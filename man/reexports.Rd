@@ -6,6 +6,7 @@
 \alias{tune_grid}
 \alias{tune_bayes}
 \alias{fit_resamples}
+\alias{collect_metrics}
 \alias{\%>\%}
 \title{Objects exported from other packages}
 \keyword{internal}
@@ -16,6 +17,6 @@ below to see their documentation.
 \describe{
   \item{dplyr}{\code{\link[dplyr:reexports]{\%>\%}}}
 
-  \item{tune}{\code{\link[tune]{fit_resamples}}, \code{\link[tune]{tune_bayes}}, \code{\link[tune]{tune_grid}}}
+  \item{tune}{\code{\link[tune:collect_predictions]{collect_metrics}}, \code{\link[tune]{fit_resamples}}, \code{\link[tune]{tune_bayes}}, \code{\link[tune]{tune_grid}}}
 }}
 

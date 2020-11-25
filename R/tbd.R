@@ -1,7 +1,8 @@
 
 
 utils::globalVariables(
-   c(".config", "mod_nm", "models", "pp_nm", "preprocs", "results", "wflow_id")
+   c(".config", "mod_nm", "models", "pp_nm", "preprocs", "results", "wflow_id",
+     "info")
 )
 
 # ------------------------------------------------------------------------------
@@ -19,6 +20,10 @@ tune::tune_bayes
 #' @importFrom tune fit_resamples
 #' @export
 tune::fit_resamples
+
+#' @importFrom tune collect_metrics
+#' @export
+tune::collect_metrics
 
 
 #' @importFrom dplyr %>%
