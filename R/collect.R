@@ -8,10 +8,11 @@
 #' @return A tibble.
 #' @export
 collect_metrics.workflow_set <- function(x, summarize = TRUE, ...) {
-   # TODO check for empty results
-   # TODO check for consistent metrics
+   check_incompete(x, fail = TRUE)
+   # TODO add a rank?
    # TODO option for only best
    res <- purrr::map(x$results, tune::collect_metrics, summarize = summarize)
+   check_consistent_metrics(res)
    res <- purrr::map2(res, x$wflow_id, add_object_name)
    res <- purrr::map2(res, x$preprocs, add_preproc_name)
    res <- purrr::map2(res, x$models,   add_model_name)
@@ -25,7 +26,6 @@ collect_metrics.workflow_set <- function(x, summarize = TRUE, ...) {
    res <- dplyr::bind_rows(res)
    not_ids <- names(res)[!(names(res) %in% c("wflow_id", "info", ".config"))]
    res <- dplyr::select(res, wflow_id, info, .config, !!!not_ids)
-   # TODO add a rank?
    res
 }
 
@@ -52,5 +52,32 @@ maybe_add_iter <- function(x) {
       x <- dplyr::mutate(x, .iter = 0)
    }
    x
+}
+
+check_consistent_metrics <- function(x) {
+   metrics <-
+      x %>%
+      dplyr::distinct(wflow_id, .metric, .estimator) %>%
+      dplyr::group_by(wflow_id, .estimator) %>%
+      dplyr::count() %>%
+      dplyr::ungroup()
+   if (length(table(metrics$n)) > 0) {
+      rlang::warn("There were inconsistent metrics across the workflow results.")
+   }
+   invisible(NULL)
+}
+
+check_incompete <- function(x, fail = TRUE) {
+   empty_res <- purrr::map_lgl(x$results, ~ identical(.x, list()))
+   n_empty <- sum(empty_res)
+   if (n_empty > 0) {
+      msg <- paste("There were", empty_res, "workflows that had no results.")
+      if (fail) {
+         halt(msg)
+      } else {
+         rlang::warn(msg)
+      }
+   }
+   invisible(NULL)
 }
 
