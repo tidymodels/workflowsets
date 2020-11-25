@@ -21,3 +21,65 @@ A tibble.
 \description{
 Obtain and format results produced by tuning functions for workflow sets
 }
+\examples{
+library(tbd)
+library(modeldata)
+library(recipes)
+library(parsnip)
+library(dplyr)
+library(rsample)
+library(tune)
+library(yardstick)
+
+# ------------------------------------------------------------------------------
+
+data(cells)
+cells <- cells \%>\% dplyr::select(-case)
+
+set.seed(1)
+val_set <- validation_split(cells)
+
+# ------------------------------------------------------------------------------
+
+basic_recipe <-
+   recipe(class ~ ., data = cells) \%>\%
+   step_YeoJohnson(all_predictors()) \%>\%
+   step_normalize(all_predictors())
+
+pca_recipe <-
+   basic_recipe \%>\%
+   step_pca(all_predictors(), num_comp = tune())
+
+ss_recipe <-
+   basic_recipe \%>\%
+   step_spatialsign(all_predictors())
+
+# ------------------------------------------------------------------------------
+
+knn_mod <-
+   nearest_neighbor(neighbors = tune(), weight_func = tune()) \%>\%
+   set_engine("kknn") \%>\%
+   set_mode("classification")
+
+lr_mod <-
+   logistic_reg() \%>\%
+   set_engine("glm")
+
+# ------------------------------------------------------------------------------
+
+preproc <- list(none = basic_recipe, pca = pca_recipe, sp_sign = ss_recipe)
+models <- list(knn = knn_mod, logistic = lr_mod)
+
+cell_models <- workflow_set(preproc, models, cross = TRUE)
+
+# ------------------------------------------------------------------------------
+
+\donttest{
+cell_models <-
+   cell_models \%>\%
+   tune_grid(resamples = val_set, grid = 10, metrics = metric_set(roc_auc)) \%>\%
+   fit_resamples(resamples = val_set, metrics = metric_set(roc_auc))
+cell_models
+collect_metrics(cell_models)
+}
+}

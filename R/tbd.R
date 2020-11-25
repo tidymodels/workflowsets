@@ -2,7 +2,7 @@
 
 utils::globalVariables(
    c(".config", "mod_nm", "models", "pp_nm", "preprocs", "results", "wflow_id",
-     "info")
+     "info", ".metric", ".estimator")
 )
 
 # ------------------------------------------------------------------------------
