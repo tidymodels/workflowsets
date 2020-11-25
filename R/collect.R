@@ -116,6 +116,7 @@ maybe_add_iter <- function(x) {
 }
 
 check_consistent_metrics <- function(x, fail = TRUE) {
+   check_incompete(x, fail = fail)
    metrics <-
       x %>%
       purrr::map_dfr(~ dplyr::select(.x, .metric, .estimator)) %>%
@@ -138,7 +139,9 @@ check_consistent_metrics <- function(x, fail = TRUE) {
 
 check_incompete <- function(x, fail = TRUE) {
    empty_res <- purrr::map_lgl(x$results, ~ identical(.x, list()))
-   n_empty <- sum(empty_res)
+   failed_res <- purrr::map_lgl(x$results, ~ inherits(.x, "try-error"))
+
+   n_empty <- sum(empty_res | failed_res)
    if (n_empty > 0) {
       msg <- paste("There were", n_empty, "workflows that had no results.")
       if (fail) {
