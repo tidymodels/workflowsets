@@ -24,7 +24,8 @@ Imports:
     tibble,
     vctrs,
     tidyr,
-    workflows
+    workflows,
+    cli
 Language: en-US
 Suggests: 
     spelling,

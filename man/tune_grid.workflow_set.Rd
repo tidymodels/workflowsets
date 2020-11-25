@@ -6,15 +6,30 @@
 \alias{fit_resamples.workflow_set}
 \title{Methods for processing workflow sets}
 \usage{
-\method{tune_grid}{workflow_set}(object, pick = NULL, options = NULL, seed = sample(1e+05, 1), ...)
+\method{tune_grid}{workflow_set}(
+  object,
+  pick = NULL,
+  options = NULL,
+  seed = sample(1e+05, 1),
+  verbose = FALSE,
+  ...
+)
 
-\method{tune_bayes}{workflow_set}(object, pick = NULL, options = NULL, seed = sample(1e+05, 1), ...)
+\method{tune_bayes}{workflow_set}(
+  object,
+  pick = NULL,
+  options = NULL,
+  seed = sample(1e+05, 1),
+  verbose = FALSE,
+  ...
+)
 
 \method{fit_resamples}{workflow_set}(
   object,
   pick = NULL,
   options = NULL,
   seed = sample(1e+05, 1),
+  verbose = FALSE,
   ...
 )
 }
@@ -29,6 +44,10 @@ in the \code{results} column are selected.}
 arguments to the corresponding function in the \code{tune} package.}
 
 \item{seed}{A single integer that is set before each workflow is processed.}
+
+\item{verbose}{A single logical to indicate if logging should occur. This
+will write a message \emph{after} each workflow is process and indicates if there
+were any issues.}
 
 \item{...}{Common arguments that will be passed to each \code{tune} function. These
 should not be the same arguments passed to \code{options}.}
