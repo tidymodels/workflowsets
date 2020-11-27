@@ -1,0 +1,172 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# tbd
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of tbd is to allow users to create and easily fit a large number of models. tbd can create a _workflow set_ that holds multiple workflow objects. These objects can be created by crossing all combinations of preprocessors (e.g., formula, recipe, etc) and model specifications. This set can be easier tuned or resampled using a set of simple commands. 
+
+
+
+## Installation
+
+You can install the released version of tbd from [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+# not yet!
+# install.packages("tbd")
+```
+
+And the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("topepo/tbd")
+```
+
+## Example
+
+It is often a good idea to try different types of models and preprocessing methods on a specific data set. tidymodels provides tools for this purpose: recipes for preprocessing/feature engineering and model specifications. 
+
+Once a few options are available, it might be helpful to evaluate a large combination of these techniques. tbd has functions for creating and evaluating combinations of modeling elements. 
+
+For example, the Chicago train ridership data has many numeric predictors that are highly correlated. There are a few approaches to compensating for this issue during modeling:
+
+ 1. Use a feature filter to remove redundant predictors.
+ 
+ 2. Apply principal component analysis to decorrelate the data. 
+ 
+ 3. Use a regularized model to make the estimation process insensitive to correlated predictors. 
+ 
+The first two methods can be used with any model while the last option is only available for specific models. Let's create a basic recipe that we will build on: 
+
+```{r recs}
+library(tidymodels)
+data(Chicago)
+
+base_recipe <- 
+   recipe(ridership ~ ., data = Chicago) %>% 
+   # create date features
+   step_date(date) %>% 
+   step_holiday(date) %>% 
+   # remove date form the list of predictors
+   update_role(date, new_role = "id") %>% 
+   # create dummy variables from factor columns
+   step_dummy(all_nominal()) %>% 
+   # remove any columns iwth a single unique value
+   step_zv(all_predictors()) %>% 
+   step_normalize(all_predictors())
+```
+
+To enact a correlation filter, an additional step is used: 
+
+```{r filter}
+filter_rec <- 
+   base_recipe %>% 
+   step_corr(all_of(stations), threshold = tune())
+```
+
+Similarly, for PCA: 
+
+
+```{r pca}
+pca_rec <- 
+   base_recipe %>% 
+   step_pca(all_of(stations), num_comp = tune()) %>% 
+   step_normalize(all_predictors())
+```
+
+We might want to assess a few different models, including a regularized method (`glmnet`):
+
+```{r models}
+regularized_spec <- 
+   linear_reg(penalty = tune(), mixture = tune()) %>% 
+   set_engine("glmnet")
+
+cart_spec <- 
+   decision_tree(cost_complexity = tune(), min_n = tune()) %>% 
+   set_engine("rpart") %>% 
+   set_mode("regression")
+
+knn_spec <- 
+   nearest_neighbor(neighbors = tune(), weight_func = tune()) %>% 
+   set_engine("kknn") %>% 
+   set_mode("regression")
+```
+
+Rather than creating all 9 combinations of these preprocessors and models, we can create a _workflow set_: 
+
+```{r set}
+library(tbd)
+chi_models <- 
+   workflow_set(
+      preproc = list(simple = base_recipe, filter = filter_rec, pca = pca_rec),
+      models = list(glmnet = regularized_spec, cart = cart_spec, knn = knn_spec),
+      cross = TRUE
+   )
+chi_models
+```
+It doesn't make sense to use PCA or a filter with a `glmnet` model. We can remove these easily: 
+
+```{r rm}
+chi_models <- 
+   chi_models %>% 
+   anti_join(tibble(wflow_id = c("pca_glmnet", "filter_glmnet")), by = "wflow_id")
+```
+
+
+These models all have tuning parameters. To resolve these, we'll need a resampling set. In this case, a time-series resampling method is used: 
+
+```{r rs}
+splits <- 
+   sliding_period(
+      Chicago,
+      date,
+      "month",
+      lookback = 15 * 12, # each resample has 15 years of data for modeling
+      assess_stop = 1     # one month for performance assessment
+   )
+splits
+```
+
+We'll use simple grid search for these models: 
+
+```{r tune}
+set.seed(123)
+chi_models <- 
+   chi_models %>% 
+   tune_grid(resamples = splits, grid = 10, metrics = metric_set(mae), verbose = TRUE)
+chi_models
+```
+
+The `results` column contains the results of each call to `tune_grid()` for the workflows. 
+
+We can determine how well each combination did by looking at the best results per workflow: 
+
+```{r best}
+best_by_wflow <-
+   chi_models %>% 
+   collect_metrics() %>%
+   dplyr::select(wflow_id, .config, mean, n, std_err) %>% 
+   group_by(wflow_id) %>%
+   arrange(mean, .by_group = TRUE) %>%
+   slice(1) %>%
+   ungroup() %>%
+   arrange(mean)
+best_by_wflow
+```
+

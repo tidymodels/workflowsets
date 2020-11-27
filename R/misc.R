@@ -15,3 +15,59 @@ make_workflow <- function(x, y) {
 halt <- function(...) {
    rlang::abort(paste0(...))
 }
+
+# ------------------------------------------------------------------------------
+
+
+metric_to_df <- function (x, ...) {
+   metrics <- attributes(x)$metrics
+   names <- names(metrics)
+   metrics <- unname(metrics)
+   classes <- purrr::map_chr(metrics, ~ class(.x)[[1]])
+   directions <- purrr::map_chr(metrics, ~ attr(.x, "direction"))
+   info <- data.frame(metric = names, class = classes, direction = directions)
+   info
+}
+
+
+collate_metrics <- function(x) {
+   metrics <-
+      x$results %>%
+      purrr::map(tune::.get_tune_metrics) %>%
+      purrr::map(metric_to_df) %>%
+      purrr::map_dfr(~ dplyr::mutate(.x, order = 1:nrow(.x)))
+
+   mean_order <-
+      metrics %>%
+      dplyr::group_by(metric) %>%
+      dplyr::summarize(order = mean(order, na.rm = TRUE), n = dplyr::n(),
+                       .groups = "drop") %>%
+      dplyr::ungroup()
+
+
+
+   dplyr::full_join(
+      dplyr::distinct(metrics) %>% dplyr::select(-order),
+      mean_order,
+      by = "metric"
+   ) %>%
+      dplyr::arrange(order)
+}
+
+pick_metric <- function(x, metric) {
+   check_incompete(x, fail = TRUE)
+   res <- purrr::map(x$results, tune::collect_metrics)
+   check_consistent_metrics(res, fail = FALSE)
+
+   metrics <- collate_metrics(x)
+   if (is.null(metric)) {
+      metric <- metrics$metric[1]
+      direction <- metrics$direction[1]
+   } else {
+      if (!any(metrics$metric == metric)) {
+         halt("Metric '", metric, "' was not in the results.")
+      }
+      direction <-  metrics$direction[metrics$metric == metric]
+   }
+   list(metric = metric, direction = direction)
+}

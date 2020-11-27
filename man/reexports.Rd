@@ -8,6 +8,7 @@
 \alias{fit_resamples}
 \alias{collect_metrics}
 \alias{\%>\%}
+\alias{autoplot}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -16,6 +17,8 @@ below to see their documentation.
 
 \describe{
   \item{dplyr}{\code{\link[dplyr:reexports]{\%>\%}}}
+
+  \item{ggplot2}{\code{\link[ggplot2]{autoplot}}}
 
   \item{tune}{\code{\link[tune:collect_predictions]{collect_metrics}}, \code{\link[tune]{fit_resamples}}, \code{\link[tune]{tune_bayes}}, \code{\link[tune]{tune_grid}}}
 }}

@@ -8,33 +8,36 @@
 \usage{
 \method{tune_grid}{workflow_set}(
   object,
+  ...,
   pick = NULL,
   options = NULL,
   seed = sample(1e+05, 1),
-  verbose = FALSE,
-  ...
+  verbose = FALSE
 )
 
 \method{tune_bayes}{workflow_set}(
   object,
+  ...,
   pick = NULL,
   options = NULL,
   seed = sample(1e+05, 1),
-  verbose = FALSE,
-  ...
+  verbose = FALSE
 )
 
 \method{fit_resamples}{workflow_set}(
   object,
+  ...,
   pick = NULL,
   options = NULL,
   seed = sample(1e+05, 1),
-  verbose = FALSE,
-  ...
+  verbose = FALSE
 )
 }
 \arguments{
 \item{object}{A \code{workflow_set} object.}
+
+\item{...}{Common arguments that will be passed to each \code{tune} function. These
+should not be the same arguments passed to \code{options}.}
 
 \item{pick}{A character string of identifiers indicating which workflows should
 be processed. If left \code{NULL}, all applicable workflows without entries
@@ -48,9 +51,6 @@ arguments to the corresponding function in the \code{tune} package.}
 \item{verbose}{A single logical to indicate if logging should occur. This
 will write a message \emph{after} each workflow is process and indicates if there
 were any issues.}
-
-\item{...}{Common arguments that will be passed to each \code{tune} function. These
-should not be the same arguments passed to \code{options}.}
 }
 \value{
 An object from the corresponding \code{tune} package function (e.g. with

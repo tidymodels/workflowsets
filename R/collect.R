@@ -70,14 +70,12 @@
 #' @export
 collect_metrics.workflow_set <- function(x, summarize = TRUE, ...) {
    check_incompete(x, fail = TRUE)
-   # TODO add a rank?
-   # TODO option for only best
    res <- purrr::map(x$results, tune::collect_metrics, summarize = summarize)
    check_consistent_metrics(res, fail = FALSE)
    res <- purrr::map2(res, x$wflow_id, add_object_name)
    res <- purrr::map2(res, x$preprocs, add_preproc_name)
    res <- purrr::map2(res, x$models,   add_model_name)
-   param <- purrr::map(x$objects, ~ tune::tune_args(.x)$name)
+   param <- purrr::map(x$objects, ~ tune::tune_args(.x)$id)
    res <- purrr::map2(res, param, nest_cols)
    all_names <- purrr::map(res, ~ names(.x))
    all_names <- unique(unlist(all_names))
@@ -114,42 +112,3 @@ maybe_add_iter <- function(x) {
    }
    x
 }
-
-check_consistent_metrics <- function(x, fail = TRUE) {
-   check_incompete(x, fail = fail)
-   metrics <-
-      x %>%
-      purrr::map_dfr(~ dplyr::select(.x, .metric, .estimator)) %>%
-      dplyr::group_by(.estimator, .metric) %>%
-      dplyr::count() %>%
-      dplyr::ungroup()
-   n_combos <- unique(metrics$n)
-   metrics$pct <- round(metrics$n/sum(metrics$n)*100, 1)
-   msg <- paste0(metrics$.metric, " (",  metrics$pct, "%)", collapse = ", ")
-   msg <- paste("There were inconsistent metrics across the workflow results:", msg)
-   if (length(n_combos) > 1) {
-      if (fail) {
-         halt(msg)
-      } else {
-         rlang::warn(msg)
-      }
-   }
-   invisible(NULL)
-}
-
-check_incompete <- function(x, fail = TRUE) {
-   empty_res <- purrr::map_lgl(x$results, ~ identical(.x, list()))
-   failed_res <- purrr::map_lgl(x$results, ~ inherits(.x, "try-error"))
-
-   n_empty <- sum(empty_res | failed_res)
-   if (n_empty > 0) {
-      msg <- paste("There were", n_empty, "workflows that had no results.")
-      if (fail) {
-         halt(msg)
-      } else {
-         rlang::warn(msg)
-      }
-   }
-   invisible(NULL)
-}
-

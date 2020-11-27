@@ -67,6 +67,7 @@ s3_register <- function(generic, class, method = NULL) {
    s3_register("tune::tune_bayes",      "workflow_set")
    s3_register("tune::fit_resamples",   "workflow_set")
    s3_register("tune::collect_metrics", "workflow_set")
+   s3_register("ggplot2::autoplot",     "workflow_set")
    invisible()
 }
 

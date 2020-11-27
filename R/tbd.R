@@ -1,8 +1,9 @@
-
+#' @import ggplot2
 
 utils::globalVariables(
-   c(".config", "mod_nm", "models", "pp_nm", "preprocs", "results", "wflow_id",
-     "info", ".metric", ".estimator")
+   c(".config", ".estimator", ".metric", "info", "metric", "mod_nm",
+     "model", "models", "n", "pp_nm", "preprocessor", "preprocs",
+     "results", "std_err", "wflow_id")
 )
 
 # ------------------------------------------------------------------------------
@@ -25,7 +26,10 @@ tune::fit_resamples
 #' @export
 tune::collect_metrics
 
-
 #' @importFrom dplyr %>%
 #' @export
 dplyr::`%>%`
+
+#' @importFrom ggplot2 autoplot
+#' @export
+ggplot2::autoplot

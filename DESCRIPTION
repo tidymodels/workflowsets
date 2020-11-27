@@ -25,7 +25,9 @@ Imports:
     vctrs,
     tidyr,
     workflows,
-    cli
+    cli,
+    ggplot2,
+    stats
 Language: en-US
 Suggests: 
     spelling,
@@ -36,3 +38,5 @@ Suggests:
     testthat,
     covr,
     yardstick
+Depends: 
+    R (>= 2.10)

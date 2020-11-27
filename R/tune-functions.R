@@ -75,25 +75,24 @@
 #' cell_models
 #' }
 #' @export
-tune_grid.workflow_set <- function(object, pick = NULL, options = NULL,
-                                   seed = sample(1e5, 1), verbose = FALSE,
-                                   ...) {
+tune_grid.workflow_set <- function(object, ..., pick = NULL, options = NULL,
+                                   seed = sample(1e5, 1), verbose = FALSE) {
    fn_loop(object, .fn = "tune_grid", tune = TRUE, pick = pick, verbose = verbose,
            options = options, seed = seed, ...)
 }
 
 #' @export
 #' @rdname tune_grid.workflow_set
-tune_bayes.workflow_set <- function(object, pick = NULL, options = NULL,
-                                    seed = sample(1e5, 1), verbose = FALSE, ...) {
+tune_bayes.workflow_set <- function(object, ..., pick = NULL, options = NULL,
+                                    seed = sample(1e5, 1), verbose = FALSE) {
    fn_loop(object, .fn = "tune_bayes", tune = TRUE, pick = pick, verbose = verbose,
            options = options, seed = seed, ...)
 }
 
 #' @export
 #' @rdname tune_grid.workflow_set
-fit_resamples.workflow_set <- function(object, pick = NULL, options = NULL,
-                                       seed = sample(1e5, 1), verbose = FALSE, ...) {
+fit_resamples.workflow_set <- function(object, ..., pick = NULL, options = NULL,
+                                       seed = sample(1e5, 1), verbose = FALSE) {
    fn_loop(object, .fn = "fit_resamples", tune = FALSE, pick = pick, verbose = verbose,
            options = options, seed = seed, ...)
 }
