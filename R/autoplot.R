@@ -35,6 +35,7 @@ rank_plot <- function(object, metric = NULL, std_errs = 1, ...) {
       geom_point(aes(shape = preprocessor))
 
    if (num_metrics > 1) {
+      # TODO plot metrics panels in order of specification
       p <- p + facet_wrap(~ .metric) + labs(x = "Workflow Rank", y = "Metric")
    } else {
       p <- p + labs(x = "Workflow Rank", y = metric_info$metric)

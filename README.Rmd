@@ -67,7 +67,7 @@ base_recipe <-
    update_role(date, new_role = "id") %>% 
    # create dummy variables from factor columns
    step_dummy(all_nominal()) %>% 
-   # remove any columns iwth a single unique value
+   # remove any columns with a single unique value
    step_zv(all_predictors()) %>% 
    step_normalize(all_predictors())
 ```

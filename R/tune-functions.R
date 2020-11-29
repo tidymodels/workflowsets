@@ -1,11 +1,14 @@
 #' Methods for processing workflow sets
 #'
 #' @param object A `workflow_set` object.
-#' @param pick A character string of identifiers indicating which workflows should
+#' @param which A character string of identifiers indicating which workflows should
 #'  be processed. If left `NULL`, all applicable workflows without entries
 #'  in the `results` column are selected.
-#' @param options A list the same length as `pick` with workflow-specific
-#'  arguments to the corresponding function in the `tune` package.
+#' @param options A named list the same length as `which` with workflow-specific
+#'  arguments to the corresponding function in the `tune` package. The names of
+#'  `options` should correspond to the names given in `which`. The elements in
+#'  `options` should be named lists where the names are for the options being
+#'  set. See the example below.
 #' @param seed A single integer that is set before each workflow is processed.
 #' @param ... Common arguments that will be passed to each `tune` function. These
 #'  should not be the same arguments passed to `options`.
@@ -23,6 +26,7 @@
 #' library(rsample)
 #' library(tune)
 #' library(yardstick)
+#' library(dials)
 #'
 #' # ------------------------------------------------------------------------------
 #'
@@ -68,69 +72,97 @@
 #' # ------------------------------------------------------------------------------
 #'
 #' \donttest{
-#' cell_models <-
+#' cell_model_results <-
 #'    cell_models %>%
 #'    tune_grid(resamples = val_set, grid = 10, metrics = metric_set(roc_auc)) %>%
 #'    fit_resamples(resamples = val_set, metrics = metric_set(roc_auc))
-#' cell_models
+#' cell_model_results
+#' }
+#'
+#' # ------------------------------------------------------------------------------
+#'
+#' # An example of setting options. Let's change the range for `num_comp` by
+#' # passing a specific parameter set.
+#'
+#' pca_knn_mod <-
+#'   cell_models %>%
+#'   dplyr::filter(wflow_id == "pca_knn")
+#' pca_knn_param <-
+#'   pca_knn_mod$objects[[1]] %>%
+#'   parameters() %>%
+#'   update(num_comp = num_comp(c(0, 20)))
+#'
+#' new_opts <- list(pca_knn = list(param_info = pca_knn_param))
+#' new_opts
+#' \donttest{
+#' cell_model_results <-
+#'    cell_models %>%
+#'    tune_grid(resamples = val_set, grid = 10, which = "pca_knn", options = new_opts)
 #' }
 #' @export
-tune_grid.workflow_set <- function(object, ..., pick = NULL, options = NULL,
+tune_grid.workflow_set <- function(object, ..., which = NULL, options = NULL,
                                    seed = sample(1e5, 1), verbose = FALSE) {
-   fn_loop(object, .fn = "tune_grid", tune = TRUE, pick = pick, verbose = verbose,
+   fn_loop(object, .fn = "tune_grid", tune = TRUE, which = which, verbose = verbose,
            options = options, seed = seed, ...)
 }
 
+# TODO ... will which up unnamed arguments to tune_grid()
+
 #' @export
 #' @rdname tune_grid.workflow_set
-tune_bayes.workflow_set <- function(object, ..., pick = NULL, options = NULL,
+tune_bayes.workflow_set <- function(object, ..., which = NULL, options = NULL,
                                     seed = sample(1e5, 1), verbose = FALSE) {
-   fn_loop(object, .fn = "tune_bayes", tune = TRUE, pick = pick, verbose = verbose,
+   fn_loop(object, .fn = "tune_bayes", tune = TRUE, which = which, verbose = verbose,
            options = options, seed = seed, ...)
 }
 
 #' @export
 #' @rdname tune_grid.workflow_set
-fit_resamples.workflow_set <- function(object, ..., pick = NULL, options = NULL,
+fit_resamples.workflow_set <- function(object, ..., which = NULL, options = NULL,
                                        seed = sample(1e5, 1), verbose = FALSE) {
-   fn_loop(object, .fn = "fit_resamples", tune = FALSE, pick = pick, verbose = verbose,
+   fn_loop(object, .fn = "fit_resamples", tune = FALSE, which = which, verbose = verbose,
            options = options, seed = seed, ...)
 }
 
 # ------------------------------------------------------------------------------
 
 fn_loop <- function(object, .fn = "tune_grid", tune = TRUE,
-                    pick = NULL, options = NULL, seed = sample(1e5, 1),
+                    which = NULL, options = NULL, seed = sample(1e5, 1),
                     verbose = FALSE, ...) {
-   if (is.null(pick)) {
+   if (is.null(which)) {
       has_tune <- purrr::map_lgl(object$objects, ~ nrow(tune::tune_args(.x)) > 0)
       no_value <- purrr::map_lgl(object$results, ~ length(.x) == 0)
       if (tune) {
-         pick <- object$wflow_id[ has_tune & no_value]
+         which <- object$wflow_id[ has_tune & no_value]
       } else {
-         pick <- object$wflow_id[!has_tune & no_value]
+         which <- object$wflow_id[!has_tune & no_value]
       }
    }
-   if (length(pick) == 0) {
+   if (length(which) == 0) {
       rlang::abort("No objects are tunable.")
    }
-   num_tasks <- length(pick)
+   num_tasks <- length(which)
    # check to see if result is not empty
 
-   # merge options in options with ...
-   # TODO check length of options, check names
    dots <- rlang::enquos(...)
-   options <- purrr::map(1:num_tasks, ~ c(options[[.x]], dots))
+   options <- check_options(which, options, dots)
+   opt_nms <- names(options)
 
-   iter_seq <- seq_along(pick)
+   iter_seq <- seq_along(which)
    iter_chr <- format(iter_seq)
    n <- length(iter_seq)
 
-   for (iter in seq_along(pick)) {
-      obj <- which(object$wflow_id == pick[iter])
+   for (iter in seq_along(which)) {
+      obj <- which(object$wflow_id == which[iter])
+      if (any(opt_nms == which[iter])) {
+         opt <- options[[which[iter]]]
+      } else {
+         opt <- NULL
+      }
       cl <- rlang::call2(.fn,
                          .ns = "tune",
-                         object = object$objects[[obj]],!!!options[[iter]])
+                         object = object$objects[[obj]],
+                         !!!dots, !!!opt)
       withr::with_seed(seed[1],
                        object$results[[obj]] <-
                           try(rlang::eval_tidy(cl), silent = TRUE))

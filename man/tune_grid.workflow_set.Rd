@@ -9,7 +9,7 @@
 \method{tune_grid}{workflow_set}(
   object,
   ...,
-  pick = NULL,
+  which = NULL,
   options = NULL,
   seed = sample(1e+05, 1),
   verbose = FALSE
@@ -18,7 +18,7 @@
 \method{tune_bayes}{workflow_set}(
   object,
   ...,
-  pick = NULL,
+  which = NULL,
   options = NULL,
   seed = sample(1e+05, 1),
   verbose = FALSE
@@ -27,7 +27,7 @@
 \method{fit_resamples}{workflow_set}(
   object,
   ...,
-  pick = NULL,
+  which = NULL,
   options = NULL,
   seed = sample(1e+05, 1),
   verbose = FALSE
@@ -39,12 +39,15 @@
 \item{...}{Common arguments that will be passed to each \code{tune} function. These
 should not be the same arguments passed to \code{options}.}
 
-\item{pick}{A character string of identifiers indicating which workflows should
+\item{which}{A character string of identifiers indicating which workflows should
 be processed. If left \code{NULL}, all applicable workflows without entries
 in the \code{results} column are selected.}
 
-\item{options}{A list the same length as \code{pick} with workflow-specific
-arguments to the corresponding function in the \code{tune} package.}
+\item{options}{A named list the same length as \code{which} with workflow-specific
+arguments to the corresponding function in the \code{tune} package. The names of
+\code{options} should correspond to the names given in \code{which}. The elements in
+\code{options} should be named lists where the names are for the options being
+set. See the example below.}
 
 \item{seed}{A single integer that is set before each workflow is processed.}
 
@@ -68,6 +71,7 @@ library(dplyr)
 library(rsample)
 library(tune)
 library(yardstick)
+library(dials)
 
 # ------------------------------------------------------------------------------
 
@@ -113,10 +117,31 @@ cell_models <- workflow_set(preproc, models, cross = TRUE)
 # ------------------------------------------------------------------------------
 
 \donttest{
-cell_models <-
+cell_model_results <-
    cell_models \%>\%
    tune_grid(resamples = val_set, grid = 10, metrics = metric_set(roc_auc)) \%>\%
    fit_resamples(resamples = val_set, metrics = metric_set(roc_auc))
-cell_models
+cell_model_results
+}
+
+# ------------------------------------------------------------------------------
+
+# An example of setting options. Let's change the range for `num_comp` by
+# passing a specific parameter set.
+
+pca_knn_mod <-
+  cell_models \%>\%
+  dplyr::filter(wflow_id == "pca_knn")
+pca_knn_param <-
+  pca_knn_mod$objects[[1]] \%>\%
+  parameters() \%>\%
+  update(num_comp = num_comp(c(0, 20)))
+
+new_opts <- list(pca_knn = list(param_info = pca_knn_param))
+new_opts
+\donttest{
+cell_model_results <-
+   cell_models \%>\%
+   tune_grid(resamples = val_set, grid = 10, which = "pca_knn", options = new_opts)
 }
 }
