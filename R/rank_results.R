@@ -18,7 +18,7 @@ rank_results <- function(x, rank_metric = NULL) {
       dplyr::select(wflow_id, model, preprocessor)
    ranked <-
       dplyr::full_join(results, types, by = "wflow_id") %>%
-      dplyr::filter(.metric == metric)
+      dplyr::filter(.metric == rank_metric)
 
    if (direction == "maximize") {
       ranked$mean <- -ranked$mean

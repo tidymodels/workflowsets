@@ -24,9 +24,10 @@ autoplot.workflow_set <- function(object, rank_metric = NULL,
    p
 }
 
-rank_plot <- function(object, metric = NULL, std_errs = 1, ...) {
-   metric_info <- pick_metric(object, metric)
-   res <- rank_results(object, rank_metric = metric)
+rank_plot <- function(object, rank_metric = NULL, std_errs = 1, ...) {
+   metric_info <- pick_metric(object, rank_metric)
+   metrics <- collate_metrics(object)
+   res <- rank_results(object, rank_metric = rank_metric)
    num_metrics <- length(unique(res$.metric))
    has_std_error <- !all(is.na(res$std_err))
 
@@ -35,8 +36,11 @@ rank_plot <- function(object, metric = NULL, std_errs = 1, ...) {
       geom_point(aes(shape = preprocessor))
 
    if (num_metrics > 1) {
-      # TODO plot metrics panels in order of specification
-      p <- p + facet_wrap(~ .metric) + labs(x = "Workflow Rank", y = "Metric")
+      res$.metric <- factor(as.character(res$.metric), levels = metrics$metric)
+      p <-
+         p +
+         facet_wrap(~ .metric, scales = "free_y") +
+         labs(x = "Workflow Rank", y = "Metric")
    } else {
       p <- p + labs(x = "Workflow Rank", y = metric_info$metric)
    }
