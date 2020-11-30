@@ -18,7 +18,7 @@ rank_results <- function(x, rank_metric = NULL) {
       dplyr::select(wflow_id, model, preprocessor)
    ranked <-
       dplyr::full_join(results, types, by = "wflow_id") %>%
-      dplyr::filter(.metric == rank_metric)
+      dplyr::filter(.metric == metric)
 
    if (direction == "maximize") {
       ranked$mean <- -ranked$mean
@@ -40,12 +40,10 @@ rank_results <- function(x, rank_metric = NULL) {
 
 
 get_preproc_type <- function(x) {
-   purrr::map(x$objects, workflows::pull_workflow_preprocessor) %>%
-      purrr::map_chr(~ class(.x)[1])
+   purrr::map_chr(x$objects, preproc_type)
 }
 
 get_model_type <- function(x) {
-   purrr::map(x$objects, workflows::pull_workflow_spec) %>%
-      purrr::map_chr(~ class(.x)[1])
+   purrr::map_chr(x$objects, model_type)
 }
 

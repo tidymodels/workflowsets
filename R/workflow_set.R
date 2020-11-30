@@ -57,6 +57,19 @@
 #'
 #' cell_models <- workflow_set(preproc, models, cross = TRUE)
 #' cell_models
+#'
+#' # ------------------------------------------------------------------------------
+#' # Using selector functions and formulas
+#'
+#' # Select predictors by their names
+#' channels <- paste0("ch_", 1:4)
+#' preproc <- purrr::map(channels, ~ selectors(class, c(contains(!!.x))))
+#' names(preproc) <- channels
+#' preproc$everything <- class ~ .
+#' preproc
+#'
+#' cell_models_by_group <- workflow_set(preproc, models["logistic"], cross = TRUE)
+#'
 #' @export
 workflow_set <- function(preproc, models, cross = FALSE) {
    if (!cross && length(preproc) == length(models)) {
@@ -128,7 +141,11 @@ new_workflow_set <- function(x) {
 
 preproc_type <- function(x) {
    x <- workflows::pull_workflow_preprocessor(x)
-   class(x)[1]
+   res <- class(x)[1]
+   if (res == "list") {
+      res <- "selector"
+   }
+   res
 }
 
 model_type <- function(x) {

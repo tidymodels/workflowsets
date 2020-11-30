@@ -72,4 +72,17 @@ models <- list(knn = knn_mod, logistic = lr_mod)
 
 cell_models <- workflow_set(preproc, models, cross = TRUE)
 cell_models
+
+# ------------------------------------------------------------------------------
+# Using selector functions and formulas
+
+# Select predictors by their names (these should really be centered and scaled)
+channels <- paste0("ch_", 1:4)
+preproc <- purrr::map(channels, ~ selectors(class, c(contains(!!.x))))
+names(preproc) <- channels
+preproc$everything <- class ~ .
+preproc
+
+cell_models_by_group <- workflow_set(preproc, models["logistic"], cross = TRUE)
+
 }

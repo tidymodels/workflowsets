@@ -1,13 +1,24 @@
 
 make_workflow <- function(x, y) {
-   # TODO add something for add_variables()
+   exp_classes <- c("formula", "recipe", "selectors")
    w <-
       workflows::workflow() %>%
       workflows::add_model(y)
    if (inherits(x, "formula")) {
       w <- workflows::add_formula(w, x)
-   } else {
+   } else if (inherits(x, "recipe")) {
       w <- workflows::add_recipe(w, x)
+   } else if (inherits(x, "selectors")) {
+      w <-
+         workflows::add_variables(
+            w,
+            outcomes = !!x$outcomes,
+            predictors = !!x$predictors,
+            blueprint = x$blueprint
+         )
+   } else {
+     halt("The preprocessor must be an object with one of the ",
+          "following classes: ", paste0("'", exp_classes, "'", collapse = ", "))
    }
    w
 }
@@ -71,3 +82,4 @@ pick_metric <- function(x, metric) {
    }
    list(metric = metric, direction = direction)
 }
+
