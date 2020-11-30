@@ -22,8 +22,8 @@ check_consistent_metrics <- function(x, fail = TRUE) {
 }
 
 check_incompete <- function(x, fail = TRUE) {
-   empty_res <- purrr::map_lgl(x$results, ~ identical(.x, list()))
-   failed_res <- purrr::map_lgl(x$results, ~ inherits(.x, "try-error"))
+   empty_res <- purrr::map_lgl(x$result, ~ identical(.x, list()))
+   failed_res <- purrr::map_lgl(x$result, ~ inherits(.x, "try-error"))
 
    n_empty <- sum(empty_res | failed_res)
    if (n_empty > 0) {

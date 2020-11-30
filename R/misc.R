@@ -43,7 +43,7 @@ metric_to_df <- function (x, ...) {
 
 collate_metrics <- function(x) {
    metrics <-
-      x$results %>%
+      x$result %>%
       purrr::map(tune::.get_tune_metrics) %>%
       purrr::map(metric_to_df) %>%
       purrr::map_dfr(~ dplyr::mutate(.x, order = 1:nrow(.x)))
@@ -67,7 +67,7 @@ collate_metrics <- function(x) {
 
 pick_metric <- function(x, metric) {
    check_incompete(x, fail = TRUE)
-   res <- purrr::map(x$results, tune::collect_metrics)
+   res <- purrr::map(x$result, tune::collect_metrics)
    check_consistent_metrics(res, fail = FALSE)
 
    metrics <- collate_metrics(x)

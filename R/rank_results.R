@@ -40,10 +40,10 @@ rank_results <- function(x, rank_metric = NULL) {
 
 
 get_preproc_type <- function(x) {
-   purrr::map_chr(x$objects, preproc_type)
+   purrr::map_chr(x$object, preproc_type)
 }
 
 get_model_type <- function(x) {
-   purrr::map_chr(x$objects, model_type)
+   purrr::map_chr(x$object, model_type)
 }
 

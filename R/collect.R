@@ -70,12 +70,12 @@
 #' @export
 collect_metrics.workflow_set <- function(x, summarize = TRUE, ...) {
    check_incompete(x, fail = TRUE)
-   res <- purrr::map(x$results, tune::collect_metrics, summarize = summarize)
+   res <- purrr::map(x$result, tune::collect_metrics, summarize = summarize)
    check_consistent_metrics(res, fail = FALSE)
    res <- purrr::map2(res, x$wflow_id, add_object_name)
-   res <- purrr::map2(res, x$preprocs, add_preproc_name)
-   res <- purrr::map2(res, x$models,   add_model_name)
-   param <- purrr::map(x$objects, ~ tune::tune_args(.x)$id)
+   res <- purrr::map2(res, x$preproc, add_preproc_name)
+   res <- purrr::map2(res, x$model,   add_model_name)
+   param <- purrr::map(x$object, ~ tune::tune_args(.x)$id)
    res <- purrr::map2(res, param, nest_cols)
    all_names <- purrr::map(res, ~ names(.x))
    all_names <- unique(unlist(all_names))
@@ -89,7 +89,7 @@ collect_metrics.workflow_set <- function(x, summarize = TRUE, ...) {
 }
 
 nest_cols <- function(x, nms) {
-   nest_cols <- c("preprocs", "models")
+   nest_cols <- c("preproc", "model")
    if (length(nms) > 0) {
       nest_cols <- c(nms, nest_cols)
    }
@@ -101,10 +101,10 @@ add_object_name <- function(x, nms) {
    dplyr::mutate(x, wflow_id = nms)
 }
 add_preproc_name <- function(x, nms) {
-   dplyr::mutate(x, preprocs = nms)
+   dplyr::mutate(x, preproc = nms)
 }
 add_model_name <- function(x, nms) {
-   dplyr::mutate(x, models = nms)
+   dplyr::mutate(x, model = nms)
 }
 maybe_add_iter <- function(x) {
    if (!any(names(x) == ".iter")) {

@@ -133,7 +133,7 @@ pca_knn_mod <-
   cell_models \%>\%
   dplyr::filter(wflow_id == "pca_knn")
 pca_knn_param <-
-  pca_knn_mod$objects[[1]] \%>\%
+  pca_knn_mod$object[[1]] \%>\%
   parameters() \%>\%
   update(num_comp = num_comp(c(0, 20)))
 

@@ -2,8 +2,8 @@
 
 utils::globalVariables(
    c(".config", ".estimator", ".metric", "info", "metric", "mod_nm",
-     "model", "models", "n", "pp_nm", "preprocessor", "preprocs",
-     "results", "std_err", "wflow_id")
+     "model", "n", "pp_nm", "preprocessor", "preproc", "object",
+     "result", "std_err", "wflow_id")
 )
 
 # ------------------------------------------------------------------------------

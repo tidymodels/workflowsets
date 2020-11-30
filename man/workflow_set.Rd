@@ -76,7 +76,7 @@ cell_models
 # ------------------------------------------------------------------------------
 # Using selector functions and formulas
 
-# Select predictors by their names (these should really be centered and scaled)
+# Select predictors by their names
 channels <- paste0("ch_", 1:4)
 preproc <- purrr::map(channels, ~ selectors(class, c(contains(!!.x))))
 names(preproc) <- channels

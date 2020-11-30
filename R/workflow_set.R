@@ -89,18 +89,18 @@ workflow_set <- function(preproc, models, cross = FALSE) {
    res <-
       res %>%
       dplyr::mutate(
-         objects  = purrr::map2(preproc, models, make_workflow),
-         objects  = unname(objects),
-         preprocs = purrr::map_chr(objects, preproc_type),
-         models   = purrr::map_chr(objects, model_type),
-         results  = purrr::map(1:nrow(res), ~ list())
+         object  = purrr::map2(preproc, model, make_workflow),
+         object  = unname(object),
+         preproc = purrr::map_chr(object, preproc_type),
+         model   = purrr::map_chr(object, model_type),
+         result   = purrr::map(1:nrow(res), ~ list())
       ) %>%
-      dplyr::select(wflow_id, preprocs, models, objects, results)
+      dplyr::select(wflow_id, preproc, model, object, result)
    new_workflow_set(res)
 }
 
 new_workflow_set <- function(x) {
- req_cols <- c("wflow_id", "objects", "preprocs", "models", "results")
+ req_cols <- c("wflow_id", "object", "preproc", "model", "result")
  if (!tibble::is_tibble(x)) {
     halt("The object should be a tibble.")
  }
@@ -111,11 +111,11 @@ new_workflow_set <- function(x) {
        "."
     )
  }
- if (!is.list(x$objects)) {
-    halt("The 'objects' column should be a list.")
+ if (!is.list(x$object)) {
+    halt("The 'object' column should be a list.")
  }
- if (!is.list(x$results)) {
-    halt("The 'results' column should be a list.")
+ if (!is.list(x$result)) {
+    halt("The 'result' column should be a list.")
  }
  if (!is.character(x$wflow_id)) {
     halt("The 'wflow_id' column should be character.")
@@ -123,17 +123,17 @@ new_workflow_set <- function(x) {
  if (max(table(x$wflow_id)) > 1 | any(x$wflow_id == "") | any(is.na(x$wflow_id))) {
     halt("The 'wflow_id' column should contain unique, non-missing character strings.")
  }
- is_workflow <- purrr::map_lgl(x$objects, ~ inherits(.x, "workflow"))
+ is_workflow <- purrr::map_lgl(x$object, ~ inherits(.x, "workflow"))
  if (!all(is_workflow)) {
     bad <- x$wflow_id[!is_workflow]
-    halt("The following elements of the 'objects' column are not workflow ",
-         "objects: ", paste0("'", bad, "'", collapse = ", "), ".")
+    halt("The following elements of the 'object' column are not workflow ",
+         "object: ", paste0("'", bad, "'", collapse = ", "), ".")
  }
- if (!is.character(x$preprocs)) {
-    halt("The 'preprocs' column should be character.")
+ if (!is.character(x$preproc)) {
+    halt("The 'preproc' column should be character.")
  }
- if (!is.character(x$models)) {
-    halt("The 'models' column should be character.")
+ if (!is.character(x$model)) {
+    halt("The 'model' column should be character.")
  }
  class(x) <- c("workflow_set", class(tibble::tibble()))
  x
@@ -172,7 +172,7 @@ cross_objects <- function(preproc, models) {
    tidyr::crossing(preproc, models) %>%
       dplyr::mutate(pp_nm = names(preproc), mod_nm = names(models)) %>%
       dplyr::mutate(wflow_id = paste(pp_nm, mod_nm, sep = "_")) %>%
-      dplyr::select(wflow_id, preproc, models)
+      dplyr::select(wflow_id, preproc, model = models)
 }
 
 fuse_objects <- function(preproc, models) {
@@ -182,7 +182,7 @@ fuse_objects <- function(preproc, models) {
    nms <-
       tibble::tibble(wflow_id = paste(names(preproc), names(models), sep = "_"))
 
-   tibble::tibble(preproc = preproc, models = models) %>%
+   tibble::tibble(preproc = preproc, model = models) %>%
       dplyr::bind_cols(nms)
 }
 

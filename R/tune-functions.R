@@ -88,7 +88,7 @@
 #'   cell_models %>%
 #'   dplyr::filter(wflow_id == "pca_knn")
 #' pca_knn_param <-
-#'   pca_knn_mod$objects[[1]] %>%
+#'   pca_knn_mod$object[[1]] %>%
 #'   parameters() %>%
 #'   update(num_comp = num_comp(c(0, 20)))
 #'
@@ -130,8 +130,8 @@ fn_loop <- function(object, .fn = "tune_grid", tune = TRUE,
                     which = NULL, options = NULL, seed = sample(1e5, 1),
                     verbose = FALSE, ...) {
    if (is.null(which)) {
-      has_tune <- purrr::map_lgl(object$objects, ~ nrow(tune::tune_args(.x)) > 0)
-      no_value <- purrr::map_lgl(object$results, ~ length(.x) == 0)
+      has_tune <- purrr::map_lgl(object$object, ~ nrow(tune::tune_args(.x)) > 0)
+      no_value <- purrr::map_lgl(object$result, ~ length(.x) == 0)
       if (tune) {
          which <- object$wflow_id[ has_tune & no_value]
       } else {
@@ -161,12 +161,12 @@ fn_loop <- function(object, .fn = "tune_grid", tune = TRUE,
       }
       cl <- rlang::call2(.fn,
                          .ns = "tune",
-                         object = object$objects[[obj]],
+                         object = object$object[[obj]],
                          !!!dots, !!!opt)
       withr::with_seed(seed[1],
-                       object$results[[obj]] <-
+                       object$result[[obj]] <-
                           try(rlang::eval_tidy(cl), silent = TRUE))
-      log_progress(verbose, object$wflow_id[[obj]], object$results[[obj]],
+      log_progress(verbose, object$wflow_id[[obj]], object$result[[obj]],
                    iter_chr[iter], n, .fn)
    }
    object

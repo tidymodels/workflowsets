@@ -19,7 +19,7 @@ autoplot.workflow_set <- function(object, rank_metric = NULL,
    if (which == "workflow_set") {
       p <- rank_plot(object, rank_metric = rank_metric, std_errs = std_errs)
    } else {
-      p <- autoplot(object$results[[which(object$wflow_id == which)]], ...)
+      p <- autoplot(object$result[[which(object$wflow_id == which)]], ...)
    }
    p
 }
