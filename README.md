@@ -59,20 +59,6 @@ we will build on:
 
 ``` r
 library(tidymodels)
-#> ── Attaching packages ────────────────────────────────────── tidymodels 0.1.2 ──
-#> ✓ broom     0.7.2          ✓ recipes   0.1.15    
-#> ✓ dials     0.0.9.9000     ✓ rsample   0.0.8     
-#> ✓ dplyr     1.0.2          ✓ tibble    3.0.4     
-#> ✓ ggplot2   3.3.2          ✓ tidyr     1.1.2     
-#> ✓ infer     0.5.3          ✓ tune      0.1.2     
-#> ✓ modeldata 0.1.0          ✓ workflows 0.2.1     
-#> ✓ parsnip   0.1.4.9000     ✓ yardstick 0.0.7     
-#> ✓ purrr     0.3.4
-#> ── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──
-#> x purrr::discard() masks scales::discard()
-#> x dplyr::filter()  masks stats::filter()
-#> x dplyr::lag()     masks stats::lag()
-#> x recipes::step()  masks stats::step()
 data(Chicago)
 
 base_recipe <- 
@@ -193,34 +179,7 @@ set.seed(123)
 chi_models <- 
    chi_models %>% 
    tune_grid(resamples = splits, grid = 10, metrics = metric_set(mae), verbose = TRUE)
-#> 
-#> Attaching package: 'rlang'
-#> The following objects are masked from 'package:purrr':
-#> 
-#>     %@%, as_function, flatten, flatten_chr, flatten_dbl, flatten_int,
-#>     flatten_lgl, flatten_raw, invoke, list_along, modify, prepend,
-#>     splice
-#> 
-#> Attaching package: 'vctrs'
-#> The following object is masked from 'package:tibble':
-#> 
-#>     data_frame
-#> The following object is masked from 'package:dplyr':
-#> 
-#>     data_frame
-#> Loading required package: Matrix
-#> 
-#> Attaching package: 'Matrix'
-#> The following objects are masked from 'package:tidyr':
-#> 
-#>     expand, pack, unpack
-#> Loaded glmnet 4.0-2
 #> ✓ 1 of 7 tuning:     simple_glmnet
-#> 
-#> Attaching package: 'rpart'
-#> The following object is masked from 'package:dials':
-#> 
-#>     prune
 #> ✓ 2 of 7 tuning:     simple_cart
 #> ✓ 3 of 7 tuning:     simple_knn
 #> ✓ 4 of 7 tuning:     filter_cart
@@ -249,7 +208,7 @@ The `autoplot()` method shows the rankings of the workflows:
 autoplot(chi_models)
 ```
 
-<img src="man/figures/README-plot-1.png" width="100%" />
+<img src="man/figures/README-plot-1.svg" width="100%" />
 
 We can determine how well each combination did by looking at the best
 results per workflow:

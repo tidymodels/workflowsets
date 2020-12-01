@@ -54,6 +54,17 @@ For example, the Chicago train ridership data has many numeric predictors that a
  
 The first two methods can be used with any model while the last option is only available for specific models. Let's create a basic recipe that we will build on: 
 
+
+```{r sshhh, include = FALSE}
+library(tidymodels)
+library(tbd)
+library(glmnet)
+library(rpart)
+library(vctrs)
+library(Matrix)
+library(rlang)
+theme_set(theme_bw())
+```
 ```{r recs}
 library(tidymodels)
 data(Chicago)
@@ -157,7 +168,7 @@ The `results` column contains the results of each call to `tune_grid()` for the 
 
 The `autoplot()` method shows the rankings of the workflows: 
 
-```{r plot}
+```{r plot, fig.height = 4, dev = "svg"}
 autoplot(chi_models)
 ```
 
