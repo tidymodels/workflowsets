@@ -138,17 +138,17 @@ chi_models <-
    )
 chi_models
 #> # A tibble: 9 x 5
-#>   wflow_id      preprocs models           objects    results   
-#>   <chr>         <chr>    <chr>            <list>     <list>    
-#> 1 simple_glmnet recipe   linear_reg       <workflow> <list [0]>
-#> 2 simple_cart   recipe   decision_tree    <workflow> <list [0]>
-#> 3 simple_knn    recipe   nearest_neighbor <workflow> <list [0]>
-#> 4 filter_glmnet recipe   linear_reg       <workflow> <list [0]>
-#> 5 filter_cart   recipe   decision_tree    <workflow> <list [0]>
-#> 6 filter_knn    recipe   nearest_neighbor <workflow> <list [0]>
-#> 7 pca_glmnet    recipe   linear_reg       <workflow> <list [0]>
-#> 8 pca_cart      recipe   decision_tree    <workflow> <list [0]>
-#> 9 pca_knn       recipe   nearest_neighbor <workflow> <list [0]>
+#>   wflow_id      preproc model            object     result    
+#>   <chr>         <chr>   <chr>            <list>     <list>    
+#> 1 simple_glmnet recipe  linear_reg       <workflow> <list [0]>
+#> 2 simple_cart   recipe  decision_tree    <workflow> <list [0]>
+#> 3 simple_knn    recipe  nearest_neighbor <workflow> <list [0]>
+#> 4 filter_glmnet recipe  linear_reg       <workflow> <list [0]>
+#> 5 filter_cart   recipe  decision_tree    <workflow> <list [0]>
+#> 6 filter_knn    recipe  nearest_neighbor <workflow> <list [0]>
+#> 7 pca_glmnet    recipe  linear_reg       <workflow> <list [0]>
+#> 8 pca_cart      recipe  decision_tree    <workflow> <list [0]>
+#> 9 pca_knn       recipe  nearest_neighbor <workflow> <list [0]>
 ```
 
 It doesn’t make sense to use PCA or a filter with a `glmnet` model. We
@@ -229,19 +229,27 @@ chi_models <-
 #> ✓ 7 of 7 tuning:     pca_knn
 chi_models
 #> # A tibble: 7 x 5
-#>   wflow_id      preprocs models           objects    results         
-#>   <chr>         <chr>    <chr>            <list>     <list>          
-#> 1 simple_glmnet recipe   linear_reg       <workflow> <tibble [7 × 4]>
-#> 2 simple_cart   recipe   decision_tree    <workflow> <tibble [7 × 4]>
-#> 3 simple_knn    recipe   nearest_neighbor <workflow> <tibble [7 × 4]>
-#> 4 filter_cart   recipe   decision_tree    <workflow> <tibble [7 × 4]>
-#> 5 filter_knn    recipe   nearest_neighbor <workflow> <tibble [7 × 4]>
-#> 6 pca_cart      recipe   decision_tree    <workflow> <tibble [7 × 4]>
-#> 7 pca_knn       recipe   nearest_neighbor <workflow> <tibble [7 × 4]>
+#>   wflow_id      preproc model            object     result          
+#>   <chr>         <chr>   <chr>            <list>     <list>          
+#> 1 simple_glmnet recipe  linear_reg       <workflow> <tibble [7 × 4]>
+#> 2 simple_cart   recipe  decision_tree    <workflow> <tibble [7 × 4]>
+#> 3 simple_knn    recipe  nearest_neighbor <workflow> <tibble [7 × 4]>
+#> 4 filter_cart   recipe  decision_tree    <workflow> <tibble [7 × 4]>
+#> 5 filter_knn    recipe  nearest_neighbor <workflow> <tibble [7 × 4]>
+#> 6 pca_cart      recipe  decision_tree    <workflow> <tibble [7 × 4]>
+#> 7 pca_knn       recipe  nearest_neighbor <workflow> <tibble [7 × 4]>
 ```
 
 The `results` column contains the results of each call to `tune_grid()`
 for the workflows.
+
+The `autoplot()` method shows the rankings of the workflows:
+
+``` r
+autoplot(chi_models)
+```
+
+<img src="man/figures/README-plot-1.png" width="100%" />
 
 We can determine how well each combination did by looking at the best
 results per workflow:

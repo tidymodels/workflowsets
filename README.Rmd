@@ -155,6 +155,12 @@ chi_models
 
 The `results` column contains the results of each call to `tune_grid()` for the workflows. 
 
+The `autoplot()` method shows the rankings of the workflows: 
+
+```{r plot}
+autoplot(chi_models)
+```
+
 We can determine how well each combination did by looking at the best results per workflow: 
 
 ```{r best}
