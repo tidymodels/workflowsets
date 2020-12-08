@@ -93,14 +93,15 @@ workflow_set <- function(preproc, models, cross = FALSE) {
          object  = unname(object),
          preproc = purrr::map_chr(object, preproc_type),
          model   = purrr::map_chr(object, model_type),
+         option  = purrr::map(1:nrow(res), ~ list()),
          result   = purrr::map(1:nrow(res), ~ list())
       ) %>%
-      dplyr::select(wflow_id, preproc, model, object, result)
+      dplyr::select(wflow_id, preproc, model, object, option, result)
    new_workflow_set(res)
 }
 
 new_workflow_set <- function(x) {
- req_cols <- c("wflow_id", "object", "preproc", "model", "result")
+ req_cols <- c("wflow_id", "object", "preproc", "model", "option", "result")
  if (!tibble::is_tibble(x)) {
     halt("The object should be a tibble.")
  }
@@ -116,6 +117,9 @@ new_workflow_set <- function(x) {
  }
  if (!is.list(x$result)) {
     halt("The 'result' column should be a list.")
+ }
+ if (!is.list(x$option)) {
+    halt("The 'option' column should be a list.")
  }
  if (!is.character(x$wflow_id)) {
     halt("The 'wflow_id' column should be character.")

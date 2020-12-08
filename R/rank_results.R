@@ -24,15 +24,17 @@ rank_results <- function(x, rank_metric = NULL) {
       ranked$mean <- -ranked$mean
    }
 
-   ranked <-
-      ranked %>%
-      dplyr::mutate(
-         rank = paste0(wflow_id, .config),
-         rank = factor(rank),
-         rank = stats::reorder(rank, mean),
-         rank = as.numeric(rank)
-      ) %>%
-      dplyr::select(wflow_id, .config, model, preprocessor, rank)
+   # ensure reproducible rankings when there are ties
+   withr::with_seed(
+      1,
+      {
+         ranked <-
+            ranked %>%
+            dplyr::mutate(rank = rank(mean, ties.method = "random")) %>%
+            dplyr::select(wflow_id, .config, model, preprocessor, rank)
+      }
+   )
+
    dplyr::full_join(results, ranked, by = c("wflow_id", ".config")) %>%
       dplyr::arrange(rank)
 

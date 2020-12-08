@@ -40,34 +40,32 @@ check_incompete <- function(x, fail = TRUE) {
 # TODO check for consistent resamples
 
 
-check_options <- function(which, opts, global) {
-   if (all(is.null(opts))) {
-      return(opts)
-   }
-   opt_nms <- names(opts)
-   if (length(opt_nms) == 0 | any(opt_nms == "") | any(is.na(opt_nms))) {
-      halt("'options' requires names for all elements.")
-   }
-   gbl_nms <- names(global)
-   match_names <- opt_nms %in% which
-   if (any(!match_names)) {
-      bad_names <- opt_nms[!match_names]
-      bad_names <- paste0("'", bad_names, "'", collapse = ", ")
-      halt("Most option names do not match the workflow IDs: ", bad_names)
-   }
+# if global in local, overwrite or fail?
 
-   num_tasks <- length(which)
-   all_nms <- purrr::map(opts, names)
-   all_nms <- unlist(all_nms)
-   all_nms <- unique(all_nms)
-
-   dup_opt_nms <- all_nms %in% gbl_nms
-
-   if (any(dup_opt_nms)) {
-      dup_opt_nms <- all_nms[dup_opt_nms]
-      dup_opt_nms <- paste0("'", dup_opt_nms, "'", collapse = ", ")
-      halt("Some options are common to `...` and 'options': ", dup_opt_nms)
+common_options <- function(model, global) {
+   old_names <- names(model)
+   new_names <- names(global)
+   common_names <- intersect(old_names, new_names)
+   if (length(common_names) > 0) {
+      res <- paste0("'", common_names, "'", collapse = ", ")
+   } else {
+      res <- ""
    }
-   opts
+   res
 }
 
+check_options <- function(model, id, global, action = "fail") {
+   res <- purrr::map_chr(model, common_options, global)
+   flag <- nchar(res) > 0
+   if (any(flag)) {
+      msg <- "There are existing options that are being modified\n"
+      msg <- paste0(msg, paste0("\t", id[flag], ": ", res[flag], collapse = "\n"))
+      if (action == "fail") {
+         halt(msg)
+      }
+      if (action == "warn") {
+         rlang::warn(msg)
+      }
+   }
+   invisible(NULL)
+}
