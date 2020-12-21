@@ -196,8 +196,8 @@ fuse_objects <- function(preproc, models) {
 # TODO select_best methods (req tune changes)
 
 #' @export
-print.workflow_set <- function(x, ...) {
-   cat("# A workflow set\n")
-   print(tibble::as_tibble(x), ...)
-   invisible(x)
+tbl_sum.workflow_set <- function(x) {
+   orig <- NextMethod()
+   c("A workflow set/tibble" = unname(orig))
 }
+
