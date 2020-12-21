@@ -15,9 +15,9 @@ workflow_map(
 \arguments{
 \item{object}{A workflow set.}
 
-\item{fn}{The function to run. Acceptable values are: \code{tune::tune_grid()},
-\code{tune::tune_bayes()}, \code{tune::fit_resamples()}, \code{finetune::tune_race_anova()},
-\code{finetune::tune_race_win_loss()}, and \code{finetune::tune_sim_anneal()}.}
+\item{fn}{The function to run. Acceptable values are: \code{\link[tune:tune_grid]{tune::tune_grid()}},
+\code{\link[tune:tune_bayes]{tune::tune_bayes()}}, \code{\link[tune:fit_resamples]{tune::fit_resamples()}}, \code{\link[finetune:tune_race_anova]{finetune::tune_race_anova()}},
+\code{\link[finetune:tune_race_win_loss]{finetune::tune_race_win_loss()}}, or \code{\link[finetune:tune_sim_anneal]{finetune::tune_sim_anneal()}}.}
 
 \item{verbose}{A logical for logging progress.}
 
@@ -40,4 +40,15 @@ column's values and the new options are added to the \code{options} column.
 
 Any failures in execution result in the corresponding row of \code{results} to
 contain a \code{try-error} object.
+}
+\examples{
+example("workflow_set", run.donttest = FALSE)
+
+cell_fits <-
+   cell_models_by_group \%>\%
+   workflow_map("fit_resamples",
+   resamples = val_set,
+    metrics = metric_set(roc_auc))
+
+rank_results(cell_fits)
 }

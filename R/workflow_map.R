@@ -4,9 +4,9 @@
 #' set. The various `tune_*()` functions can be used as well as
 #' `fit_resamples()`.
 #' @param object A workflow set.
-#' @param fn The function to run. Acceptable values are: `tune::tune_grid()`,
-#' `tune::tune_bayes()`, `tune::fit_resamples()`, `finetune::tune_race_anova()`,
-#'  `finetune::tune_race_win_loss()`, and `finetune::tune_sim_anneal()`.
+#' @param fn The function to run. Acceptable values are: [tune::tune_grid()],
+#' [tune::tune_bayes()], [tune::fit_resamples()], [finetune::tune_race_anova()],
+#' [finetune::tune_race_win_loss()], or [finetune::tune_sim_anneal()].
 #' @param verbose A logical for logging progress.
 #' @param seed A single integer that is set prior to each function execution.
 #' @param ... Options to pass to the modeling function. See details below.
@@ -19,6 +19,16 @@
 #'
 #' Any failures in execution result in the corresponding row of `results` to
 #' contain a `try-error` object.
+#' @examples
+#' example("workflow_set", run.donttest = FALSE)
+#'
+#' cell_fits <-
+#'    cell_models_by_group %>%
+#'    workflow_map("fit_resamples",
+#'                 resamples = val_set,
+#'                 metrics = metric_set(roc_auc))
+#'
+#' rank_results(cell_fits)
 #' @export
 workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
                          seed = sample.int(10^4, 1), ...) {
@@ -45,13 +55,20 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
    # new fingerprinting option.
 
    for (iter in iter_seq) {
+      log_progress(verbose, object$wflow_id[[iter]], NULL, iter_chr[iter], n, fn)
+
+      .fn <- check_fn(fn, object$object[[iter]])
+      .fn_info <- dplyr::filter(allowed_fn, func == .fn)
+
       opt <- object$option[[iter]]
       cl <-
-         rlang::call2(fn, .ns = fn_info$pkg, object = object$object[[iter]], !!!opt)
-      withr::with_seed(seed[1],
-                       object$result[[iter]] <-
-                          try(rlang::eval_tidy(cl), silent = TRUE))
-      tbd:::log_progress(verbose, object$wflow_id[[iter]], object$result[[iter]],
+         rlang::call2(.fn, .ns = .fn_info$pkg, object = object$object[[iter]], !!!opt)
+      withr::with_seed(
+         seed[1],
+         object$result[[iter]] <- try(rlang::eval_tidy(cl), silent = TRUE)
+      )
+
+      log_progress(verbose, object$wflow_id[[iter]], object$result[[iter]],
                    iter_chr[iter], n, fn)
    }
    object
