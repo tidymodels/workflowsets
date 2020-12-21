@@ -117,7 +117,7 @@ allowed_obj_types <- c("iteration_results", "tune_results", "resample_results",
                        "tune_race")
 
 check_result_types <- function(x) {
-   right_type <- purrr:::map_lgl(x, ~ inherits(.x, allowed_obj_types))
+   right_type <- purrr::map_lgl(x, ~ inherits(.x, allowed_obj_types))
    if (any(!right_type)) {
       bad <- names(right_type)[!right_type]
       msg <- "Some objects are not tuning or resampling results:"
