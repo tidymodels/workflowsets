@@ -30,6 +30,7 @@ library(parsnip)
 library(dplyr)
 library(rsample)
 library(tune)
+library(yardstick)
 
 # ------------------------------------------------------------------------------
 

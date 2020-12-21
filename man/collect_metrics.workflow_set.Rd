@@ -77,8 +77,7 @@ cell_models <- workflow_set(preproc, models, cross = TRUE)
 \donttest{
 cell_models <-
    cell_models \%>\%
-   tune_grid(resamples = val_set, grid = 10, metrics = metric_set(roc_auc)) \%>\%
-   fit_resamples(resamples = val_set, metrics = metric_set(roc_auc))
+   workflow_map(resamples = val_set, grid = 10, metrics = metric_set(roc_auc))
 cell_models
 collect_metrics(cell_models)
 }

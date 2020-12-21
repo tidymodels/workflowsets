@@ -4,17 +4,21 @@
 \alias{rank_results}
 \title{Rank the results by a metric}
 \usage{
-rank_results(x, rank_metric = NULL)
+rank_results(x, rank_metric = NULL, select_best = FALSE)
 }
 \arguments{
 \item{x}{A workflow set that has all results.}
 
 \item{rank_metric}{A character string for a metric.}
+
+\item{select_best}{A logical; should the results only contain the numerically
+best submodel per workflow.}
 }
 \description{
 Rank the results by a metric
 }
 \examples{
 rank_results(cell_models)
+rank_results(cell_models, select_best = TRUE)
 rank_results(cell_models, rank_metric = "accuracy")
 }

@@ -15,6 +15,7 @@
 #' library(dplyr)
 #' library(rsample)
 #' library(tune)
+#' library(yardstick)
 #'
 #' # ------------------------------------------------------------------------------
 #'
@@ -191,12 +192,8 @@ fuse_objects <- function(preproc, models) {
 }
 
 
-# TODO dplyr/vctrs class retention rules
-#  OK: removing rows, row binding, sorting
-# BAD: removing required columns, altering types of required columns
 # TODO api for correlation analysis?
 # TODO select_best methods (req tune changes)
-# TODO better way of passing in grids and/or param_sets
 
 #' @export
 print.workflow_set <- function(x, ...) {

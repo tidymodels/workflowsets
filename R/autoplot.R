@@ -7,27 +7,42 @@
 #' `"workflow_set"` is used, the results of each model (and sub-model) are ordered
 #' and plotted. Alternatively, a value of the workflow set's `wflow_id` can be
 #' given and the `autoplot()` method is executed on that workflow's results.
+#' @param select_best A logical; should the results only contain the numerically
+#' best submodel per workflow.
+#' @param metric A character vector for which metrics (apart from `rank_metric`)
+#' to be included in the visualization.
 #' @param std_errs The number of standard errors to plot (if the standard error
 #' exists).
 #' @param ... Other options to pass to `autoplot()`.
 #' @examples
 #' autoplot(chi_models)
+#' autoplot(chi_models, select_best = TRUE)
 #' autoplot(chi_models, which = "pca_knn")
 #' @export
-autoplot.workflow_set <- function(object, rank_metric = NULL,
-                                  which = "workflow_set", std_errs = 1, ...) {
+autoplot.workflow_set <- function(object, rank_metric = NULL, metric = NULL,
+                                  which = "workflow_set",
+                                  select_best = FALSE,
+                                  std_errs = qnorm(0.95), ...) {
    if (which == "workflow_set") {
-      p <- rank_plot(object, rank_metric = rank_metric, std_errs = std_errs)
+      p <- rank_plot(object, rank_metric = rank_metric, metric = metric,
+                     select_best = select_best, std_errs = std_errs)
    } else {
-      p <- autoplot(object$result[[which(object$wflow_id == which)]], ...)
+      p <- autoplot(object$result[[which(object$wflow_id == which)]], metric = metric, ...)
    }
    p
 }
 
-rank_plot <- function(object, rank_metric = NULL, std_errs = 1, ...) {
+rank_plot <- function(object, rank_metric = NULL, metric = NULL,
+                      select_best = FALSE, std_errs = 1, ...) {
    metric_info <- pick_metric(object, rank_metric)
    metrics <- collate_metrics(object)
-   res <- rank_results(object, rank_metric = rank_metric)
+   res <- rank_results(object, rank_metric = rank_metric, select_best = select_best)
+
+   if (!is.null(metric)) {
+      keep_metrics <- unique(c(rank_metric, metric))
+      res <- dplyr::filter(res, .metric %in% keep_metrics)
+   }
+
    num_metrics <- length(unique(res$.metric))
    has_std_error <- !all(is.na(res$std_err))
 
@@ -48,7 +63,11 @@ rank_plot <- function(object, rank_metric = NULL, std_errs = 1, ...) {
    if (has_std_error) {
       p <-
          p +
-         geom_errorbar(aes(ymin = mean - std_errs * std_err, ymax = mean + std_errs * std_err))
+         geom_errorbar(
+            aes(ymin = mean - std_errs * std_err,
+                ymax = mean + std_errs * std_err),
+            width = diff(range(res$rank))/75
+         )
    }
 
    p

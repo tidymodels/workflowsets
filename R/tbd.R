@@ -1,4 +1,5 @@
 #' @import ggplot2
+#' @importFrom stats qnorm
 
 utils::globalVariables(
    c(".config", ".estimator", ".metric", "info", "metric", "mod_nm",

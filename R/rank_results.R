@@ -2,11 +2,14 @@
 #'
 #' @param x A workflow set that has all results.
 #' @param rank_metric A character string for a metric.
+#' @param select_best A logical; should the results only contain the numerically
+#' best submodel per workflow.
 #' @examples
 #' rank_results(cell_models)
+#' rank_results(cell_models, select_best = TRUE)
 #' rank_results(cell_models, rank_metric = "accuracy")
 #' @export
-rank_results <- function(x, rank_metric = NULL) {
+rank_results <- function(x, rank_metric = NULL, select_best = FALSE) {
    metric_info <- pick_metric(x, rank_metric)
    metric <- metric_info$metric
    direction <- metric_info$direction
@@ -43,6 +46,15 @@ rank_results <- function(x, rank_metric = NULL) {
       ranked$mean <- -ranked$mean
    }
 
+   if (select_best) {
+      best_by_wflow <-
+         dplyr::group_by(ranked, wflow_id) %>%
+         dplyr::slice_min(mean) %>%
+         dplyr::ungroup() %>%
+         dplyr::select(wflow_id, .config)
+      ranked <- dplyr::inner_join(ranked, best_by_wflow, by = c("wflow_id", ".config"))
+   }
+
    # ensure reproducible rankings when there are ties
    withr::with_seed(
       1,
@@ -54,7 +66,7 @@ rank_results <- function(x, rank_metric = NULL) {
       }
    )
 
-   dplyr::full_join(results, ranked, by = c("wflow_id", ".config")) %>%
+   dplyr::inner_join(results, ranked, by = c("wflow_id", ".config")) %>%
       dplyr::arrange(rank)
 
 }
@@ -69,7 +81,7 @@ get_model_type <- function(x) {
 }
 
 get_num_resamples <- function(x) {
-   purrr::map_dfr(x$splits, labels) %>%
+   purrr::map_dfr(x$splits, ~ .x$id) %>%
       dplyr::distinct() %>%
       nrow()
 }
