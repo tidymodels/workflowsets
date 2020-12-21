@@ -49,7 +49,7 @@ rank_results <- function(x, rank_metric = NULL, select_best = FALSE) {
    if (select_best) {
       best_by_wflow <-
          dplyr::group_by(ranked, wflow_id) %>%
-         dplyr::slice_min(mean) %>%
+         dplyr::slice_min(mean, with_ties = FALSE) %>%
          dplyr::ungroup() %>%
          dplyr::select(wflow_id, .config)
       ranked <- dplyr::inner_join(ranked, best_by_wflow, by = c("wflow_id", ".config"))
