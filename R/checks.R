@@ -81,3 +81,48 @@ check_fn <- function(fn, x) {
    }
    fn
 }
+
+
+
+check_names <- function(x) {
+   nms <- names(x)
+   if (any(nms == "")) {
+      bad <- which(nms == "")
+      msg <- "Objects in these positions are not named:"
+      msg <- paste(msg, paste0(bad, collapse = ", "))
+      halt(msg)
+   }
+   xtab <- table(nms)
+   if (any(xtab > 1)) {
+      msg <- "The object names should be unique:"
+      msg <- paste(msg, paste0("'", names(xtab)[xtab > 1], "'", collapse = ", "))
+      halt(msg)
+   }
+   invisible(NULL)
+}
+
+check_for_workflow <- function(x) {
+   no_wflow <- purrr::map_lgl(x, ~ !inherits(.x, "workflow"))
+   if (any(no_wflow)) {
+      bad <- names(no_wflow)[no_wflow]
+      msg <- "Some objects do not have workflows:"
+      msg <- paste(msg, paste0("'", bad, "'", collapse = ", "))
+      msg <- paste0(msg, ". Use the control option `save_workflow` and re-run.")
+      halt(msg)
+   }
+   invisible(NULL)
+}
+
+allowed_obj_types <- c("iteration_results", "tune_results", "resample_results",
+                       "tune_race")
+
+check_result_types <- function(x) {
+   right_type <- purrr:::map_lgl(x, ~ inherits(.x, allowed_obj_types))
+   if (any(!right_type)) {
+      bad <- names(right_type)[!right_type]
+      msg <- "Some objects are not tuning or resampling results:"
+      msg <- paste(msg, paste0("'", bad, "'", collapse = ", "))
+      halt(msg)
+   }
+   invisible(NULL)
+}

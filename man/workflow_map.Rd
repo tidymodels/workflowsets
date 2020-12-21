@@ -47,8 +47,8 @@ example("workflow_set", run.donttest = FALSE)
 cell_fits <-
    cell_models_by_group \%>\%
    workflow_map("fit_resamples",
-   resamples = val_set,
-    metrics = metric_set(roc_auc))
+                resamples = val_set,
+                metrics = metric_set(roc_auc))
 
 rank_results(cell_fits)
 }
