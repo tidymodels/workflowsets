@@ -198,3 +198,9 @@ fuse_objects <- function(preproc, models) {
 # TODO select_best methods (req tune changes)
 # TODO better way of passing in grids and/or param_sets
 
+#' @export
+print.workflow_set <- function(x, ...) {
+   cat("# A workflow set\n")
+   print(tibble::as_tibble(x), ...)
+   invisible(x)
+}

@@ -123,18 +123,18 @@ chi_models <-
       cross = TRUE
    )
 chi_models
-#> # A tibble: 9 x 5
-#>   wflow_id      preproc model            object     result    
-#>   <chr>         <chr>   <chr>            <list>     <list>    
-#> 1 simple_glmnet recipe  linear_reg       <workflow> <list [0]>
-#> 2 simple_cart   recipe  decision_tree    <workflow> <list [0]>
-#> 3 simple_knn    recipe  nearest_neighbor <workflow> <list [0]>
-#> 4 filter_glmnet recipe  linear_reg       <workflow> <list [0]>
-#> 5 filter_cart   recipe  decision_tree    <workflow> <list [0]>
-#> 6 filter_knn    recipe  nearest_neighbor <workflow> <list [0]>
-#> 7 pca_glmnet    recipe  linear_reg       <workflow> <list [0]>
-#> 8 pca_cart      recipe  decision_tree    <workflow> <list [0]>
-#> 9 pca_knn       recipe  nearest_neighbor <workflow> <list [0]>
+#> # A tibble: 9 x 6
+#>   wflow_id      preproc model            object     option     result    
+#>   <chr>         <chr>   <chr>            <list>     <list>     <list>    
+#> 1 simple_glmnet recipe  linear_reg       <workflow> <list [0]> <list [0]>
+#> 2 simple_cart   recipe  decision_tree    <workflow> <list [0]> <list [0]>
+#> 3 simple_knn    recipe  nearest_neighbor <workflow> <list [0]> <list [0]>
+#> 4 filter_glmnet recipe  linear_reg       <workflow> <list [0]> <list [0]>
+#> 5 filter_cart   recipe  decision_tree    <workflow> <list [0]> <list [0]>
+#> 6 filter_knn    recipe  nearest_neighbor <workflow> <list [0]> <list [0]>
+#> 7 pca_glmnet    recipe  linear_reg       <workflow> <list [0]> <list [0]>
+#> 8 pca_cart      recipe  decision_tree    <workflow> <list [0]> <list [0]>
+#> 9 pca_knn       recipe  nearest_neighbor <workflow> <list [0]> <list [0]>
 ```
 
 It doesn’t make sense to use PCA or a filter with a `glmnet` model. We
@@ -172,13 +172,16 @@ splits
 #> 7 <split [5.5K/28]> Slice7
 ```
 
-We’ll use simple grid search for these models:
+We’ll use simple grid search for these models by running
+`workflow_map()`. This will execute a resampling or tuning function over
+the workflows in the `object` column:
 
 ``` r
 set.seed(123)
 chi_models <- 
    chi_models %>% 
-   tune_grid(resamples = splits, grid = 10, metrics = metric_set(mae), verbose = TRUE)
+   workflow_map("tune_grid", resamples = splits, grid = 10, 
+                metrics = metric_set(mae), verbose = TRUE)
 #> ✓ 1 of 7 tuning:     simple_glmnet
 #> ✓ 2 of 7 tuning:     simple_cart
 #> ✓ 3 of 7 tuning:     simple_knn
@@ -187,16 +190,16 @@ chi_models <-
 #> ✓ 6 of 7 tuning:     pca_cart
 #> ✓ 7 of 7 tuning:     pca_knn
 chi_models
-#> # A tibble: 7 x 5
-#>   wflow_id      preproc model            object     result          
-#>   <chr>         <chr>   <chr>            <list>     <list>          
-#> 1 simple_glmnet recipe  linear_reg       <workflow> <tibble [7 × 4]>
-#> 2 simple_cart   recipe  decision_tree    <workflow> <tibble [7 × 4]>
-#> 3 simple_knn    recipe  nearest_neighbor <workflow> <tibble [7 × 4]>
-#> 4 filter_cart   recipe  decision_tree    <workflow> <tibble [7 × 4]>
-#> 5 filter_knn    recipe  nearest_neighbor <workflow> <tibble [7 × 4]>
-#> 6 pca_cart      recipe  decision_tree    <workflow> <tibble [7 × 4]>
-#> 7 pca_knn       recipe  nearest_neighbor <workflow> <tibble [7 × 4]>
+#> # A tibble: 7 x 6
+#>   wflow_id      preproc model           object     option         result        
+#>   <chr>         <chr>   <chr>           <list>     <list>         <list>        
+#> 1 simple_glmnet recipe  linear_reg      <workflow> <named list [… <tibble [7 × …
+#> 2 simple_cart   recipe  decision_tree   <workflow> <named list [… <tibble [7 × …
+#> 3 simple_knn    recipe  nearest_neighb… <workflow> <named list [… <tibble [7 × …
+#> 4 filter_cart   recipe  decision_tree   <workflow> <named list [… <tibble [7 × …
+#> 5 filter_knn    recipe  nearest_neighb… <workflow> <named list [… <tibble [7 × …
+#> 6 pca_cart      recipe  decision_tree   <workflow> <named list [… <tibble [7 × …
+#> 7 pca_knn       recipe  nearest_neighb… <workflow> <named list [… <tibble [7 × …
 ```
 
 The `results` column contains the results of each call to `tune_grid()`
@@ -227,11 +230,11 @@ best_by_wflow
 #> # A tibble: 7 x 5
 #>   wflow_id      .config                mean     n std_err
 #>   <chr>         <chr>                 <dbl> <int>   <dbl>
-#> 1 simple_cart   Preprocessor1_Model09  1.08     7  0.0678
-#> 2 pca_cart      Preprocessor1_Model1   1.14     7  0.115 
-#> 3 filter_cart   Preprocessor06_Model1  1.15     7  0.117 
-#> 4 simple_glmnet Preprocessor1_Model09  1.24     7  0.0912
-#> 5 simple_knn    Preprocessor1_Model09  1.67     7  0.206 
-#> 6 pca_knn       Preprocessor1_Model2   2.06     7  0.269 
-#> 7 filter_knn    Preprocessor07_Model1  2.30     7  0.219
+#> 1 simple_cart   Preprocessor1_Model04  1.07     7  0.0704
+#> 2 pca_cart      Preprocessor3_Model2   1.12     7  0.107 
+#> 3 filter_cart   Preprocessor02_Model1  1.15     7  0.117 
+#> 4 simple_glmnet Preprocessor1_Model09  1.24     7  0.0916
+#> 5 simple_knn    Preprocessor1_Model07  1.66     7  0.195 
+#> 6 filter_knn    Preprocessor07_Model1  1.76     7  0.195 
+#> 7 pca_knn       Preprocessor1_Model2   2.19     7  0.273
 ```

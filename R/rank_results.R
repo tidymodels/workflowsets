@@ -12,13 +12,32 @@ rank_results <- function(x, rank_metric = NULL) {
    direction <- metric_info$direction
 
    results <- collect_metrics(x) %>%
-      dplyr::select(wflow_id, .config, .metric, mean, std_err)
+      dplyr::select(wflow_id, .config, .metric, mean, std_err, n)
    types <- x %>%
-      dplyr::mutate(model = get_model_type(x), preprocessor = get_preproc_type(x)) %>%
-      dplyr::select(wflow_id, model, preprocessor)
+      dplyr::mutate(
+         model = get_model_type(x),
+         preprocessor = get_preproc_type(x),
+         is_race = purrr::map_lgl(result, ~ inherits(.x, "tune_race")),
+         num_rs = purrr::map_int(result, get_num_resamples)
+         ) %>%
+      dplyr::select(wflow_id, model, preprocessor, is_race, num_rs)
+
    ranked <-
       dplyr::full_join(results, types, by = "wflow_id") %>%
       dplyr::filter(.metric == metric)
+
+   if (any(ranked$is_race)) {
+      # remove any racing results with less resamples than the total number
+      rm_rows <-
+         ranked %>%
+         dplyr::filter(is_race & (num_rs > n)) %>%
+         dplyr::select(wflow_id, .config) %>%
+         dplyr::distinct()
+      if (nrow(rm_rows) > 0) {
+         ranked <- dplyr::anti_join(ranked, rm_rows, by = c("wflow_id", ".config"))
+         results <- dplyr::anti_join(results, rm_rows, by = c("wflow_id", ".config"))
+      }
+   }
 
    if (direction == "maximize") {
       ranked$mean <- -ranked$mean
@@ -49,3 +68,8 @@ get_model_type <- function(x) {
    purrr::map_chr(x$object, model_type)
 }
 
+get_num_resamples <- function(x) {
+   purrr::map_dfr(x$splits, labels) %>%
+      dplyr::distinct() %>%
+      nrow()
+}

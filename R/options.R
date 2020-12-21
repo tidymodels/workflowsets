@@ -27,8 +27,8 @@ add_options <- function(x, ..., strict = FALSE) {
    } else {
       act <- "warn"
    }
-   check_options(x$options, x$wflow_id, dots, action = act)
-   x <- dplyr::mutate(x, options = purrr::map(option, append_options, dots))
+   check_options(x$option, x$wflow_id, dots, action = act)
+   x <- dplyr::mutate(x, option = purrr::map(option, append_options, dots))
    x
 }
 
@@ -41,7 +41,7 @@ remove_options <- function(x, ...) {
    }
    dots <- purrr::map_chr(dots, rlang::expr_text)
 
-   x <- dplyr::mutate(x, options = purrr::map(options, rm_elem, dots))
+   x <- dplyr::mutate(x, option = purrr::map(option, rm_elem, dots))
    x
 }
 

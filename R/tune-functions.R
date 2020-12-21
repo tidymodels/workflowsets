@@ -177,18 +177,25 @@ log_progress <- function(verbose, id, res, iter, n, .fn) {
    cols <- tune::get_tune_colors()
    event <- ifelse(grepl("tune", .fn), "tuning:    ", "resampling:")
    msg <- paste0(iter, " of ", n, " ", event, " ", id)
-   if (inherits(res, "try-error")) {
+   if (is.null(res)) {
       message(
-         cols$symbol$danger(cli::symbol$cross), " ",
-         cols$message$info(msg),
-         cols$message$danger(" failed with "),
-         cols$message$danger(as.character(res))
-      )
-   } else {
-      message(
-         cols$symbol$success(cli::symbol$tick), " ",
+         cols$symbol$info(cli::symbol$info), " ",
          cols$message$info(msg)
       )
+   } else {
+      if (inherits(res, "try-error")) {
+         message(
+            cols$symbol$danger(cli::symbol$cross), " ",
+            cols$message$info(msg),
+            cols$message$danger(" failed with "),
+            cols$message$danger(as.character(res))
+         )
+      } else {
+         message(
+            cols$symbol$success(cli::symbol$tick), " ",
+            cols$message$info(msg)
+         )
+      }
    }
 
    invisible(NULL)

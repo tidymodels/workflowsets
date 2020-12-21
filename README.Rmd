@@ -154,13 +154,14 @@ splits <-
 splits
 ```
 
-We'll use simple grid search for these models: 
+We'll use simple grid search for these models by running `workflow_map()`. This will execute a resampling or tuning function over the workflows in the `object` column: 
 
 ```{r tune}
 set.seed(123)
 chi_models <- 
    chi_models %>% 
-   tune_grid(resamples = splits, grid = 10, metrics = metric_set(mae), verbose = TRUE)
+   workflow_map("tune_grid", resamples = splits, grid = 10, 
+                metrics = metric_set(mae), verbose = TRUE)
 chi_models
 ```
 
