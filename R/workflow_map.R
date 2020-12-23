@@ -40,6 +40,12 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
       halt(msg)
    }
 
+   on.exit({
+      cols <- tune::get_tune_colors()
+      message(cols$symbol$danger("Execution stepped; returning current results"))
+      return(new_workflow_set(object))
+      })
+
    dots <- rlang::list2(...)
    # check and add options to options column
    if (length(dots) > 0) {
@@ -73,7 +79,7 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
       log_progress(verbose, object$wflow_id[[iter]], object$result[[iter]],
                    iter_chr[iter], n, fn, run_time)
    }
-   object
+   new_workflow_set(object)
 }
 
 
