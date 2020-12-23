@@ -55,21 +55,23 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
    # new fingerprinting option.
 
    for (iter in iter_seq) {
-      log_progress(verbose, object$wflow_id[[iter]], NULL, iter_chr[iter], n, fn)
+      log_progress(verbose, object$wflow_id[[iter]], NULL, iter_chr[iter],
+                   n, fn, NULL)
 
       .fn <- check_fn(fn, object$object[[iter]])
       .fn_info <- dplyr::filter(allowed_fn, func == .fn)
 
       opt <- object$option[[iter]]
-      cl <-
-         rlang::call2(.fn, .ns = .fn_info$pkg, object = object$object[[iter]], !!!opt)
-      withr::with_seed(
-         seed[1],
-         object$result[[iter]] <- try(rlang::eval_tidy(cl), silent = TRUE)
-      )
-
+      run_time <- system.time({
+         cl <-
+            rlang::call2(.fn, .ns = .fn_info$pkg, object = object$object[[iter]], !!!opt)
+         withr::with_seed(
+            seed[1],
+            object$result[[iter]] <- try(rlang::eval_tidy(cl), silent = TRUE)
+         )
+      })
       log_progress(verbose, object$wflow_id[[iter]], object$result[[iter]],
-                   iter_chr[iter], n, fn)
+                   iter_chr[iter], n, fn, run_time)
    }
    object
 }

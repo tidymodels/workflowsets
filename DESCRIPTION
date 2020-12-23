@@ -27,7 +27,8 @@ Imports:
     workflows,
     cli,
     ggplot2,
-    stats
+    stats,
+    prettyunits
 Language: en-US
 Suggests: 
     spelling,

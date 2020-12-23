@@ -170,7 +170,7 @@ fn_loop <- function(object, .fn = "tune_grid", tune = TRUE,
    object
 }
 
-log_progress <- function(verbose, id, res, iter, n, .fn) {
+log_progress <- function(verbose, id, res, iter, n, .fn, elapsed) {
    if (!verbose) {
       return(invisible(NULL))
    }
@@ -191,9 +191,11 @@ log_progress <- function(verbose, id, res, iter, n, .fn) {
             cols$message$danger(as.character(res))
          )
       } else {
+         time_msg <- paste0(" (", prettyunits::pretty_sec(elapsed[3]), ")")
          message(
             cols$symbol$success(cli::symbol$tick), " ",
-            cols$message$info(msg)
+            cols$message$info(msg),
+            cols$message$info(time_msg)
          )
       }
    }
