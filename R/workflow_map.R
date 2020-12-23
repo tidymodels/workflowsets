@@ -79,7 +79,7 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
       log_progress(verbose, object$wflow_id[[iter]], object$result[[iter]],
                    iter_chr[iter], n, fn, run_time)
    }
-   new_workflow_set(object)
+   on.exit(return(new_workflow_set(object)))
 }
 
 
