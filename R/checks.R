@@ -73,7 +73,7 @@ check_options <- function(model, id, global, action = "fail") {
 
 check_fn <- function(fn, x) {
    has_tune <- nrow(tune::tune_args(x)) > 0
-   if (!has_tune) {
+   if (!has_tune & fn != "fit_resamples") {
       fn <- "fit_resamples"
       cols <- tune::get_tune_colors()
       msg <- "No tuning parameters. `fit_resamples()` will be attempted"
