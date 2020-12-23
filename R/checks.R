@@ -70,6 +70,25 @@ check_options <- function(model, id, global, action = "fail") {
    invisible(NULL)
 }
 
+check_for_parallel <- function(overall, indiv) {
+   if (any(names(indiv) == "control")) {
+      if (any(names(indiv$control) == "allow_par")) {
+         if (indiv$control$alllow_par & overall) {
+            msg <-
+               paste(
+                  "The control option for this workflow has `allow_par = TRUE`.",
+                  "This conflicts with the option given by `workflow_map()`.",
+                  "Setting `allow_par = FALSE`."
+               )
+            cols <- tune::get_tune_colors()
+            cols$message$info(msg)
+            indiv$control$alllow_par <- FALSE
+         }
+      }
+   }
+   indiv
+}
+
 
 check_fn <- function(fn, x) {
    has_tune <- nrow(tune::tune_args(x)) > 0
