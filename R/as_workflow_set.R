@@ -1,14 +1,15 @@
 #' Save tuning or resampling results as a workflow set
 #'
-#' @param object A named list of results. Names should be unique and the
-#' elements in `object` should have at least one of the following classes:
+#' @param ... One or more named objects. Names should be unique and the
+#' objects should have at least one of the following classes:
 #' `iteration_results`, `tune_results`, `resample_results`, or `tune_race`. Each
 #' element should also contain the original workflow (accomplished using the
 #' `save_workflow` option in the control function).
 #' @return A workflow set. Note that the `option` column will not reflect the
 #' options that were used to create each object.
 #' @export
-as_workflow_set <- function(object) {
+as_workflow_set <- function(...) {
+   object <- rlang::list2(...)
    wflows <- purrr::map(object, tune::.get_tune_workflow)
    check_names(wflows)
    check_for_workflow(wflows)
