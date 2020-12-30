@@ -8,6 +8,7 @@
 \alias{tune_bayes}
 \alias{fit_resamples}
 \alias{collect_metrics}
+\alias{collect_predictions}
 \alias{\%>\%}
 \alias{autoplot}
 \title{Objects exported from other packages}
@@ -23,6 +24,6 @@ below to see their documentation.
 
   \item{tibble}{\code{\link[tibble]{tbl_sum}}}
 
-  \item{tune}{\code{\link[tune:collect_predictions]{collect_metrics}}, \code{\link[tune]{fit_resamples}}, \code{\link[tune]{tune_bayes}}, \code{\link[tune]{tune_grid}}}
+  \item{tune}{\code{\link[tune:collect_predictions]{collect_metrics}}, \code{\link[tune]{collect_predictions}}, \code{\link[tune]{fit_resamples}}, \code{\link[tune]{tune_bayes}}, \code{\link[tune]{tune_grid}}}
 }}
 

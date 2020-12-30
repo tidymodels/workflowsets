@@ -2,9 +2,19 @@
 % Please edit documentation in R/collect.R
 \name{collect_metrics.workflow_set}
 \alias{collect_metrics.workflow_set}
+\alias{collect_predictions.workflow_set}
 \title{Obtain and format results produced by tuning functions for workflow sets}
 \usage{
 \method{collect_metrics}{workflow_set}(x, summarize = TRUE, ...)
+
+\method{collect_predictions}{workflow_set}(
+  x,
+  summarize = TRUE,
+  parameters = NULL,
+  select_best = FALSE,
+  metric = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{A \code{workflow_set} object where all workflows have been evaluated.}
@@ -14,6 +24,17 @@ summarized via the mean (over resamples) or the raw performance values (per
 resample) should be returned along with the resampling identifiers.}
 
 \item{...}{Not currently used.}
+
+\item{parameters}{An optional tibble of tuning parameter values that can be
+used to filter the predicted values before processing. This tibble should
+only have columns for each tuning parameter identifier (e.g. \code{"my_param"}
+if \code{tune("my_param")} was used).}
+
+\item{select_best}{A single logical for whether the numerically best results
+are retained. If \code{TRUE}, the \code{parameters} argument is ignored.}
+
+\item{metric}{A character string for the metric that is used for
+\code{select_best}.}
 }
 \value{
 A tibble.

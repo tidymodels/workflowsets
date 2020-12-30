@@ -66,9 +66,8 @@ collate_metrics <- function(x) {
 }
 
 pick_metric <- function(x, metric) {
-   check_incompete(x, fail = TRUE)
-   res <- purrr::map(x$result, tune::collect_metrics)
-   check_consistent_metrics(res, fail = FALSE)
+   # mostly to check for completeness and consistency:
+   tmp <- collect_metrics(x)
 
    metrics <- collate_metrics(x)
    if (is.null(metric)) {

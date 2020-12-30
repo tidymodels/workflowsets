@@ -4,7 +4,8 @@
 utils::globalVariables(
    c(".config", ".estimator", ".metric", "info", "metric", "mod_nm",
      "model", "n", "pp_nm", "preprocessor", "preproc", "object",
-     "result", "std_err", "wflow_id", "func", "is_race", "num_rs", "option")
+     "result", "std_err", "wflow_id", "func", "is_race", "num_rs", "option",
+     "metrics", "predictions")
 )
 
 # ------------------------------------------------------------------------------
@@ -30,6 +31,10 @@ tune::fit_resamples
 #' @importFrom tune collect_metrics
 #' @export
 tune::collect_metrics
+
+#' @importFrom tune collect_predictions
+#' @export
+tune::collect_predictions
 
 #' @importFrom dplyr %>%
 #' @export

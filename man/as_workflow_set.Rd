@@ -4,11 +4,11 @@
 \alias{as_workflow_set}
 \title{Save tuning or resampling results as a workflow set}
 \usage{
-as_workflow_set(object)
+as_workflow_set(...)
 }
 \arguments{
-\item{object}{A named list of results. Names should be unique and the
-elements in \code{object} should have at least one of the following classes:
+\item{...}{One or more named objects. Names should be unique and the
+objects should have at least one of the following classes:
 \code{iteration_results}, \code{tune_results}, \code{resample_results}, or \code{tune_race}. Each
 element should also contain the original workflow (accomplished using the
 \code{save_workflow} option in the control function).}
