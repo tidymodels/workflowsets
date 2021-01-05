@@ -20,7 +20,7 @@ be removed before a CRAN submissin (due to size).
 \code{cell_models} was generated using this code:
 
 \preformatted{
-library(tbd)
+library(workflowsets)
 library(modeldata)
 library(recipes)
 library(parsnip)

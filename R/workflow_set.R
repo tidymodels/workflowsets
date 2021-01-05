@@ -8,7 +8,7 @@
 #'  and `models` should be equal.
 #' @return A tibble with extra class 'workflow_set'.
 #' @examples
-#' library(tbd)
+#' library(workflowsets)
 #' library(modeldata)
 #' library(recipes)
 #' library(parsnip)

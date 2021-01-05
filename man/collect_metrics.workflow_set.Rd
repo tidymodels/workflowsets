@@ -42,8 +42,20 @@ A tibble.
 \description{
 Obtain and format results produced by tuning functions for workflow sets
 }
+\details{
+When applied to a workflow set, the metrics and predictions that are returned
+do not contain the actual tuning parameter columns and values (unlike when
+these collect functions are run on other objects). The reason is that workflow
+sets can contain different types of models or models with different tuning
+parameters.
+
+If the columns are needed, there are two options. First, the \code{.config} column
+can be used to merge the tuning parameter columns into an appropriate object.
+Alternatively, the \code{map()} function can be used to get the metrics from the
+original objects (see the example below).
+}
 \examples{
-library(tbd)
+library(workflowsets)
 library(modeldata)
 library(recipes)
 library(parsnip)
@@ -51,6 +63,8 @@ library(dplyr)
 library(rsample)
 library(tune)
 library(yardstick)
+library(purrr)
+library(tidyr)
 
 # ------------------------------------------------------------------------------
 
@@ -101,5 +115,14 @@ cell_models <-
    workflow_map(resamples = val_set, grid = 10, metrics = metric_set(roc_auc))
 cell_models
 collect_metrics(cell_models)
+
+# Alternatively, if the tuning parameter values are needed:
+cell_models \%>\%
+  dplyr::filter(grepl("knn", wflow_id)) \%>\%
+  mutate(metrics = map(result, collect_metrics)) \%>\%
+  dplyr::select(wflow_id, metrics) \%>\%
+  tidyr::unnest(cols = metrics)
+
+
 }
 }

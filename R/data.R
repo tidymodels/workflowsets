@@ -8,7 +8,7 @@
 #' `cell_models` was generated using this code:
 #'
 #' \preformatted{
-#' library(tbd)
+#' library(workflowsets)
 #' library(modeldata)
 #' library(recipes)
 #' library(parsnip)

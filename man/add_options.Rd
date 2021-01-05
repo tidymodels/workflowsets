@@ -2,9 +2,15 @@
 % Please edit documentation in R/options.R
 \name{add_options}
 \alias{add_options}
+\alias{remove_options}
+\alias{add_option_parameters}
 \title{Functions for options in a workflow set}
 \usage{
 add_options(x, ..., strict = FALSE)
+
+remove_options(x, ...)
+
+add_option_parameters(x, strict = FALSE)
 }
 \arguments{
 \item{x}{A workflow set}

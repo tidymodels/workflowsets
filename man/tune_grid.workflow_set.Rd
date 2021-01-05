@@ -42,7 +42,7 @@ class \code{tune_result}, etc.)
 Methods for processing workflow sets
 }
 \examples{
-library(tbd)
+library(workflowsets)
 library(modeldata)
 library(recipes)
 library(parsnip)

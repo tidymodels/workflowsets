@@ -34,6 +34,7 @@ add_options <- function(x, ..., strict = FALSE) {
 
 
 #' @export
+#' @rdname add_options
 remove_options <- function(x, ...) {
    dots <- rlang::enexprs(...)
    if (length(dots) == 0) {
@@ -57,6 +58,7 @@ maybe_param <- function(x) {
    x
 }
 #' @export
+#' @rdname add_options
 add_option_parameters <- function(x, strict = FALSE) {
    prm <- purrr::map(x$object, maybe_param)
    num <- purrr::map_int(prm, length)

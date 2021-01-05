@@ -23,7 +23,7 @@ A tibble with extra class 'workflow_set'.
 Generate a set of workflow objects from preprocessing and model objects
 }
 \examples{
-library(tbd)
+library(workflowsets)
 library(modeldata)
 library(recipes)
 library(parsnip)

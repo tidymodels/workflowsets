@@ -13,7 +13,7 @@
 #' @return An object from the corresponding `tune` package function (e.g. with
 #'  class `tune_result`, etc.)
 #' @examples
-#' library(tbd)
+#' library(workflowsets)
 #' library(modeldata)
 #' library(recipes)
 #' library(parsnip)
