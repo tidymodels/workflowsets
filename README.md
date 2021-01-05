@@ -60,6 +60,8 @@ we will build on:
 ``` r
 library(tidymodels)
 data(Chicago)
+# use a small sample to keep file sizes down:
+Chicago <- Chicago %>% slice(1:365)
 
 base_recipe <- 
    recipe(ridership ~ ., data = Chicago) %>% 
@@ -115,7 +117,7 @@ Rather than creating all 9 combinations of these preprocessors and
 models, we can create a *workflow set*:
 
 ``` r
-library(tbd)
+library(workflowsets)
 chi_models <- 
    workflow_set(
       preproc = list(simple = base_recipe, filter = filter_rec, pca = pca_rec),
@@ -123,7 +125,7 @@ chi_models <-
       cross = TRUE
    )
 chi_models
-#> # A tibble: 9 x 6
+#> # A workflow set/tibble: 9 x 6
 #>   wflow_id      preproc model            object     option     result    
 #>   <chr>         <chr>   <chr>            <list>     <list>     <list>    
 #> 1 simple_glmnet recipe  linear_reg       <workflow> <list [0]> <list [0]>
@@ -154,22 +156,25 @@ splits <-
    sliding_period(
       Chicago,
       date,
-      "month",
-      lookback = 15 * 12, # each resample has 15 years of data for modeling
-      assess_stop = 1     # one month for performance assessment
+      "day",
+      lookback = 300,   # Each resample has 300 days for modeling
+      assess_stop = 7,  # One week for performance assessment
+      step = 7          # Ensure non-overlapping weeks for assessment
    )
 splits
 #> # Sliding period resampling 
-#> # A tibble: 7 x 2
-#>   splits            id    
-#>   <list>            <chr> 
-#> 1 <split [5.5K/29]> Slice1
-#> 2 <split [5.5K/31]> Slice2
-#> 3 <split [5.5K/30]> Slice3
-#> 4 <split [5.5K/31]> Slice4
-#> 5 <split [5.5K/30]> Slice5
-#> 6 <split [5.5K/31]> Slice6
-#> 7 <split [5.5K/28]> Slice7
+#> # A tibble: 9 x 2
+#>   splits          id    
+#>   <list>          <chr> 
+#> 1 <split [301/7]> Slice1
+#> 2 <split [301/7]> Slice2
+#> 3 <split [301/7]> Slice3
+#> 4 <split [301/7]> Slice4
+#> 5 <split [301/7]> Slice5
+#> 6 <split [301/7]> Slice6
+#> 7 <split [301/7]> Slice7
+#> 8 <split [301/7]> Slice8
+#> 9 <split [301/7]> Slice9
 ```
 
 We’ll use simple grid search for these models by running
@@ -182,24 +187,31 @@ chi_models <-
    chi_models %>% 
    workflow_map("tune_grid", resamples = splits, grid = 10, 
                 metrics = metric_set(mae), verbose = TRUE)
-#> ✓ 1 of 7 tuning:     simple_glmnet
-#> ✓ 2 of 7 tuning:     simple_cart
-#> ✓ 3 of 7 tuning:     simple_knn
-#> ✓ 4 of 7 tuning:     filter_cart
-#> ✓ 5 of 7 tuning:     filter_knn
-#> ✓ 6 of 7 tuning:     pca_cart
-#> ✓ 7 of 7 tuning:     pca_knn
+#> ℹ 1 of 7 tuning:     simple_glmnet
+#> ✓ 1 of 7 tuning:     simple_glmnet (38s)
+#> ℹ 2 of 7 tuning:     simple_cart
+#> ✓ 2 of 7 tuning:     simple_cart (39.5s)
+#> ℹ 3 of 7 tuning:     simple_knn
+#> ✓ 3 of 7 tuning:     simple_knn (39.1s)
+#> ℹ 4 of 7 tuning:     filter_cart
+#> ✓ 4 of 7 tuning:     filter_cart (1m 2.7s)
+#> ℹ 5 of 7 tuning:     filter_knn
+#> ✓ 5 of 7 tuning:     filter_knn (1m 3.8s)
+#> ℹ 6 of 7 tuning:     pca_cart
+#> ✓ 6 of 7 tuning:     pca_cart (46.5s)
+#> ℹ 7 of 7 tuning:     pca_knn
+#> ✓ 7 of 7 tuning:     pca_knn (46.4s)
 chi_models
-#> # A tibble: 7 x 6
+#> # A workflow set/tibble: 7 x 6
 #>   wflow_id      preproc model           object     option         result        
 #>   <chr>         <chr>   <chr>           <list>     <list>         <list>        
-#> 1 simple_glmnet recipe  linear_reg      <workflow> <named list [… <tibble [7 × …
-#> 2 simple_cart   recipe  decision_tree   <workflow> <named list [… <tibble [7 × …
-#> 3 simple_knn    recipe  nearest_neighb… <workflow> <named list [… <tibble [7 × …
-#> 4 filter_cart   recipe  decision_tree   <workflow> <named list [… <tibble [7 × …
-#> 5 filter_knn    recipe  nearest_neighb… <workflow> <named list [… <tibble [7 × …
-#> 6 pca_cart      recipe  decision_tree   <workflow> <named list [… <tibble [7 × …
-#> 7 pca_knn       recipe  nearest_neighb… <workflow> <named list [… <tibble [7 × …
+#> 1 simple_glmnet recipe  linear_reg      <workflow> <named list [… <tibble [9 × …
+#> 2 simple_cart   recipe  decision_tree   <workflow> <named list [… <tibble [9 × …
+#> 3 simple_knn    recipe  nearest_neighb… <workflow> <named list [… <tibble [9 × …
+#> 4 filter_cart   recipe  decision_tree   <workflow> <named list [… <tibble [9 × …
+#> 5 filter_knn    recipe  nearest_neighb… <workflow> <named list [… <tibble [9 × …
+#> 6 pca_cart      recipe  decision_tree   <workflow> <named list [… <tibble [9 × …
+#> 7 pca_knn       recipe  nearest_neighb… <workflow> <named list [… <tibble [9 × …
 ```
 
 The `results` column contains the results of each call to `tune_grid()`
@@ -212,6 +224,14 @@ autoplot(chi_models)
 ```
 
 <img src="man/figures/README-plot-1.svg" width="100%" />
+
+or the best form each workflow:
+
+``` r
+autoplot(chi_models)
+```
+
+<img src="man/figures/README-plot-best-1.svg" width="100%" />
 
 We can determine how well each combination did by looking at the best
 results per workflow:
@@ -230,11 +250,11 @@ best_by_wflow
 #> # A tibble: 7 x 5
 #>   wflow_id      .config                mean     n std_err
 #>   <chr>         <chr>                 <dbl> <int>   <dbl>
-#> 1 simple_cart   Preprocessor1_Model04  1.07     7  0.0704
-#> 2 pca_cart      Preprocessor3_Model2   1.12     7  0.107 
-#> 3 filter_cart   Preprocessor02_Model1  1.15     7  0.117 
-#> 4 simple_glmnet Preprocessor1_Model09  1.24     7  0.0916
-#> 5 simple_knn    Preprocessor1_Model07  1.66     7  0.195 
-#> 6 filter_knn    Preprocessor07_Model1  1.76     7  0.195 
-#> 7 pca_knn       Preprocessor1_Model2   2.19     7  0.273
+#> 1 simple_glmnet Preprocessor1_Model07  1.85     9   0.557
+#> 2 simple_cart   Preprocessor1_Model09  2.18     9   0.463
+#> 3 filter_cart   Preprocessor07_Model1  2.95     9   0.653
+#> 4 pca_cart      Preprocessor3_Model2   3.00     9   0.608
+#> 5 simple_knn    Preprocessor1_Model05  3.34     9   0.673
+#> 6 filter_knn    Preprocessor07_Model1  3.50     9   0.663
+#> 7 pca_knn       Preprocessor4_Model1   3.81     9   0.518
 ```

@@ -3,7 +3,7 @@
 #' @details These results are used for development purposes and will probably
 #' be removed before a CRAN submissin (due to size).
 #'
-#' `chi_models` contains the results of the code whown in the readme file.
+#' `chi_models` contains the results of the code shown in the readme file.
 #'
 #' `cell_models` was generated using this code:
 #'
@@ -20,7 +20,7 @@
 #' # ------------------------------------------------------------------------------
 #'
 #' data(cells)
-#' cells <- cells %>% dplyr::select(-case)
+#' cells <- cells %>% dplyr::select(-case) %>% dplyr::slice(1:200)
 #'
 #' set.seed(1)
 #' val_set <- validation_split(cells)
@@ -47,7 +47,7 @@
 #'    set_engine("kknn") %>%
 #'    set_mode("classification")
 #'
-#' lr_mod <-
+#' 'lr_mod <-
 #'    logistic_reg() %>%
 #'    set_engine("glm")
 #'
@@ -63,7 +63,7 @@
 #' cell_models <-
 #'    cell_models %>%
 #'    tune_grid(resamples = val_set, grid = 10) %>%
-#'    fit_resamples(resamples = val_set)
+#'    workflow_map(resamples = val_set)
 #' }
 #'
 #' @name chi_models

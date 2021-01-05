@@ -3,7 +3,9 @@
 #' @param x A `workflow_set` object where all workflows have been evaluated.
 #' @param summarize A logical for whether the performance estimates should be
 #'  summarized via the mean (over resamples) or the raw performance values (per
-#'  resample) should be returned along with the resampling identifiers.
+#'  resample) should be returned along with the resampling identifiers. When
+#'  collecting predictions, these are averaged if multiple assessment sets
+#'  contain the same row.
 #' @param parameters An optional tibble of tuning parameter values that can be
 #'  used to filter the predicted values before processing. This tibble should
 #'  only have columns for each tuning parameter identifier (e.g. `"my_param"`

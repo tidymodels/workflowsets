@@ -21,7 +21,9 @@
 
 \item{summarize}{A logical for whether the performance estimates should be
 summarized via the mean (over resamples) or the raw performance values (per
-resample) should be returned along with the resampling identifiers.}
+resample) should be returned along with the resampling identifiers. When
+collecting predictions, these are averaged if multiple assessment sets
+contain the same row.}
 
 \item{...}{Not currently used.}
 

@@ -1,0 +1,38 @@
+library(parsnip)
+library(rsample)
+
+lr_spec <- linear_reg() %>% set_engine("lm")
+
+set.seed(1)
+car_set_1 <-
+   workflow_set(
+      list(reg = mpg ~ ., nonlin = mpg ~ wt + 1/sqrt(disp)),
+      list(lm = lr_spec)
+   ) %>%
+   workflow_map("fit_resamples", resamples = vfold_cv(mtcars, v = 3),
+                control = tune::control_resamples(save_pred = TRUE))
+
+# ------------------------------------------------------------------------------
+
+test_that("pulling objects", {
+
+   expect_equal(
+      car_set_1 %>% pull_workflow("reg_lm"),
+      car_set_1$object[[1]]
+   )
+
+   expect_equal(
+      car_set_1 %>% pull_workflow_result("reg_lm"),
+      car_set_1$result[[1]]
+   )
+
+   expect_error(
+      car_set_1 %>% pull_workflow_result("Gideon Nav"),
+      "No workflow ID found"
+   )
+
+   expect_error(
+      car_set_1 %>% pull_workflow("Coronabeth Tridentarius"),
+      "No workflow ID found"
+   )
+})

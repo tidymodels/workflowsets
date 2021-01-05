@@ -57,7 +57,7 @@ The first two methods can be used with any model while the last option is only a
 
 ```{r sshhh, include = FALSE}
 library(tidymodels)
-library(tbd)
+library(workflows)
 library(glmnet)
 library(rpart)
 library(vctrs)
@@ -68,6 +68,8 @@ theme_set(theme_bw())
 ```{r recs}
 library(tidymodels)
 data(Chicago)
+# use a small sample to keep file sizes down:
+Chicago <- Chicago %>% slice(1:365)
 
 base_recipe <- 
    recipe(ridership ~ ., data = Chicago) %>% 
@@ -122,7 +124,7 @@ knn_spec <-
 Rather than creating all 9 combinations of these preprocessors and models, we can create a _workflow set_: 
 
 ```{r set}
-library(tbd)
+library(workflowsets)
 chi_models <- 
    workflow_set(
       preproc = list(simple = base_recipe, filter = filter_rec, pca = pca_rec),
@@ -147,9 +149,10 @@ splits <-
    sliding_period(
       Chicago,
       date,
-      "month",
-      lookback = 15 * 12, # each resample has 15 years of data for modeling
-      assess_stop = 1     # one month for performance assessment
+      "day",
+      lookback = 300,   # Each resample has 300 days for modeling
+      assess_stop = 7,  # One week for performance assessment
+      step = 7          # Ensure non-overlapping weeks for assessment
    )
 splits
 ```
@@ -170,6 +173,13 @@ The `results` column contains the results of each call to `tune_grid()` for the 
 The `autoplot()` method shows the rankings of the workflows: 
 
 ```{r plot, fig.height = 4, dev = "svg"}
+autoplot(chi_models)
+```
+
+or the best form each workflow: 
+
+
+```{r plot-best, fig.height = 4, dev = "svg"}
 autoplot(chi_models)
 ```
 
