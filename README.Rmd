@@ -13,36 +13,36 @@ knitr::opts_chunk$set(
 )
 ```
 
-# tbd
+# workflowsets
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of tbd is to allow users to create and easily fit a large number of models. tbd can create a _workflow set_ that holds multiple workflow objects. These objects can be created by crossing all combinations of preprocessors (e.g., formula, recipe, etc) and model specifications. This set can be easier tuned or resampled using a set of simple commands. 
+The goal of workflowsets is to allow users to create and easily fit a large number of models. workflowsets can create a _workflow set_ that holds multiple workflow objects. These objects can be created by crossing all combinations of preprocessors (e.g., formula, recipe, etc) and model specifications. This set can be easier tuned or resampled using a set of simple commands. 
 
 
 
 ## Installation
 
-You can install the released version of tbd from [CRAN](https://CRAN.R-project.org) with:
+You can install the released version of workflowsets from [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
 # not yet!
-# install.packages("tbd")
+# install.packages("workflowsets")
 ```
 
 And the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("topepo/tbd")
+devtools::install_github("tidymodels/workflowsets")
 ```
 
 ## Example
 
 It is often a good idea to try different types of models and preprocessing methods on a specific data set. tidymodels provides tools for this purpose: recipes for preprocessing/feature engineering and model specifications. 
 
-Once a few options are available, it might be helpful to evaluate a large combination of these techniques. tbd has functions for creating and evaluating combinations of modeling elements. 
+Once a few options are available, it might be helpful to evaluate a large combination of these techniques. workflowsets has functions for creating and evaluating combinations of modeling elements. 
 
 For example, the Chicago train ridership data has many numeric predictors that are highly correlated. There are a few approaches to compensating for this issue during modeling:
 
@@ -57,7 +57,7 @@ The first two methods can be used with any model while the last option is only a
 
 ```{r sshhh, include = FALSE}
 library(tidymodels)
-library(workflows)
+library(workflowsets)
 library(glmnet)
 library(rpart)
 library(vctrs)
@@ -67,6 +67,7 @@ theme_set(theme_bw())
 ```
 ```{r recs}
 library(tidymodels)
+library(workflowsets)
 data(Chicago)
 # use a small sample to keep file sizes down:
 Chicago <- Chicago %>% slice(1:365)
@@ -124,7 +125,6 @@ knn_spec <-
 Rather than creating all 9 combinations of these preprocessors and models, we can create a _workflow set_: 
 
 ```{r set}
-library(workflowsets)
 chi_models <- 
    workflow_set(
       preproc = list(simple = base_recipe, filter = filter_rec, pca = pca_rec),
@@ -163,6 +163,8 @@ We'll use simple grid search for these models by running `workflow_map()`. This 
 set.seed(123)
 chi_models <- 
    chi_models %>% 
+   # The first argument is a function name from the {{tune}} package
+   # such as `tune_grid()`, `fit_resamples()`, etc.
    workflow_map("tune_grid", resamples = splits, grid = 10, 
                 metrics = metric_set(mae), verbose = TRUE)
 chi_models

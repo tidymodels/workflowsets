@@ -1,34 +1,34 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# tbd
+# workflowsets
 
 <!-- badges: start -->
 
 <!-- badges: end -->
 
-The goal of tbd is to allow users to create and easily fit a large
-number of models. tbd can create a *workflow set* that holds multiple
-workflow objects. These objects can be created by crossing all
-combinations of preprocessors (e.g., formula, recipe, etc) and model
-specifications. This set can be easier tuned or resampled using a set of
-simple commands.
+The goal of workflowsets is to allow users to create and easily fit a
+large number of models. workflowsets can create a *workflow set* that
+holds multiple workflow objects. These objects can be created by
+crossing all combinations of preprocessors (e.g., formula, recipe, etc)
+and model specifications. This set can be easier tuned or resampled
+using a set of simple commands.
 
 ## Installation
 
-You can install the released version of tbd from
+You can install the released version of workflowsets from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
 # not yet!
-# install.packages("tbd")
+# install.packages("workflowsets")
 ```
 
 And the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("topepo/tbd")
+devtools::install_github("tidymodels/workflowsets")
 ```
 
 ## Example
@@ -39,8 +39,8 @@ for this purpose: recipes for preprocessing/feature engineering and
 model specifications.
 
 Once a few options are available, it might be helpful to evaluate a
-large combination of these techniques. tbd has functions for creating
-and evaluating combinations of modeling elements.
+large combination of these techniques. workflowsets has functions for
+creating and evaluating combinations of modeling elements.
 
 For example, the Chicago train ridership data has many numeric
 predictors that are highly correlated. There are a few approaches to
@@ -59,6 +59,7 @@ we will build on:
 
 ``` r
 library(tidymodels)
+library(workflowsets)
 data(Chicago)
 # use a small sample to keep file sizes down:
 Chicago <- Chicago %>% slice(1:365)
@@ -117,7 +118,6 @@ Rather than creating all 9 combinations of these preprocessors and
 models, we can create a *workflow set*:
 
 ``` r
-library(workflowsets)
 chi_models <- 
    workflow_set(
       preproc = list(simple = base_recipe, filter = filter_rec, pca = pca_rec),
@@ -185,22 +185,24 @@ the workflows in the `object` column:
 set.seed(123)
 chi_models <- 
    chi_models %>% 
+   # The first argument is a function name from the {{tune}} package
+   # such as `tune_grid()`, `fit_resamples()`, etc.
    workflow_map("tune_grid", resamples = splits, grid = 10, 
                 metrics = metric_set(mae), verbose = TRUE)
 #> ℹ 1 of 7 tuning:     simple_glmnet
-#> ✓ 1 of 7 tuning:     simple_glmnet (22.8s)
+#> ✓ 1 of 7 tuning:     simple_glmnet (23s)
 #> ℹ 2 of 7 tuning:     simple_cart
-#> ✓ 2 of 7 tuning:     simple_cart (23.8s)
+#> ✓ 2 of 7 tuning:     simple_cart (24.3s)
 #> ℹ 3 of 7 tuning:     simple_knn
-#> ✓ 3 of 7 tuning:     simple_knn (24s)
+#> ✓ 3 of 7 tuning:     simple_knn (24.2s)
 #> ℹ 4 of 7 tuning:     filter_cart
-#> ✓ 4 of 7 tuning:     filter_cart (36.9s)
+#> ✓ 4 of 7 tuning:     filter_cart (37.6s)
 #> ℹ 5 of 7 tuning:     filter_knn
-#> ✓ 5 of 7 tuning:     filter_knn (37.2s)
+#> ✓ 5 of 7 tuning:     filter_knn (38.2s)
 #> ℹ 6 of 7 tuning:     pca_cart
-#> ✓ 6 of 7 tuning:     pca_cart (29.5s)
+#> ✓ 6 of 7 tuning:     pca_cart (30.1s)
 #> ℹ 7 of 7 tuning:     pca_knn
-#> ✓ 7 of 7 tuning:     pca_knn (29.8s)
+#> ✓ 7 of 7 tuning:     pca_knn (29.4s)
 chi_models
 #> # A workflow set/tibble: 7 x 6
 #>   wflow_id      preproc model           object     option         result        
