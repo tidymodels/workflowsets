@@ -180,21 +180,12 @@ or the best form each workflow:
 
 
 ```{r plot-best, fig.height = 4, dev = "svg"}
-autoplot(chi_models)
+autoplot(chi_models, select_best = TRUE)
 ```
 
 We can determine how well each combination did by looking at the best results per workflow: 
 
 ```{r best}
-best_by_wflow <-
-   chi_models %>% 
-   collect_metrics() %>%
-   dplyr::select(wflow_id, .config, mean, n, std_err) %>% 
-   group_by(wflow_id) %>%
-   arrange(mean, .by_group = TRUE) %>%
-   slice(1) %>%
-   ungroup() %>%
-   arrange(mean)
-best_by_wflow
+rank_results(chi_models, rank_metric = "mae", select_best = TRUE)
 ```
 

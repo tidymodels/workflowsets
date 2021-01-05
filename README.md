@@ -188,19 +188,19 @@ chi_models <-
    workflow_map("tune_grid", resamples = splits, grid = 10, 
                 metrics = metric_set(mae), verbose = TRUE)
 #> ℹ 1 of 7 tuning:     simple_glmnet
-#> ✓ 1 of 7 tuning:     simple_glmnet (38s)
+#> ✓ 1 of 7 tuning:     simple_glmnet (22.8s)
 #> ℹ 2 of 7 tuning:     simple_cart
-#> ✓ 2 of 7 tuning:     simple_cart (39.5s)
+#> ✓ 2 of 7 tuning:     simple_cart (23.8s)
 #> ℹ 3 of 7 tuning:     simple_knn
-#> ✓ 3 of 7 tuning:     simple_knn (39.1s)
+#> ✓ 3 of 7 tuning:     simple_knn (24s)
 #> ℹ 4 of 7 tuning:     filter_cart
-#> ✓ 4 of 7 tuning:     filter_cart (1m 2.7s)
+#> ✓ 4 of 7 tuning:     filter_cart (36.9s)
 #> ℹ 5 of 7 tuning:     filter_knn
-#> ✓ 5 of 7 tuning:     filter_knn (1m 3.8s)
+#> ✓ 5 of 7 tuning:     filter_knn (37.2s)
 #> ℹ 6 of 7 tuning:     pca_cart
-#> ✓ 6 of 7 tuning:     pca_cart (46.5s)
+#> ✓ 6 of 7 tuning:     pca_cart (29.5s)
 #> ℹ 7 of 7 tuning:     pca_knn
-#> ✓ 7 of 7 tuning:     pca_knn (46.4s)
+#> ✓ 7 of 7 tuning:     pca_knn (29.8s)
 chi_models
 #> # A workflow set/tibble: 7 x 6
 #>   wflow_id      preproc model           object     option         result        
@@ -228,7 +228,7 @@ autoplot(chi_models)
 or the best form each workflow:
 
 ``` r
-autoplot(chi_models)
+autoplot(chi_models, select_best = TRUE)
 ```
 
 <img src="man/figures/README-plot-best-1.svg" width="100%" />
@@ -237,24 +237,15 @@ We can determine how well each combination did by looking at the best
 results per workflow:
 
 ``` r
-best_by_wflow <-
-   chi_models %>% 
-   collect_metrics() %>%
-   dplyr::select(wflow_id, .config, mean, n, std_err) %>% 
-   group_by(wflow_id) %>%
-   arrange(mean, .by_group = TRUE) %>%
-   slice(1) %>%
-   ungroup() %>%
-   arrange(mean)
-best_by_wflow
-#> # A tibble: 7 x 5
-#>   wflow_id      .config                mean     n std_err
-#>   <chr>         <chr>                 <dbl> <int>   <dbl>
-#> 1 simple_glmnet Preprocessor1_Model07  1.85     9   0.557
-#> 2 simple_cart   Preprocessor1_Model09  2.18     9   0.463
-#> 3 filter_cart   Preprocessor07_Model1  2.95     9   0.653
-#> 4 pca_cart      Preprocessor3_Model2   3.00     9   0.608
-#> 5 simple_knn    Preprocessor1_Model05  3.34     9   0.673
-#> 6 filter_knn    Preprocessor07_Model1  3.50     9   0.663
-#> 7 pca_knn       Preprocessor4_Model1   3.81     9   0.518
+rank_results(chi_models, rank_metric = "mae", select_best = TRUE)
+#> # A tibble: 7 x 9
+#>   wflow_id   .config     .metric  mean std_err     n model    preprocessor  rank
+#>   <chr>      <chr>       <chr>   <dbl>   <dbl> <int> <chr>    <chr>        <int>
+#> 1 simple_gl… Preprocess… mae      1.85   0.557     9 linear_… recipe           1
+#> 2 simple_ca… Preprocess… mae      2.18   0.463     9 decisio… recipe           2
+#> 3 filter_ca… Preprocess… mae      2.95   0.653     9 decisio… recipe           3
+#> 4 pca_cart   Preprocess… mae      3.00   0.608     9 decisio… recipe           4
+#> 5 simple_knn Preprocess… mae      3.34   0.673     9 nearest… recipe           5
+#> 6 filter_knn Preprocess… mae      3.50   0.663     9 nearest… recipe           6
+#> 7 pca_knn    Preprocess… mae      3.81   0.518     9 nearest… recipe           7
 ```
