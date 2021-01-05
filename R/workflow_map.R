@@ -67,7 +67,7 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
       .fn <- check_fn(fn, object$object[[iter]])
       .fn_info <- dplyr::filter(allowed_fn, func == .fn)
 
-      opt <- object$option[[iter]]
+      opt <- recheck_options(object$option[[iter]], .fn)
       run_time <- system.time({
          cl <-
             rlang::call2(.fn, .ns = .fn_info$pkg, object = object$object[[iter]], !!!opt)

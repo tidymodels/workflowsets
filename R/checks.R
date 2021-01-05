@@ -71,6 +71,21 @@ check_options <- function(model, id, global, action = "fail") {
 }
 
 
+# in case there are no tuning parameters, we can avoid warnings
+
+recheck_options <- function(opts, .fn) {
+   if (.fn == "fit_resamples") {
+      allowed <- c("object", "resamples", "metrics", "control")
+      nms <- names(opts)
+      disallowed <- !(nms %in% allowed)
+      if (any(disallowed)) {
+         opts <- opts[!disallowed]
+      }
+   }
+   opts
+}
+
+
 check_fn <- function(fn, x) {
    has_tune <- nrow(tune::tune_args(x)) > 0
    if (!has_tune & fn != "fit_resamples") {
