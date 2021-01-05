@@ -5,6 +5,9 @@
 
 <!-- badges: start -->
 
+[![Codecov test
+coverage](https://codecov.io/gh/topepo/tbd/branch/main/graph/badge.svg)](https://codecov.io/gh/topepo/tbd?branch=main)
+[![R-CMD-check](https://github.com/topepo/tbd/workflows/R-CMD-check/badge.svg)](https://github.com/topepo/tbd/actions)
 <!-- badges: end -->
 
 The goal of workflowsets is to allow users to create and easily fit a
@@ -61,7 +64,7 @@ we will build on:
 library(tidymodels)
 library(workflowsets)
 data(Chicago)
-# use a small sample to keep file sizes down:
+# Use a small sample to keep file sizes down:
 Chicago <- Chicago %>% slice(1:365)
 
 base_recipe <- 
@@ -190,17 +193,17 @@ chi_models <-
    workflow_map("tune_grid", resamples = splits, grid = 10, 
                 metrics = metric_set(mae), verbose = TRUE)
 #> ℹ 1 of 7 tuning:     simple_glmnet
-#> ✓ 1 of 7 tuning:     simple_glmnet (23s)
+#> ✓ 1 of 7 tuning:     simple_glmnet (23.5s)
 #> ℹ 2 of 7 tuning:     simple_cart
-#> ✓ 2 of 7 tuning:     simple_cart (24.3s)
+#> ✓ 2 of 7 tuning:     simple_cart (24.5s)
 #> ℹ 3 of 7 tuning:     simple_knn
-#> ✓ 3 of 7 tuning:     simple_knn (24.2s)
+#> ✓ 3 of 7 tuning:     simple_knn (24.3s)
 #> ℹ 4 of 7 tuning:     filter_cart
-#> ✓ 4 of 7 tuning:     filter_cart (37.6s)
+#> ✓ 4 of 7 tuning:     filter_cart (37.2s)
 #> ℹ 5 of 7 tuning:     filter_knn
-#> ✓ 5 of 7 tuning:     filter_knn (38.2s)
+#> ✓ 5 of 7 tuning:     filter_knn (37.1s)
 #> ℹ 6 of 7 tuning:     pca_cart
-#> ✓ 6 of 7 tuning:     pca_cart (30.1s)
+#> ✓ 6 of 7 tuning:     pca_cart (29.7s)
 #> ℹ 7 of 7 tuning:     pca_knn
 #> ✓ 7 of 7 tuning:     pca_knn (29.4s)
 chi_models
