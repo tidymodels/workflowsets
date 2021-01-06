@@ -5,9 +5,8 @@
 
 <!-- badges: start -->
 
-[![Codecov test
-coverage](https://codecov.io/gh/topepo/tbd/branch/main/graph/badge.svg)](https://codecov.io/gh/topepo/tbd?branch=main)
-[![R-CMD-check](https://github.com/topepo/tbd/workflows/R-CMD-check/badge.svg)](https://github.com/topepo/tbd/actions)
+[![Codecov test coverage](https://codecov.io/gh/tidymodels/workflowsets/branch/main/graph/badge.svg)](https://codecov.io/gh/tidymodels/workflowsets?branch=main)
+[![R-CMD-check](https://github.com/tidymodels/workflowsets/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/workflowsets/actions)
 <!-- badges: end -->
 
 The goal of workflowsets is to allow users to create and easily fit a
