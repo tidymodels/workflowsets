@@ -5,8 +5,8 @@
 #' `fit_resamples()`.
 #' @param object A workflow set.
 #' @param fn The function to run. Acceptable values are: [tune::tune_grid()],
-#' [tune::tune_bayes()], [tune::fit_resamples()], [finetune::tune_race_anova()],
-#' [finetune::tune_race_win_loss()], or [finetune::tune_sim_anneal()].
+#' [tune::tune_bayes()], [tune::fit_resamples()], `finetune::tune_race_anova()`,
+#' `finetune::tune_race_win_loss()`, or `finetune::tune_sim_anneal()`.
 #' @param verbose A logical for logging progress.
 #' @param seed A single integer that is set prior to each function execution.
 #' @param ... Options to pass to the modeling function. See details below.

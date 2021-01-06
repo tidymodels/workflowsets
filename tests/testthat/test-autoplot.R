@@ -18,8 +18,8 @@ test_that("autoplot with error bars", {
      rlang::get_expr(as.list(p_1$layers[[2]])$mapping$ymax),
      expr(mean + std_errs * std_err)
   )
-  expect_equal(p_1$labels$y, "mae")
-  expect_equal(p_1$labels$x, "Workflow Rank")
+  expect_equal(p_1$labels$y, as.character("mae"))
+  expect_equal(p_1$labels$x, as.character("Workflow Rank"))
 })
 
 test_that("autoplot with without error bars", {
