@@ -43,7 +43,8 @@ Suggests:
     testthat (>= 3.0.0),
     covr,
     yardstick,
-    dials
+    dials,
+    kknn
 Remotes: 
     tidymodels/tune
 Depends: 
