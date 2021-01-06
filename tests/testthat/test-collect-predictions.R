@@ -52,16 +52,16 @@ test_that("collect predictions", {
    for (i in 1:nrow(car_set_1)) {
       expect_true(check_prediction_results(i, car_set_1))
    }
-   # for (i in 1:nrow(car_set_2)) {
-   #    expect_true(check_prediction_results(i, car_set_2))
-   # }
+   for (i in 1:nrow(car_set_2)) {
+      expect_true(check_prediction_results(i, car_set_2))
+   }
 
    for (i in 1:nrow(car_set_1)) {
       expect_true(check_prediction_results(i, car_set_1, summarize = FALSE))
    }
-   # for (i in 1:nrow(car_set_2)) {
-   #    expect_true(check_prediction_results(i, car_set_2, summarize = FALSE))
-   # }
+   for (i in 1:nrow(car_set_2)) {
+      expect_true(check_prediction_results(i, car_set_2, summarize = FALSE))
+   }
 
 })
 
