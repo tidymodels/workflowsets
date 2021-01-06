@@ -64,9 +64,6 @@ s3_register <- function(generic, class, method = NULL) {
 
 .onAttach <- function(libname, pkgname) {
    s3_register("tibble::tbl_sum",           "workflow_set")
-   s3_register("tune::tune_grid",           "workflow_set")
-   s3_register("tune::tune_bayes",          "workflow_set")
-   s3_register("tune::fit_resamples",       "workflow_set")
    s3_register("tune::collect_metrics",     "workflow_set")
    s3_register("tune::collect_predictions", "workflow_set")
    s3_register("ggplot2::autoplot",         "workflow_set")

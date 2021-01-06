@@ -72,8 +72,10 @@
 #' cell_models_by_group <- workflow_set(preproc, models["logistic"], cross = TRUE)
 #'
 #' @export
-workflow_set <- function(preproc, models, cross = FALSE) {
-   if (!cross && length(preproc) == length(models)) {
+workflow_set <- function(preproc, models, cross = TRUE) {
+   if (length(preproc) != length(models) &
+       (length(preproc) != 1 & length(models) != 1)
+   ) {
       rlang::abort(
          "The lengths of 'preproc' and 'models' are different and `cross = FALSE`."
       )

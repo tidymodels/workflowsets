@@ -90,3 +90,40 @@ allowed_fn <-
       pkg = c(rep("tune", 3), rep("finetune", 3))
    )
 allowed_fn_list <- paste0("'", allowed_fn$func, "'", collapse = ", ")
+
+# ------------------------------------------------------------------------------
+
+log_progress <- function(verbose, id, res, iter, n, .fn, elapsed) {
+   if (!verbose) {
+      return(invisible(NULL))
+   }
+   cols <- tune::get_tune_colors()
+   event <- ifelse(grepl("tune", .fn), "tuning:    ", "resampling:")
+   msg <- paste0(iter, " of ", n, " ", event, " ", id)
+   if (is.null(res)) {
+      message(
+         cols$symbol$info(cli::symbol$info), " ",
+         cols$message$info(msg)
+      )
+   } else {
+      if (inherits(res, "try-error")) {
+         message(
+            cols$symbol$danger(cli::symbol$cross), " ",
+            cols$message$info(msg),
+            cols$message$danger(" failed with "),
+            cols$message$danger(as.character(res))
+         )
+      } else {
+         time_msg <- paste0(" (", prettyunits::pretty_sec(elapsed[3]), ")")
+         message(
+            cols$symbol$success(cli::symbol$tick), " ",
+            cols$message$info(msg),
+            cols$message$info(time_msg)
+         )
+      }
+   }
+
+   invisible(NULL)
+}
+
+
