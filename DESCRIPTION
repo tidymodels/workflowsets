@@ -21,7 +21,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1.9000
 Imports: 
     rlang,
-    tune,
+    tune (>= 0.1.2.9000),
     withr,
     dplyr,
     purrr,
@@ -44,6 +44,8 @@ Suggests:
     covr,
     yardstick,
     dials
+Remotes: 
+    tidymodels/tune
 Depends: 
     R (>= 2.10)
 Config/testthat/edition: 3
