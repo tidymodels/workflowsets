@@ -143,6 +143,9 @@ new_workflow_set <- function(x) {
  if (!is.character(x$model)) {
     halt("The 'model' column should be character.")
  }
+ check_for_tune_results(x$result)
+ check_consistent_resamples(x)
+
  class(x) <- c("workflow_set", class(tibble::tibble()))
  x
 }

@@ -32,11 +32,11 @@ Imports:
     cli,
     ggplot2,
     stats,
-    prettyunits
+    prettyunits,
+    rsample (>= 0.0.8.9000)
 Language: en-US
 Suggests: 
     spelling,
-    rsample,
     recipes (>= 0.1.15),
     modeldata,
     parsnip,

@@ -105,6 +105,47 @@ test_that("creating workflow sets", {
 
 })
 
+test_that("correct object type and resamples", {
+   pp <- list(
+      cyl = mpg ~ disp + hp + drat + wt + qsec + vs + am + gear + carb,
+      disp = mpg ~ cyl + hp + drat + wt + qsec + vs + am + gear + carb,
+      # hp = mpg ~ cyl + disp + drat + wt + qsec + vs + am + gear + carb,
+      # drat = mpg ~ cyl + disp + hp + wt + qsec + vs + am + gear + carb,
+      # wt = mpg ~ cyl + disp + hp + drat + qsec + vs + am + gear + carb,
+      # qsec = mpg ~ cyl + disp + hp + drat + wt + vs + am + gear + carb,
+      # vs = mpg ~ cyl + disp + hp + drat + wt + qsec + am + gear + carb,
+      # am = mpg ~ cyl + disp + hp + drat + wt + qsec + vs + gear + carb,
+      # gear = mpg ~ cyl + disp + hp + drat + wt + qsec + vs + am + carb,
+      carb = mpg ~ cyl + disp + hp + drat + wt + qsec + vs + am + gear
+   )
+
+   set_1 <- workflow_set(pp, list(lm = lr_spec))
+
+   # same resamples since the seed is set
+   expect_error(
+      res_1 <- workflow_map(set_1, "fit_resamples", resamples = bootstraps(mtcars, 3)),
+      regex = NA
+   )
+   res_1$result[[1]] <- lm(pp[[1]], data = mtcars)
+   expect_error(
+      workflowsets:::check_for_tune_results(res_1$result),
+      "Some elements of 'result` do not have class `tune_results`"
+   )
+
+   res_2 <- set_1
+   res_2$result <- purrr::map(res_2$object, ~ fit_resamples(.x, resamples = bootstraps(mtcars, 3)))
+   expect_error(
+      workflowsets:::check_for_tune_results(res_2$result),
+      regex = NA
+   )
+   expect_error(
+      workflowsets:::check_consistent_resamples(res_2),
+      "Different resamples were used in the workflow results"
+   )
+})
+
+
+
 # ------------------------------------------------------------------------------
 
 test_that("crossing", {
@@ -205,12 +246,5 @@ test_that("constructor", {
       workflowsets:::new_workflow_set(car_set_1 %>% mutate(model = 1)),
       "The 'model' column should be character."
    )
-
-
-
-
-
-
-
 
 })

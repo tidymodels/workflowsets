@@ -128,16 +128,40 @@ check_for_workflow <- function(x) {
    invisible(NULL)
 }
 
-allowed_obj_types <- c("iteration_results", "tune_results", "resample_results",
-                       "tune_race")
-
-check_result_types <- function(x) {
-   right_type <- purrr::map_lgl(x, ~ inherits(.x, allowed_obj_types))
-   if (any(!right_type)) {
-      bad <- names(right_type)[!right_type]
-      msg <- "Some objects are not tuning or resampling results:"
-      msg <- paste(msg, paste0("'", bad, "'", collapse = ", "))
-      halt(msg)
+check_for_tune_results <- function(x) {
+   res <- purrr::map_lgl(x, bad_result_col)
+   if (any(res)) {
+      rlang::abort("Some elements of 'result` do not have class `tune_results`.")
    }
    invisible(NULL)
 }
+bad_result_col <- function(x) {
+   if(length(x) > 0) {
+      res <- !inherits(x, "tune_results")
+   } else {
+      res <- FALSE
+   }
+   res
+}
+
+check_consistent_resamples <- function(x) {
+   empty_res <- purrr::map_lgl(x$result, ~ length(.x) == 0)
+   tmp <- x$result[!empty_res]
+   tmp_id <- x$wflow_id[!empty_res]
+   rs_hash <- purrr::map_chr(tmp, rsample::fingerprint)
+   if (length(unique(rs_hash)) > 1) {
+      fail_res <-
+         tibble::tibble(hash = rs_hash, id = tmp_id) %>%
+         dplyr::group_by(hash) %>%
+         dplyr::summarize(obj = paste0(id, collapse = ", "), .groups = "drop") %>%
+         dplyr::ungroup()
+      msg <- paste("Different resamples were used in the workflow results. These",
+                   "objects used different resamples:",
+                   paste0("{", fail_res$obj, "}", collapse = ", "))
+      rlang::abort(msg)
+   }
+   invisible(NULL)
+}
+
+
+

@@ -13,7 +13,6 @@ as_workflow_set <- function(...) {
    wflows <- purrr::map(object, tune::.get_tune_workflow)
    check_names(wflows)
    check_for_workflow(wflows)
-   check_result_types(object)
 
    res <- tibble::tibble(wflow_id = names(wflows))
    res <-
