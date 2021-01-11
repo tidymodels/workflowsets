@@ -255,7 +255,7 @@ original objects (see the example below).</p>
 <span class='va'>models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>knn <span class='op'>=</span> <span class='va'>knn_mod</span>, logistic <span class='op'>=</span> <span class='va'>lr_mod</span><span class='op'>)</span>
 
 <span class='va'>cell_models</span> <span class='op'>&lt;-</span> <span class='fu'><a href='workflow_set.html'>workflow_set</a></span><span class='op'>(</span><span class='va'>preproc</span>, <span class='va'>models</span>, cross <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-
+</div><div class='output co'>#&gt; <span class='error'>Error: 'fingerprint' is not an exported object from 'namespace:rsample'</span></div><div class='input'>
 <span class='co'># ------------------------------------------------------------------------------</span>
 
 <span class='co'># \donttest{</span>
@@ -275,7 +275,7 @@ original objects (see the example below).</p>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    data_frame</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:dplyr’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    data_frame</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>ℹ</span><span> </span><span style='color: #000000;'>No tuning parameters. `fit_resamples()` will be attempted</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>ℹ</span><span> </span><span style='color: #000000;'>No tuning parameters. `fit_resamples()` will be attempted</span><span></span></div><div class='input'><span class='va'>cell_models</span>
+#&gt; <span class='message'>    data_frame</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>ℹ</span><span> </span><span style='color: #000000;'>No tuning parameters. `fit_resamples()` will be attempted</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>ℹ</span><span> </span><span style='color: #000000;'>No tuning parameters. `fit_resamples()` will be attempted</span><span></span></div><div class='output co'>#&gt; <span class='error'>Error: 'fingerprint' is not an exported object from 'namespace:rsample'</span></div><div class='input'><span class='va'>cell_models</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A workflow set/tibble: 6 x 6</span><span>
 #&gt;   wflow_id        preproc model          object    option         result        
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>        
@@ -285,40 +285,40 @@ original objects (see the example below).</p>
 #&gt; </span><span style='color: #555555;'>4</span><span> pca_logistic    recipe  logistic_reg   </span><span style='color: #555555;'>&lt;workflo</span><span>… </span><span style='color: #555555;'>&lt;named list [</span><span>… </span><span style='color: #555555;'>&lt;tibble [1 × </span><span>…
 #&gt; </span><span style='color: #555555;'>5</span><span> sp_sign_knn     recipe  nearest_neigh… </span><span style='color: #555555;'>&lt;workflo</span><span>… </span><span style='color: #555555;'>&lt;named list [</span><span>… </span><span style='color: #555555;'>&lt;tibble [1 × </span><span>…
 #&gt; </span><span style='color: #555555;'>6</span><span> sp_sign_logist… recipe  logistic_reg   </span><span style='color: #555555;'>&lt;workflo</span><span>… </span><span style='color: #555555;'>&lt;named list [</span><span>… </span><span style='color: #555555;'>&lt;tibble [1 × </span><span>…</div><div class='input'><span class='fu'><a href='https://tune.tidymodels.org/reference/collect_predictions.html'>collect_metrics</a></span><span class='op'>(</span><span class='va'>cell_models</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 36 x 9</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 72 x 9</span><span>
 #&gt;    wflow_id .config      preproc model    .metric .estimator  mean     n std_err
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
-#&gt; </span><span style='color: #555555;'> 1</span><span> none_knn Preprocesso… recipe  nearest… roc_auc binary     0.873     1      </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #555555;'> 2</span><span> none_knn Preprocesso… recipe  nearest… roc_auc binary     0.866     1      </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #555555;'> 3</span><span> none_knn Preprocesso… recipe  nearest… roc_auc binary     0.888     1      </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #555555;'> 4</span><span> none_knn Preprocesso… recipe  nearest… roc_auc binary     0.876     1      </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #555555;'> 5</span><span> none_knn Preprocesso… recipe  nearest… roc_auc binary     0.891     1      </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #555555;'> 6</span><span> none_knn Preprocesso… recipe  nearest… roc_auc binary     0.848     1      </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #555555;'> 7</span><span> none_knn Preprocesso… recipe  nearest… roc_auc binary     0.886     1      </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #555555;'> 8</span><span> none_knn Preprocesso… recipe  nearest… roc_auc binary     0.887     1      </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #555555;'> 9</span><span> none_knn Preprocesso… recipe  nearest… roc_auc binary     0.870     1      </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #555555;'>10</span><span> none_knn Preprocesso… recipe  nearest… roc_auc binary     0.772     1      </span><span style='color: #BB0000;'>NA</span><span>
-#&gt; </span><span style='color: #555555;'># … with 26 more rows</span><span></div><div class='input'>
+#&gt; </span><span style='color: #555555;'> 1</span><span> none_knn Preprocesso… recipe  nearest… accura… binary     0.8       1      </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 2</span><span> none_knn Preprocesso… recipe  nearest… roc_auc binary     0.872     1      </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 3</span><span> none_knn Preprocesso… recipe  nearest… accura… binary     0.8       1      </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 4</span><span> none_knn Preprocesso… recipe  nearest… roc_auc binary     0.903     1      </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 5</span><span> none_knn Preprocesso… recipe  nearest… accura… binary     0.82      1      </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 6</span><span> none_knn Preprocesso… recipe  nearest… roc_auc binary     0.930     1      </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 7</span><span> none_knn Preprocesso… recipe  nearest… accura… binary     0.88      1      </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 8</span><span> none_knn Preprocesso… recipe  nearest… roc_auc binary     0.935     1      </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'> 9</span><span> none_knn Preprocesso… recipe  nearest… accura… binary     0.78      1      </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'>10</span><span> none_knn Preprocesso… recipe  nearest… roc_auc binary     0.818     1      </span><span style='color: #BB0000;'>NA</span><span>
+#&gt; </span><span style='color: #555555;'># … with 62 more rows</span><span></div><div class='input'>
 <span class='co'># Alternatively, if the tuning parameter values are needed:</span>
 <span class='va'>cell_models</span> <span class='op'>%&gt;%</span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grepl</a></span><span class='op'>(</span><span class='st'>"knn"</span>, <span class='va'>wflow_id</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>metrics <span class='op'>=</span> <span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map</a></span><span class='op'>(</span><span class='va'>result</span>, <span class='va'>collect_metrics</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>wflow_id</span>, <span class='va'>metrics</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'>tidyr</span><span class='fu'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/nest.html'>unnest</a></span><span class='op'>(</span>cols <span class='op'>=</span> <span class='va'>metrics</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 30 x 10</span><span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 60 x 10</span><span>
 #&gt;    wflow_id neighbors weight_func .metric .estimator  mean     n std_err .config
 #&gt;    </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>       </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>  
-#&gt; </span><span style='color: #555555;'> 1</span><span> none_knn         9 biweight    roc_auc binary     0.873     1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
-#&gt; </span><span style='color: #555555;'> 2</span><span> none_knn         5 cos         roc_auc binary     0.866     1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
-#&gt; </span><span style='color: #555555;'> 3</span><span> none_knn        13 epanechnik… roc_auc binary     0.888     1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
-#&gt; </span><span style='color: #555555;'> 4</span><span> none_knn         7 gaussian    roc_auc binary     0.876     1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
-#&gt; </span><span style='color: #555555;'> 5</span><span> none_knn        14 inv         roc_auc binary     0.891     1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
-#&gt; </span><span style='color: #555555;'> 6</span><span> none_knn         3 optimal     roc_auc binary     0.848     1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
-#&gt; </span><span style='color: #555555;'> 7</span><span> none_knn        11 rank        roc_auc binary     0.886     1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
-#&gt; </span><span style='color: #555555;'> 8</span><span> none_knn        10 rectangular roc_auc binary     0.887     1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
-#&gt; </span><span style='color: #555555;'> 9</span><span> none_knn         6 triangular  roc_auc binary     0.870     1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
-#&gt; </span><span style='color: #555555;'>10</span><span> none_knn         1 triweight   roc_auc binary     0.772     1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
-#&gt; </span><span style='color: #555555;'># … with 20 more rows, and 1 more variable: num_comp </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div><div class='input'>
+#&gt; </span><span style='color: #555555;'> 1</span><span> none_knn         9 biweight    accura… binary     0.8       1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
+#&gt; </span><span style='color: #555555;'> 2</span><span> none_knn         9 biweight    roc_auc binary     0.872     1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
+#&gt; </span><span style='color: #555555;'> 3</span><span> none_knn         7 cos         accura… binary     0.8       1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
+#&gt; </span><span style='color: #555555;'> 4</span><span> none_knn         7 cos         roc_auc binary     0.903     1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
+#&gt; </span><span style='color: #555555;'> 5</span><span> none_knn        12 epanechnik… accura… binary     0.82      1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
+#&gt; </span><span style='color: #555555;'> 6</span><span> none_knn        12 epanechnik… roc_auc binary     0.930     1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
+#&gt; </span><span style='color: #555555;'> 7</span><span> none_knn        10 gaussian    accura… binary     0.88      1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
+#&gt; </span><span style='color: #555555;'> 8</span><span> none_knn        10 gaussian    roc_auc binary     0.935     1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
+#&gt; </span><span style='color: #555555;'> 9</span><span> none_knn         2 inv         accura… binary     0.78      1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
+#&gt; </span><span style='color: #555555;'>10</span><span> none_knn         2 inv         roc_auc binary     0.818     1      </span><span style='color: #BB0000;'>NA</span><span> Prepro…
+#&gt; </span><span style='color: #555555;'># … with 50 more rows, and 1 more variable: num_comp </span><span style='color: #555555;font-style: italic;'>&lt;int&gt;</span><span></div><div class='input'>
 
 <span class='co'># }</span>
 </div></span></pre>
