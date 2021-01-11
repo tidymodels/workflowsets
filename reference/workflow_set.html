@@ -206,7 +206,7 @@ and <code>models</code> should be equal.</p></td>
 <span class='va'>cell_models</span> <span class='op'>&lt;-</span> <span class='fu'>workflow_set</span><span class='op'>(</span><span class='va'>preproc</span>, <span class='va'>models</span>, cross <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='va'>cell_models</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A workflow set/tibble: 6 x 6</span><span>
-#&gt;   wflow_id         preproc model            object     option     result    
+#&gt;   wflow_id         preproc model            workflow   option     result    
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>    
 #&gt; </span><span style='color: #555555;'>1</span><span> none_knn         recipe  nearest_neighbor </span><span style='color: #555555;'>&lt;workflow&gt;</span><span> </span><span style='color: #555555;'>&lt;list [0]&gt;</span><span> </span><span style='color: #555555;'>&lt;list [0]&gt;</span><span>
 #&gt; </span><span style='color: #555555;'>2</span><span> none_logistic    recipe  logistic_reg     </span><span style='color: #555555;'>&lt;workflow&gt;</span><span> </span><span style='color: #555555;'>&lt;list [0]&gt;</span><span> </span><span style='color: #555555;'>&lt;list [0]&gt;</span><span>
@@ -237,7 +237,7 @@ and <code>models</code> should be equal.</p></td>
 #&gt; 
 #&gt; $everything
 #&gt; class ~ .
-#&gt; &lt;environment: 0x7fd7e493e8a0&gt;
+#&gt; &lt;environment: 0x7fef00a1ad08&gt;
 #&gt; </div><div class='input'>
 <span class='va'>cell_models_by_group</span> <span class='op'>&lt;-</span> <span class='fu'>workflow_set</span><span class='op'>(</span><span class='va'>preproc</span>, <span class='va'>models</span><span class='op'>[</span><span class='st'>"logistic"</span><span class='op'>]</span>, cross <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 

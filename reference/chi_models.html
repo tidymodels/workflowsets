@@ -179,7 +179,7 @@ knn_mod &lt;-
    set_engine("kknn") &lt;!-- %&gt;% --&gt;
    set_mode("classification")
 
-'lr_mod &lt;-
+lr_mod &lt;-
    logistic_reg() &lt;!-- %&gt;% --&gt;
    set_engine("glm")
 
@@ -194,8 +194,7 @@ cell_models &lt;- workflow_set(preproc, models, cross = TRUE)
 
 cell_models &lt;-
    cell_models &lt;!-- %&gt;% --&gt;
-   tune_grid(resamples = val_set, grid = 10) &lt;!-- %&gt;% --&gt;
-   workflow_map(resamples = val_set)
+   workflow_map(resamples = val_set, grid = 10, seed = 1)
 </pre>
 
 
@@ -203,7 +202,7 @@ cell_models &lt;-
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>chi_models</span><span class='op'>)</span>
 <span class='va'>chi_models</span>
 </div><div class='output co'>#&gt; <span style='color: #555555;'># A workflow set/tibble: 7 x 6</span><span>
-#&gt;   wflow_id      preproc model           object     option         result        
+#&gt;   wflow_id      preproc model           workflow   option         result        
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>     </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>        
 #&gt; </span><span style='color: #555555;'>1</span><span> simple_glmnet recipe  linear_reg      </span><span style='color: #555555;'>&lt;workflow&gt;</span><span> </span><span style='color: #555555;'>&lt;named list [</span><span>… </span><span style='color: #555555;'>&lt;tibble [9 × </span><span>…
 #&gt; </span><span style='color: #555555;'>2</span><span> simple_cart   recipe  decision_tree   </span><span style='color: #555555;'>&lt;workflow&gt;</span><span> </span><span style='color: #555555;'>&lt;named list [</span><span>… </span><span style='color: #555555;'>&lt;tibble [9 × </span><span>…

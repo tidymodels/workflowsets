@@ -120,7 +120,7 @@
    <span class="co"># create date features</span>
    <span class="fu">step_date</span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">%&gt;%</span> 
    <span class="fu">step_holiday</span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-   <span class="co"># remove date form the list of predictors</span>
+   <span class="co"># remove date from the list of predictors</span>
    <span class="fu">update_role</span><span class="op">(</span><span class="va">date</span>, new_role <span class="op">=</span> <span class="st">"id"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
    <span class="co"># create dummy variables from factor columns</span>
    <span class="fu">step_dummy</span><span class="op">(</span><span class="fu">all_nominal</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -163,7 +163,7 @@
    <span class="op">)</span>
 <span class="va">chi_models</span>
 <span class="co">#&gt; # A workflow set/tibble: 9 x 6</span>
-<span class="co">#&gt;   wflow_id      preproc model            object     option     result    </span>
+<span class="co">#&gt;   wflow_id      preproc model            workflow   option     result    </span>
 <span class="co">#&gt;   &lt;chr&gt;         &lt;chr&gt;   &lt;chr&gt;            &lt;list&gt;     &lt;list&gt;     &lt;list&gt;    </span>
 <span class="co">#&gt; 1 simple_glmnet recipe  linear_reg       &lt;workflow&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span>
 <span class="co">#&gt; 2 simple_cart   recipe  decision_tree    &lt;workflow&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span>
@@ -204,7 +204,7 @@
 <span class="co">#&gt; 7 &lt;split [301/7]&gt; Slice7</span>
 <span class="co">#&gt; 8 &lt;split [301/7]&gt; Slice8</span>
 <span class="co">#&gt; 9 &lt;split [301/7]&gt; Slice9</span></code></pre></div>
-<p>We’ll use simple grid search for these models by running <code><a href="reference/workflow_map.html">workflow_map()</a></code>. This will execute a resampling or tuning function over the workflows in the <code>object</code> column:</p>
+<p>We’ll use simple grid search for these models by running <code><a href="reference/workflow_map.html">workflow_map()</a></code>. This will execute a resampling or tuning function over the workflows in the <code>workflow</code> column:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
 <span class="va">chi_models</span> <span class="op">&lt;-</span> 
@@ -214,22 +214,22 @@
    <span class="fu"><a href="reference/workflow_map.html">workflow_map</a></span><span class="op">(</span><span class="st">"tune_grid"</span>, resamples <span class="op">=</span> <span class="va">splits</span>, grid <span class="op">=</span> <span class="fl">10</span>, 
                 metrics <span class="op">=</span> <span class="fu">metric_set</span><span class="op">(</span><span class="va">mae</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; ℹ 1 of 7 tuning:     simple_glmnet</span>
-<span class="co">#&gt; ✓ 1 of 7 tuning:     simple_glmnet (23.5s)</span>
+<span class="co">#&gt; ✓ 1 of 7 tuning:     simple_glmnet (24.5s)</span>
 <span class="co">#&gt; ℹ 2 of 7 tuning:     simple_cart</span>
-<span class="co">#&gt; ✓ 2 of 7 tuning:     simple_cart (24.5s)</span>
+<span class="co">#&gt; ✓ 2 of 7 tuning:     simple_cart (25.7s)</span>
 <span class="co">#&gt; ℹ 3 of 7 tuning:     simple_knn</span>
-<span class="co">#&gt; ✓ 3 of 7 tuning:     simple_knn (24.3s)</span>
+<span class="co">#&gt; ✓ 3 of 7 tuning:     simple_knn (26.1s)</span>
 <span class="co">#&gt; ℹ 4 of 7 tuning:     filter_cart</span>
-<span class="co">#&gt; ✓ 4 of 7 tuning:     filter_cart (37.2s)</span>
+<span class="co">#&gt; ✓ 4 of 7 tuning:     filter_cart (42s)</span>
 <span class="co">#&gt; ℹ 5 of 7 tuning:     filter_knn</span>
-<span class="co">#&gt; ✓ 5 of 7 tuning:     filter_knn (37.1s)</span>
+<span class="co">#&gt; ✓ 5 of 7 tuning:     filter_knn (40.9s)</span>
 <span class="co">#&gt; ℹ 6 of 7 tuning:     pca_cart</span>
-<span class="co">#&gt; ✓ 6 of 7 tuning:     pca_cart (29.7s)</span>
+<span class="co">#&gt; ✓ 6 of 7 tuning:     pca_cart (32.6s)</span>
 <span class="co">#&gt; ℹ 7 of 7 tuning:     pca_knn</span>
-<span class="co">#&gt; ✓ 7 of 7 tuning:     pca_knn (29.4s)</span>
+<span class="co">#&gt; ✓ 7 of 7 tuning:     pca_knn (32.3s)</span>
 <span class="va">chi_models</span>
 <span class="co">#&gt; # A workflow set/tibble: 7 x 6</span>
-<span class="co">#&gt;   wflow_id      preproc model           object     option         result        </span>
+<span class="co">#&gt;   wflow_id      preproc model           workflow   option         result        </span>
 <span class="co">#&gt;   &lt;chr&gt;         &lt;chr&gt;   &lt;chr&gt;           &lt;list&gt;     &lt;list&gt;         &lt;list&gt;        </span>
 <span class="co">#&gt; 1 simple_glmnet recipe  linear_reg      &lt;workflow&gt; &lt;named list [… &lt;tibble [9 × …</span>
 <span class="co">#&gt; 2 simple_cart   recipe  decision_tree   &lt;workflow&gt; &lt;named list [… &lt;tibble [9 × …</span>
