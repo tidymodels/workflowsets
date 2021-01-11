@@ -4,7 +4,7 @@
 \alias{workflow_set}
 \title{Generate a set of workflow objects from preprocessing and model objects}
 \usage{
-workflow_set(preproc, models, cross = FALSE)
+workflow_set(preproc, models, cross = TRUE)
 }
 \arguments{
 \item{preproc}{A list (preferably named) with preprocessing objects:
