@@ -1,16 +1,16 @@
 
 check_consistent_metrics <- function(x, fail = TRUE) {
-   metrics <-
-      dplyr::select(x, .metric, .estimator) %>%
-      dplyr::group_by(.estimator, .metric) %>%
-      dplyr::count() %>%
-      dplyr::ungroup()
-   n_combos <- unique(metrics$n)
+   metric_info <-
+      dplyr::distinct(x, .metric, wflow_id) %>%
+      dplyr::mutate(has = TRUE) %>%
+      tidyr::pivot_wider(names_from = ".metric", values_from = "has", values_fill = FALSE) %>%
+      dplyr::select(-wflow_id) %>%
+      purrr::map_dbl(~ sum(!.x))
 
-   if (length(n_combos) > 1) {
-      metrics$pct <- round(metrics$n/sum(metrics$n)*100, 1)
-      msg <- paste0(metrics$.metric, " (",  metrics$pct, "%)", collapse = ", ")
-      msg <- paste("There were inconsistent metrics across the workflow results:", msg)
+   if (any(metric_info > 0)) {
+      incp_metrics <- names(metric_info)[metric_info > 0]
+      msg <- paste("Some metrics were not used in all workflows:",
+                   paste(incp_metrics, collapse = ", "))
 
       if (fail) {
          halt(msg)
