@@ -59,7 +59,7 @@ knn_mod <-
    set_engine("kknn") %>%
    set_mode("classification")
 
-'lr_mod <-
+lr_mod <-
    logistic_reg() %>%
    set_engine("glm")
 
@@ -74,8 +74,7 @@ cell_models <- workflow_set(preproc, models, cross = TRUE)
 
 cell_models <-
    cell_models %>%
-   tune_grid(resamples = val_set, grid = 10) %>%
-   workflow_map(resamples = val_set)
+   workflow_map(resamples = val_set, grid = 10, seed = 1)
 }
 }
 \examples{

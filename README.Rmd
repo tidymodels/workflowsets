@@ -79,7 +79,7 @@ base_recipe <-
    # create date features
    step_date(date) %>% 
    step_holiday(date) %>% 
-   # remove date form the list of predictors
+   # remove date from the list of predictors
    update_role(date, new_role = "id") %>% 
    # create dummy variables from factor columns
    step_dummy(all_nominal()) %>% 
@@ -159,7 +159,7 @@ splits <-
 splits
 ```
 
-We'll use simple grid search for these models by running `workflow_map()`. This will execute a resampling or tuning function over the workflows in the `object` column: 
+We'll use simple grid search for these models by running `workflow_map()`. This will execute a resampling or tuning function over the workflows in the `workflow` column: 
 
 ```{r tune}
 set.seed(123)

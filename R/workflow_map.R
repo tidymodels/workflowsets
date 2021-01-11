@@ -64,13 +64,13 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
       log_progress(verbose, object$wflow_id[[iter]], NULL, iter_chr[iter],
                    n, fn, NULL)
 
-      .fn <- check_fn(fn, object$object[[iter]])
+      .fn <- check_fn(fn, object$workflow[[iter]])
       .fn_info <- dplyr::filter(allowed_fn, func == .fn)
 
       opt <- recheck_options(object$option[[iter]], .fn)
       run_time <- system.time({
          cl <-
-            rlang::call2(.fn, .ns = .fn_info$pkg, object = object$object[[iter]], !!!opt)
+            rlang::call2(.fn, .ns = .fn_info$pkg, object = object$workflow[[iter]], !!!opt)
          withr::with_seed(
             seed[1],
             object$result[[iter]] <- try(rlang::eval_tidy(cl), silent = TRUE)

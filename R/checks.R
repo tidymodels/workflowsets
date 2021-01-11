@@ -109,7 +109,7 @@ check_names <- function(x) {
    }
    xtab <- table(nms)
    if (any(xtab > 1)) {
-      msg <- "The object names should be unique:"
+      msg <- "The workflow names should be unique:"
       msg <- paste(msg, paste0("'", names(xtab)[xtab > 1], "'", collapse = ", "))
       halt(msg)
    }

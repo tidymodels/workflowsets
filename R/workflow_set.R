@@ -93,19 +93,19 @@ workflow_set <- function(preproc, models, cross = TRUE) {
    res <-
       res %>%
       dplyr::mutate(
-         object  = purrr::map2(preproc, model, make_workflow),
-         object  = unname(object),
-         preproc = purrr::map_chr(object, preproc_type),
-         model   = purrr::map_chr(object, model_type),
+         workflow  = purrr::map2(preproc, model, make_workflow),
+         workflow  = unname(workflow),
+         preproc = purrr::map_chr(workflow, preproc_type),
+         model   = purrr::map_chr(workflow, model_type),
          option  = purrr::map(1:nrow(res), ~ list()),
          result   = purrr::map(1:nrow(res), ~ list())
       ) %>%
-      dplyr::select(wflow_id, preproc, model, object, option, result)
+      dplyr::select(wflow_id, preproc, model, workflow, option, result)
    new_workflow_set(res)
 }
 
 new_workflow_set <- function(x) {
- req_cols <- c("wflow_id", "object", "preproc", "model", "option", "result")
+ req_cols <- c("wflow_id", "workflow", "preproc", "model", "option", "result")
  if (!tibble::is_tibble(x)) {
     halt("The object should be a tibble.")
  }
@@ -116,8 +116,8 @@ new_workflow_set <- function(x) {
        "."
     )
  }
- if (!is.list(x$object)) {
-    halt("The 'object' column should be a list.")
+ if (!is.list(x$workflow)) {
+    halt("The 'workflow' column should be a list.")
  }
  if (!is.list(x$result)) {
     halt("The 'result' column should be a list.")
@@ -131,11 +131,11 @@ new_workflow_set <- function(x) {
  if (max(table(x$wflow_id)) > 1 | any(x$wflow_id == "") | any(is.na(x$wflow_id))) {
     halt("The 'wflow_id' column should contain unique, non-missing character strings.")
  }
- is_workflow <- purrr::map_lgl(x$object, ~ inherits(.x, "workflow"))
+ is_workflow <- purrr::map_lgl(x$workflow, ~ inherits(.x, "workflow"))
  if (!all(is_workflow)) {
     bad <- x$wflow_id[!is_workflow]
-    halt("The following elements of the 'object' column are not workflow ",
-         "object: ", paste0("'", bad, "'", collapse = ", "), ".")
+    halt("The following elements of the 'workflow' column are not workflows: ",
+         paste0("'", bad, "'", collapse = ", "), ".")
  }
  if (!is.character(x$preproc)) {
     halt("The 'preproc' column should be character.")

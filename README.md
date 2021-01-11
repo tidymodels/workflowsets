@@ -5,7 +5,8 @@
 
 <!-- badges: start -->
 
-[![Codecov test coverage](https://codecov.io/gh/tidymodels/workflowsets/branch/main/graph/badge.svg)](https://codecov.io/gh/tidymodels/workflowsets?branch=main)
+[![Codecov test
+coverage](https://codecov.io/gh/tidymodels/workflowsets/branch/main/graph/badge.svg)](https://codecov.io/gh/tidymodels/workflowsets?branch=main)
 [![R-CMD-check](https://github.com/tidymodels/workflowsets/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/workflowsets/actions)
 <!-- badges: end -->
 
@@ -71,7 +72,7 @@ base_recipe <-
    # create date features
    step_date(date) %>% 
    step_holiday(date) %>% 
-   # remove date form the list of predictors
+   # remove date from the list of predictors
    update_role(date, new_role = "id") %>% 
    # create dummy variables from factor columns
    step_dummy(all_nominal()) %>% 
@@ -128,7 +129,7 @@ chi_models <-
    )
 chi_models
 #> # A workflow set/tibble: 9 x 6
-#>   wflow_id      preproc model            object     option     result    
+#>   wflow_id      preproc model            workflow   option     result    
 #>   <chr>         <chr>   <chr>            <list>     <list>     <list>    
 #> 1 simple_glmnet recipe  linear_reg       <workflow> <list [0]> <list [0]>
 #> 2 simple_cart   recipe  decision_tree    <workflow> <list [0]> <list [0]>
@@ -181,7 +182,7 @@ splits
 
 We’ll use simple grid search for these models by running
 `workflow_map()`. This will execute a resampling or tuning function over
-the workflows in the `object` column:
+the workflows in the `workflow` column:
 
 ``` r
 set.seed(123)
@@ -192,22 +193,22 @@ chi_models <-
    workflow_map("tune_grid", resamples = splits, grid = 10, 
                 metrics = metric_set(mae), verbose = TRUE)
 #> ℹ 1 of 7 tuning:     simple_glmnet
-#> ✓ 1 of 7 tuning:     simple_glmnet (23.5s)
+#> ✓ 1 of 7 tuning:     simple_glmnet (24.5s)
 #> ℹ 2 of 7 tuning:     simple_cart
-#> ✓ 2 of 7 tuning:     simple_cart (24.5s)
+#> ✓ 2 of 7 tuning:     simple_cart (25.7s)
 #> ℹ 3 of 7 tuning:     simple_knn
-#> ✓ 3 of 7 tuning:     simple_knn (24.3s)
+#> ✓ 3 of 7 tuning:     simple_knn (26.1s)
 #> ℹ 4 of 7 tuning:     filter_cart
-#> ✓ 4 of 7 tuning:     filter_cart (37.2s)
+#> ✓ 4 of 7 tuning:     filter_cart (42s)
 #> ℹ 5 of 7 tuning:     filter_knn
-#> ✓ 5 of 7 tuning:     filter_knn (37.1s)
+#> ✓ 5 of 7 tuning:     filter_knn (40.9s)
 #> ℹ 6 of 7 tuning:     pca_cart
-#> ✓ 6 of 7 tuning:     pca_cart (29.7s)
+#> ✓ 6 of 7 tuning:     pca_cart (32.6s)
 #> ℹ 7 of 7 tuning:     pca_knn
-#> ✓ 7 of 7 tuning:     pca_knn (29.4s)
+#> ✓ 7 of 7 tuning:     pca_knn (32.3s)
 chi_models
 #> # A workflow set/tibble: 7 x 6
-#>   wflow_id      preproc model           object     option         result        
+#>   wflow_id      preproc model           workflow   option         result        
 #>   <chr>         <chr>   <chr>           <list>     <list>         <list>        
 #> 1 simple_glmnet recipe  linear_reg      <workflow> <named list [… <tibble [9 × …
 #> 2 simple_cart   recipe  decision_tree   <workflow> <named list [… <tibble [9 × …

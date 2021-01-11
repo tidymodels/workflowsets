@@ -20,5 +20,5 @@ pull_workflow <- function(x, id) {
    if (nrow(y) != 1) {
       halt("No workflow ID found for '", id[1], "'")
    }
-   y$object[[1]]
+   y$workflow[[1]]
 }
