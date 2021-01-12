@@ -1,5 +1,5 @@
 #' @import ggplot2
-#' @importFrom stats qnorm
+#' @importFrom stats qnorm as.formula model.frame
 
 utils::globalVariables(
    c(".config", ".estimator", ".metric", "info", "metric", "mod_nm",
@@ -9,8 +9,6 @@ utils::globalVariables(
 )
 
 # ------------------------------------------------------------------------------
-
-
 
 #' @importFrom tibble tbl_sum
 #' @export
