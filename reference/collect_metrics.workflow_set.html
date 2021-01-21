@@ -262,20 +262,7 @@ original objects (see the example below).</p>
 <span class='va'>cell_models</span> <span class='op'>&lt;-</span>
    <span class='va'>cell_models</span> <span class='op'>%&gt;%</span>
    <span class='fu'><a href='workflow_map.html'>workflow_map</a></span><span class='op'>(</span>resamples <span class='op'>=</span> <span class='va'>val_set</span>, grid <span class='op'>=</span> <span class='fl'>10</span>, metrics <span class='op'>=</span> <span class='fu'><a href='https://yardstick.tidymodels.org/reference/metric_set.html'>metric_set</a></span><span class='op'>(</span><span class='va'>roc_auc</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Loading required package: scales</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘scales’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:purrr’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    discard</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘rlang’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:purrr’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    %@%, as_function, flatten, flatten_chr, flatten_dbl, flatten_int,</span>
-#&gt; <span class='message'>    flatten_lgl, flatten_raw, invoke, list_along, modify, prepend,</span>
-#&gt; <span class='message'>    splice</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Attaching package: ‘vctrs’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:tibble’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    data_frame</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:dplyr’:</span>
-#&gt; <span class='message'></span>
-#&gt; <span class='message'>    data_frame</span></div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>ℹ</span><span> </span><span style='color: #000000;'>No tuning parameters. `fit_resamples()` will be attempted</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>ℹ</span><span> </span><span style='color: #000000;'>No tuning parameters. `fit_resamples()` will be attempted</span><span></span></div><div class='input'><span class='va'>cell_models</span>
+</div><div class='output co'>#&gt; <span class='message'><span style='color: #0000BB;'>ℹ</span><span> </span><span style='color: #000000;'>No tuning parameters. `fit_resamples()` will be attempted</span><span></span></div><div class='output co'>#&gt; <span class='message'></span><span style='color: #0000BB;'>ℹ</span><span> </span><span style='color: #000000;'>No tuning parameters. `fit_resamples()` will be attempted</span><span></span></div><div class='input'><span class='va'>cell_models</span>
 </div><div class='output co'>#&gt; </span><span style='color: #555555;'># A workflow set/tibble: 6 x 6</span><span>
 #&gt;   wflow_id        preproc model          workflow  option         result        
 #&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>           </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #555555;font-style: italic;'>&lt;chr&gt;</span><span>          </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>         </span><span style='color: #555555;font-style: italic;'>&lt;list&gt;</span><span>        
