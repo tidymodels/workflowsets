@@ -27,16 +27,19 @@ test_that("LOO var formulas", {
    )
 
    f_1 <- leave_var_out_formulas(y ~ ., data = form_data)
-   expect_true(length(f_1) == 3)
-   expect_equal(names(f_1), letters[1:3])
-   expect_true(all(purrr::map_int(f_1, num_pred) == 2))
+   expect_true(length(f_1) == 4)
+   expect_equal(names(f_1), c(letters[1:3], "everything"))
+   expect_equal(
+      purrr::map_int(f_1, num_pred),
+      c(a = 2L, b = 2L, c = 2L, everything = 1L)
+   )
 
-   f_2 <- leave_var_out_formulas(y ~ (.)^2, data = form_data)
+   f_2 <- leave_var_out_formulas(y ~ (.)^2, data = form_data, FALSE)
    expect_true(length(f_2) == 6)
    expect_equal(names(f_2), c("a", "b", "c", "a:b", "a:c", "b:c"))
    expect_equal(unname(purrr::map_int(f_2, num_pred)), rep(2:3, each = 3))
 
-   f_3 <- leave_var_out_formulas(y ~ . + I(a^3), data = form_data)
+   f_3 <- leave_var_out_formulas(y ~ . + I(a^3), data = form_data, FALSE)
    expect_true(length(f_3) == 4)
    expect_equal(names(f_3), c("a", "b", "c", "I(a^3)"))
    expect_equal(unname(purrr::map_int(f_3, num_pred)), c(2, 2, 2, 3))

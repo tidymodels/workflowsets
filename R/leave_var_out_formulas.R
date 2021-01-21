@@ -7,6 +7,7 @@
 #' indicator variables are created).
 #' @param formula A model formula that contains at least two predictors.
 #' @param data A data frame.
+#' @param full_model A logical; should the list include the original formula?
 #' @param ... Options to pass to [stats::model.frame()]
 #' @return A named list of formulas
 #' @examples
@@ -28,7 +29,7 @@
 #'    data = penguins
 #' )
 #' @export
-leave_var_out_formulas <- function(formula, data, ...) {
+leave_var_out_formulas <- function(formula, data, full_model = TRUE, ...) {
    trms <- attr(model.frame(formula, data, ...), "terms")
    x_vars <- attr(trms, "term.labels")
    if (length(x_vars) < 2) {
@@ -41,6 +42,9 @@ leave_var_out_formulas <- function(formula, data, ...) {
    form <- purrr::map(form, as.formula)
    form <- purrr::map(form, rm_formula_env)
    names(form) <- x_vars
+   if (full_model) {
+      form$everything <- formula
+   }
    form
 }
 

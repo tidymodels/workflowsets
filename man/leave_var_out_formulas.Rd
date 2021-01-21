@@ -4,12 +4,14 @@
 \alias{leave_var_out_formulas}
 \title{Create formulas without each predictor}
 \usage{
-leave_var_out_formulas(formula, data, ...)
+leave_var_out_formulas(formula, data, full_model = TRUE, ...)
 }
 \arguments{
 \item{formula}{A model formula that contains at least two predictors.}
 
 \item{data}{A data frame.}
+
+\item{full_model}{A logical; should the list include the original formula?}
 
 \item{...}{Options to pass to \code{\link[stats:model.frame]{stats::model.frame()}}}
 }
