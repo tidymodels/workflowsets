@@ -54,6 +54,7 @@ Visually, we can see that the predictors a mildly correlated and some time of no
 ```{r 2d-plot, fig.width=5, fig.height=5.1}
 ggplot(train_set, aes(x = X1, y = X2, col = class)) + 
   geom_point(alpha = 0.5) + 
+  coord_fixed(ratio = 1) + 
   scale_color_brewer(palette = "Dark2")
 ```
 We'll fit two types of discriminant analysis (DA) models (regularized DA and flexible DA using multivariate adaptive regression splines (MARS)) as well as a simple classification tree. Let's create those `parsnip` model objects: 
@@ -163,7 +164,8 @@ We can produce a contour plot for the class boundary then overlay the data:
 ```{r 2d-boundary, fig.width=5, fig.height=5.1, warning=FALSE}
 ggplot(grid, aes(x = X1, y = X2)) + 
   geom_contour(aes(z = .pred_Class2), breaks = 0.5, col = "black") + 
-  geom_point(data = test_set, aes(col = class), alpha = 0.5)
+  geom_point(data = test_set, aes(col = class), alpha = 0.5) + 
+  coord_fixed(ratio = 1)
 ```
 
 Th workflow set allows us to screen many models to find one that does very well. This can be combined with parallel processing and, especially, racing methods from the [`finetune`](https://finetune.tidymodels.org/reference/tune_race_anova.html) package to optimize the efficiency. 
@@ -263,7 +265,8 @@ summary_stats %>% filter(lower > 0)
 ggplot(summary_stats, aes(x = performance_drop, y = wflow_id)) + 
   geom_point() + 
   geom_errorbar(aes(xmin = lower, xmax = upper), width = .25) +
-  ylab("")
+  ylab("") + 
+  coord_fixed(ratio = 0.002)
 ```
 
 From this, there are a predictors that, when not included in the model, have a significant effect on the performance metric. 
