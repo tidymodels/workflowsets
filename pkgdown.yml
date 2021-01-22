@@ -3,7 +3,7 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   articles/Introducing-Workflow-Sets: Introducing-Workflow-Sets.html
-last_built: 2021-01-22T01:12Z
+last_built: 2021-01-22T01:48Z
 urls:
   reference: https://workflowsets.tidymodels.org/reference
   article: https://workflowsets.tidymodels.org/articles
