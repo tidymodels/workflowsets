@@ -1,3 +1,5 @@
+url: https://workflowsets.tidymodels.org
+
 template:
   package: tidytemplate
   params:
@@ -13,3 +15,12 @@ development:
 figures:
   fig.width: 8
   fig.height: 5.75
+
+navbar:
+  left:
+  - text: Get started
+    href: articles/articles/Introducing-Workflow-Sets.html
+  - text: Reference
+    href: reference/index.html
+  - text: News
+    href: news/index.html

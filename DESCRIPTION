@@ -44,10 +44,13 @@ Suggests:
     covr,
     yardstick,
     dials,
-    kknn
+    kknn,
+    knitr,
+    rmarkdown
 Remotes: 
     tidymodels/tune,
     tidymodels/rsample
 Depends: 
     R (>= 2.10)
 Config/testthat/edition: 3
+VignetteBuilder: knitr

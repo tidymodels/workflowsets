@@ -37,6 +37,7 @@ jobs:
           remotes::install_deps(dependencies = TRUE)
           install.packages("pkgdown", type = "binary")
           remotes::install_github("tidyverse/tidytemplate")
+          install.packages(c("tidymodels", "discrim", "rpart", "mda", "klaR", "earth"), type = "binary")
         shell: Rscript {0}
 
       - name: Install package
