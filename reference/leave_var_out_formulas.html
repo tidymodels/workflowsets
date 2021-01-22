@@ -98,7 +98,10 @@ indicator variables are created)." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="../articles/articles/Introducing-Workflow-Sets.html">Get started</a>
+  <a href="../articles/evaluating-different-predictor-sets.html">Evaluating different predictors</a>
+</li>
+<li>
+  <a href="../articles/articles/tuning-and-comparing-models.html">Ranking models</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -199,7 +202,7 @@ indicator variables are created).</p>
 #&gt; 
 #&gt; $everything
 #&gt; bill_length_mm ~ .
-#&gt; &lt;environment: 0x7f82f56d34d8&gt;
+#&gt; &lt;environment: 0x7ffbe8ec44c8&gt;
 #&gt; </div><div class='input'>
 <span class='fu'>leave_var_out_formulas</span><span class='op'>(</span>
    <span class='va'>bill_length_mm</span> <span class='op'>~</span> <span class='op'>(</span><span class='va'>island</span> <span class='op'>+</span> <span class='va'>sex</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>+</span> <span class='va'>flipper_length_mm</span>,
@@ -223,7 +226,7 @@ indicator variables are created).</p>
 #&gt; 
 #&gt; $everything
 #&gt; bill_length_mm ~ (island + sex)^2 + flipper_length_mm
-#&gt; &lt;environment: 0x7f82f56d34d8&gt;
+#&gt; &lt;environment: 0x7ffbe8ec44c8&gt;
 #&gt; </div><div class='input'>
 <span class='fu'>leave_var_out_formulas</span><span class='op'>(</span>
    <span class='va'>bill_length_mm</span> <span class='op'>~</span> <span class='op'>(</span><span class='va'>island</span> <span class='op'>+</span> <span class='va'>sex</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>+</span> <span class='va'>flipper_length_mm</span> <span class='op'>+</span>
@@ -252,7 +255,7 @@ indicator variables are created).</p>
 #&gt; 
 #&gt; $everything
 #&gt; bill_length_mm ~ (island + sex)^2 + flipper_length_mm + I(flipper_length_mm^2)
-#&gt; &lt;environment: 0x7f82f56d34d8&gt;
+#&gt; &lt;environment: 0x7ffbe8ec44c8&gt;
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

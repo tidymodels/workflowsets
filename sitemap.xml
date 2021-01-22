@@ -40,6 +40,9 @@
     <loc>https://workflowsets.tidymodels.org/reference/workflow_set.html</loc>
   </url>
   <url>
-    <loc>https://workflowsets.tidymodels.org/articles/articles/Introducing-Workflow-Sets.html</loc>
+    <loc>https://workflowsets.tidymodels.org/articles/articles/tuning-and-comparing-models.html</loc>
+  </url>
+  <url>
+    <loc>https://workflowsets.tidymodels.org/articles/evaluating-different-predictor-sets.html</loc>
   </url>
 </urlset>
