@@ -14,7 +14,7 @@ development:
 
 figures:
   fig.width: 8
-  fig.height: 5.75
+  fig.height: 8
 
 navbar:
   left:
