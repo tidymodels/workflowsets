@@ -1,0 +1,270 @@
+---
+title: "Introducing Workflow Sets"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introducing-Workflow-Sets}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center"
+)
+library(klaR)
+library(mda)
+library(rpart)
+library(earth)
+library(workflowsets)
+library(tidymodels)
+theme_set(theme_bw() + theme(legend.position = "top"))
+```
+
+Workflow sets are collections of tidymodels workflow objects that are created as a set. A workflow object is a combination of a preprocessor (e.g. a formula or recipe) and a `parsnip` model specification. 
+
+For some problems, users might want to try different combinations of preprocessing options, models, and/or predictor sets. In stead of creating a large number of individual objects, a cohort of workflows can be created simultaneously. 
+
+This article shows two different use cases for workflow sets. 
+
+## Tuning and comparing models
+
+The first example is a small, two-dimensional data set for illustrating classification models. The data are in the `modeldata` package: 
+
+```{r parabolic}
+library(tidymodels)
+
+data(parabolic)
+str(parabolic)
+```
+
+Let's hold back 25% of the data for a test set: 
+
+```{r 2d-splits}
+set.seed(1)
+split <- initial_split(parabolic)
+
+train_set <- training(split)
+test_set <- testing(split)
+```
+
+Visually, we can see that the predictors a mildly correlated and some time of nonlinear class boundary is probably needed. 
+
+```{r 2d-plot, fig.width=5, fig.height=5.1}
+ggplot(train_set, aes(x = X1, y = X2, col = class)) + 
+  geom_point(alpha = 0.5) + 
+  scale_color_brewer(palette = "Dark2")
+```
+We'll fit two types of discriminant analysis (DA) models (regularized DA and flexible DA using multivariate adaptive regression splines (MARS)) as well as a simple classification tree. Let's create those `parsnip` model objects: 
+
+```{r models}
+library(discrim)
+
+mars_disc_spec <- 
+  discrim_flexible(prod_degree = tune()) %>% 
+  set_engine("earth")
+
+reg_disc_sepc <- 
+  discrim_regularized(frac_common_cov = tune(), frac_identity = tune()) %>% 
+  set_engine("klaR")
+
+cart_spec <- 
+  decision_tree(cost_complexity = tune(), min_n = tune()) %>% 
+  set_engine("rpart") %>% 
+  set_mode("classification")
+```
+
+Next, we'll need a resampling method. Let's use the bootstrap
+
+```{r resamples}
+set.seed(2)
+train_resamples <- bootstraps(train_set)
+```
+
+We have a simple data set so, for a preprocessor, a basic formula will suffice. We could also use a recipe as a preprocessor too. 
+
+The workflow set takes a (named) list of preprocessors and a named list of `parsnip` model specifications and can cross them to make all combinations. For our case, it will just make a set of workflows for our models: 
+
+```{r wflow-set}
+all_workflows <- 
+  workflow_set(
+    preproc = list("formula" = class ~ .),
+    models = list(regularized = reg_disc_sepc, mars = mars_disc_spec, cart = cart_spec)
+  )
+all_workflows
+```
+
+Since these models all have tuning parameters, we can apply the `workflow_map()` function to execute grid search for each of these models with a common set of arguments. The default function to apply across the workflows is `tune_grid()` but other `tune_*()` functions can be used by passing the function name as the first argument. 
+
+Let's use the same grid size for each model. For the MARS model, there are only two possible tuning parameter values nut `tune_grid()` is forgiving about our request of 20 parameter values. 
+
+The `verbose` option provides a concise listing for which workflow is being processed:
+
+```{r tuning}
+all_workflows <- 
+  all_workflows %>% 
+  workflow_map(resamples = train_resamples, grid = 20, verbose = TRUE)
+all_workflows
+```
+
+The `result` column now has the results of each `tune_grid()` call. 
+
+From these results, we can get quick assessments of how well these models classified the data: 
+
+```{r rank_res, fig.width=6, fig.height=4.25}
+rank_results(all_workflows, rank_metric = "roc_auc")
+
+# or a handy plot: 
+autoplot(all_workflows, metric = "roc_auc")
+```
+
+It looks like the MARS model did well. We can plot its results and also pull out the tuning object too: 
+
+```{r mars, fig.width=6, fig.height=4.25}
+autoplot(all_workflows, metric = "roc_auc", which = "formula_mars")
+
+mars_results <- 
+  all_workflows %>% 
+  pull_workflow_result("formula_mars")
+mars_results
+```
+
+Let's get that workflow object and finalize the model: 
+
+```{r final-mars}
+mars_workflow <- 
+  all_workflows %>% 
+  pull_workflow("formula_mars")
+mars_workflow
+
+mars_workflow_fit <- 
+  mars_workflow %>% 
+  finalize_workflow(tibble(prod_degree = 2)) %>% 
+  fit(data = train_set)
+mars_workflow_fit
+```
+
+Let's see how well these data work on the test set:
+
+```{r grid-pred}
+# Make a grid to predict the whole space:
+grid <-
+  crossing(X1 = seq(min(train_set$X1), max(train_set$X1), length.out = 250),
+           X2 = seq(min(train_set$X1), max(train_set$X2), length.out = 250))
+
+grid <- 
+  grid %>% 
+  bind_cols(predict(mars_workflow_fit, grid, type = "prob"))
+```
+
+We can produce a contour plot for the class boundary then overlay the data: 
+
+```{r 2d-boundary, fig.width=5, fig.height=5.1, warning=FALSE}
+ggplot(grid, aes(x = X1, y = X2)) + 
+  geom_contour(aes(z = .pred_Class2), breaks = 0.5, col = "black") + 
+  geom_point(data = test_set, aes(col = class), alpha = 0.5)
+```
+
+Th workflow set allows us to screen many models to find one that does very well. This can be combined with parallel processing and, especially, racing methods from the [`finetune`](https://finetune.tidymodels.org/reference/tune_race_anova.html) package to optimize the efficiency. 
+
+## Evaluating different predictor sets
+
+In this example, we'll fit the same model but specify different predictor sets in the preprocessor list. 
+
+Let's take a look at the customer churn data from the `modeldata` package: 
+
+```{r tidymodels}
+data(mlc_churn)
+ncol(mlc_churn)
+```
+
+There are 19 predictors, mostly numeric. This include aspects of their account, such as `number_customer_service_calls`. The outcome is a factor with two levels: "yes" and "no". 
+
+We'll use a logistic regression to model the data. Since the data set is not small, we'll use basic 10-fold cross-validation to get resampled performance estimates. 
+
+```{r churn-objects}
+lr_model <- logistic_reg() %>% set_engine("glm")
+
+set.seed(1)
+trn_tst_split <- initial_split(mlc_churn, strata = churn)
+
+# Resample the training set
+set.seed(1)
+folds <- vfold_cv(training(trn_tst_split), strata = churn)
+```
+
+We would make a basic workflow that uses this model specification and a basic formula. However, in this application, we'd like to know which predictors are associated with the best area under the ROC curve. 
+
+```{r churn-formulas}
+formulas <- leave_var_out_formulas(churn ~ ., data = mlc_churn)
+length(formulas)
+
+formulas[["area_code"]]
+```
+
+We create our workflow set: 
+
+```{r churn-wflow-sets}
+churn_workflows <- 
+   workflow_set(
+      preproc = formulas, 
+      models = list(logistic = lr_model)
+   )
+churn_workflows
+```
+
+Since we are using basic logistic regression, there is nothing to tune for these models. Instead of `tune_grid()`, we'll use `tune::fit_resamples()` instead by giving that function name as the first argument: 
+
+```{r churn-wflow-set-fits}
+churn_workflows <- 
+   churn_workflows %>% 
+   workflow_map("fit_resamples", resamples = folds)
+churn_workflows
+```
+
+To assess how to measure the effect of each predictor, let's subtract the area under the ROC curve for each predictor from the same metric from the full model. We'll match first by resampling ID, the compute the mean difference. 
+
+```{r churn-metrics, fig.width=5, fig.height=5.1}
+roc_values <- 
+  churn_workflows %>% 
+  collect_metrics(summarize = FALSE) %>% 
+  filter(.metric == "roc_auc") %>% 
+  mutate(wflow_id = gsub("_logistic", "", wflow_id))
+
+full_model <- 
+  roc_values %>% 
+  filter(wflow_id == "everything") %>% 
+  select(full_model = .estimate, id)
+
+differences <- 
+  roc_values %>% 
+  filter(wflow_id != "everything") %>% 
+  full_join(full_model, by = "id") %>% 
+  mutate(performance_drop = full_model - .estimate)
+
+summary_stats <- 
+  differences %>% 
+  group_by(wflow_id) %>% 
+  summarize(
+    std_err = sd(performance_drop)/sum(!is.na(performance_drop)),
+    performance_drop = mean(performance_drop),
+    lower = performance_drop - qnorm(0.975) * std_err,
+    upper = performance_drop + qnorm(0.975) * std_err,
+    .groups = "drop"
+  ) %>% 
+  mutate(
+    wflow_id = factor(wflow_id),
+    wflow_id = reorder(wflow_id, performance_drop)
+    )
+
+summary_stats %>% filter(lower > 0)
+
+ggplot(summary_stats, aes(x = performance_drop, y = wflow_id)) + 
+  geom_point() + 
+  geom_errorbar(aes(xmin = lower, xmax = upper), width = .25) +
+  ylab("")
+```
+
+From this, there are a predictors that, when not included in the model, have a significant effect on the performance metric. 
+
