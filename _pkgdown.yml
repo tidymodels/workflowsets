@@ -14,8 +14,10 @@ development:
 
 navbar:
   left:
-  - text: Get started
-    href: articles/articles/Introducing-Workflow-Sets.html
+  - text: Evaluating different predictors
+    href: articles/evaluating-different-predictor-sets.html
+  - text: Ranking models
+    href: articles/articles/tuning-and-comparing-models.html
   - text: Reference
     href: reference/index.html
   - text: News

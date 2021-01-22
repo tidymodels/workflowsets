@@ -1,0 +1,130 @@
+---
+title: "Evaluating different predictor sets"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Evaluating different predictor sets}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(parsnip)
+library(recipes)
+library(dplyr)
+library(workflowsets)
+library(ggplot2)
+theme_set(theme_bw() + theme(legend.position = "top"))
+```
+
+Workflow sets are collections of tidymodels workflow objects that are created as a set. A workflow object is a combination of a preprocessor (e.g. a formula or recipe) and a `parsnip` model specification. 
+
+For some problems, users might want to try different combinations of preprocessing options, models, and/or predictor sets. In stead of creating a large number of individual objects, a cohort of workflows can be created simultaneously. 
+
+In this example, we'll fit the same model but specify different predictor sets in the preprocessor list. 
+
+Let's take a look at the customer churn data from the `modeldata` package: 
+
+```{r tidymodels}
+data(mlc_churn, package = "modeldata")
+ncol(mlc_churn)
+```
+
+There are 19 predictors, mostly numeric. This include aspects of their account, such as `number_customer_service_calls`. The outcome is a factor with two levels: "yes" and "no". 
+
+We'll use a logistic regression to model the data. Since the data set is not small, we'll use basic 10-fold cross-validation to get resampled performance estimates. 
+
+```{r churn-objects}
+library(workflowsets)
+library(parsnip)
+library(rsample)
+library(dplyr)
+library(ggplot2)
+
+lr_model <- logistic_reg() %>% set_engine("glm")
+
+set.seed(1)
+trn_tst_split <- initial_split(mlc_churn, strata = churn)
+
+# Resample the training set
+set.seed(1)
+folds <- vfold_cv(training(trn_tst_split), strata = churn)
+```
+
+We would make a basic workflow that uses this model specification and a basic formula. However, in this application, we'd like to know which predictors are associated with the best area under the ROC curve. 
+
+```{r churn-formulas}
+formulas <- leave_var_out_formulas(churn ~ ., data = mlc_churn)
+length(formulas)
+
+formulas[["area_code"]]
+```
+
+We create our workflow set: 
+
+```{r churn-wflow-sets}
+churn_workflows <- 
+   workflow_set(
+      preproc = formulas, 
+      models = list(logistic = lr_model)
+   )
+churn_workflows
+```
+
+Since we are using basic logistic regression, there is nothing to tune for these models. Instead of `tune_grid()`, we'll use `tune::fit_resamples()` instead by giving that function name as the first argument: 
+
+```{r churn-wflow-set-fits}
+churn_workflows <- 
+   churn_workflows %>% 
+   workflow_map("fit_resamples", resamples = folds)
+churn_workflows
+```
+
+To assess how to measure the effect of each predictor, let's subtract the area under the ROC curve for each predictor from the same metric from the full model. We'll match first by resampling ID, the compute the mean difference. 
+
+```{r churn-metrics, fig.width=6, fig.height=5}
+roc_values <- 
+  churn_workflows %>% 
+  collect_metrics(summarize = FALSE) %>% 
+  filter(.metric == "roc_auc") %>% 
+  mutate(wflow_id = gsub("_logistic", "", wflow_id))
+
+full_model <- 
+  roc_values %>% 
+  filter(wflow_id == "everything") %>% 
+  select(full_model = .estimate, id)
+
+differences <- 
+  roc_values %>% 
+  filter(wflow_id != "everything") %>% 
+  full_join(full_model, by = "id") %>% 
+  mutate(performance_drop = full_model - .estimate)
+
+summary_stats <- 
+  differences %>% 
+  group_by(wflow_id) %>% 
+  summarize(
+    std_err = sd(performance_drop)/sum(!is.na(performance_drop)),
+    performance_drop = mean(performance_drop),
+    lower = performance_drop - qnorm(0.975) * std_err,
+    upper = performance_drop + qnorm(0.975) * std_err,
+    .groups = "drop"
+  ) %>% 
+  mutate(
+    wflow_id = factor(wflow_id),
+    wflow_id = reorder(wflow_id, performance_drop)
+    )
+
+summary_stats %>% filter(lower > 0)
+
+ggplot(summary_stats, aes(x = performance_drop, y = wflow_id)) + 
+  geom_point() + 
+  geom_errorbar(aes(xmin = lower, xmax = upper), width = .25) +
+  ylab("")
+```
+
+From this, there are a predictors that, when not included in the model, have a significant effect on the performance metric. 
+
