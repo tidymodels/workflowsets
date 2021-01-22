@@ -12,10 +12,6 @@ template:
 development:
   mode: release
 
-figures:
-  fig.width: 8
-  fig.height: 8
-
 navbar:
   left:
   - text: Get started
