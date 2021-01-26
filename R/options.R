@@ -80,7 +80,8 @@ add_option_parameters <- function(x, strict = FALSE) {
 
 
 rm_elem <- function(x, nms) {
-   x[!(names(x) %in% nms)]
+   x <- x[!(names(x) %in% nms)]
+   new_options(!!!x)
 }
 
 append_options <- function(model, global) {
@@ -92,5 +93,31 @@ append_options <- function(model, global) {
       model <- rm_elem(model, common_names)
    }
 
-   c(model, global)
+   all_opt <- c(model, global)
+   new_options(!!!all_opt)
+}
+
+#' @export
+print.options <- function(x, ...) {
+   if (length(x) > 0) {
+      cat("a list of options with names: ",
+          paste0("'", names(x), "'", collapse = ", "))
+   } else {
+      cat("an empty container for options")
+   }
+   cat("\n")
+}
+
+
+new_options <- function(...) {
+   res <- rlang::list2(...)
+   if (any(names(res) == "")) {
+      rlang::abort("All options should be named.")
+   }
+   structure(res, class = c("options", "list"))
+}
+
+#' @export
+obj_sum.options <- function(x) {
+   paste0("opts[", length(x), "]")
 }

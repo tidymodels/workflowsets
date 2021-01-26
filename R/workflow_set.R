@@ -97,7 +97,7 @@ workflow_set <- function(preproc, models, cross = TRUE) {
          workflow  = unname(workflow),
          preproc = purrr::map_chr(workflow, preproc_type),
          model   = purrr::map_chr(workflow, model_type),
-         option  = purrr::map(1:nrow(res), ~ list()),
+         option  = purrr::map(1:nrow(res), ~ new_options()),
          result   = purrr::map(1:nrow(res), ~ list())
       ) %>%
       dplyr::select(wflow_id, preproc, model, workflow, option, result)
