@@ -106,7 +106,11 @@ log_progress <- function(verbose, id, res, iter, n, .fn, elapsed) {
          cols$message$info(msg)
       )
    } else {
-      if (inherits(res, "try-error")) {
+      all_null <- isTRUE(all(is.null(unlist(res$.metrics))))
+      if (inherits(res, "try-error") || all_null) {
+         if (all_null) {
+            res <- collect_notes(res)
+         }
          message(
             cols$symbol$danger(cli::symbol$cross), " ",
             cols$message$info(msg),
@@ -125,5 +129,4 @@ log_progress <- function(verbose, id, res, iter, n, .fn, elapsed) {
 
    invisible(NULL)
 }
-
 

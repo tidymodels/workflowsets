@@ -191,3 +191,11 @@ get_bare_predictions <- function(x, ...) {
    res <- tune::collect_predictions(x, ...)
    remove_parameters(res, x)
 }
+
+collect_notes <- function(x, show = 1) {
+   y <- purrr::map_dfr(x$.notes, I)
+   show <- min(show, nrow(y))
+   y <- paste0(y$.notes[1:show])
+   gsub("[\r\n]", "", y)
+}
+
