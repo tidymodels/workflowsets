@@ -109,6 +109,18 @@ print.options <- function(x, ...) {
 }
 
 
+#' Make a classed list of options
+#'
+#' This function returns a named list with an extra class of `"options"` that
+#' has corresponding formatting methods for printing inside of tibbles.
+#' @param ... A set of named options (or nothing)
+#' @return A classed list.
+#' @examples
+#' options_list(a = 1, b = 2)
+#' options_list()
+#' @export
+options_list <- function(...) new_options(...)
+
 new_options <- function(...) {
    res <- rlang::list2(...)
    if (any(names(res) == "")) {
