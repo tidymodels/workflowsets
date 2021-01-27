@@ -14,6 +14,10 @@ utils::globalVariables(
 #' @export
 tibble::tbl_sum
 
+#' @importFrom tibble obj_sum
+#' @export
+tibble::obj_sum
+
 #' @importFrom tune tune_grid
 #' @export
 tune::tune_grid

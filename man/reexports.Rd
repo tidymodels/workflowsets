@@ -4,6 +4,7 @@
 \name{reexports}
 \alias{reexports}
 \alias{tbl_sum}
+\alias{obj_sum}
 \alias{tune_grid}
 \alias{tune_bayes}
 \alias{fit_resamples}
@@ -22,7 +23,7 @@ below to see their documentation.
 
   \item{ggplot2}{\code{\link[ggplot2]{autoplot}}}
 
-  \item{tibble}{\code{\link[tibble]{tbl_sum}}}
+  \item{tibble}{\code{\link[tibble:reexports]{obj_sum}}, \code{\link[tibble]{tbl_sum}}}
 
   \item{tune}{\code{\link[tune:collect_predictions]{collect_metrics}}, \code{\link[tune]{collect_predictions}}, \code{\link[tune]{fit_resamples}}, \code{\link[tune]{tune_bayes}}, \code{\link[tune]{tune_grid}}}
 }}
