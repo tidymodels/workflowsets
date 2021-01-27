@@ -147,14 +147,24 @@ bad_result_col <- function(x) {
 check_consistent_resamples <- function(x) {
    empty_res <- purrr::map_lgl(x$result, ~ length(.x) == 0)
    tmp <- x$result[!empty_res]
+
+   # Not sure how to fingerprint racing objects just yet. See
+   # https://github.com/tidymodels/rsample/issues/212
+   is_race <- purrr::map_lgl(tmp, inherits, "tune_race")
+   tmp <- x$result[which(!is_race)]
+
+   if (length(tmp) == 0) {
+      return(invisible(NULL))
+   }
+
    tmp_id <- x$wflow_id[!empty_res]
    rs_hash <- purrr::map_chr(tmp, rsample::fingerprint)
+
    if (length(unique(rs_hash)) > 1) {
       fail_res <-
          tibble::tibble(hash = rs_hash, id = tmp_id) %>%
          dplyr::group_by(hash) %>%
-         dplyr::summarize(obj = paste0(id, collapse = ", "), .groups = "drop") %>%
-         dplyr::ungroup()
+         dplyr::summarize(obj = paste0(id, collapse = ", "), .groups = "drop")
       msg <- paste("Different resamples were used in the workflow results. These",
                    "objects used different resamples:",
                    paste0("{", fail_res$obj, "}", collapse = ", "))

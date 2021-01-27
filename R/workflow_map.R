@@ -76,6 +76,7 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
             object$result[[iter]] <- try(rlang::eval_tidy(cl), silent = TRUE)
          )
       })
+      object <- new_workflow_set(object)
       log_progress(verbose, object$wflow_id[[iter]], object$result[[iter]],
                    iter_chr[iter], n, fn, run_time)
    }
