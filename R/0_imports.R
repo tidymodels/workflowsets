@@ -1,6 +1,7 @@
 #' @import ggplot2
 #' @importFrom stats qnorm as.formula model.frame
-
+#' @importFrom tibble obj_sum type_sum
+#'
 utils::globalVariables(
    c(".config", ".estimator", ".metric", "info", "metric", "mod_nm",
      "model", "n", "pp_nm", "preprocessor", "preproc", "object",
@@ -17,6 +18,10 @@ tibble::tbl_sum
 #' @importFrom tibble obj_sum
 #' @export
 tibble::obj_sum
+
+#' @importFrom pillar size_sum
+#' @export
+pillar::size_sum
 
 #' @importFrom tune tune_grid
 #' @export

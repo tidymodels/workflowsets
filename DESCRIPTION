@@ -33,7 +33,8 @@ Imports:
     ggplot2,
     stats,
     prettyunits,
-    rsample (>= 0.0.8.9000)
+    rsample (>= 0.0.8.9000),
+    pillar
 Language: en-US
 Suggests: 
     spelling,
@@ -49,7 +50,8 @@ Suggests:
     rmarkdown
 Remotes: 
     tidymodels/tune,
-    tidymodels/rsample
+    tidymodels/rsample,
+    r-lib/pillar#239
 Depends: 
     R (>= 2.10)
 Config/testthat/edition: 3
