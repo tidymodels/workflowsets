@@ -92,7 +92,7 @@ check_fn <- function(fn, x) {
       fn <- "fit_resamples"
       cols <- tune::get_tune_colors()
       msg <- "No tuning parameters. `fit_resamples()` will be attempted"
-      message(cols$symbol$info("i"), " ", cols$message$info(msg))
+      message(cols$symbol$info("i"), "\t", cols$message$info(msg))
    }
    fn
 }
