@@ -103,7 +103,7 @@ log_progress <- function(verbose, id, res, iter, n, .fn, elapsed) {
    msg <- paste0(iter, " of ", n, " ", event, " ", id)
    if (is.null(res)) {
       message(
-         cols$symbol$info(cli::symbol$info), " ",
+         cols$symbol$info("i"), " ",
          cols$message$info(msg)
       )
    } else {
