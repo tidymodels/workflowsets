@@ -6,7 +6,7 @@
 \alias{add_option_parameters}
 \title{Functions for options in a workflow set}
 \usage{
-add_options(x, ..., strict = FALSE)
+add_options(x, ..., id = NULL, strict = FALSE)
 
 remove_options(x, ...)
 
@@ -17,6 +17,10 @@ add_option_parameters(x, strict = FALSE)
 
 \item{...}{A list of named options. For \code{remove_options()} this can be a
 series of unquoted option names.}
+
+\item{id}{A character string of one or more values from the \code{wflow_id}
+column that indicates which options to update. By default, all workflows
+are updated.}
 
 \item{strict}{A logical; show execution stop if existing options are being
 replaced?}

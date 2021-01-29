@@ -3,6 +3,9 @@
 #' @param x A workflow set
 #' @param ... A list of named options. For `remove_options()` this can be a
 #' series of unquoted option names.
+#' @param id A character string of one or more values from the `wflow_id`
+#' column that indicates which options to update. By default, all workflows
+#' are updated.
 #' @param strict A logical; show execution stop if existing options are being
 #' replaced?
 #' @return An updated workflow set.
@@ -16,7 +19,7 @@
 #'
 #' Note that executing a function on the workflow set, such as `tune_grid()`,
 #' will add any options given to that funciton to the `option` column.
-add_options <- function(x, ..., strict = FALSE) {
+add_options <- function(x, ..., id = NULL, strict = FALSE) {
    dots <- list(...)
    if (length(dots) == 0) {
       return(x)
@@ -27,8 +30,21 @@ add_options <- function(x, ..., strict = FALSE) {
    } else {
       act <- "warn"
    }
-   check_options(x$option, x$wflow_id, dots, action = act)
-   x <- dplyr::mutate(x, option = purrr::map(option, append_options, dots))
+
+   if (!is.null(id)) {
+      for (i in id) {
+         ind <- which(x$wflow_id == i)
+         if (length(ind) == 0) {
+            rlang::warn(paste("Don't have an 'id' value", i))
+         } else {
+            check_options(x$option[[ind]], x$wflow_id[[ind]], dots, action = act)
+            x$option[[ind]] <- append_options(x$option[[ind]], dots)
+         }
+      }
+   } else {
+      check_options(x$option, x$wflow_id, dots, action = act)
+      x <- dplyr::mutate(x, option = purrr::map(option, append_options, dots))
+   }
    x
 }
 
