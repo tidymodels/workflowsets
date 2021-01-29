@@ -196,6 +196,32 @@ test_that("crossing", {
    )
 })
 
+
+# ------------------------------------------------------------------------------
+
+test_that("checking resamples", {
+   library(workflows)
+   ctrl <- control_resamples(save_workflow = TRUE)
+   set.seed(1)
+   cv_1 <- vfold_cv(mtcars, v = 5)
+   f_1 <- lr_spec %>% fit_resamples(mpg ~ wt, resamples = cv_1, control = ctrl)
+   set.seed(2)
+   cv_2 <- vfold_cv(mtcars, v = 5)
+   f_2 <- lr_spec %>% fit_resamples(mpg ~ disp, resamples = cv_2, control = ctrl)
+   expect_error(
+      as_workflow_set(wt = f_1, disp = f_2),
+      "Different resamples were used in the workflow results"
+   )
+
+   # Emulate old rset objects
+   attr(cv_2, "fingerprint") <- NULL
+   f_3 <- lr_spec %>% fit_resamples(mpg ~ disp, resamples = cv_2, control = ctrl)
+   expect_error(
+      as_workflow_set(wt = f_1, disp = f_3),
+      regexp = NA
+   )
+})
+
 # ------------------------------------------------------------------------------
 
 test_that("constructor", {
