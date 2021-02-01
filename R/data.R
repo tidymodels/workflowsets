@@ -7,6 +7,9 @@
 #'
 #' `cell_models` was generated using this code:
 #'
+#' `two_class_set` and `two_class_res` were generated using the data in the
+#' package file `example-data/two-class-set.R`
+#'
 #' \preformatted{
 #' library(workflowsets)
 #' library(modeldata)
@@ -79,6 +82,13 @@ NULL
 #' @name cell_models
 #' @rdname chi_models
 #' @aliases cell_models
+#' @docType data
+#' @keywords datasets
+NULL
+
+#' @name two_class_set
+#' @rdname chi_models
+#' @aliases two_class_set two_class_res
 #' @docType data
 #' @keywords datasets
 NULL
