@@ -10,7 +10,7 @@ add_options(x, ..., id = NULL, strict = FALSE)
 
 remove_options(x, ...)
 
-add_option_parameters(x, strict = FALSE)
+add_option_parameters(x, id = NULL, strict = FALSE)
 }
 \arguments{
 \item{x}{A workflow set}
@@ -40,5 +40,17 @@ Functions for options in a workflow set
 (if parameters are being tuned).
 
 Note that executing a function on the workflow set, such as \code{tune_grid()},
-will add any options given to that funciton to the \code{option} column.
+will add any options given to that function to the \code{option} column.
+}
+\examples{
+two_class_set \%>\%
+  add_options(a = 1)
+
+two_class_set \%>\%
+  add_options(a = 1) \%>\%
+  add_options(b = 2, id = "none_cart")
+
+library(tune)
+two_class_set \%>\%
+  add_option_parameters()
 }
