@@ -24,10 +24,6 @@ mars_earth_spec <-
   set_engine('earth') %>%
   set_mode('classification')
 
-naive_Bayes_klaR_spec <-
-  discrim::naive_Bayes(smoothness = tune()) %>%
-  set_engine('klaR')
-
 # ------------------------------------------------------------------------------
 
 yj_recipe <-
@@ -40,7 +36,7 @@ two_class_set <-
    workflow_set(
       preproc = list(none = Class ~ A + B, yj_trans = yj_recipe),
       models = list(cart = decision_tree_rpart_spec, glm = logistic_reg_glm_spec,
-                    mars = mars_earth_spec, naive_bayes = naive_Bayes_klaR_spec)
+                    mars = mars_earth_spec)
    )
 
 # ------------------------------------------------------------------------------
