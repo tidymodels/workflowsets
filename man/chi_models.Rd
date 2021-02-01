@@ -4,6 +4,8 @@
 \name{chi_models}
 \alias{chi_models}
 \alias{cell_models}
+\alias{two_class_set}
+\alias{two_class_res}
 \title{Example Data Sets}
 \value{
 A workflow set.
@@ -18,6 +20,9 @@ be removed before a CRAN submissin (due to size).
 \code{chi_models} contains the results of the code shown in the readme file.
 
 \code{cell_models} was generated using this code:
+
+\code{two_class_set} and \code{two_class_res} were generated using the data in the
+package file \code{example-data/two-class-set.R}
 
 \preformatted{
 library(workflowsets)

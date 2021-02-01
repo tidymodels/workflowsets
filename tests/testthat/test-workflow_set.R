@@ -24,22 +24,16 @@ test_that("creating workflow sets", {
    expect_s3_class(car_set_1, c("workflow_set", "tbl_df", "tbl", "data.frame"))
    expect_equal(
       names(car_set_1),
-      c("wflow_id", "preproc", "model", "workflow", "option", "result")
+      c("wflow_id", "info", "option", "result")
    )
 
    expect_true(
       all(purrr::map_lgl(car_set_1$wflow_id, is.character))
    )
    expect_true(
-      all(purrr::map_lgl(car_set_1$preproc, is.character))
-   )
-   expect_true(
-      all(purrr::map_lgl(car_set_1$model, is.character))
+      all(purrr::map_lgl(car_set_1$info, tibble::is_tibble))
    )
 
-   expect_true(
-      all(purrr::map_lgl(car_set_1$workflow, is.list))
-   )
    expect_true(
       all(purrr::map_lgl(car_set_1$option, is.list))
    )
@@ -48,7 +42,7 @@ test_that("creating workflow sets", {
    )
 
    expect_true(
-      all(purrr::map_lgl(car_set_1$workflow, ~ inherits(.x, "workflow")))
+      all(purrr::map_lgl(car_set_1$info, ~ inherits(.x$workflow[[1]], "workflow")))
    )
    expect_true(
       all(purrr::map_lgl(car_set_1$option, ~ inherits(.x, "list")))
@@ -74,15 +68,9 @@ test_that("creating workflow sets", {
       all(purrr::map_lgl(car_set_2$wflow_id, is.character))
    )
    expect_true(
-      all(purrr::map_lgl(car_set_2$preproc, is.character))
-   )
-   expect_true(
-      all(purrr::map_lgl(car_set_2$model, is.character))
+      all(purrr::map_lgl(car_set_2$info, tibble::is_tibble))
    )
 
-   expect_true(
-      all(purrr::map_lgl(car_set_2$workflow, is.list))
-   )
    expect_true(
       all(purrr::map_lgl(car_set_2$option, is.list))
    )
@@ -91,7 +79,7 @@ test_that("creating workflow sets", {
    )
 
    expect_true(
-      all(purrr::map_lgl(car_set_2$workflow, ~ inherits(.x, "workflow")))
+      all(purrr::map_lgl(car_set_2$info, ~ inherits(.x$workflow[[1]], "workflow")))
    )
    expect_true(
       all(purrr::map_lgl(car_set_2$option, ~ inherits(.x, "list")))
@@ -133,7 +121,9 @@ test_that("correct object type and resamples", {
    )
 
    res_2 <- set_1
-   res_2$result <- purrr::map(res_2$workflow, ~ fit_resamples(.x, resamples = bootstraps(mtcars, 3)))
+   res_2$result <-
+      map(res_2$wflow_id, ~ pull_workflow(res_2, id = .x)) %>%
+      purrr::map(~ fit_resamples(.x, resamples = bootstraps(mtcars, 3)))
    expect_error(
       workflowsets:::check_for_tune_results(res_2$result),
       regex = NA
@@ -210,13 +200,13 @@ test_that("constructor", {
                    control = tune::control_resamples(save_pred = TRUE, save_workflow = TRUE))
 
    expect_error(
-      workflowsets:::new_workflow_set(car_set_1 %>% dplyr::select(-workflow)),
+      workflowsets:::new_workflow_set(car_set_1 %>% dplyr::select(-info)),
       "The object should have columns"
    )
 
    expect_error(
-      workflowsets:::new_workflow_set(car_set_1 %>% mutate(workflow = "a")),
-      "The 'workflow' column should be a list."
+      workflowsets:::new_workflow_set(car_set_1 %>% mutate(info = "a")),
+      "The 'info' column should be a list."
    )
    expect_error(
       workflowsets:::new_workflow_set(car_set_1 %>% mutate(result = "a")),
@@ -233,18 +223,6 @@ test_that("constructor", {
    expect_error(
       workflowsets:::new_workflow_set(car_set_1 %>% mutate(wflow_id = "a")),
       "The 'wflow_id' column should contain unique, non-missing character strings"
-   )
-   expect_error(
-      workflowsets:::new_workflow_set(car_set_1 %>% mutate(workflow = map(wflow_id, ~ list(1)))),
-      "The following elements of the 'workflow' column"
-   )
-   expect_error(
-      workflowsets:::new_workflow_set(car_set_1 %>% mutate(preproc = 1)),
-      "The 'preproc' column should be character."
-   )
-   expect_error(
-      workflowsets:::new_workflow_set(car_set_1 %>% mutate(model = 1)),
-      "The 'model' column should be character."
    )
 
 })

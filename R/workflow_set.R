@@ -95,17 +95,22 @@ workflow_set <- function(preproc, models, cross = TRUE) {
       dplyr::mutate(
          workflow  = purrr::map2(preproc, model, make_workflow),
          workflow  = unname(workflow),
-         preproc = purrr::map_chr(workflow, preproc_type),
-         model   = purrr::map_chr(workflow, model_type),
+         info = purrr::map(workflow, get_info),
          option  = purrr::map(1:nrow(res), ~ list()),
          result   = purrr::map(1:nrow(res), ~ list())
       ) %>%
-      dplyr::select(wflow_id, preproc, model, workflow, option, result)
+      dplyr::select(wflow_id, info, option, result)
    new_workflow_set(res)
 }
 
+get_info <- function(x) {
+   tibble::tibble(workflow = list(x),
+                  preproc = preproc_type(x),
+                  model = model_type(x))
+}
+
 new_workflow_set <- function(x) {
- req_cols <- c("wflow_id", "workflow", "preproc", "model", "option", "result")
+ req_cols <- c("wflow_id", "info", "option", "result")
  if (!tibble::is_tibble(x)) {
     halt("The object should be a tibble.")
  }
@@ -116,8 +121,8 @@ new_workflow_set <- function(x) {
        "."
     )
  }
- if (!is.list(x$workflow)) {
-    halt("The 'workflow' column should be a list.")
+ if (!is.list(x$info)) {
+    halt("The 'info' column should be a list.")
  }
  if (!is.list(x$result)) {
     halt("The 'result' column should be a list.")
@@ -131,18 +136,21 @@ new_workflow_set <- function(x) {
  if (max(table(x$wflow_id)) > 1 | any(x$wflow_id == "") | any(is.na(x$wflow_id))) {
     halt("The 'wflow_id' column should contain unique, non-missing character strings.")
  }
- is_workflow <- purrr::map_lgl(x$workflow, ~ inherits(.x, "workflow"))
- if (!all(is_workflow)) {
-    bad <- x$wflow_id[!is_workflow]
-    halt("The following elements of the 'workflow' column are not workflows: ",
+ is_tibble <- purrr::map_lgl(x$info, ~ inherits(.x, "tbl_df"))
+ if (!all(is_tibble)) {
+    bad <- x$wflow_id[!is_tibble]
+    halt("The following elements of the 'info' column are not tibbles: ",
          paste0("'", bad, "'", collapse = ", "), ".")
  }
- if (!is.character(x$preproc)) {
-    halt("The 'preproc' column should be character.")
+ tbl_nms <- purrr::map(x$info, names)
+ exp_nms <- c("workflow", "preproc", "model")
+ check_nms <- purrr::map_lgl(tbl_nms, ~ identical(.x, exp_nms))
+ if (!all(check_nms)) {
+    bad <- x$wflow_id[!check_nms]
+    halt("The following elements of the 'info' column do not have the correct elements: ",
+         paste0("'", bad, "'", collapse = ", "), ".")
  }
- if (!is.character(x$model)) {
-    halt("The 'model' column should be character.")
- }
+
  check_for_tune_results(x$result)
  check_consistent_resamples(x)
 
