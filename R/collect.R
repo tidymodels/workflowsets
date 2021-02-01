@@ -113,8 +113,10 @@ collect_metrics.workflow_set <- function(x, summarize = TRUE, ...) {
          ),
          metrics = purrr::map2(metrics, result, remove_parameters)
       )
+   info <- dplyr::bind_rows(x$info) %>% dplyr::select(-workflow)
    x <-
-      dplyr::select(x, wflow_id, preproc, model, metrics) %>%
+      dplyr::select(x, wflow_id, metrics) %>%
+      dplyr::bind_cols(info) %>%
       tidyr::unnest(cols = c(metrics)) %>%
       reorder_cols()
    check_consistent_metrics(x, fail = FALSE)
@@ -172,8 +174,10 @@ collect_predictions.workflow_set <-
                )
             )
       }
+      info <- dplyr::bind_rows(x$info) %>% dplyr::select(-workflow)
       x <-
-         dplyr::select(x, wflow_id, preproc, model, predictions) %>%
+         dplyr::select(x, wflow_id, predictions) %>%
+         dplyr::bind_cols(info) %>%
          tidyr::unnest(cols = c(predictions)) %>%
          reorder_cols()
       x

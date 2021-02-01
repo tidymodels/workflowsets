@@ -6,6 +6,9 @@
 #' depending on the function.
 #' @export
 pull_workflow_result <- function(x, id) {
+   if (length(id) != 1) {
+      rlang::abort("'id' should have a single value.")
+   }
    y <- x %>% dplyr::filter(wflow_id == id[1])
    if (nrow(y) != 1) {
       halt("No workflow ID found for '", id[1], "'")
@@ -16,9 +19,12 @@ pull_workflow_result <- function(x, id) {
 #' @export
 #' @rdname pull_workflow_result
 pull_workflow <- function(x, id) {
+   if (length(id) != 1) {
+      rlang::abort("'id' should have a single value.")
+   }
    y <- x %>% dplyr::filter(wflow_id == id[1])
    if (nrow(y) != 1) {
       halt("No workflow ID found for '", id[1], "'")
    }
-   y$workflow[[1]]
+   y$info[[1]]$workflow[[1]]
 }

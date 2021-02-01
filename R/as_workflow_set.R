@@ -19,13 +19,12 @@ as_workflow_set <- function(...) {
       res %>%
       dplyr::mutate(
          workflow  = unname(wflows),
-         preproc   = purrr::map_chr(wflows, preproc_type),
-         model     = purrr::map_chr(wflows, model_type),
+         info = purrr::map(workflow, get_info),
          option    = purrr::map(1:nrow(res), ~ list())
       )
    res$result <- unname(object)
 
    res %>%
-      dplyr::select(wflow_id, preproc, model, workflow, option, result) %>%
+      dplyr::select(wflow_id, info, option, result) %>%
       new_workflow_set()
 }

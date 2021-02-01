@@ -3,6 +3,9 @@
 #' @param x A workflow set
 #' @param ... A list of named options. For `remove_options()` this can be a
 #' series of unquoted option names.
+#' @param id A character string of one or more values from the `wflow_id`
+#' column that indicates which options to update. By default, all workflows
+#' are updated.
 #' @param strict A logical; show execution stop if existing options are being
 #' replaced?
 #' @return An updated workflow set.
@@ -15,8 +18,19 @@
 #' (if parameters are being tuned).
 #'
 #' Note that executing a function on the workflow set, such as `tune_grid()`,
-#' will add any options given to that funciton to the `option` column.
-add_options <- function(x, ..., strict = FALSE) {
+#' will add any options given to that function to the `option` column.
+#' @examples
+#' two_class_set %>%
+#'   add_options(a = 1)
+#'
+#' two_class_set %>%
+#'   add_options(a = 1) %>%
+#'   add_options(b = 2, id = "none_cart")
+#'
+#' library(tune)
+#' two_class_set %>%
+#'   add_option_parameters()
+add_options <- function(x, ..., id = NULL, strict = FALSE) {
    dots <- list(...)
    if (length(dots) == 0) {
       return(x)
@@ -27,8 +41,21 @@ add_options <- function(x, ..., strict = FALSE) {
    } else {
       act <- "warn"
    }
-   check_options(x$option, x$wflow_id, dots, action = act)
-   x <- dplyr::mutate(x, option = purrr::map(option, append_options, dots))
+
+   if (!is.null(id)) {
+      for (i in id) {
+         ind <- which(x$wflow_id == i)
+         if (length(ind) == 0) {
+            rlang::warn(paste("Don't have an 'id' value", i))
+         } else {
+            check_options(x$option[[ind]], x$wflow_id[[ind]], dots, action = act)
+            x$option[[ind]] <- append_options(x$option[[ind]], dots)
+         }
+      }
+   } else {
+      check_options(x$option, x$wflow_id, dots, action = act)
+      x <- dplyr::mutate(x, option = purrr::map(option, append_options, dots))
+   }
    x
 }
 
@@ -59,8 +86,8 @@ maybe_param <- function(x) {
 }
 #' @export
 #' @rdname add_options
-add_option_parameters <- function(x, strict = FALSE) {
-   prm <- purrr::map(x$workflow, maybe_param)
+add_option_parameters <- function(x, id = NULL, strict = FALSE) {
+   prm <- purrr::map(x$info, ~ maybe_param(.x$workflow[[1]]))
    num <- purrr::map_int(prm, length)
    if (all(num == 0)) {
       return(x)
@@ -71,13 +98,23 @@ add_option_parameters <- function(x, strict = FALSE) {
    } else {
       act <- "warn"
    }
-   check_options(x$option, x$wflow_id, prm[1], action = act)
-   x <- dplyr::mutate(x, option = purrr::map2(option, prm, append_options))
+
+   if (!is.null(id)) {
+      for (i in id) {
+         ind <- which(x$wflow_id == i)
+         if (length(ind) == 0) {
+            rlang::warn(paste("Don't have an 'id' value", i))
+         } else {
+            check_options(x$option[[ind]], x$wflow_id[[ind]], prm[[ind]], action = act)
+            x$option[[ind]] <- append_options(x$option[[ind]], prm[[ind]])
+         }
+      }
+   } else {
+      check_options(x$option, x$wflow_id, prm[1], action = act)
+      x <- dplyr::mutate(x, option = purrr::map2(option, prm, append_options))
+   }
    x
 }
-
-
-
 
 rm_elem <- function(x, nms) {
    x[!(names(x) %in% nms)]
