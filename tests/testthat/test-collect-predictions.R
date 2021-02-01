@@ -1,6 +1,6 @@
 
 library(parsnip)
-library(rsample)
+suppressPackageStartupMessages(library(rsample))
 
 lr_spec <- linear_reg() %>% set_engine("lm")
 

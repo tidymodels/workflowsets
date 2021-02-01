@@ -13,17 +13,19 @@ rank_results <- function(x, rank_metric = NULL, select_best = FALSE) {
    metric_info <- pick_metric(x, rank_metric)
    metric <- metric_info$metric
    direction <- metric_info$direction
+   wflow_info <- dplyr::bind_cols(purrr::map_dfr(x$info, I), dplyr::select(x, wflow_id))
 
    results <- collect_metrics(x) %>%
-      dplyr::select(wflow_id, .config, .metric, mean, std_err, n)
+      dplyr::select(wflow_id, .config, .metric, mean, std_err, n) %>%
+      dplyr::full_join(wflow_info, by = "wflow_id")
+
    types <- x %>%
+      dplyr::full_join(wflow_info, by = "wflow_id") %>%
       dplyr::mutate(
-         model = get_model_type(x),
-         preprocessor = get_preproc_type(x),
          is_race = purrr::map_lgl(result, ~ inherits(.x, "tune_race")),
          num_rs = purrr::map_int(result, get_num_resamples)
          ) %>%
-      dplyr::select(wflow_id, model, preprocessor, is_race, num_rs)
+      dplyr::select(wflow_id, is_race, num_rs)
 
    ranked <-
       dplyr::full_join(results, types, by = "wflow_id") %>%
@@ -62,12 +64,13 @@ rank_results <- function(x, rank_metric = NULL, select_best = FALSE) {
          ranked <-
             ranked %>%
             dplyr::mutate(rank = rank(mean, ties.method = "random")) %>%
-            dplyr::select(wflow_id, .config, model, preprocessor, rank)
+            dplyr::select(wflow_id, .config, rank)
       }
    )
 
    dplyr::inner_join(results, ranked, by = c("wflow_id", ".config")) %>%
-      dplyr::arrange(rank)
+      dplyr::arrange(rank) %>%
+      dplyr::rename(preprocessor = preproc)
 
 }
 

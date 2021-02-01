@@ -18,7 +18,7 @@ test_that("pulling objects", {
 
    expect_equal(
       car_set_1 %>% pull_workflow("reg_lm"),
-      car_set_1$workflow[[1]]
+      car_set_1$info[[1]]$workflow[[1]]
    )
 
    expect_equal(
