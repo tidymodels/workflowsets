@@ -49,7 +49,7 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
    dots <- rlang::list2(...)
    # check and add options to options column
    if (length(dots) > 0) {
-      object <- rlang::exec("add_options", object, !!!dots)
+      object <- rlang::exec("options_add", object, !!!dots)
    }
 
    iter_seq <- seq_along(object$wflow_id)

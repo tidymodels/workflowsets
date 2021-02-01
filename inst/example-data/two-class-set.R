@@ -49,3 +49,4 @@ two_class_res <-
 
 save(two_class_set, two_class_res, file = "data/two_class_set.rda",
      compress = "bzip2", version = 2)
+
