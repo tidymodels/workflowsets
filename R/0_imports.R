@@ -19,9 +19,9 @@ tibble::tbl_sum
 #' @export
 tibble::obj_sum
 
-#' @importFrom pillar size_sum
-#' @export
-pillar::size_sum
+#' #' @importFrom pillar size_sum
+#' #' @export
+#' pillar::size_sum
 
 #' @importFrom tune tune_grid
 #' @export

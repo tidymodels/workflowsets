@@ -25,7 +25,7 @@ Imports:
     withr,
     dplyr,
     purrr,
-    tibble,
+    tibble (>= 3.0.6),
     vctrs,
     tidyr,
     workflows,
@@ -34,7 +34,7 @@ Imports:
     stats,
     prettyunits,
     rsample (>= 0.0.8.9000),
-    pillar
+    pillar (>= 1.4.99.9006)
 Language: en-US
 Suggests: 
     spelling,
