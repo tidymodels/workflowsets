@@ -158,7 +158,10 @@ check_consistent_resamples <- function(x) {
    }
 
    tmp_id <- x$wflow_id[!empty_res]
-   rs_hash <- purrr::map_chr(tmp, rsample::fingerprint)
+
+   rs_hash <- purrr::map_chr(tmp, rsample::.get_fingerprint)
+   tmp_id <- tmp_id[!is.na(rs_hash)]
+   rs_hash <- rs_hash[!is.na(rs_hash)]
 
    if (length(unique(rs_hash)) > 1) {
       fail_res <-

@@ -193,3 +193,6 @@ We can determine how well each combination did by looking at the best results pe
 rank_results(chi_models, rank_metric = "mae", select_best = TRUE)
 ```
 
+```{r save, include = FALSE}
+save(chi_models, file = "data/chi_models.rda", compress = "bzip2", version = 2)
+```
