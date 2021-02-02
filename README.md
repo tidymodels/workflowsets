@@ -128,18 +128,18 @@ chi_models <-
       cross = TRUE
    )
 chi_models
-#> # A workflow set/tibble: 9 x 6
-#>   wflow_id      preproc model            workflow   option     result    
-#>   <chr>         <chr>   <chr>            <list>     <list>     <list>    
-#> 1 simple_glmnet recipe  linear_reg       <workflow> <list [0]> <list [0]>
-#> 2 simple_cart   recipe  decision_tree    <workflow> <list [0]> <list [0]>
-#> 3 simple_knn    recipe  nearest_neighbor <workflow> <list [0]> <list [0]>
-#> 4 filter_glmnet recipe  linear_reg       <workflow> <list [0]> <list [0]>
-#> 5 filter_cart   recipe  decision_tree    <workflow> <list [0]> <list [0]>
-#> 6 filter_knn    recipe  nearest_neighbor <workflow> <list [0]> <list [0]>
-#> 7 pca_glmnet    recipe  linear_reg       <workflow> <list [0]> <list [0]>
-#> 8 pca_cart      recipe  decision_tree    <workflow> <list [0]> <list [0]>
-#> 9 pca_knn       recipe  nearest_neighbor <workflow> <list [0]> <list [0]>
+#> # A workflow set/tibble: 9 x 4
+#>   wflow_id      info             option     result    
+#>   <chr>         <list>           <list>     <list>    
+#> 1 simple_glmnet <tibble [1 × 3]> <list [0]> <list [0]>
+#> 2 simple_cart   <tibble [1 × 3]> <list [0]> <list [0]>
+#> 3 simple_knn    <tibble [1 × 3]> <list [0]> <list [0]>
+#> 4 filter_glmnet <tibble [1 × 3]> <list [0]> <list [0]>
+#> 5 filter_cart   <tibble [1 × 3]> <list [0]> <list [0]>
+#> 6 filter_knn    <tibble [1 × 3]> <list [0]> <list [0]>
+#> 7 pca_glmnet    <tibble [1 × 3]> <list [0]> <list [0]>
+#> 8 pca_cart      <tibble [1 × 3]> <list [0]> <list [0]>
+#> 9 pca_knn       <tibble [1 × 3]> <list [0]> <list [0]>
 ```
 
 It doesn’t make sense to use PCA or a filter with a `glmnet` model. We
@@ -192,31 +192,31 @@ chi_models <-
    # such as `tune_grid()`, `fit_resamples()`, etc.
    workflow_map("tune_grid", resamples = splits, grid = 10, 
                 metrics = metric_set(mae), verbose = TRUE)
-#> ℹ 1 of 7 tuning:     simple_glmnet
-#> ✓ 1 of 7 tuning:     simple_glmnet (24.5s)
-#> ℹ 2 of 7 tuning:     simple_cart
+#> i 1 of 7 tuning:     simple_glmnet
+#> ✓ 1 of 7 tuning:     simple_glmnet (23.9s)
+#> i 2 of 7 tuning:     simple_cart
 #> ✓ 2 of 7 tuning:     simple_cart (25.7s)
-#> ℹ 3 of 7 tuning:     simple_knn
-#> ✓ 3 of 7 tuning:     simple_knn (26.1s)
-#> ℹ 4 of 7 tuning:     filter_cart
-#> ✓ 4 of 7 tuning:     filter_cart (42s)
-#> ℹ 5 of 7 tuning:     filter_knn
-#> ✓ 5 of 7 tuning:     filter_knn (40.9s)
-#> ℹ 6 of 7 tuning:     pca_cart
-#> ✓ 6 of 7 tuning:     pca_cart (32.6s)
-#> ℹ 7 of 7 tuning:     pca_knn
-#> ✓ 7 of 7 tuning:     pca_knn (32.3s)
+#> i 3 of 7 tuning:     simple_knn
+#> ✓ 3 of 7 tuning:     simple_knn (25.5s)
+#> i 4 of 7 tuning:     filter_cart
+#> ✓ 4 of 7 tuning:     filter_cart (39.4s)
+#> i 5 of 7 tuning:     filter_knn
+#> ✓ 5 of 7 tuning:     filter_knn (39.6s)
+#> i 6 of 7 tuning:     pca_cart
+#> ✓ 6 of 7 tuning:     pca_cart (31.3s)
+#> i 7 of 7 tuning:     pca_knn
+#> ✓ 7 of 7 tuning:     pca_knn (31.1s)
 chi_models
-#> # A workflow set/tibble: 7 x 6
-#>   wflow_id      preproc model           workflow   option         result        
-#>   <chr>         <chr>   <chr>           <list>     <list>         <list>        
-#> 1 simple_glmnet recipe  linear_reg      <workflow> <named list [… <tibble [9 × …
-#> 2 simple_cart   recipe  decision_tree   <workflow> <named list [… <tibble [9 × …
-#> 3 simple_knn    recipe  nearest_neighb… <workflow> <named list [… <tibble [9 × …
-#> 4 filter_cart   recipe  decision_tree   <workflow> <named list [… <tibble [9 × …
-#> 5 filter_knn    recipe  nearest_neighb… <workflow> <named list [… <tibble [9 × …
-#> 6 pca_cart      recipe  decision_tree   <workflow> <named list [… <tibble [9 × …
-#> 7 pca_knn       recipe  nearest_neighb… <workflow> <named list [… <tibble [9 × …
+#> # A workflow set/tibble: 7 x 4
+#>   wflow_id      info             option           result                
+#>   <chr>         <list>           <list>           <list>                
+#> 1 simple_glmnet <tibble [1 × 3]> <named list [3]> <tune_results [9 × 4]>
+#> 2 simple_cart   <tibble [1 × 3]> <named list [3]> <tune_results [9 × 4]>
+#> 3 simple_knn    <tibble [1 × 3]> <named list [3]> <tune_results [9 × 4]>
+#> 4 filter_cart   <tibble [1 × 3]> <named list [3]> <tune_results [9 × 4]>
+#> 5 filter_knn    <tibble [1 × 3]> <named list [3]> <tune_results [9 × 4]>
+#> 6 pca_cart      <tibble [1 × 3]> <named list [3]> <tune_results [9 × 4]>
+#> 7 pca_knn       <tibble [1 × 3]> <named list [3]> <tune_results [9 × 4]>
 ```
 
 The `results` column contains the results of each call to `tune_grid()`
@@ -243,14 +243,14 @@ results per workflow:
 
 ``` r
 rank_results(chi_models, rank_metric = "mae", select_best = TRUE)
-#> # A tibble: 7 x 9
-#>   wflow_id   .config     .metric  mean std_err     n model    preprocessor  rank
-#>   <chr>      <chr>       <chr>   <dbl>   <dbl> <int> <chr>    <chr>        <int>
-#> 1 simple_gl… Preprocess… mae      1.85   0.557     9 linear_… recipe           1
-#> 2 simple_ca… Preprocess… mae      2.18   0.463     9 decisio… recipe           2
-#> 3 filter_ca… Preprocess… mae      2.95   0.653     9 decisio… recipe           3
-#> 4 pca_cart   Preprocess… mae      3.00   0.608     9 decisio… recipe           4
-#> 5 simple_knn Preprocess… mae      3.34   0.673     9 nearest… recipe           5
-#> 6 filter_knn Preprocess… mae      3.50   0.663     9 nearest… recipe           6
-#> 7 pca_knn    Preprocess… mae      3.81   0.518     9 nearest… recipe           7
+#> # A tibble: 7 x 10
+#>   wflow_id .config .metric  mean std_err     n workflow preprocessor model  rank
+#>   <chr>    <chr>   <chr>   <dbl>   <dbl> <int> <list>   <chr>        <chr> <int>
+#> 1 simple_… Prepro… mae      1.85   0.557     9 <workfl… recipe       line…     1
+#> 2 simple_… Prepro… mae      2.18   0.463     9 <workfl… recipe       deci…     2
+#> 3 filter_… Prepro… mae      2.95   0.653     9 <workfl… recipe       deci…     3
+#> 4 pca_cart Prepro… mae      3.00   0.608     9 <workfl… recipe       deci…     4
+#> 5 simple_… Prepro… mae      3.34   0.673     9 <workfl… recipe       near…     5
+#> 6 filter_… Prepro… mae      3.50   0.663     9 <workfl… recipe       near…     6
+#> 7 pca_knn  Prepro… mae      3.81   0.518     9 <workfl… recipe       near…     7
 ```
