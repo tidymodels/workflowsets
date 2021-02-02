@@ -47,7 +47,7 @@
         <a class="navbar-brand" href="index.html">workflowsets</a>
         <div class="info hidden-xs hidden-sm">
           <span class="partof">part of <a href="https://tidymodels.org">tidymodels</a></span>
-          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+          <span class="version version-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9001</span>
         </div>
       </div>
     </div>
@@ -162,18 +162,18 @@
       cross <span class="op">=</span> <span class="cn">TRUE</span>
    <span class="op">)</span>
 <span class="va">chi_models</span>
-<span class="co">#&gt; # A workflow set/tibble: 9 x 6</span>
-<span class="co">#&gt;   wflow_id      preproc model            workflow   option     result    </span>
-<span class="co">#&gt;   &lt;chr&gt;         &lt;chr&gt;   &lt;chr&gt;            &lt;list&gt;     &lt;list&gt;     &lt;list&gt;    </span>
-<span class="co">#&gt; 1 simple_glmnet recipe  linear_reg       &lt;workflow&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span>
-<span class="co">#&gt; 2 simple_cart   recipe  decision_tree    &lt;workflow&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span>
-<span class="co">#&gt; 3 simple_knn    recipe  nearest_neighbor &lt;workflow&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span>
-<span class="co">#&gt; 4 filter_glmnet recipe  linear_reg       &lt;workflow&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span>
-<span class="co">#&gt; 5 filter_cart   recipe  decision_tree    &lt;workflow&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span>
-<span class="co">#&gt; 6 filter_knn    recipe  nearest_neighbor &lt;workflow&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span>
-<span class="co">#&gt; 7 pca_glmnet    recipe  linear_reg       &lt;workflow&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span>
-<span class="co">#&gt; 8 pca_cart      recipe  decision_tree    &lt;workflow&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span>
-<span class="co">#&gt; 9 pca_knn       recipe  nearest_neighbor &lt;workflow&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span></code></pre></div>
+<span class="co">#&gt; # A workflow set/tibble: 9 x 4</span>
+<span class="co">#&gt;   wflow_id      info             option     result    </span>
+<span class="co">#&gt;   &lt;chr&gt;         &lt;list&gt;           &lt;list&gt;     &lt;list&gt;    </span>
+<span class="co">#&gt; 1 simple_glmnet &lt;tibble [1 × 3]&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span>
+<span class="co">#&gt; 2 simple_cart   &lt;tibble [1 × 3]&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span>
+<span class="co">#&gt; 3 simple_knn    &lt;tibble [1 × 3]&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span>
+<span class="co">#&gt; 4 filter_glmnet &lt;tibble [1 × 3]&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span>
+<span class="co">#&gt; 5 filter_cart   &lt;tibble [1 × 3]&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span>
+<span class="co">#&gt; 6 filter_knn    &lt;tibble [1 × 3]&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span>
+<span class="co">#&gt; 7 pca_glmnet    &lt;tibble [1 × 3]&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span>
+<span class="co">#&gt; 8 pca_cart      &lt;tibble [1 × 3]&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span>
+<span class="co">#&gt; 9 pca_knn       &lt;tibble [1 × 3]&gt; &lt;list [0]&gt; &lt;list [0]&gt;</span></code></pre></div>
 <p>It doesn’t make sense to use PCA or a filter with a <code>glmnet</code> model. We can remove these easily:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">chi_models</span> <span class="op">&lt;-</span> 
@@ -213,31 +213,31 @@
    <span class="co"># such as `tune_grid()`, `fit_resamples()`, etc.</span>
    <span class="fu"><a href="reference/workflow_map.html">workflow_map</a></span><span class="op">(</span><span class="st">"tune_grid"</span>, resamples <span class="op">=</span> <span class="va">splits</span>, grid <span class="op">=</span> <span class="fl">10</span>, 
                 metrics <span class="op">=</span> <span class="fu">metric_set</span><span class="op">(</span><span class="va">mae</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; ℹ 1 of 7 tuning:     simple_glmnet</span>
-<span class="co">#&gt; ✓ 1 of 7 tuning:     simple_glmnet (24.5s)</span>
-<span class="co">#&gt; ℹ 2 of 7 tuning:     simple_cart</span>
+<span class="co">#&gt; i 1 of 7 tuning:     simple_glmnet</span>
+<span class="co">#&gt; ✓ 1 of 7 tuning:     simple_glmnet (23.9s)</span>
+<span class="co">#&gt; i 2 of 7 tuning:     simple_cart</span>
 <span class="co">#&gt; ✓ 2 of 7 tuning:     simple_cart (25.7s)</span>
-<span class="co">#&gt; ℹ 3 of 7 tuning:     simple_knn</span>
-<span class="co">#&gt; ✓ 3 of 7 tuning:     simple_knn (26.1s)</span>
-<span class="co">#&gt; ℹ 4 of 7 tuning:     filter_cart</span>
-<span class="co">#&gt; ✓ 4 of 7 tuning:     filter_cart (42s)</span>
-<span class="co">#&gt; ℹ 5 of 7 tuning:     filter_knn</span>
-<span class="co">#&gt; ✓ 5 of 7 tuning:     filter_knn (40.9s)</span>
-<span class="co">#&gt; ℹ 6 of 7 tuning:     pca_cart</span>
-<span class="co">#&gt; ✓ 6 of 7 tuning:     pca_cart (32.6s)</span>
-<span class="co">#&gt; ℹ 7 of 7 tuning:     pca_knn</span>
-<span class="co">#&gt; ✓ 7 of 7 tuning:     pca_knn (32.3s)</span>
+<span class="co">#&gt; i 3 of 7 tuning:     simple_knn</span>
+<span class="co">#&gt; ✓ 3 of 7 tuning:     simple_knn (25.5s)</span>
+<span class="co">#&gt; i 4 of 7 tuning:     filter_cart</span>
+<span class="co">#&gt; ✓ 4 of 7 tuning:     filter_cart (39.4s)</span>
+<span class="co">#&gt; i 5 of 7 tuning:     filter_knn</span>
+<span class="co">#&gt; ✓ 5 of 7 tuning:     filter_knn (39.6s)</span>
+<span class="co">#&gt; i 6 of 7 tuning:     pca_cart</span>
+<span class="co">#&gt; ✓ 6 of 7 tuning:     pca_cart (31.3s)</span>
+<span class="co">#&gt; i 7 of 7 tuning:     pca_knn</span>
+<span class="co">#&gt; ✓ 7 of 7 tuning:     pca_knn (31.1s)</span>
 <span class="va">chi_models</span>
-<span class="co">#&gt; # A workflow set/tibble: 7 x 6</span>
-<span class="co">#&gt;   wflow_id      preproc model           workflow   option         result        </span>
-<span class="co">#&gt;   &lt;chr&gt;         &lt;chr&gt;   &lt;chr&gt;           &lt;list&gt;     &lt;list&gt;         &lt;list&gt;        </span>
-<span class="co">#&gt; 1 simple_glmnet recipe  linear_reg      &lt;workflow&gt; &lt;named list [… &lt;tibble [9 × …</span>
-<span class="co">#&gt; 2 simple_cart   recipe  decision_tree   &lt;workflow&gt; &lt;named list [… &lt;tibble [9 × …</span>
-<span class="co">#&gt; 3 simple_knn    recipe  nearest_neighb… &lt;workflow&gt; &lt;named list [… &lt;tibble [9 × …</span>
-<span class="co">#&gt; 4 filter_cart   recipe  decision_tree   &lt;workflow&gt; &lt;named list [… &lt;tibble [9 × …</span>
-<span class="co">#&gt; 5 filter_knn    recipe  nearest_neighb… &lt;workflow&gt; &lt;named list [… &lt;tibble [9 × …</span>
-<span class="co">#&gt; 6 pca_cart      recipe  decision_tree   &lt;workflow&gt; &lt;named list [… &lt;tibble [9 × …</span>
-<span class="co">#&gt; 7 pca_knn       recipe  nearest_neighb… &lt;workflow&gt; &lt;named list [… &lt;tibble [9 × …</span></code></pre></div>
+<span class="co">#&gt; # A workflow set/tibble: 7 x 4</span>
+<span class="co">#&gt;   wflow_id      info             option           result                </span>
+<span class="co">#&gt;   &lt;chr&gt;         &lt;list&gt;           &lt;list&gt;           &lt;list&gt;                </span>
+<span class="co">#&gt; 1 simple_glmnet &lt;tibble [1 × 3]&gt; &lt;named list [3]&gt; &lt;tune_results [9 × 4]&gt;</span>
+<span class="co">#&gt; 2 simple_cart   &lt;tibble [1 × 3]&gt; &lt;named list [3]&gt; &lt;tune_results [9 × 4]&gt;</span>
+<span class="co">#&gt; 3 simple_knn    &lt;tibble [1 × 3]&gt; &lt;named list [3]&gt; &lt;tune_results [9 × 4]&gt;</span>
+<span class="co">#&gt; 4 filter_cart   &lt;tibble [1 × 3]&gt; &lt;named list [3]&gt; &lt;tune_results [9 × 4]&gt;</span>
+<span class="co">#&gt; 5 filter_knn    &lt;tibble [1 × 3]&gt; &lt;named list [3]&gt; &lt;tune_results [9 × 4]&gt;</span>
+<span class="co">#&gt; 6 pca_cart      &lt;tibble [1 × 3]&gt; &lt;named list [3]&gt; &lt;tune_results [9 × 4]&gt;</span>
+<span class="co">#&gt; 7 pca_knn       &lt;tibble [1 × 3]&gt; &lt;named list [3]&gt; &lt;tune_results [9 × 4]&gt;</span></code></pre></div>
 <p>The <code>results</code> column contains the results of each call to <code><a href="https://tune.tidymodels.org/reference/tune_grid.html">tune_grid()</a></code> for the workflows.</p>
 <p>The <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot()</a></code> method shows the rankings of the workflows:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -250,16 +250,16 @@
 <p>We can determine how well each combination did by looking at the best results per workflow:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/rank_results.html">rank_results</a></span><span class="op">(</span><span class="va">chi_models</span>, rank_metric <span class="op">=</span> <span class="st">"mae"</span>, select_best <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 7 x 9</span>
-<span class="co">#&gt;   wflow_id   .config     .metric  mean std_err     n model    preprocessor  rank</span>
-<span class="co">#&gt;   &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;        &lt;int&gt;</span>
-<span class="co">#&gt; 1 simple_gl… Preprocess… mae      1.85   0.557     9 linear_… recipe           1</span>
-<span class="co">#&gt; 2 simple_ca… Preprocess… mae      2.18   0.463     9 decisio… recipe           2</span>
-<span class="co">#&gt; 3 filter_ca… Preprocess… mae      2.95   0.653     9 decisio… recipe           3</span>
-<span class="co">#&gt; 4 pca_cart   Preprocess… mae      3.00   0.608     9 decisio… recipe           4</span>
-<span class="co">#&gt; 5 simple_knn Preprocess… mae      3.34   0.673     9 nearest… recipe           5</span>
-<span class="co">#&gt; 6 filter_knn Preprocess… mae      3.50   0.663     9 nearest… recipe           6</span>
-<span class="co">#&gt; 7 pca_knn    Preprocess… mae      3.81   0.518     9 nearest… recipe           7</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 7 x 10</span>
+<span class="co">#&gt;   wflow_id .config .metric  mean std_err     n workflow preprocessor model  rank</span>
+<span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt; &lt;list&gt;   &lt;chr&gt;        &lt;chr&gt; &lt;int&gt;</span>
+<span class="co">#&gt; 1 simple_… Prepro… mae      1.85   0.557     9 &lt;workfl… recipe       line…     1</span>
+<span class="co">#&gt; 2 simple_… Prepro… mae      2.18   0.463     9 &lt;workfl… recipe       deci…     2</span>
+<span class="co">#&gt; 3 filter_… Prepro… mae      2.95   0.653     9 &lt;workfl… recipe       deci…     3</span>
+<span class="co">#&gt; 4 pca_cart Prepro… mae      3.00   0.608     9 &lt;workfl… recipe       deci…     4</span>
+<span class="co">#&gt; 5 simple_… Prepro… mae      3.34   0.673     9 &lt;workfl… recipe       near…     5</span>
+<span class="co">#&gt; 6 filter_… Prepro… mae      3.50   0.663     9 &lt;workfl… recipe       near…     6</span>
+<span class="co">#&gt; 7 pca_knn  Prepro… mae      3.81   0.518     9 &lt;workfl… recipe       near…     7</span></code></pre></div>
 </div>
 </div>
   </div>
