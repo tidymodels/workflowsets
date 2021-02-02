@@ -25,7 +25,7 @@ Imports:
     withr,
     dplyr,
     purrr,
-    tibble (>= 3.0.6),
+    tibble (>= 3.0.6.9000),
     vctrs,
     tidyr,
     workflows,
@@ -51,7 +51,8 @@ Suggests:
 Remotes: 
     tidymodels/tune,
     tidymodels/rsample,
-    r-lib/pillar#239
+    r-lib/pillar#239,
+    tidyverse/tibble#850
 Depends: 
     R (>= 2.10)
 Config/testthat/edition: 3

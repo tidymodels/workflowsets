@@ -170,7 +170,7 @@ new_options <- function(...) {
 type_sum.options <- function(x) {
    paste0("opts[", length(x), "]")
 }
-#' #' @export
-#' size_sum.options <- function(x) {
-#'    ""
-#' }
+#' @export
+size_sum.options <- function(x) {
+   ""
+}

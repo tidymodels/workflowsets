@@ -63,6 +63,8 @@ s3_register <- function(generic, class, method = NULL) {
 
 
 .onAttach <- function(libname, pkgname) {
+   s3_register("tibble::size_sum",          "options")
+   s3_register("tibble::type_sum",          "options")
    s3_register("tibble::tbl_sum",           "workflow_set")
    s3_register("tune::collect_metrics",     "workflow_set")
    s3_register("tune::collect_predictions", "workflow_set")

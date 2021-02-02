@@ -5,6 +5,7 @@
 \alias{reexports}
 \alias{tbl_sum}
 \alias{obj_sum}
+\alias{size_sum}
 \alias{tune_grid}
 \alias{tune_bayes}
 \alias{fit_resamples}
@@ -22,6 +23,8 @@ below to see their documentation.
   \item{dplyr}{\code{\link[dplyr:reexports]{\%>\%}}}
 
   \item{ggplot2}{\code{\link[ggplot2]{autoplot}}}
+
+  \item{pillar}{\code{\link[pillar:type_sum]{size_sum}}}
 
   \item{tibble}{\code{\link[tibble:reexports]{obj_sum}}, \code{\link[tibble]{tbl_sum}}}
 
