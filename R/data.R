@@ -21,13 +21,6 @@
 #' two_class_set
 NULL
 
-#' @name cell_models
-#' @rdname two_class_set
-#' @aliases cell_models
-#' @docType data
-#' @keywords datasets
-NULL
-
 #' @name chi_features_set
 #' @rdname two_class_set
 #' @aliases chi_features_set chi_features_res

@@ -23,7 +23,7 @@ test_that("autoplot with error bars", {
 })
 
 test_that("autoplot with without error bars", {
-   p_2 <- autoplot(cell_models)
+   p_2 <- autoplot(chi_features_res)
    expect_s3_class(p_2, "ggplot")
    expect_equal(
       names(p_2$data),
@@ -40,8 +40,8 @@ test_that("autoplot with without error bars", {
 })
 
 test_that("autoplot for specific workflow result", {
-   p_3 <- autoplot(cell_models, which = cell_models$wflow_id[1])
-   p_4 <- autoplot(cell_models$result[[1]])
+   p_3 <- autoplot(chi_features_res, which = "plus_pca_lm")
+   p_4 <- autoplot(pull_workflow_result(chi_features_res, id = "plus_pca_lm"))
    expect_equal(p_3$data, p_4$data)
    expect_equal(p_3$labels, p_4$labels)
    expect_equal(

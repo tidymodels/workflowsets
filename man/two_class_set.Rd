@@ -4,7 +4,6 @@
 \name{two_class_set}
 \alias{two_class_set}
 \alias{two_class_res}
-\alias{cell_models}
 \alias{chi_features_set}
 \alias{chi_features_res}
 \title{Example Data Sets}

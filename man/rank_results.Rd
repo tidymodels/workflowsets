@@ -18,7 +18,7 @@ best submodel per workflow.}
 Rank the results by a metric
 }
 \examples{
-rank_results(cell_models)
-rank_results(cell_models, select_best = TRUE)
-rank_results(cell_models, rank_metric = "accuracy")
+rank_results(chi_features_res)
+rank_results(chi_features_res, select_best = TRUE)
+rank_results(chi_features_res, rank_metric = "rsq")
 }

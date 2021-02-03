@@ -20,15 +20,15 @@
 #' Any failures in execution result in the corresponding row of `results` to
 #' contain a `try-error` object.
 #' @examples
-#' example("workflow_set", run.donttest = FALSE)
 #'
-#' cell_fits <-
-#'    cell_models_by_group %>%
-#'    workflow_map("fit_resamples",
-#'                 resamples = val_set,
-#'                 metrics = metric_set(roc_auc))
+#' # Duplicating the existing results
+#' if (FALSE) {
+#'    two_class_res <-
+#'       two_class_set %>%
+#'       workflow_map(resamples = folds, grid = 10, seed = 2, verbose = TRUE)
+#' }
 #'
-#' rank_results(cell_fits)
+#' rank_results(chi_features_res)
 #' @export
 workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
                          seed = sample.int(10^4, 1), ...) {
