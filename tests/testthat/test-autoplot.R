@@ -1,5 +1,5 @@
 test_that("autoplot with error bars", {
-  p_1 <- autoplot(chi_models)
+  p_1 <- autoplot(two_class_res, metric = "roc_auc")
   expect_s3_class(p_1, "ggplot")
   expect_equal(
      names(p_1$data),
@@ -18,7 +18,7 @@ test_that("autoplot with error bars", {
      rlang::get_expr(as.list(p_1$layers[[2]])$mapping$ymax),
      expr(mean + std_errs * std_err)
   )
-  expect_equal(as.character(p_1$labels$y), "mae")
+  expect_equal(as.character(p_1$labels$y), "roc_auc")
   expect_equal(as.character(p_1$labels$x), "Workflow Rank")
 })
 

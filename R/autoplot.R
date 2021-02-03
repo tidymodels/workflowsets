@@ -15,9 +15,9 @@
 #' exists).
 #' @param ... Other options to pass to `autoplot()`.
 #' @examples
-#' autoplot(chi_models)
-#' autoplot(chi_models, select_best = TRUE)
-#' autoplot(chi_models, which = "pca_knn")
+#' autoplot(two_class_res)
+#' autoplot(two_class_res, select_best = TRUE)
+#' autoplot(two_class_res, which = "yj_trans_cart", metric = "roc_auc")
 #' @export
 autoplot.workflow_set <- function(object, rank_metric = NULL, metric = NULL,
                                   which = "workflow_set",

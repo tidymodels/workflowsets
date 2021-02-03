@@ -24,15 +24,15 @@ check_metric_results <- function(ind, x, ...) {
 
 test_that("collect summarized metrics", {
 
-   for (i in 1:nrow(chi_models)) {
-      expect_true(check_metric_results(i, chi_models))
+   for (i in 1:nrow(two_class_res)) {
+      expect_true(check_metric_results(i, two_class_res))
    }
    for (i in 1:nrow(cell_models)) {
       expect_true(check_metric_results(i, cell_models))
    }
 
-   for (i in 1:nrow(chi_models)) {
-      expect_true(check_metric_results(i, chi_models, summarize = FALSE))
+   for (i in 1:nrow(two_class_res)) {
+      expect_true(check_metric_results(i, two_class_res, summarize = FALSE))
    }
    for (i in 1:nrow(cell_models)) {
       expect_true(check_metric_results(i, cell_models, summarize = FALSE))
