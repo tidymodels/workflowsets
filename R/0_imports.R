@@ -15,13 +15,13 @@ utils::globalVariables(
 #' @export
 tibble::tbl_sum
 
-#' @importFrom tibble obj_sum
+#' @importFrom tibble type_sum
 #' @export
-tibble::obj_sum
+tibble::type_sum
 
-#' @importFrom pillar size_sum
+#' @importFrom tibble size_sum
 #' @export
-pillar::size_sum
+tibble::size_sum
 
 #' @importFrom tune tune_grid
 #' @export
