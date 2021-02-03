@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • workflowsets</title>
+<title>Make a classed list of options — options_list • workflowsets</title>
 
 
 <!-- jquery -->
@@ -42,7 +42,10 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Make a classed list of options — options_list" />
+<meta property="og:description" content="This function returns a named list with an extra class of &quot;options&quot; that
+has corresponding formatting methods for printing inside of tibbles." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -69,7 +72,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -115,108 +118,38 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Make a classed list of options</h1>
+    
+    <div class="hidden name"><code>options_list.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>This function returns a named list with an extra class of <code>"options"</code> that
+has corresponding formatting methods for printing inside of tibbles.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>options_list</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="as_workflow_set.html">as_workflow_set()</a></code> </p>
-        </td>
-        <td><p>Save tuning or resampling results as a workflow set</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="autoplot.workflow_set.html">autoplot(<i>&lt;workflow_set&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Plot the results of a workflow set</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="collect_metrics.workflow_set.html">collect_metrics(<i>&lt;workflow_set&gt;</i>)</a></code> <code><a href="collect_metrics.workflow_set.html">collect_predictions(<i>&lt;workflow_set&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Obtain and format results produced by tuning functions for workflow sets</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="leave_var_out_formulas.html">leave_var_out_formulas()</a></code> </p>
-        </td>
-        <td><p>Create formulas without each predictor</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="options_add.html">options_add()</a></code> <code><a href="options_add.html">options_remove()</a></code> <code><a href="options_add.html">options_add_parameters()</a></code> </p>
-        </td>
-        <td><p>Functions for options in a workflow set</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="options_list.html">options_list()</a></code> </p>
-        </td>
-        <td><p>Make a classed list of options</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pull_workflow_result.html">pull_workflow_result()</a></code> <code><a href="pull_workflow_result.html">pull_workflow()</a></code> </p>
-        </td>
-        <td><p>Extract a workflow from a workflow set</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rank_results.html">rank_results()</a></code> </p>
-        </td>
-        <td><p>Rank the results by a metric</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="selectors.html">selectors()</a></code> </p>
-        </td>
-        <td><p>Raw column selectors for modeling</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="two_class_set.html">two_class_set</a></code> </p>
-        </td>
-        <td><p>Example Data Sets</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="workflow_map.html">workflow_map()</a></code> </p>
-        </td>
-        <td><p>Process a series of workflows</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="workflow_set.html">workflow_set()</a></code> </p>
-        </td>
-        <td><p>Generate a set of workflow objects from preprocessing and model objects</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>...</th>
+      <td><p>A set of named options (or nothing)</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A classed list.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>options_list</span><span class='op'>(</span>a <span class='op'>=</span> <span class='fl'>1</span>, b <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; a list of options with names:  'a', 'b'</div><div class='input'><span class='fu'>options_list</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; an empty container for options</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>

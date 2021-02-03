@@ -4,22 +4,22 @@
     <loc>https://workflowsets.tidymodels.org/index.html</loc>
   </url>
   <url>
-    <loc>https://workflowsets.tidymodels.org/reference/add_options.html</loc>
-  </url>
-  <url>
     <loc>https://workflowsets.tidymodels.org/reference/as_workflow_set.html</loc>
   </url>
   <url>
     <loc>https://workflowsets.tidymodels.org/reference/autoplot.workflow_set.html</loc>
   </url>
   <url>
-    <loc>https://workflowsets.tidymodels.org/reference/chi_models.html</loc>
-  </url>
-  <url>
     <loc>https://workflowsets.tidymodels.org/reference/collect_metrics.workflow_set.html</loc>
   </url>
   <url>
     <loc>https://workflowsets.tidymodels.org/reference/leave_var_out_formulas.html</loc>
+  </url>
+  <url>
+    <loc>https://workflowsets.tidymodels.org/reference/options_add.html</loc>
+  </url>
+  <url>
+    <loc>https://workflowsets.tidymodels.org/reference/options_list.html</loc>
   </url>
   <url>
     <loc>https://workflowsets.tidymodels.org/reference/pull_workflow_result.html</loc>
@@ -32,6 +32,9 @@
   </url>
   <url>
     <loc>https://workflowsets.tidymodels.org/reference/selectors.html</loc>
+  </url>
+  <url>
+    <loc>https://workflowsets.tidymodels.org/reference/two_class_set.html</loc>
   </url>
   <url>
     <loc>https://workflowsets.tidymodels.org/reference/workflow_map.html</loc>
