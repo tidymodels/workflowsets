@@ -56,8 +56,8 @@
 #' preproc <- list(none = basic_recipe, pca = pca_recipe, sp_sign = ss_recipe)
 #' models <- list(knn = knn_mod, logistic = lr_mod)
 #'
-#' cell_models <- workflow_set(preproc, models, cross = TRUE)
-#' cell_models
+#' cell_set <- workflow_set(preproc, models, cross = TRUE)
+#' cell_set
 #'
 #' # ------------------------------------------------------------------------------
 #' # Using selector functions and formulas
@@ -69,8 +69,8 @@
 #' preproc$everything <- class ~ .
 #' preproc
 #'
-#' cell_models_by_group <- workflow_set(preproc, models["logistic"], cross = TRUE)
-#'
+#' cell_set_by_group <- workflow_set(preproc, models["logistic"], cross = TRUE)
+#' cell_set_by_group
 #' @export
 workflow_set <- function(preproc, models, cross = TRUE) {
    if (length(preproc) != length(models) &
@@ -96,7 +96,7 @@ workflow_set <- function(preproc, models, cross = TRUE) {
          workflow  = purrr::map2(preproc, model, make_workflow),
          workflow  = unname(workflow),
          info = purrr::map(workflow, get_info),
-         option  = purrr::map(1:nrow(res), ~ list()),
+         option  = purrr::map(1:nrow(res), ~ new_options()),
          result   = purrr::map(1:nrow(res), ~ list())
       ) %>%
       dplyr::select(wflow_id, info, option, result)

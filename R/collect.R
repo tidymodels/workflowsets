@@ -80,25 +80,19 @@
 #' preproc <- list(none = basic_recipe, pca = pca_recipe, sp_sign = ss_recipe)
 #' models <- list(knn = knn_mod, logistic = lr_mod)
 #'
-#' cell_models <- workflow_set(preproc, models, cross = TRUE)
+#' cell_set <- workflow_set(preproc, models, cross = TRUE)
 #'
 #' # ------------------------------------------------------------------------------
 #'
 #' \donttest{
-#' cell_models <-
-#'    cell_models %>%
-#'    workflow_map(resamples = val_set, grid = 10, metrics = metric_set(roc_auc))
-#' cell_models
-#' collect_metrics(cell_models)
+#' collect_metrics(two_class_res)
 #'
 #' # Alternatively, if the tuning parameter values are needed:
-#' cell_models %>%
-#'   dplyr::filter(grepl("knn", wflow_id)) %>%
+#' two_class_res %>%
+#'   dplyr::filter(grepl("cart", wflow_id)) %>%
 #'   mutate(metrics = map(result, collect_metrics)) %>%
 #'   dplyr::select(wflow_id, metrics) %>%
 #'   tidyr::unnest(cols = metrics)
-#'
-#'
 #' }
 #' @export
 collect_metrics.workflow_set <- function(x, summarize = TRUE, ...) {
@@ -195,3 +189,11 @@ get_bare_predictions <- function(x, ...) {
    res <- tune::collect_predictions(x, ...)
    remove_parameters(res, x)
 }
+
+collect_notes <- function(x, show = 1) {
+   y <- purrr::map_dfr(x$.notes, I)
+   show <- min(show, nrow(y))
+   y <- paste0(y$.notes[1:show])
+   gsub("[\r\n]", "", y)
+}
+

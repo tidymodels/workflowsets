@@ -1,7 +1,7 @@
 #' Functions for options in a workflow set
 #' @export
 #' @param x A workflow set
-#' @param ... A list of named options. For `remove_options()` this can be a
+#' @param ... A list of named options. For `options_remove()` this can be a
 #' series of unquoted option names.
 #' @param id A character string of one or more values from the `wflow_id`
 #' column that indicates which options to update. By default, all workflows
@@ -10,27 +10,27 @@
 #' replaced?
 #' @return An updated workflow set.
 #' @details
-#' `add_options()` is used to update all of the options in a workflow set.
+#' `options_add()` is used to update all of the options in a workflow set.
 #'
-#' `remove_options()` will eliminate specific options across rows.
+#' `options_remove()` will eliminate specific options across rows.
 #'
-#' `add_option_parameters()` adds a parameter object to the `option` column
+#' `options_add_parameters()` adds a parameter object to the `option` column
 #' (if parameters are being tuned).
 #'
 #' Note that executing a function on the workflow set, such as `tune_grid()`,
 #' will add any options given to that function to the `option` column.
 #' @examples
 #' two_class_set %>%
-#'   add_options(a = 1)
+#'   options_add(a = 1)
 #'
 #' two_class_set %>%
-#'   add_options(a = 1) %>%
-#'   add_options(b = 2, id = "none_cart")
+#'   options_add(a = 1) %>%
+#'   options_add(b = 2, id = "none_cart")
 #'
 #' library(tune)
 #' two_class_set %>%
-#'   add_option_parameters()
-add_options <- function(x, ..., id = NULL, strict = FALSE) {
+#'   options_add_parameters()
+options_add <- function(x, ..., id = NULL, strict = FALSE) {
    dots <- list(...)
    if (length(dots) == 0) {
       return(x)
@@ -61,8 +61,8 @@ add_options <- function(x, ..., id = NULL, strict = FALSE) {
 
 
 #' @export
-#' @rdname add_options
-remove_options <- function(x, ...) {
+#' @rdname options_add
+options_remove <- function(x, ...) {
    dots <- rlang::enexprs(...)
    if (length(dots) == 0) {
       return(x)
@@ -85,8 +85,8 @@ maybe_param <- function(x) {
    x
 }
 #' @export
-#' @rdname add_options
-add_option_parameters <- function(x, id = NULL, strict = FALSE) {
+#' @rdname options_add
+options_add_parameters <- function(x, id = NULL, strict = FALSE) {
    prm <- purrr::map(x$info, ~ maybe_param(.x$workflow[[1]]))
    num <- purrr::map_int(prm, length)
    if (all(num == 0)) {
@@ -117,7 +117,8 @@ add_option_parameters <- function(x, id = NULL, strict = FALSE) {
 }
 
 rm_elem <- function(x, nms) {
-   x[!(names(x) %in% nms)]
+   x <- x[!(names(x) %in% nms)]
+   new_options(!!!x)
 }
 
 append_options <- function(model, global) {
@@ -129,5 +130,47 @@ append_options <- function(model, global) {
       model <- rm_elem(model, common_names)
    }
 
-   c(model, global)
+   all_opt <- c(model, global)
+   new_options(!!!all_opt)
+}
+
+#' @export
+print.options <- function(x, ...) {
+   if (length(x) > 0) {
+      cat("a list of options with names: ",
+          paste0("'", names(x), "'", collapse = ", "))
+   } else {
+      cat("an empty container for options")
+   }
+   cat("\n")
+}
+
+
+#' Make a classed list of options
+#'
+#' This function returns a named list with an extra class of `"options"` that
+#' has corresponding formatting methods for printing inside of tibbles.
+#' @param ... A set of named options (or nothing)
+#' @return A classed list.
+#' @examples
+#' options_list(a = 1, b = 2)
+#' options_list()
+#' @export
+options_list <- function(...) new_options(...)
+
+new_options <- function(...) {
+   res <- rlang::list2(...)
+   if (any(names(res) == "")) {
+      rlang::abort("All options should be named.")
+   }
+   structure(res, class = c("options", "list"))
+}
+
+#' @export
+type_sum.options <- function(x) {
+   paste0("opts[", length(x), "]")
+}
+#' @export
+size_sum.options <- function(x) {
+   ""
 }

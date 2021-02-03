@@ -20,15 +20,15 @@
 #' Any failures in execution result in the corresponding row of `results` to
 #' contain a `try-error` object.
 #' @examples
-#' example("workflow_set", run.donttest = FALSE)
 #'
-#' cell_fits <-
-#'    cell_models_by_group %>%
-#'    workflow_map("fit_resamples",
-#'                 resamples = val_set,
-#'                 metrics = metric_set(roc_auc))
+#' # Duplicating the existing results
+#' if (FALSE) {
+#'    two_class_res <-
+#'       two_class_set %>%
+#'       workflow_map(resamples = folds, grid = 10, seed = 2, verbose = TRUE)
+#' }
 #'
-#' rank_results(cell_fits)
+#' rank_results(chi_features_res)
 #' @export
 workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
                          seed = sample.int(10^4, 1), ...) {
@@ -49,7 +49,7 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
    dots <- rlang::list2(...)
    # check and add options to options column
    if (length(dots) > 0) {
-      object <- rlang::exec("add_options", object, !!!dots)
+      object <- rlang::exec("options_add", object, !!!dots)
    }
 
    iter_seq <- seq_along(object$wflow_id)
@@ -77,6 +77,7 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
             object$result[[iter]] <- try(rlang::eval_tidy(cl), silent = TRUE)
          )
       })
+      object <- new_workflow_set(object)
       log_progress(verbose, object$wflow_id[[iter]], object$result[[iter]],
                    iter_chr[iter], n, fn, run_time)
    }
@@ -107,7 +108,11 @@ log_progress <- function(verbose, id, res, iter, n, .fn, elapsed) {
          cols$message$info(msg)
       )
    } else {
-      if (inherits(res, "try-error")) {
+      all_null <- isTRUE(all(is.null(unlist(res$.metrics))))
+      if (inherits(res, "try-error") || all_null) {
+         if (all_null) {
+            res <- collect_notes(res)
+         }
          message(
             cols$symbol$danger(cli::symbol$cross), " ",
             cols$message$info(msg),
@@ -126,5 +131,4 @@ log_progress <- function(verbose, id, res, iter, n, .fn, elapsed) {
 
    invisible(NULL)
 }
-
 

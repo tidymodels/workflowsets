@@ -25,7 +25,7 @@ Imports:
     withr,
     dplyr,
     purrr,
-    tibble,
+    tibble (>= 3.0.6.9000),
     vctrs,
     tidyr,
     workflows,
@@ -33,6 +33,7 @@ Imports:
     ggplot2,
     stats,
     prettyunits,
+    pillar (>= 1.4.99.9006),
     rsample (>= 0.0.8.9001)
 Language: en-US
 Suggests: 
@@ -49,7 +50,9 @@ Suggests:
     rmarkdown
 Remotes: 
     tidymodels/tune,
-    tidymodels/rsample
+    tidymodels/rsample,
+    r-lib/pillar#239,
+    tidyverse/tibble#850
 Depends: 
     R (>= 2.10)
 Config/testthat/edition: 3

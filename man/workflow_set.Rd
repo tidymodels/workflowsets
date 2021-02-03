@@ -71,8 +71,8 @@ lr_mod <-
 preproc <- list(none = basic_recipe, pca = pca_recipe, sp_sign = ss_recipe)
 models <- list(knn = knn_mod, logistic = lr_mod)
 
-cell_models <- workflow_set(preproc, models, cross = TRUE)
-cell_models
+cell_set <- workflow_set(preproc, models, cross = TRUE)
+cell_set
 
 # ------------------------------------------------------------------------------
 # Using selector functions and formulas
@@ -84,6 +84,6 @@ names(preproc) <- channels
 preproc$everything <- class ~ .
 preproc
 
-cell_models_by_group <- workflow_set(preproc, models["logistic"], cross = TRUE)
-
+cell_set_by_group <- workflow_set(preproc, models["logistic"], cross = TRUE)
+cell_set_by_group
 }

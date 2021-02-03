@@ -52,10 +52,7 @@ collate_metrics <- function(x) {
       metrics %>%
       dplyr::group_by(metric) %>%
       dplyr::summarize(order = mean(order, na.rm = TRUE), n = dplyr::n(),
-                       .groups = "drop") %>%
-      dplyr::ungroup()
-
-
+                       .groups = "drop")
 
    dplyr::full_join(
       dplyr::distinct(metrics) %>% dplyr::select(-order),

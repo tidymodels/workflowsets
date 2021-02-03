@@ -5,9 +5,9 @@
 #' @param select_best A logical; should the results only contain the numerically
 #' best submodel per workflow.
 #' @examples
-#' rank_results(cell_models)
-#' rank_results(cell_models, select_best = TRUE)
-#' rank_results(cell_models, rank_metric = "accuracy")
+#' rank_results(chi_features_res)
+#' rank_results(chi_features_res, select_best = TRUE)
+#' rank_results(chi_features_res, rank_metric = "rsq")
 #' @export
 rank_results <- function(x, rank_metric = NULL, select_best = FALSE) {
    metric_info <- pick_metric(x, rank_metric)
