@@ -106,7 +106,8 @@ workflow_set <- function(preproc, models, cross = TRUE) {
 get_info <- function(x) {
    tibble::tibble(workflow = list(x),
                   preproc = preproc_type(x),
-                  model = model_type(x))
+                  model = model_type(x),
+                  note = character(1))
 }
 
 new_workflow_set <- function(x) {
@@ -143,7 +144,7 @@ new_workflow_set <- function(x) {
          paste0("'", bad, "'", collapse = ", "), ".")
  }
  tbl_nms <- purrr::map(x$info, names)
- exp_nms <- c("workflow", "preproc", "model")
+ exp_nms <- c("workflow", "preproc", "model", "note")
  check_nms <- purrr::map_lgl(tbl_nms, ~ identical(.x, exp_nms))
  if (!all(check_nms)) {
     bad <- x$wflow_id[!check_nms]

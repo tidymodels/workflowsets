@@ -107,7 +107,7 @@ collect_metrics.workflow_set <- function(x, summarize = TRUE, ...) {
          ),
          metrics = purrr::map2(metrics, result, remove_parameters)
       )
-   info <- dplyr::bind_rows(x$info) %>% dplyr::select(-workflow)
+   info <- dplyr::bind_rows(x$info) %>% dplyr::select(-workflow, -note)
    x <-
       dplyr::select(x, wflow_id, metrics) %>%
       dplyr::bind_cols(info) %>%
@@ -168,7 +168,7 @@ collect_predictions.workflow_set <-
                )
             )
       }
-      info <- dplyr::bind_rows(x$info) %>% dplyr::select(-workflow)
+      info <- dplyr::bind_rows(x$info) %>% dplyr::select(-workflow, -note)
       x <-
          dplyr::select(x, wflow_id, predictions) %>%
          dplyr::bind_cols(info) %>%
