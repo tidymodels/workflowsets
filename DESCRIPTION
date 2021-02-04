@@ -51,7 +51,7 @@ Suggests:
 Remotes: 
     tidymodels/tune,
     tidymodels/rsample,
-    r-lib/pillar#239,
+    r-lib/pillar,
     tidyverse/tibble#850
 Depends: 
     R (>= 2.10)
