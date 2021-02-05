@@ -45,3 +45,17 @@ test_that("option management", {
       expect_equal(unclass(set_5$option[[i]]), list())
    }
 })
+
+
+
+test_that("option printing", {
+
+   expect_output(
+      print(two_class_res$option[[1]]),
+      "a list of options with names:  'resamples', 'grid'"
+   )
+   expect_equal(
+      tibble::type_sum(two_class_res$option[[1]]),
+      "opts[2]"
+   )
+})

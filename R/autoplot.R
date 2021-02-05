@@ -3,7 +3,7 @@
 #' @param object A `workflow_set` whose elements have results.
 #' @param rank_metric A character string for which metric should be used to rank
 #' the results.
-#' @param which A character string for what to plot. If a value of
+#' @param id A character string for what to plot. If a value of
 #' `"workflow_set"` is used, the results of each model (and sub-model) are ordered
 #' and plotted. Alternatively, a value of the workflow set's `wflow_id` can be
 #' given and the `autoplot()` method is executed on that workflow's results.
@@ -17,17 +17,17 @@
 #' @examples
 #' autoplot(two_class_res)
 #' autoplot(two_class_res, select_best = TRUE)
-#' autoplot(two_class_res, which = "yj_trans_cart", metric = "roc_auc")
+#' autoplot(two_class_res, id = "yj_trans_cart", metric = "roc_auc")
 #' @export
 autoplot.workflow_set <- function(object, rank_metric = NULL, metric = NULL,
-                                  which = "workflow_set",
+                                  id = "workflow_set",
                                   select_best = FALSE,
                                   std_errs = qnorm(0.95), ...) {
-   if (which == "workflow_set") {
+   if (id == "workflow_set") {
       p <- rank_plot(object, rank_metric = rank_metric, metric = metric,
                      select_best = select_best, std_errs = std_errs)
    } else {
-      p <- autoplot(object$result[[which(object$wflow_id == which)]], metric = metric, ...)
+      p <- autoplot(object$result[[which(object$wflow_id == id)]], metric = metric, ...)
    }
    p
 }
