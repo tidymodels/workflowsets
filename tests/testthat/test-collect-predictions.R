@@ -1,8 +1,18 @@
+skip_on_cran()
+
+# ------------------------------------------------------------------------------
 
 library(parsnip)
 suppressPackageStartupMessages(library(rsample))
+suppressPackageStartupMessages(library(tune))
+
+# ------------------------------------------------------------------------------
 
 lr_spec <- linear_reg() %>% set_engine("lm")
+knn_spec <-
+   nearest_neighbor(neighbors = tune()) %>%
+   set_engine("kknn") %>%
+   set_mode("regression")
 
 set.seed(1)
 car_set_1 <-
@@ -21,6 +31,18 @@ car_set_2 <-
    ) %>%
    workflow_map("fit_resamples", resamples = vfold_cv(mtcars, v = 3, repeats = 2),
                 control = tune::control_resamples(save_pred = TRUE))
+
+set.seed(1)
+car_set_3 <-
+   workflow_set(
+      list(reg = mpg ~ ., nonlin = mpg ~ wt + 1/sqrt(disp)),
+      list(knn = knn_spec)
+   ) %>%
+   workflow_map("tune_bayes", resamples = vfold_cv(mtcars, v = 3, repeats = 2),
+                control = tune::control_bayes(save_pred = TRUE),
+                seed = 1, iter = 2, initial = 3)
+
+car_set_23 <- dplyr::bind_rows(car_set_2, car_set_3)
 
 # ------------------------------------------------------------------------------
 
@@ -86,6 +108,25 @@ test_that("dropping tuning parameter columns", {
       c("wflow_id", ".config", "preproc", "model", "id", "id2", ".pred", ".row", "mpg")
    )
 
+   expect_error(
+      best_iter <- collect_predictions(car_set_3, select_best = TRUE, metric = "rmse"),
+      regexp = NA
+   )
+   expect_true(
+      nrow(dplyr::distinct(best_iter[, c(".config", "wflow_id")])) == 2
+   )
+   expect_error(
+      no_param <-
+         workflowsets:::select_bare_predictions(car_set_3$result[[1]], metric = "rmse", TRUE),
+      regex = NA
+   )
+   expect_equal(names(no_param), c(".row", "mpg", ".config", ".iter", ".pred"))
 })
 
+
+test_that("mixed object types", {
+
+ expect_true(".iter" %in% names(collect_predictions(car_set_23)))
+
+})
 

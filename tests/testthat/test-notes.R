@@ -7,7 +7,7 @@ test_that("test notes", {
       note_add("none_cart", "What does 'cart' stand for\u2753")
 
    expect_equal(
-      notes_1$info[[1]]$note,
+      note_get(notes_1, id = "none_cart"),
       "What does 'cart' stand for\u2753"
    )
 
@@ -18,7 +18,7 @@ test_that("test notes", {
       notes_1 %>%
       note_add("none_cart", "Stuff.")
    expect_equal(
-      notes_2$info[[1]]$note,
+      note_get(notes_2, id = "none_cart") %>% paste0(collapse = "\n"),
       "What does 'cart' stand for\u2753\nStuff."
    )
    notes_3 <-
@@ -56,4 +56,21 @@ test_that("test notes", {
       notes_1 %>% note_add("none_cart", "Stuff.", append = FALSE),
       "There is already a note for this id and"
    )
+   expect_error(
+      note_get(notes_1, id = letters),
+      "should be a single character value"
+   )
+   expect_error(
+      note_get(notes_1, id = letters[1]),
+      "value is not in wflow_id"
+   )
+   expect_error(
+      notes_1 %>% note_reset(letters),
+      "should be a single character value"
+   )
+   expect_error(
+      notes_1 %>% note_reset("none_carts"),
+      "value is not in wflow_id"
+   )
+
 })
