@@ -3,7 +3,7 @@ test_that("autoplot with error bars", {
   expect_s3_class(p_1, "ggplot")
   expect_equal(
      names(p_1$data),
-     c("wflow_id", ".config", ".metric", "mean", "std_err", "n", "workflow",
+     c("wflow_id", ".config", ".metric", "mean", "std_err", "n",
        "preprocessor", "model", "rank")
   )
   expect_equal(rlang::get_expr(p_1$mapping$x), expr(rank))
@@ -27,7 +27,7 @@ test_that("autoplot with without error bars", {
    expect_s3_class(p_2, "ggplot")
    expect_equal(
       names(p_2$data),
-      c("wflow_id", ".config", ".metric", "mean", "std_err", "n", "workflow",
+      c("wflow_id", ".config", ".metric", "mean", "std_err", "n",
         "preprocessor", "model", "rank")
    )
    expect_equal(rlang::get_expr(p_2$mapping$x), expr(rank))
