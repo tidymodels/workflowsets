@@ -208,12 +208,12 @@ and <code>models</code> should be equal.</p></td>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A workflow set/tibble: 6 x 4</span><span>
 #&gt;   wflow_id         info             option    result    
 #&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>    
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> none_knn         </span><span style='color: #949494;'>&lt;tibble [1 × 3]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> none_logistic    </span><span style='color: #949494;'>&lt;tibble [1 × 3]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> pca_knn          </span><span style='color: #949494;'>&lt;tibble [1 × 3]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> pca_logistic     </span><span style='color: #949494;'>&lt;tibble [1 × 3]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> sp_sign_knn      </span><span style='color: #949494;'>&lt;tibble [1 × 3]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> sp_sign_logistic </span><span style='color: #949494;'>&lt;tibble [1 × 3]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span></div><div class='input'>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> none_knn         </span><span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> none_logistic    </span><span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> pca_knn          </span><span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> pca_logistic     </span><span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> sp_sign_knn      </span><span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>6</span><span> sp_sign_logistic </span><span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span></div><div class='input'>
 <span class='co'># ------------------------------------------------------------------------------</span>
 <span class='co'># Using selector functions and formulas</span>
 
@@ -237,18 +237,18 @@ and <code>models</code> should be equal.</p></td>
 #&gt; 
 #&gt; $everything
 #&gt; class ~ .
-#&gt; &lt;environment: 0x7fc6685267e8&gt;
+#&gt; &lt;environment: 0x7f860a587a70&gt;
 #&gt; </div><div class='input'>
 <span class='va'>cell_set_by_group</span> <span class='op'>&lt;-</span> <span class='fu'>workflow_set</span><span class='op'>(</span><span class='va'>preproc</span>, <span class='va'>models</span><span class='op'>[</span><span class='st'>"logistic"</span><span class='op'>]</span>, cross <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='va'>cell_set_by_group</span>
 </div><div class='output co'>#&gt; </span><span style='color: #949494;'># A workflow set/tibble: 5 x 4</span><span>
 #&gt;   wflow_id            info             option    result    
 #&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>               </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>    
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> ch_1_logistic       </span><span style='color: #949494;'>&lt;tibble [1 × 3]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> ch_2_logistic       </span><span style='color: #949494;'>&lt;tibble [1 × 3]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> ch_3_logistic       </span><span style='color: #949494;'>&lt;tibble [1 × 3]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> ch_4_logistic       </span><span style='color: #949494;'>&lt;tibble [1 × 3]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> everything_logistic </span><span style='color: #949494;'>&lt;tibble [1 × 3]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span></div></span></pre>
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> ch_1_logistic       </span><span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> ch_2_logistic       </span><span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> ch_3_logistic       </span><span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> ch_4_logistic       </span><span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> everything_logistic </span><span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

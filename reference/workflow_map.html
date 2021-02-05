@@ -188,20 +188,20 @@ contain a <code>try-error</code> object.</p>
 <span class='op'>}</span>
 
 <span class='fu'><a href='rank_results.html'>rank_results</a></span><span class='op'>(</span><span class='va'>chi_features_res</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 40 x 10</span><span>
-#&gt;    wflow_id .config .metric  mean std_err     n workflow preprocessor model
-#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> plus_pc… Prepro… rmse    0.574      </span><span style='color: #BB0000;'>NA</span><span>     1 </span><span style='color: #949494;'>&lt;workfl</span><span>… recipe       line…
-#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> plus_pc… Prepro… rsq     0.989      </span><span style='color: #BB0000;'>NA</span><span>     1 </span><span style='color: #949494;'>&lt;workfl</span><span>… recipe       line…
-#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> plus_pc… Prepro… rmse    0.586      </span><span style='color: #BB0000;'>NA</span><span>     1 </span><span style='color: #949494;'>&lt;workfl</span><span>… recipe       line…
-#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> plus_pc… Prepro… rsq     0.989      </span><span style='color: #BB0000;'>NA</span><span>     1 </span><span style='color: #949494;'>&lt;workfl</span><span>… recipe       line…
-#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> plus_pc… Prepro… rmse    0.590      </span><span style='color: #BB0000;'>NA</span><span>     1 </span><span style='color: #949494;'>&lt;workfl</span><span>… recipe       line…
-#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> plus_pc… Prepro… rsq     0.988      </span><span style='color: #BB0000;'>NA</span><span>     1 </span><span style='color: #949494;'>&lt;workfl</span><span>… recipe       line…
-#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> plus_pc… Prepro… rmse    0.591      </span><span style='color: #BB0000;'>NA</span><span>     1 </span><span style='color: #949494;'>&lt;workfl</span><span>… recipe       line…
-#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> plus_pc… Prepro… rsq     0.988      </span><span style='color: #BB0000;'>NA</span><span>     1 </span><span style='color: #949494;'>&lt;workfl</span><span>… recipe       line…
-#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> plus_pc… Prepro… rmse    0.594      </span><span style='color: #BB0000;'>NA</span><span>     1 </span><span style='color: #949494;'>&lt;workfl</span><span>… recipe       line…
-#&gt; </span><span style='color: #BCBCBC;'>10</span><span> plus_pc… Prepro… rsq     0.989      </span><span style='color: #BB0000;'>NA</span><span>     1 </span><span style='color: #949494;'>&lt;workfl</span><span>… recipe       line…
-#&gt; </span><span style='color: #949494;'># … with 30 more rows, and 1 more variable: rank </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span></div></span></pre>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 40 x 9</span><span>
+#&gt;    wflow_id   .config      .metric  mean std_err     n preprocessor model   rank
+#&gt;    </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>      </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span>   </span><span style='color: #949494;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>        </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>  </span><span style='color: #949494;font-style: italic;'>&lt;int&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'> 1</span><span> plus_pca_… Preprocesso… rmse    0.574      </span><span style='color: #BB0000;'>NA</span><span>     1 recipe       linea…     1
+#&gt; </span><span style='color: #BCBCBC;'> 2</span><span> plus_pca_… Preprocesso… rsq     0.989      </span><span style='color: #BB0000;'>NA</span><span>     1 recipe       linea…     1
+#&gt; </span><span style='color: #BCBCBC;'> 3</span><span> plus_pca_… Preprocesso… rmse    0.586      </span><span style='color: #BB0000;'>NA</span><span>     1 recipe       linea…     2
+#&gt; </span><span style='color: #BCBCBC;'> 4</span><span> plus_pca_… Preprocesso… rsq     0.989      </span><span style='color: #BB0000;'>NA</span><span>     1 recipe       linea…     2
+#&gt; </span><span style='color: #BCBCBC;'> 5</span><span> plus_pca_… Preprocesso… rmse    0.590      </span><span style='color: #BB0000;'>NA</span><span>     1 recipe       linea…     3
+#&gt; </span><span style='color: #BCBCBC;'> 6</span><span> plus_pca_… Preprocesso… rsq     0.988      </span><span style='color: #BB0000;'>NA</span><span>     1 recipe       linea…     3
+#&gt; </span><span style='color: #BCBCBC;'> 7</span><span> plus_pca_… Preprocesso… rmse    0.591      </span><span style='color: #BB0000;'>NA</span><span>     1 recipe       linea…     4
+#&gt; </span><span style='color: #BCBCBC;'> 8</span><span> plus_pca_… Preprocesso… rsq     0.988      </span><span style='color: #BB0000;'>NA</span><span>     1 recipe       linea…     4
+#&gt; </span><span style='color: #BCBCBC;'> 9</span><span> plus_pca_… Preprocesso… rmse    0.594      </span><span style='color: #BB0000;'>NA</span><span>     1 recipe       linea…     5
+#&gt; </span><span style='color: #BCBCBC;'>10</span><span> plus_pca_… Preprocesso… rsq     0.989      </span><span style='color: #BB0000;'>NA</span><span>     1 recipe       linea…     5
+#&gt; </span><span style='color: #949494;'># … with 30 more rows</span><span></div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
