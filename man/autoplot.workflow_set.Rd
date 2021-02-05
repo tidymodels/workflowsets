@@ -8,7 +8,7 @@
   object,
   rank_metric = NULL,
   metric = NULL,
-  which = "workflow_set",
+  id = "workflow_set",
   select_best = FALSE,
   std_errs = qnorm(0.95),
   ...
@@ -23,7 +23,7 @@ the results.}
 \item{metric}{A character vector for which metrics (apart from \code{rank_metric})
 to be included in the visualization.}
 
-\item{which}{A character string for what to plot. If a value of
+\item{id}{A character string for what to plot. If a value of
 \code{"workflow_set"} is used, the results of each model (and sub-model) are ordered
 and plotted. Alternatively, a value of the workflow set's \code{wflow_id} can be
 given and the \code{autoplot()} method is executed on that workflow's results.}
@@ -42,5 +42,5 @@ Plot the results of a workflow set
 \examples{
 autoplot(two_class_res)
 autoplot(two_class_res, select_best = TRUE)
-autoplot(two_class_res, which = "yj_trans_cart", metric = "roc_auc")
+autoplot(two_class_res, id = "yj_trans_cart", metric = "roc_auc")
 }
