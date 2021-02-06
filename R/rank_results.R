@@ -18,7 +18,7 @@ rank_results <- function(x, rank_metric = NULL, select_best = FALSE) {
    results <- collect_metrics(x) %>%
       dplyr::select(wflow_id, .config, .metric, mean, std_err, n) %>%
       dplyr::full_join(wflow_info, by = "wflow_id") %>%
-      dplyr::select(-note, -workflow)
+      dplyr::select(-comment, -workflow)
 
    types <- x %>%
       dplyr::full_join(wflow_info, by = "wflow_id") %>%
