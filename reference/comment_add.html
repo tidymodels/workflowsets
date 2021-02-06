@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • workflowsets</title>
+<title>Add annotations and comments for workflows — comment_add • workflowsets</title>
 
 
 <!-- jquery -->
@@ -42,7 +42,10 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Add annotations and comments for workflows — comment_add" />
+<meta property="og:description" content="comment_add() can be used to log important information about the workflow or
+its results as you work. Comments can be appended or removed." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -69,7 +72,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -115,114 +118,80 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Add annotations and comments for workflows</h1>
+    
+    <div class="hidden name"><code>comment_add.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p><code>comment_add()</code> can be used to log important information about the workflow or
+its results as you work. Comments can be appended or removed.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>comment_add</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>id</span>, <span class='va'>...</span>, append <span class='op'>=</span> <span class='cn'>TRUE</span>, collapse <span class='op'>=</span> <span class='st'>"\n"</span><span class='op'>)</span>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="as_workflow_set.html">as_workflow_set()</a></code> </p>
-        </td>
-        <td><p>Save tuning or resampling results as a workflow set</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="autoplot.workflow_set.html">autoplot(<i>&lt;workflow_set&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Plot the results of a workflow set</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="collect_metrics.workflow_set.html">collect_metrics(<i>&lt;workflow_set&gt;</i>)</a></code> <code><a href="collect_metrics.workflow_set.html">collect_predictions(<i>&lt;workflow_set&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Obtain and format results produced by tuning functions for workflow sets</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="comment_add.html">comment_add()</a></code> <code><a href="comment_add.html">comment_get()</a></code> <code><a href="comment_add.html">comment_reset()</a></code> <code><a href="comment_add.html">comment_print()</a></code> </p>
-        </td>
-        <td><p>Add annotations and comments for workflows</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="leave_var_out_formulas.html">leave_var_out_formulas()</a></code> </p>
-        </td>
-        <td><p>Create formulas without each predictor</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="options_add.html">options_add()</a></code> <code><a href="options_add.html">options_remove()</a></code> <code><a href="options_add.html">options_add_parameters()</a></code> </p>
-        </td>
-        <td><p>Functions for options in a workflow set</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="options_list.html">options_list()</a></code> </p>
-        </td>
-        <td><p>Make a classed list of options</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="pull_workflow_result.html">pull_workflow_result()</a></code> <code><a href="pull_workflow_result.html">pull_workflow()</a></code> </p>
-        </td>
-        <td><p>Extract a workflow from a workflow set</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="rank_results.html">rank_results()</a></code> </p>
-        </td>
-        <td><p>Rank the results by a metric</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="selectors.html">selectors()</a></code> </p>
-        </td>
-        <td><p>Raw column selectors for modeling</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="two_class_set.html">two_class_set</a></code> </p>
-        </td>
-        <td><p>Example Data Sets</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="workflow_map.html">workflow_map()</a></code> </p>
-        </td>
-        <td><p>Process a series of workflows</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="workflow_set.html">workflow_set()</a></code> </p>
-        </td>
-        <td><p>Generate a set of workflow objects from preprocessing and model objects</p></td>
-      </tr>
-    </tbody>
+<span class='fu'>comment_get</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>id</span><span class='op'>)</span>
+
+<span class='fu'>comment_reset</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>id</span><span class='op'>)</span>
+
+<span class='fu'>comment_print</span><span class='op'>(</span><span class='va'>x</span>, id <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A workflow set</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A single character string for a value in the <code>wflow_id</code> column. For
+<code>comment_print()</code>, <code>id</code> can be a vector or <code>NULL</code> (and this indicates that
+all comments are printed).</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>One or more character strings.</p></td>
+    </tr>
+    <tr>
+      <th>append</th>
+      <td><p>A logical value to determine if the new comment should be added
+to the existing values.</p></td>
+    </tr>
+    <tr>
+      <th>collapse</th>
+      <td><p>A character string that separates the comments.</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p><code>comment_add()</code> and <code>comment_reset()</code> return an updated workflow set.
+<code>comment_get()</code> returns a character string. <code>comment_print()</code> returns <code>NULL</code>
+invisibly.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>two_class_set</span> <span class='op'>%&gt;%</span> <span class='fu'>comment_get</span><span class='op'>(</span><span class='st'>"none_cart"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] ""</div><div class='input'>
+<span class='va'>new_set</span> <span class='op'>&lt;-</span>
+   <span class='va'>two_class_set</span> <span class='op'>%&gt;%</span>
+   <span class='fu'>comment_add</span><span class='op'>(</span><span class='st'>"none_cart"</span>, <span class='st'>"What does 'cart' stand for\u2753"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+   <span class='fu'>comment_add</span><span class='op'>(</span><span class='st'>"none_cart"</span>, <span class='st'>"Classification And Regression Trees."</span><span class='op'>)</span>
+
+<span class='fu'>comment_print</span><span class='op'>(</span><span class='va'>new_set</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ── none_cart ─────────────────────────────────────────────────────────────────── 
+#&gt; 
+#&gt; What does 'cart' stand for❓
+#&gt; 
+#&gt; Classification And Regression Trees. 
+#&gt; </div><div class='input'>
+<span class='va'>new_set</span> <span class='op'>%&gt;%</span> <span class='fu'>comment_get</span><span class='op'>(</span><span class='st'>"none_cart"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "What does 'cart' stand for\u2753\nClassification And Regression Trees."</div><div class='input'>
+<span class='va'>new_set</span> <span class='op'>%&gt;%</span> <span class='fu'>comment_reset</span><span class='op'>(</span><span class='st'>"none_cart"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>comment_get</span><span class='op'>(</span><span class='st'>"none_cart"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] ""</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
