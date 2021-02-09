@@ -134,8 +134,10 @@ new_workflow_set <- function(x) {
  if (!is.character(x$wflow_id)) {
     halt("The 'wflow_id' column should be character.")
  }
- if (max(table(x$wflow_id)) > 1 | any(x$wflow_id == "") | any(is.na(x$wflow_id))) {
-    halt("The 'wflow_id' column should contain unique, non-missing character strings.")
+ if (nrow(x) > 0) {
+    if (max(table(x$wflow_id)) > 1 | any(x$wflow_id == "") | any(is.na(x$wflow_id))) {
+       halt("The 'wflow_id' column should contain unique, non-missing character strings.")
+    }
  }
  is_tibble <- purrr::map_lgl(x$info, ~ inherits(.x, "tbl_df"))
  if (!all(is_tibble)) {
@@ -155,6 +157,7 @@ new_workflow_set <- function(x) {
  check_for_tune_results(x$result)
  check_consistent_resamples(x)
 
+ # new_tibble(class = )
  class(x) <- c("workflow_set", class(tibble::tibble()))
  x
 }

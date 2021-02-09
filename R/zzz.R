@@ -5,6 +5,8 @@
    vctrs::s3_register("tune::collect_metrics",     "workflow_set")
    vctrs::s3_register("tune::collect_predictions", "workflow_set")
    vctrs::s3_register("ggplot2::autoplot",         "workflow_set")
+   vctrs::s3_register("dplyr::dplyr_reconstruct",  "workflow_set",
+                      method = dplyr_reconstruct_wflowset)
+
    invisible()
 }
-
