@@ -18,14 +18,14 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1.9000
+RoxygenNote: 7.1.1.9001
 Imports: 
     rlang,
-    tune (>= 0.1.2.9000),
+    tune (>= 0.1.3),
     withr,
     dplyr,
     purrr,
-    tibble (>= 3.0.6.9000),
+    tibble (>= 3.1.0),
     vctrs,
     tidyr,
     workflows,
@@ -33,8 +33,7 @@ Imports:
     ggplot2,
     stats,
     prettyunits,
-    pillar (>= 1.4.99.9006),
-    rsample (>= 0.0.8.9001)
+    rsample (>= 0.0.9)
 Language: en-US
 Suggests: 
     spelling,
@@ -49,10 +48,7 @@ Suggests:
     knitr,
     rmarkdown
 Remotes: 
-    tidymodels/tune,
-    tidymodels/rsample,
-    r-lib/pillar,
-    tidyverse/tibble#850
+    tidymodels/tune
 Depends: 
     R (>= 2.10)
 Config/testthat/edition: 3

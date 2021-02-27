@@ -24,7 +24,7 @@ below to see their documentation.
 
   \item{ggplot2}{\code{\link[ggplot2]{autoplot}}}
 
-  \item{tibble}{\code{\link[tibble:reexports]{size_sum}}, \code{\link[tibble]{tbl_sum}}, \code{\link[tibble:reexports]{type_sum}}}
+  \item{tibble}{\code{\link[tibble:reexports]{size_sum}}, \code{\link[tibble:reexports]{tbl_sum}}, \code{\link[tibble:reexports]{type_sum}}}
 
   \item{tune}{\code{\link[tune:collect_predictions]{collect_metrics}}, \code{\link[tune]{collect_predictions}}, \code{\link[tune]{fit_resamples}}, \code{\link[tune]{tune_bayes}}, \code{\link[tune]{tune_grid}}}
 }}
