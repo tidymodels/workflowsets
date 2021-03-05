@@ -162,28 +162,28 @@
    <span class="fu"><a href="../reference/workflow_map.html">workflow_map</a></span><span class="op">(</span><span class="st">"fit_resamples"</span>, resamples <span class="op">=</span> <span class="va">folds</span><span class="op">)</span>
 <span class="va">churn_workflows</span>
 <span class="co">#&gt; # A workflow set/tibble: 20 x 4</span>
-<span class="co">#&gt;    wflow_id                        info           option   result               </span>
-<span class="co">#&gt;    &lt;chr&gt;                           &lt;list&gt;         &lt;list&gt;   &lt;list&gt;               </span>
-<span class="co">#&gt;  1 state_logistic                  &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span>
-<span class="co">#&gt;  2 account_length_logistic         &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span>
-<span class="co">#&gt;  3 area_code_logistic              &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span>
-<span class="co">#&gt;  4 international_plan_logistic     &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span>
-<span class="co">#&gt;  5 voice_mail_plan_logistic        &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span>
-<span class="co">#&gt;  6 number_vmail_messages_logistic  &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span>
-<span class="co">#&gt;  7 total_day_minutes_logistic      &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span>
-<span class="co">#&gt;  8 total_day_calls_logistic        &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span>
-<span class="co">#&gt;  9 total_day_charge_logistic       &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span>
-<span class="co">#&gt; 10 total_eve_minutes_logistic      &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span>
-<span class="co">#&gt; 11 total_eve_calls_logistic        &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span>
-<span class="co">#&gt; 12 total_eve_charge_logistic       &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span>
-<span class="co">#&gt; 13 total_night_minutes_logistic    &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span>
-<span class="co">#&gt; 14 total_night_calls_logistic      &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span>
-<span class="co">#&gt; 15 total_night_charge_logistic     &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span>
-<span class="co">#&gt; 16 total_intl_minutes_logistic     &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span>
-<span class="co">#&gt; 17 total_intl_calls_logistic       &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span>
-<span class="co">#&gt; 18 total_intl_charge_logistic      &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span>
-<span class="co">#&gt; 19 number_customer_service_calls_… &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span>
-<span class="co">#&gt; 20 everything_logistic             &lt;tibble [1 × … &lt;opts[1… &lt;resample_results [1…</span></code></pre></div>
+<span class="co">#&gt;    wflow_id                               info             option    result   </span>
+<span class="co">#&gt;    &lt;chr&gt;                                  &lt;list&gt;           &lt;list&gt;    &lt;list&gt;   </span>
+<span class="co">#&gt;  1 state_logistic                         &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span>
+<span class="co">#&gt;  2 account_length_logistic                &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span>
+<span class="co">#&gt;  3 area_code_logistic                     &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span>
+<span class="co">#&gt;  4 international_plan_logistic            &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span>
+<span class="co">#&gt;  5 voice_mail_plan_logistic               &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span>
+<span class="co">#&gt;  6 number_vmail_messages_logistic         &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span>
+<span class="co">#&gt;  7 total_day_minutes_logistic             &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span>
+<span class="co">#&gt;  8 total_day_calls_logistic               &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span>
+<span class="co">#&gt;  9 total_day_charge_logistic              &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span>
+<span class="co">#&gt; 10 total_eve_minutes_logistic             &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span>
+<span class="co">#&gt; 11 total_eve_calls_logistic               &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span>
+<span class="co">#&gt; 12 total_eve_charge_logistic              &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span>
+<span class="co">#&gt; 13 total_night_minutes_logistic           &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span>
+<span class="co">#&gt; 14 total_night_calls_logistic             &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span>
+<span class="co">#&gt; 15 total_night_charge_logistic            &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span>
+<span class="co">#&gt; 16 total_intl_minutes_logistic            &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span>
+<span class="co">#&gt; 17 total_intl_calls_logistic              &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span>
+<span class="co">#&gt; 18 total_intl_charge_logistic             &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span>
+<span class="co">#&gt; 19 number_customer_service_calls_logistic &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span>
+<span class="co">#&gt; 20 everything_logistic                    &lt;tibble [1 × 4]&gt; &lt;opts[1]&gt; &lt;rsmp[+]&gt;</span></code></pre></div>
 <p>To assess how to measure the effect of each predictor, let’s subtract the area under the ROC curve for each predictor from the same metric from the full model. We’ll match first by resampling ID, the compute the mean difference.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">roc_values</span> <span class="op">&lt;-</span> 
