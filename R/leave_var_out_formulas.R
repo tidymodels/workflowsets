@@ -9,6 +9,7 @@
 #' @param data A data frame.
 #' @param full_model A logical; should the list include the original formula?
 #' @param ... Options to pass to [stats::model.frame()]
+#' @seealso [workflow_set()]
 #' @return A named list of formulas
 #' @examples
 #' data(penguins, package = "modeldata")

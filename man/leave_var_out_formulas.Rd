@@ -44,3 +44,6 @@ leave_var_out_formulas(
    data = penguins
 )
 }
+\seealso{
+\code{\link[=workflow_set]{workflow_set()}}
+}

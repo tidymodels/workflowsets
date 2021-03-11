@@ -1,4 +1,4 @@
-#'Process a series of workflows
+#' Process a series of workflows
 #'
 #' `workflow_map()` will execute the same function across the workflows in the
 #' set. The various `tune_*()` functions can be used as well as
@@ -10,7 +10,12 @@
 #' @param verbose A logical for logging progress.
 #' @param seed A single integer that is set prior to each function execution.
 #' @param ... Options to pass to the modeling function. See details below.
-#' @return An updated workflow set.
+#' @return An updated workflow set. The `option` column will be updated with
+#' any options for the `tune` package functions given to `workflow_map()`. Also,
+#' the results will be added to the `result` column. If the computations for a
+#' workflow fail, an `try-catch` object will be saved in place of the results
+#' (without stopping execution).
+#' @seealso [workflow_set()], [as_workflow_set()], [pull_workflow_result()]
 #' @details
 #'
 #' When passing options, anything passed in the `...` will be combined with any
@@ -19,6 +24,11 @@
 #'
 #' Any failures in execution result in the corresponding row of `results` to
 #' contain a `try-error` object.
+#'
+#' In cases where a model has no tuning parameters is mapped to one of the
+#' tuning functions, `[tune::fit_resamples()]` will be used instead and a
+#' warning is issued.
+#'
 #' @examples
 #'
 #' # Duplicating the existing results
@@ -49,7 +59,7 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
    dots <- rlang::list2(...)
    # check and add options to options column
    if (length(dots) > 0) {
-      object <- rlang::exec("options_add", object, !!!dots)
+      object <- rlang::exec("option_add", object, !!!dots)
    }
 
    iter_seq <- seq_along(object$wflow_id)

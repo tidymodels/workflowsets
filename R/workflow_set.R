@@ -6,7 +6,33 @@
 #' @param cross A logical: should all combinations of the preprocessors and
 #'  models be used to create the workflows? If `FALSE`, the length of `preproc`
 #'  and `models` should be equal.
-#' @return A tibble with extra class 'workflow_set'.
+#' @seealso [workflow_map()], [comment_add()], [option_add()],
+#' [as_workflow_set()]
+#' @details
+#' The preprocessors that can be combined with the model objects can include:
+#'
+#'  * A basic R formula.
+#'  * A recipe definition (un-prepared).
+#'  * A selectors object.
+#'
+#' Since `preproc` is a named list column, any combination of these can be
+#' used in that argument (i.e., `preproc` can be mixed types).
+#'
+#' @return A tibble with extra class 'workflow_set'. A new set includes four
+#' columns (but others can be added):
+#'
+#'  * `wflow_id` contains character strings for the preprocessor/workflow
+#'     combination. These can be changed but must be unique.
+#'  * `info` is a list column with tibbles containing more specific information,
+#'     including any comments added using [comment_add()]. This tibble also
+#'     contains the workflow object (which can be easily retrieved using
+#'     [pull_workflow()]).
+#'  * `option` is a list column that will include a list of optional arguments
+#'     passed to the functions from the `tune` package. They can be added
+#'     manually via [option_add()] or automatically when options are passed to
+#'     [workflow_map()].
+#'  * `result` is a list column that will contain any objects produced when
+#'     [workflow_map()] is used.
 #' @examples
 #' library(workflowsets)
 #' library(modeldata)
@@ -111,52 +137,52 @@ get_info <- function(x) {
 }
 
 new_workflow_set <- function(x) {
- req_cols <- c("wflow_id", "info", "option", "result")
- if (!tibble::is_tibble(x)) {
-    halt("The object should be a tibble.")
- }
- if (!all(req_cols %in% names(x))) {
-    halt(
-       "The object should have columns: ",
-       paste0("'", req_cols, "'", collapse = ", "),
-       "."
-    )
- }
- if (!is.list(x$info)) {
-    halt("The 'info' column should be a list.")
- }
- if (!is.list(x$result)) {
-    halt("The 'result' column should be a list.")
- }
- if (!is.list(x$option)) {
-    halt("The 'option' column should be a list.")
- }
- if (!is.character(x$wflow_id)) {
-    halt("The 'wflow_id' column should be character.")
- }
- if (max(table(x$wflow_id)) > 1 | any(x$wflow_id == "") | any(is.na(x$wflow_id))) {
-    halt("The 'wflow_id' column should contain unique, non-missing character strings.")
- }
- is_tibble <- purrr::map_lgl(x$info, ~ inherits(.x, "tbl_df"))
- if (!all(is_tibble)) {
-    bad <- x$wflow_id[!is_tibble]
-    halt("The following elements of the 'info' column are not tibbles: ",
-         paste0("'", bad, "'", collapse = ", "), ".")
- }
- tbl_nms <- purrr::map(x$info, names)
- exp_nms <- c("workflow", "preproc", "model", "comment")
- check_nms <- purrr::map_lgl(tbl_nms, ~ identical(.x, exp_nms))
- if (!all(check_nms)) {
-    bad <- x$wflow_id[!check_nms]
-    halt("The following elements of the 'info' column do not have the correct elements: ",
-         paste0("'", bad, "'", collapse = ", "), ".")
- }
+   req_cols <- c("wflow_id", "info", "option", "result")
+   if (!tibble::is_tibble(x)) {
+      halt("The object should be a tibble.")
+   }
+   if (!all(req_cols %in% names(x))) {
+      halt(
+         "The object should have columns: ",
+         paste0("'", req_cols, "'", collapse = ", "),
+         "."
+      )
+   }
+   if (!is.list(x$info)) {
+      halt("The 'info' column should be a list.")
+   }
+   if (!is.list(x$result)) {
+      halt("The 'result' column should be a list.")
+   }
+   if (!is.list(x$option)) {
+      halt("The 'option' column should be a list.")
+   }
+   if (!is.character(x$wflow_id)) {
+      halt("The 'wflow_id' column should be character.")
+   }
+   if (max(table(x$wflow_id)) > 1 | any(x$wflow_id == "") | any(is.na(x$wflow_id))) {
+      halt("The 'wflow_id' column should contain unique, non-missing character strings.")
+   }
+   is_tibble <- purrr::map_lgl(x$info, ~ inherits(.x, "tbl_df"))
+   if (!all(is_tibble)) {
+      bad <- x$wflow_id[!is_tibble]
+      halt("The following elements of the 'info' column are not tibbles: ",
+           paste0("'", bad, "'", collapse = ", "), ".")
+   }
+   tbl_nms <- purrr::map(x$info, names)
+   exp_nms <- c("workflow", "preproc", "model", "comment")
+   check_nms <- purrr::map_lgl(tbl_nms, ~ identical(.x, exp_nms))
+   if (!all(check_nms)) {
+      bad <- x$wflow_id[!check_nms]
+      halt("The following elements of the 'info' column do not have the correct elements: ",
+           paste0("'", bad, "'", collapse = ", "), ".")
+   }
 
- check_for_tune_results(x$result)
- check_consistent_resamples(x)
+   check_for_tune_results(x$result)
+   check_consistent_resamples(x)
 
- class(x) <- c("workflow_set", class(tibble::tibble()))
- x
+   class(x) <- c("workflow_set", class(tibble::tibble()))
+   x
 }
 
 preproc_type <- function(x) {
