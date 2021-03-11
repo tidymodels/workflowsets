@@ -20,7 +20,21 @@ and \code{models} should be equal.}
 A tibble with extra class 'workflow_set'.
 }
 \description{
-Generate a set of workflow objects from preprocessing and model objects
+This function creates a series of workflow objects using combinations of the
+preprocessors and model specifications. These are contained in a tibble along
+with some additional columns.
+}
+\details{
+When manipulating a workflow set, the required columns should not be
+removed: \code{wflow_id}, \code{info}, \code{option}, and \code{result}. Their contents can be
+changes so long as \code{wflow_id} has no duplicate values and the new column
+values have the same type as the originals. Columns can otherwise be added
+or removed. New rows can be added so long as they also come from a workflow
+set (and \code{wflow_id} has no duplicates). Order of the rows does not matter.
+
+resampling scheme is used across all results. For example, two 10-fold
+cross-validation objects that were created with different seeds will result
+in an error.
 }
 \examples{
 library(workflowsets)
