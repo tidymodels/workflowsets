@@ -1,6 +1,6 @@
 
 make_workflow <- function(x, y) {
-   exp_classes <- c("formula", "recipe", "selectors")
+   exp_classes <- c("formula", "recipe", "workflow_variables")
    w <-
       workflows::workflow() %>%
       workflows::add_model(y)
@@ -8,14 +8,8 @@ make_workflow <- function(x, y) {
       w <- workflows::add_formula(w, x)
    } else if (inherits(x, "recipe")) {
       w <- workflows::add_recipe(w, x)
-   } else if (inherits(x, "selectors")) {
-      w <-
-         workflows::add_variables(
-            w,
-            outcomes = !!x$outcomes,
-            predictors = !!x$predictors,
-            blueprint = x$blueprint
-         )
+   } else if (inherits(x, "workflow_variables")) {
+      w <- workflows::add_variables(w, variables = x)
    } else {
      halt("The preprocessor must be an object with one of the ",
           "following classes: ", paste0("'", exp_classes, "'", collapse = ", "))
