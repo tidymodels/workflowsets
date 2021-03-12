@@ -129,3 +129,118 @@ check_for_workflow <- function(x) {
 }
 
 
+has_required_container_type <- function(x) {
+   rlang::is_list(x)
+}
+has_required_container_columns <- function(x) {
+   columns <- required_container_columns()
+   ok <- all(columns %in% names(x))
+   ok
+}
+required_container_columns <- function() {
+   c("wflow_id", "info", "option", "result")
+}
+
+
+has_valid_column_info_structure <- function(x) {
+   info <- x$info
+   rlang::is_list(info)
+}
+has_valid_column_info_inner_types <- function(x) {
+   info <- x$info
+   is_tibble_indicator <- purrr::map_lgl(info, tibble::is_tibble)
+   all(is_tibble_indicator)
+}
+has_valid_column_info_inner_names <- function(x) {
+   columns <- required_info_inner_names()
+   info <- x$info
+   list_of_names <- purrr::map(info, names)
+   has_names_indicator <- purrr::map_lgl(list_of_names, identical, y = columns)
+   all(has_names_indicator)
+}
+required_info_inner_names <- function() {
+   c("workflow", "preproc", "model", "comment")
+}
+
+
+has_valid_column_result_structure <- function(x) {
+   result <- x$result
+   rlang::is_list(result)
+}
+has_valid_column_result_inner_types <- function(x) {
+   result <- x$result
+   valid_indicator <- purrr::map_lgl(result, is_valid_result_inner_type)
+   all(valid_indicator)
+}
+has_valid_column_result_fingerprints <- function(x) {
+   result <- x$result
+
+   # Drop default results
+   default_indicator <- purrr::map_lgl(result, is_default_result_element)
+   result <- result[!default_indicator]
+
+   # Not sure how to fingerprint racing objects just yet. See
+   # https://github.com/tidymodels/rsample/issues/212
+   racing_indicator <- purrr::map_lgl(result, inherits, "tune_race")
+   result <- result[!racing_indicator]
+
+   hashes <- purrr::map_chr(result, rsample::.get_fingerprint)
+
+   # Drop NAs for results created before rsample 0.1.0, which won't have a hash
+   pre_0.1.0 <- is.na(hashes)
+   hashes <- hashes[!pre_0.1.0]
+   result <- result[!pre_0.1.0]
+
+   if (rlang::is_empty(hashes)) {
+      # No hashes to check
+      TRUE
+   } else {
+      # Should collapse to a single hash value if all resamples are the same
+      uniques <- unique(hashes)
+      length(uniques) == 1L
+   }
+}
+is_valid_result_inner_type <- function(x) {
+   if (is_default_result_element(x)) {
+      # Default, before any results are filled
+      return(TRUE)
+   }
+   inherits(x, "tune_results")
+}
+is_default_result_element <- function(x) {
+   identical(x, list())
+}
+
+
+has_valid_column_option_structure <- function(x) {
+   option <- x$option
+   rlang::is_list(option)
+}
+has_valid_column_option_inner_types <- function(x) {
+   option <- x$option
+   valid_options_indicator <- purrr::map_lgl(option, inherits, "options")
+   all(valid_options_indicator)
+}
+
+
+has_valid_column_wflow_id_structure <- function(x) {
+   wflow_id <- x$wflow_id
+   rlang::is_character(wflow_id)
+}
+has_valid_column_wflow_id_strings <- function(x) {
+   wflow_id <- x$wflow_id
+   uniques <- unique(wflow_id)
+
+   if (length(wflow_id) != length(uniques)) {
+      return(FALSE)
+   }
+   if (any(is.na(wflow_id))) {
+      return(FALSE)
+   }
+   if (any(wflow_id == "")) {
+      return(FALSE)
+   }
+
+   TRUE
+}
+
