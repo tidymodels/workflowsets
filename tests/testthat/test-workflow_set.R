@@ -115,22 +115,22 @@ test_that("correct object type and resamples", {
       regex = NA
    )
    res_1$result[[1]] <- lm(pp[[1]], data = mtcars)
-   expect_error(
-      workflowsets:::check_for_tune_results(res_1$result),
-      "Some elements of 'result` do not have class `tune_results`"
+   expect_identical(
+      workflowsets:::has_valid_column_result_inner_types(res_1),
+      FALSE
    )
 
    res_2 <- set_1
    res_2$result <-
       map(res_2$wflow_id, ~ pull_workflow(res_2, id = .x)) %>%
       purrr::map(~ fit_resamples(.x, resamples = bootstraps(mtcars, 3)))
-   expect_error(
-      workflowsets:::check_for_tune_results(res_2$result),
-      regex = NA
+   expect_identical(
+      workflowsets:::has_valid_column_result_inner_types(res_2),
+      TRUE
    )
-   expect_error(
-      workflowsets:::check_consistent_resamples(res_2),
-      "Different resamples were used in the workflow results"
+   expect_identical(
+      workflowsets:::has_valid_column_result_fingerprints(res_2),
+      FALSE
    )
 })
 
@@ -200,7 +200,7 @@ test_that("checking resamples", {
    f_2 <- lr_spec %>% fit_resamples(mpg ~ disp, resamples = cv_2, control = ctrl)
    expect_error(
       as_workflow_set(wt = f_1, disp = f_2),
-      "Different resamples were used in the workflow results"
+      "Different resamples were used in the workflow 'result's"
    )
 
    # Emulate old rset objects

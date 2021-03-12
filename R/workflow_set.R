@@ -138,55 +138,6 @@ get_info <- function(x) {
                   comment = character(1))
 }
 
-new_workflow_set <- function(x) {
-   req_cols <- c("wflow_id", "info", "option", "result")
-   if (!tibble::is_tibble(x)) {
-      halt("The object should be a tibble.")
-   }
-   if (!all(req_cols %in% names(x))) {
-      halt(
-         "The object should have columns: ",
-         paste0("'", req_cols, "'", collapse = ", "),
-         "."
-      )
-   }
-   if (!is.list(x$info)) {
-      halt("The 'info' column should be a list.")
-   }
-   if (!is.list(x$result)) {
-      halt("The 'result' column should be a list.")
-   }
-   if (!is.list(x$option)) {
-      halt("The 'option' column should be a list.")
-   }
-   if (!is.character(x$wflow_id)) {
-      halt("The 'wflow_id' column should be character.")
-   }
-   if (max(table(x$wflow_id)) > 1 | any(x$wflow_id == "") | any(is.na(x$wflow_id))) {
-      halt("The 'wflow_id' column should contain unique, non-missing character strings.")
-   }
-   is_tibble <- purrr::map_lgl(x$info, ~ inherits(.x, "tbl_df"))
-   if (!all(is_tibble)) {
-      bad <- x$wflow_id[!is_tibble]
-      halt("The following elements of the 'info' column are not tibbles: ",
-           paste0("'", bad, "'", collapse = ", "), ".")
-   }
-   tbl_nms <- purrr::map(x$info, names)
-   exp_nms <- c("workflow", "preproc", "model", "comment")
-   check_nms <- purrr::map_lgl(tbl_nms, ~ identical(.x, exp_nms))
-   if (!all(check_nms)) {
-      bad <- x$wflow_id[!check_nms]
-      halt("The following elements of the 'info' column do not have the correct elements: ",
-           paste0("'", bad, "'", collapse = ", "), ".")
-   }
-
-   check_for_tune_results(x$result)
-   check_consistent_resamples(x)
-
-   class(x) <- c("workflow_set", class(tibble::tibble()))
-   x
-}
-
 preproc_type <- function(x) {
    x <- workflows::pull_workflow_preprocessor(x)
    class(x)[1]
@@ -234,9 +185,96 @@ fuse_objects <- function(preproc, models) {
 # TODO api for correlation analysis?
 # TODO select_best methods (req tune changes)
 
+# ------------------------------------------------------------------------------
+
 #' @export
 tbl_sum.workflow_set <- function(x) {
    orig <- NextMethod()
    c("A workflow set/tibble" = unname(orig))
 }
 
+# ------------------------------------------------------------------------------
+
+#' @export
+`[.workflow_set` <- function(x, i, j, drop = FALSE, ...) {
+   out <- NextMethod()
+   workflow_set_maybe_reconstruct(out)
+}
+
+# ------------------------------------------------------------------------------
+
+#' @export
+`names<-.workflow_set` <- function(x, value) {
+   out <- NextMethod()
+   workflow_set_maybe_reconstruct(out)
+}
+
+# ------------------------------------------------------------------------------
+
+new_workflow_set <- function(x) {
+   if (!has_required_container_type(x)) {
+      halt("`x` must be a list.")
+   }
+   if (!has_required_container_columns(x)) {
+      columns <- required_container_columns()
+      halt(
+         "The object should have columns: ",
+         paste0("'", columns, "'", collapse = ", "),
+         "."
+      )
+   }
+
+   if (!has_valid_column_info_structure(x)) {
+      halt("The 'info' column should be a list.")
+   }
+   if (!has_valid_column_info_inner_types(x)) {
+      halt("All elements of 'info' must be tibbles.")
+   }
+   if (!has_valid_column_info_inner_names(x)) {
+      columns <- required_info_inner_names()
+      halt(
+         "The 'info' columns should have columns: ",
+         paste0("'", columns, "'", collapse = ", "),
+         "."
+      )
+   }
+
+   if (!has_valid_column_result_structure(x)) {
+      halt("The 'result' column should be a list.")
+   }
+   if (!has_valid_column_result_inner_types(x)) {
+      halt("Some elements of 'result' do not have class `tune_results`.")
+   }
+   if (!has_valid_column_result_fingerprints(x)) {
+      halt(
+         "Different resamples were used in the workflow 'result's. ",
+         "All elements of 'result' must use the same resamples."
+      )
+   }
+
+   if (!has_valid_column_option_structure(x)) {
+      halt("The 'option' column should be a list.")
+   }
+   if (!has_valid_column_option_inner_types(x)) {
+      halt("All elements of 'option' should be 'options'.")
+   }
+
+   if (!has_valid_column_wflow_id_structure(x)) {
+      halt("The 'wflow_id' column should be character.")
+   }
+   if (!has_valid_column_wflow_id_strings(x)) {
+      halt("The 'wflow_id' column should contain unique, non-missing character strings.")
+   }
+
+   new_workflow_set0(x)
+}
+
+new_workflow_set0 <- function(x) {
+   new_tibble0(x, class = "workflow_set")
+}
+new_tibble0 <- function(x, ..., class = NULL) {
+   # Handle the 0-row case correctly by using `new_data_frame()`.
+   # This also correctly strips any attributes except `names` off `x`.
+   x <- vctrs::new_data_frame(x)
+   tibble::new_tibble(x, nrow = nrow(x), class = class)
+}
