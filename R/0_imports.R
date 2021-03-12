@@ -1,4 +1,5 @@
 #' @import ggplot2
+#' @import vctrs
 #' @importFrom stats qnorm as.formula model.frame
 #' @importFrom tibble obj_sum type_sum
 #'
