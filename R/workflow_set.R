@@ -171,6 +171,22 @@ tbl_sum.workflow_set <- function(x) {
 
 # ------------------------------------------------------------------------------
 
+#' @export
+`[.workflow_set` <- function(x, i, j, drop = FALSE, ...) {
+   out <- NextMethod()
+   workflow_set_maybe_reconstruct(out)
+}
+
+# ------------------------------------------------------------------------------
+
+#' @export
+`names<-.workflow_set` <- function(x, value) {
+   out <- NextMethod()
+   workflow_set_maybe_reconstruct(out)
+}
+
+# ------------------------------------------------------------------------------
+
 new_workflow_set <- function(x) {
    if (!has_required_container_type(x)) {
       halt("`x` must be a list.")
