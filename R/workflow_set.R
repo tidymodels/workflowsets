@@ -97,7 +97,7 @@ workflow_set <- function(preproc, models, cross = TRUE) {
          workflow  = purrr::map2(preproc, model, make_workflow),
          workflow  = unname(workflow),
          info = purrr::map(workflow, get_info),
-         option  = purrr::map(1:nrow(res), ~ new_options()),
+         option  = purrr::map(1:nrow(res), ~ new_workflow_set_options()),
          result   = purrr::map(1:nrow(res), ~ list())
       ) %>%
       dplyr::select(wflow_id, info, option, result)

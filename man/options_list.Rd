@@ -13,8 +13,9 @@ options_list(...)
 A classed list.
 }
 \description{
-This function returns a named list with an extra class of \code{"options"} that
-has corresponding formatting methods for printing inside of tibbles.
+This function returns a named list with an extra class of
+\code{"workflow_set_options"} that has corresponding formatting methods for
+printing inside of tibbles.
 }
 \examples{
 options_list(a = 1, b = 2)
