@@ -3,7 +3,7 @@
 \name{pull_workflow_result}
 \alias{pull_workflow_result}
 \alias{pull_workflow}
-\title{Extract a workflow from a workflow set}
+\title{Extract elements from a workflow set}
 \usage{
 pull_workflow_result(x, id)
 
@@ -12,12 +12,22 @@ pull_workflow(x, id)
 \arguments{
 \item{x}{A workflow set.}
 
-\item{id}{A single character string for a workflow ID}
+\item{id}{A single character string for a workflow ID.}
 }
 \value{
-The value in the \code{result} or \code{object} field of the workflow set,
-depending on the function.
+\code{pull_workflow_result()} produces a \code{tune_result} or
+\code{resample_results} object. \code{pull_workflow()} returns an unfit workflow
+object.
 }
 \description{
-Extract a workflow from a workflow set
+\code{pull_workflow_result()} retrieves the results of \code{\link[=workflow_map]{workflow_map()}} for a
+particular workflow while \code{pull_workflow()} extracts the unfitted workflow
+from the \code{info} column.
+}
+\examples{
+library(tune)
+
+pull_workflow_result(two_class_res, "none_cart")
+
+pull_workflow(two_class_res, "none_cart")
 }

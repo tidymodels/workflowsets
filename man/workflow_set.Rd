@@ -17,10 +17,37 @@ models be used to create the workflows? If \code{FALSE}, the length of \code{pre
 and \code{models} should be equal.}
 }
 \value{
-A tibble with extra class 'workflow_set'.
+A tibble with extra class 'workflow_set'. A new set includes four
+columns (but others can be added):
+\itemize{
+\item \code{wflow_id} contains character strings for the preprocessor/workflow
+combination. These can be changed but must be unique.
+\item \code{info} is a list column with tibbles containing more specific information,
+including any comments added using \code{\link[=comment_add]{comment_add()}}. This tibble also
+contains the workflow object (which can be easily retrieved using
+\code{\link[=pull_workflow]{pull_workflow()}}).
+\item \code{option} is a list column that will include a list of optional arguments
+passed to the functions from the \code{tune} package. They can be added
+manually via \code{\link[=option_add]{option_add()}} or automatically when options are passed to
+\code{\link[=workflow_map]{workflow_map()}}.
+\item \code{result} is a list column that will contain any objects produced when
+\code{\link[=workflow_map]{workflow_map()}} is used.
+}
 }
 \description{
 Generate a set of workflow objects from preprocessing and model objects
+}
+\details{
+The preprocessors that can be combined with the model objects can be one or
+more of:
+\itemize{
+\item A traditional R formula.
+\item A recipe definition (un-prepared) via \code{\link[recipes:recipe]{recipes::recipe()}}.
+\item A selectors object created by \code{\link[workflows:add_variables]{workflows::workflow_variables()}}.
+}
+
+Since \code{preproc} is a named list column, any combination of these can be
+used in that argument (i.e., \code{preproc} can be mixed types).
 }
 \examples{
 library(workflowsets)
@@ -85,6 +112,10 @@ names(preproc) <- channels
 preproc$everything <- class ~ .
 preproc
 
-cell_set_by_group <- workflow_set(preproc, models["logistic"], cross = TRUE)
+cell_set_by_group <- workflow_set(preproc, models["logistic"])
 cell_set_by_group
+}
+\seealso{
+\code{\link[=workflow_map]{workflow_map()}}, \code{\link[=comment_add]{comment_add()}}, \code{\link[=option_add]{option_add()}},
+\code{\link[=as_workflow_set]{as_workflow_set()}}
 }

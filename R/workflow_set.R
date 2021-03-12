@@ -6,7 +6,34 @@
 #' @param cross A logical: should all combinations of the preprocessors and
 #'  models be used to create the workflows? If `FALSE`, the length of `preproc`
 #'  and `models` should be equal.
-#' @return A tibble with extra class 'workflow_set'.
+#' @seealso [workflow_map()], [comment_add()], [option_add()],
+#' [as_workflow_set()]
+#' @details
+#' The preprocessors that can be combined with the model objects can be one or
+#' more of:
+#'
+#'  * A traditional R formula.
+#'  * A recipe definition (un-prepared) via [recipes::recipe()].
+#'  * A selectors object created by [workflows::workflow_variables()].
+#'
+#' Since `preproc` is a named list column, any combination of these can be
+#' used in that argument (i.e., `preproc` can be mixed types).
+#'
+#' @return A tibble with extra class 'workflow_set'. A new set includes four
+#' columns (but others can be added):
+#'
+#'  * `wflow_id` contains character strings for the preprocessor/workflow
+#'     combination. These can be changed but must be unique.
+#'  * `info` is a list column with tibbles containing more specific information,
+#'     including any comments added using [comment_add()]. This tibble also
+#'     contains the workflow object (which can be easily retrieved using
+#'     [pull_workflow()]).
+#'  * `option` is a list column that will include a list of optional arguments
+#'     passed to the functions from the `tune` package. They can be added
+#'     manually via [option_add()] or automatically when options are passed to
+#'     [workflow_map()].
+#'  * `result` is a list column that will contain any objects produced when
+#'     [workflow_map()] is used.
 #' @examples
 #' library(workflowsets)
 #' library(workflows)
@@ -70,7 +97,7 @@
 #' preproc$everything <- class ~ .
 #' preproc
 #'
-#' cell_set_by_group <- workflow_set(preproc, models["logistic"], cross = TRUE)
+#' cell_set_by_group <- workflow_set(preproc, models["logistic"])
 #' cell_set_by_group
 #' @export
 workflow_set <- function(preproc, models, cross = TRUE) {
