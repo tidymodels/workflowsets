@@ -2,7 +2,7 @@
 % Please edit documentation in R/as_workflow_set.R
 \name{as_workflow_set}
 \alias{as_workflow_set}
-\title{Save tuning or resampling results as a workflow set}
+\title{Save results from tuning or resampling functions as a workflow set}
 \usage{
 as_workflow_set(...)
 }
@@ -18,5 +18,7 @@ A workflow set. Note that the \code{option} column will not reflect the
 options that were used to create each object.
 }
 \description{
-Save tuning or resampling results as a workflow set
+If results have been generated directly from functions like
+\code{\link[tune:tune_grid]{tune::tune_grid()}}, they can be combined into a workflow set using this
+function.
 }

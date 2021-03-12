@@ -1,16 +1,19 @@
 #' Create formulas without each predictor
 #'
-#' From an initial model formula, create a list of formulas that do not include
-#' each predictor. The new formulas obey the hierarchy rule so that
-#' interactions without main effects are not included (unless the original
-#' formula contains such terms). Factor predictors are left as-is (i.e., no
-#' indicator variables are created).
+#' From an initial model formula, create a list of formulas that exclude
+#' each predictor.
 #' @param formula A model formula that contains at least two predictors.
 #' @param data A data frame.
 #' @param full_model A logical; should the list include the original formula?
 #' @param ... Options to pass to [stats::model.frame()]
 #' @seealso [workflow_set()]
 #' @return A named list of formulas
+#' @details The new formulas obey the hierarchy rule so that interactions
+#'  without main effects are not included (unless the original formula contains
+#'  such terms).
+#'
+#' Factor predictors are left as-is (i.e., no indicator variables are created).
+#'
 #' @examples
 #' data(penguins, package = "modeldata")
 #'

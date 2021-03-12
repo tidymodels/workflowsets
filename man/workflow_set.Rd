@@ -28,7 +28,7 @@ contains the workflow object (which can be easily retrieved using
 \code{\link[=pull_workflow]{pull_workflow()}}).
 \item \code{option} is a list column that will include a list of optional arguments
 passed to the functions from the \code{tune} package. They can be added
-manually via \code{\link[=options_add]{options_add()}} or automatically when options are passed to
+manually via \code{\link[=option_add]{option_add()}} or automatically when options are passed to
 \code{\link[=workflow_map]{workflow_map()}}.
 \item \code{result} is a list column that will contain any objects produced when
 \code{\link[=workflow_map]{workflow_map()}} is used.
@@ -114,6 +114,6 @@ cell_set_by_group <- workflow_set(preproc, models["logistic"], cross = TRUE)
 cell_set_by_group
 }
 \seealso{
-\code{\link[=workflow_map]{workflow_map()}}, \code{\link[=comment_add]{comment_add()}}, \code{\link[=options_add]{options_add()}},
+\code{\link[=workflow_map]{workflow_map()}}, \code{\link[=comment_add]{comment_add()}}, \code{\link[=option_add]{option_add()}},
 \code{\link[=as_workflow_set]{as_workflow_set()}}
 }
