@@ -110,55 +110,6 @@ get_info <- function(x) {
                   comment = character(1))
 }
 
-new_workflow_set <- function(x) {
- req_cols <- c("wflow_id", "info", "option", "result")
- if (!tibble::is_tibble(x)) {
-    halt("The object should be a tibble.")
- }
- if (!all(req_cols %in% names(x))) {
-    halt(
-       "The object should have columns: ",
-       paste0("'", req_cols, "'", collapse = ", "),
-       "."
-    )
- }
- if (!is.list(x$info)) {
-    halt("The 'info' column should be a list.")
- }
- if (!is.list(x$result)) {
-    halt("The 'result' column should be a list.")
- }
- if (!is.list(x$option)) {
-    halt("The 'option' column should be a list.")
- }
- if (!is.character(x$wflow_id)) {
-    halt("The 'wflow_id' column should be character.")
- }
- if (max(table(x$wflow_id)) > 1 | any(x$wflow_id == "") | any(is.na(x$wflow_id))) {
-    halt("The 'wflow_id' column should contain unique, non-missing character strings.")
- }
- is_tibble <- purrr::map_lgl(x$info, ~ inherits(.x, "tbl_df"))
- if (!all(is_tibble)) {
-    bad <- x$wflow_id[!is_tibble]
-    halt("The following elements of the 'info' column are not tibbles: ",
-         paste0("'", bad, "'", collapse = ", "), ".")
- }
- tbl_nms <- purrr::map(x$info, names)
- exp_nms <- c("workflow", "preproc", "model", "comment")
- check_nms <- purrr::map_lgl(tbl_nms, ~ identical(.x, exp_nms))
- if (!all(check_nms)) {
-    bad <- x$wflow_id[!check_nms]
-    halt("The following elements of the 'info' column do not have the correct elements: ",
-         paste0("'", bad, "'", collapse = ", "), ".")
- }
-
- check_for_tune_results(x$result)
- check_consistent_resamples(x)
-
- class(x) <- c("workflow_set", class(tibble::tibble()))
- x
-}
-
 preproc_type <- function(x) {
    x <- workflows::pull_workflow_preprocessor(x)
    res <- class(x)[1]
@@ -210,9 +161,195 @@ fuse_objects <- function(preproc, models) {
 # TODO api for correlation analysis?
 # TODO select_best methods (req tune changes)
 
+# ------------------------------------------------------------------------------
+
 #' @export
 tbl_sum.workflow_set <- function(x) {
    orig <- NextMethod()
    c("A workflow set/tibble" = unname(orig))
 }
 
+# ------------------------------------------------------------------------------
+
+new_workflow_set <- function(x) {
+   if (!has_required_container_type(x)) {
+      halt("`x` must be a list.")
+   }
+   if (!has_required_container_columns(x)) {
+      columns <- required_container_columns()
+      halt(
+         "The object should have columns: ",
+         paste0("'", columns, "'", collapse = ", "),
+         "."
+      )
+   }
+
+   if (!has_valid_column_info_structure(x)) {
+      halt("The 'info' column should be a list.")
+   }
+   if (!has_valid_column_info_inner_types(x)) {
+      halt("All elements of 'info' must be tibbles.")
+   }
+   if (!has_valid_column_info_inner_names(x)) {
+      columns <- required_info_inner_names()
+      halt(
+         "The 'info' columns should have columns: ",
+         paste0("'", columns, "'", collapse = ", "),
+         "."
+      )
+   }
+
+   if (!has_valid_column_result_structure(x)) {
+      halt("The 'result' column should be a list.")
+   }
+   if (!has_valid_column_result_inner_types(x)) {
+      halt("Some elements of 'result' do not have class `tune_results`.")
+   }
+   if (!has_valid_column_result_fingerprints(x)) {
+      halt(
+         "Different resamples were used in the workflow 'result's. ",
+         "All elements of 'result' must use the same resamples."
+      )
+   }
+
+   if (!has_valid_column_option_structure(x)) {
+      halt("The 'option' column should be a list.")
+   }
+   if (!has_valid_column_option_inner_types(x)) {
+      halt("All elements of 'option' should be 'options'.")
+   }
+
+   if (!has_valid_column_wflow_id_structure(x)) {
+      halt("The 'wflow_id' column should be character.")
+   }
+   if (!has_valid_column_wflow_id_strings(x)) {
+      halt("The 'wflow_id' column should contain unique, non-missing character strings.")
+   }
+
+   new_workflow_set0(x)
+}
+
+new_workflow_set0 <- function(x) {
+   new_tibble0(x, class = "workflow_set")
+}
+new_tibble0 <- function(x, ..., class = NULL) {
+   # Handle the 0-row case correctly by using `new_data_frame()`.
+   # This also correctly strips any attributes except `names` off `x`.
+   x <- vctrs::new_data_frame(x)
+   tibble::new_tibble(x, nrow = nrow(x), class = class)
+}
+
+has_required_container_type <- function(x) {
+   rlang::is_list(x)
+}
+has_required_container_columns <- function(x) {
+   columns <- required_container_columns()
+   ok <- all(columns %in% names(x))
+   ok
+}
+required_container_columns <- function() {
+   c("wflow_id", "info", "option", "result")
+}
+
+
+has_valid_column_info_structure <- function(x) {
+   info <- x$info
+   rlang::is_list(info)
+}
+has_valid_column_info_inner_types <- function(x) {
+   info <- x$info
+   is_tibble_indicator <- purrr::map_lgl(info, tibble::is_tibble)
+   all(is_tibble_indicator)
+}
+has_valid_column_info_inner_names <- function(x) {
+   columns <- required_info_inner_names()
+   info <- x$info
+   list_of_names <- purrr::map(info, names)
+   has_names_indicator <- purrr::map_lgl(list_of_names, identical, y = columns)
+   all(has_names_indicator)
+}
+required_info_inner_names <- function() {
+   c("workflow", "preproc", "model", "comment")
+}
+
+
+has_valid_column_result_structure <- function(x) {
+   result <- x$result
+   rlang::is_list(result)
+}
+has_valid_column_result_inner_types <- function(x) {
+   result <- x$result
+   valid_indicator <- purrr::map_lgl(result, is_valid_result_inner_type)
+   all(valid_indicator)
+}
+has_valid_column_result_fingerprints <- function(x) {
+   result <- x$result
+
+   # Drop default results
+   default_indicator <- purrr::map_lgl(result, is_default_result_element)
+   result <- result[!default_indicator]
+
+   # Not sure how to fingerprint racing objects just yet. See
+   # https://github.com/tidymodels/rsample/issues/212
+   racing_indicator <- purrr::map_lgl(result, inherits, "tune_race")
+   result <- result[!racing_indicator]
+
+   hashes <- purrr::map_chr(result, rsample::.get_fingerprint)
+
+   # Drop NAs for results created before rsample 0.1.0, which won't have a hash
+   pre_0.1.0 <- is.na(hashes)
+   hashes <- hashes[!pre_0.1.0]
+   result <- result[!pre_0.1.0]
+
+   if (rlang::is_empty(hashes)) {
+      # No hashes to check
+      TRUE
+   } else {
+      # Should collapse to a single hash value if all resamples are the same
+      uniques <- unique(hashes)
+      length(uniques) == 1L
+   }
+}
+is_valid_result_inner_type <- function(x) {
+   if (is_default_result_element(x)) {
+      # Default, before any results are filled
+      return(TRUE)
+   }
+   inherits(x, "tune_results")
+}
+is_default_result_element <- function(x) {
+   identical(x, list())
+}
+
+
+has_valid_column_option_structure <- function(x) {
+   option <- x$option
+   rlang::is_list(option)
+}
+has_valid_column_option_inner_types <- function(x) {
+   option <- x$option
+   valid_options_indicator <- purrr::map_lgl(option, inherits, "options")
+   all(valid_options_indicator)
+}
+
+
+has_valid_column_wflow_id_structure <- function(x) {
+   wflow_id <- x$wflow_id
+   rlang::is_character(wflow_id)
+}
+has_valid_column_wflow_id_strings <- function(x) {
+   wflow_id <- x$wflow_id
+   uniques <- unique(wflow_id)
+
+   if (length(wflow_id) != length(uniques)) {
+      return(FALSE)
+   }
+   if (any(is.na(wflow_id))) {
+      return(FALSE)
+   }
+   if (any(wflow_id == "")) {
+      return(FALSE)
+   }
+
+   TRUE
+}
