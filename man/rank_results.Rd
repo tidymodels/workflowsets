@@ -14,8 +14,21 @@ rank_results(x, rank_metric = NULL, select_best = FALSE)
 \item{select_best}{A logical; should the results only contain the numerically
 best submodel per workflow.}
 }
+\value{
+A tibble with columns: \code{wflow_id}, \code{.config}, \code{.metric}, \code{mean},
+\code{std_err}, \code{n}, \code{preprocessor}, \code{model}, and \code{rank}.
+}
 \description{
-Rank the results by a metric
+This function sorts the results by a specific performance metric.
+}
+\details{
+If some models have the exact same performance,
+\code{rank(value, ties.method = "random")} is used (with a reproducible seed) so
+that all ranks are integers.
+
+No columns are returned for the tuning parameters since they are likely to
+be different (or not exist) for some models. The \code{wflow_id} and \code{.config}
+columns can be used to determine the corresponding parameter values.
 }
 \examples{
 rank_results(chi_features_res)

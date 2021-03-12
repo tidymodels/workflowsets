@@ -19,11 +19,15 @@ leave_var_out_formulas(formula, data, full_model = TRUE, ...)
 A named list of formulas
 }
 \description{
-From an initial model formula, create a list of formulas that do not include
-each predictor. The new formulas obey the hierarchy rule so that
-interactions without main effects are not included (unless the original
-formula contains such terms). Factor predictors are left as-is (i.e., no
-indicator variables are created).
+From an initial model formula, create a list of formulas that exclude
+each predictor.
+}
+\details{
+The new formulas obey the hierarchy rule so that interactions
+without main effects are not included (unless the original formula contains
+such terms).
+
+Factor predictors are left as-is (i.e., no indicator variables are created).
 }
 \examples{
 data(penguins, package = "modeldata")
@@ -43,4 +47,7 @@ leave_var_out_formulas(
                     I(flipper_length_mm^2),
    data = penguins
 )
+}
+\seealso{
+\code{\link[=workflow_set]{workflow_set()}}
 }

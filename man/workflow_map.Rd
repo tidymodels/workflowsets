@@ -26,7 +26,11 @@ workflow_map(
 \item{...}{Options to pass to the modeling function. See details below.}
 }
 \value{
-An updated workflow set.
+An updated workflow set. The \code{option} column will be updated with
+any options for the \code{tune} package functions given to \code{workflow_map()}. Also,
+the results will be added to the \code{result} column. If the computations for a
+workflow fail, an \code{try-catch} object will be saved in place of the results
+(without stopping execution).
 }
 \description{
 \code{workflow_map()} will execute the same function across the workflows in the
@@ -40,6 +44,10 @@ column's values and the new options are added to the \code{options} column.
 
 Any failures in execution result in the corresponding row of \code{results} to
 contain a \code{try-error} object.
+
+In cases where a model has no tuning parameters is mapped to one of the
+tuning functions, \verb{[tune::fit_resamples()]} will be used instead and a
+warning is issued.
 }
 \examples{
 
@@ -51,4 +59,7 @@ if (FALSE) {
 }
 
 rank_results(chi_features_res)
+}
+\seealso{
+\code{\link[=workflow_set]{workflow_set()}}, \code{\link[=as_workflow_set]{as_workflow_set()}}, \code{\link[=pull_workflow_result]{pull_workflow_result()}}
 }

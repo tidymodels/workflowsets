@@ -129,8 +129,10 @@ Rather than creating all 9 combinations of these preprocessors and models, we ca
 ```{r set}
 chi_models <- 
    workflow_set(
-      preproc = list(simple = base_recipe, filter = filter_rec, pca = pca_rec),
-      models = list(glmnet = regularized_spec, cart = cart_spec, knn = knn_spec),
+      preproc = list(simple = base_recipe, filter = filter_rec, 
+                     pca = pca_rec),
+      models = list(glmnet = regularized_spec, cart = cart_spec, 
+                    knn = knn_spec),
       cross = TRUE
    )
 chi_models
@@ -140,7 +142,8 @@ It doesn't make sense to use PCA or a filter with a `glmnet` model. We can remov
 ```{r rm}
 chi_models <- 
    chi_models %>% 
-   anti_join(tibble(wflow_id = c("pca_glmnet", "filter_glmnet")), by = "wflow_id")
+   anti_join(tibble(wflow_id = c("pca_glmnet", "filter_glmnet")), 
+             by = "wflow_id")
 ```
 
 
@@ -190,9 +193,10 @@ autoplot(chi_models, select_best = TRUE)
 We can determine how well each combination did by looking at the best results per workflow: 
 
 ```{r best}
-rank_results(chi_models, rank_metric = "mae", select_best = TRUE)
+rank_results(chi_models, rank_metric = "mae", select_best = TRUE) %>% 
+   select(rank, mean, model, wflow_id, .config)
 ```
 
-```{r save, include = FALSE}
+```{r save, eval = FALSE, echo = FALSE}
 save(chi_models, file = "data/chi_models.rda", compress = "bzip2", version = 2)
 ```

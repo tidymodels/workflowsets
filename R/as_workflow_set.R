@@ -1,5 +1,8 @@
-#' Save tuning or resampling results as a workflow set
+#' Save results from tuning or resampling functions as a workflow set
 #'
+#' If results have been generated directly from functions like
+#' [tune::tune_grid()], they can be combined into a workflow set using this
+#' function.
 #' @param ... One or more named objects. Names should be unique and the
 #' objects should have at least one of the following classes:
 #' `iteration_results`, `tune_results`, `resample_results`, or `tune_race`. Each
@@ -20,7 +23,7 @@ as_workflow_set <- function(...) {
       dplyr::mutate(
          workflow  = unname(wflows),
          info = purrr::map(workflow, get_info),
-         option    = purrr::map(1:nrow(res), ~ list())
+         option    = purrr::map(1:nrow(res), ~ new_workflow_set_options())
       )
    res$result <- unname(object)
 

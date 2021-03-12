@@ -1,5 +1,9 @@
 #' Plot the results of a workflow set
 #'
+#' This `autoplot()` method can performance metrics that have been ranked using
+#' a metric. It can also run `autoplot()` on the individual results (per
+#' `wflow_id`).
+#'
 #' @param object A `workflow_set` whose elements have results.
 #' @param rank_metric A character string for which metric should be used to rank
 #' the results.
@@ -8,12 +12,19 @@
 #' and plotted. Alternatively, a value of the workflow set's `wflow_id` can be
 #' given and the `autoplot()` method is executed on that workflow's results.
 #' @param select_best A logical; should the results only contain the numerically
-#' best submodel per workflow.
+#' best submodel per workflow?
 #' @param metric A character vector for which metrics (apart from `rank_metric`)
 #' to be included in the visualization.
 #' @param std_errs The number of standard errors to plot (if the standard error
 #' exists).
 #' @param ... Other options to pass to `autoplot()`.
+#' @details
+#' The x-axis is the workflow rank in the set (a value of one being the best)
+#' versus the performance metric(s) on the y-axis. With multiple metrics, there
+#' will be facets for each metric.
+#'
+#' If multiple resamples are used, confidence bounds are shown for each result.
+#' @return A ggplot object.
 #' @examples
 #' autoplot(two_class_res)
 #' autoplot(two_class_res, select_best = TRUE)

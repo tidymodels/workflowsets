@@ -71,6 +71,38 @@ check_prediction_results <- function(ind, x, summarize = FALSE, ...) {
 
 test_that("collect predictions", {
 
+   expect_error(
+      res_car_set_1 <- collect_predictions(car_set_1),
+      regexp = NA
+   )
+   expect_true(nrow(mtcars) * nrow(car_set_1) == nrow(res_car_set_1))
+
+   expect_error(
+      res_car_set_2 <- collect_predictions(car_set_2),
+      regexp = NA
+   )
+   expect_true(nrow(mtcars) * nrow(car_set_2) == nrow(res_car_set_2))
+
+   expect_error(
+      res_car_set_2_reps <- collect_predictions(car_set_2, summarize = FALSE),
+      regexp = NA
+   )
+   expect_true(nrow(mtcars) * nrow(car_set_2) * 2 == nrow(res_car_set_2_reps))
+
+   expect_error(
+      res_car_set_3 <- collect_predictions(car_set_3),
+      regexp = NA
+   )
+   expect_true(nrow(mtcars) * nrow(car_set_2) * 5 == nrow(res_car_set_3))
+
+   expect_error(
+      res_car_set_3_reps <- collect_predictions(car_set_3, summarize = FALSE),
+      regexp = NA
+   )
+   expect_true(nrow(mtcars) * nrow(car_set_2) * 5 * 2 == nrow(res_car_set_3_reps))
+
+   # ---------------------------------------------------------------------------
+   # These don't seem to get captured by covr
    for (i in 1:nrow(car_set_1)) {
       expect_true(check_prediction_results(i, car_set_1))
    }

@@ -123,23 +123,25 @@ models, we can create a *workflow set*:
 ``` r
 chi_models <- 
    workflow_set(
-      preproc = list(simple = base_recipe, filter = filter_rec, pca = pca_rec),
-      models = list(glmnet = regularized_spec, cart = cart_spec, knn = knn_spec),
+      preproc = list(simple = base_recipe, filter = filter_rec, 
+                     pca = pca_rec),
+      models = list(glmnet = regularized_spec, cart = cart_spec, 
+                    knn = knn_spec),
       cross = TRUE
    )
 chi_models
 #> # A workflow set/tibble: 9 x 4
-#>   wflow_id      info             option     result    
-#>   <chr>         <list>           <list>     <list>    
-#> 1 simple_glmnet <tibble [1 × 3]> <list [0]> <list [0]>
-#> 2 simple_cart   <tibble [1 × 3]> <list [0]> <list [0]>
-#> 3 simple_knn    <tibble [1 × 3]> <list [0]> <list [0]>
-#> 4 filter_glmnet <tibble [1 × 3]> <list [0]> <list [0]>
-#> 5 filter_cart   <tibble [1 × 3]> <list [0]> <list [0]>
-#> 6 filter_knn    <tibble [1 × 3]> <list [0]> <list [0]>
-#> 7 pca_glmnet    <tibble [1 × 3]> <list [0]> <list [0]>
-#> 8 pca_cart      <tibble [1 × 3]> <list [0]> <list [0]>
-#> 9 pca_knn       <tibble [1 × 3]> <list [0]> <list [0]>
+#>   wflow_id      info             option    result    
+#>   <chr>         <list>           <list>    <list>    
+#> 1 simple_glmnet <tibble [1 × 4]> <opts[0]> <list [0]>
+#> 2 simple_cart   <tibble [1 × 4]> <opts[0]> <list [0]>
+#> 3 simple_knn    <tibble [1 × 4]> <opts[0]> <list [0]>
+#> 4 filter_glmnet <tibble [1 × 4]> <opts[0]> <list [0]>
+#> 5 filter_cart   <tibble [1 × 4]> <opts[0]> <list [0]>
+#> 6 filter_knn    <tibble [1 × 4]> <opts[0]> <list [0]>
+#> 7 pca_glmnet    <tibble [1 × 4]> <opts[0]> <list [0]>
+#> 8 pca_cart      <tibble [1 × 4]> <opts[0]> <list [0]>
+#> 9 pca_knn       <tibble [1 × 4]> <opts[0]> <list [0]>
 ```
 
 It doesn’t make sense to use PCA or a filter with a `glmnet` model. We
@@ -148,7 +150,8 @@ can remove these easily:
 ``` r
 chi_models <- 
    chi_models %>% 
-   anti_join(tibble(wflow_id = c("pca_glmnet", "filter_glmnet")), by = "wflow_id")
+   anti_join(tibble(wflow_id = c("pca_glmnet", "filter_glmnet")), 
+             by = "wflow_id")
 ```
 
 These models all have tuning parameters. To resolve these, we’ll need a
@@ -193,30 +196,30 @@ chi_models <-
    workflow_map("tune_grid", resamples = splits, grid = 10, 
                 metrics = metric_set(mae), verbose = TRUE)
 #> i 1 of 7 tuning:     simple_glmnet
-#> ✓ 1 of 7 tuning:     simple_glmnet (23.9s)
+#> ✓ 1 of 7 tuning:     simple_glmnet (23.6s)
 #> i 2 of 7 tuning:     simple_cart
-#> ✓ 2 of 7 tuning:     simple_cart (25.7s)
+#> ✓ 2 of 7 tuning:     simple_cart (24.9s)
 #> i 3 of 7 tuning:     simple_knn
-#> ✓ 3 of 7 tuning:     simple_knn (25.5s)
+#> ✓ 3 of 7 tuning:     simple_knn (24.4s)
 #> i 4 of 7 tuning:     filter_cart
-#> ✓ 4 of 7 tuning:     filter_cart (39.4s)
+#> ✓ 4 of 7 tuning:     filter_cart (38.2s)
 #> i 5 of 7 tuning:     filter_knn
-#> ✓ 5 of 7 tuning:     filter_knn (39.6s)
+#> ✓ 5 of 7 tuning:     filter_knn (38.4s)
 #> i 6 of 7 tuning:     pca_cart
-#> ✓ 6 of 7 tuning:     pca_cart (31.3s)
+#> ✓ 6 of 7 tuning:     pca_cart (30.3s)
 #> i 7 of 7 tuning:     pca_knn
-#> ✓ 7 of 7 tuning:     pca_knn (31.1s)
+#> ✓ 7 of 7 tuning:     pca_knn (29.9s)
 chi_models
 #> # A workflow set/tibble: 7 x 4
-#>   wflow_id      info             option           result                
-#>   <chr>         <list>           <list>           <list>                
-#> 1 simple_glmnet <tibble [1 × 3]> <named list [3]> <tune_results [9 × 4]>
-#> 2 simple_cart   <tibble [1 × 3]> <named list [3]> <tune_results [9 × 4]>
-#> 3 simple_knn    <tibble [1 × 3]> <named list [3]> <tune_results [9 × 4]>
-#> 4 filter_cart   <tibble [1 × 3]> <named list [3]> <tune_results [9 × 4]>
-#> 5 filter_knn    <tibble [1 × 3]> <named list [3]> <tune_results [9 × 4]>
-#> 6 pca_cart      <tibble [1 × 3]> <named list [3]> <tune_results [9 × 4]>
-#> 7 pca_knn       <tibble [1 × 3]> <named list [3]> <tune_results [9 × 4]>
+#>   wflow_id      info             option    result   
+#>   <chr>         <list>           <list>    <list>   
+#> 1 simple_glmnet <tibble [1 × 4]> <opts[3]> <tune[+]>
+#> 2 simple_cart   <tibble [1 × 4]> <opts[3]> <tune[+]>
+#> 3 simple_knn    <tibble [1 × 4]> <opts[3]> <tune[+]>
+#> 4 filter_cart   <tibble [1 × 4]> <opts[3]> <tune[+]>
+#> 5 filter_knn    <tibble [1 × 4]> <opts[3]> <tune[+]>
+#> 6 pca_cart      <tibble [1 × 4]> <opts[3]> <tune[+]>
+#> 7 pca_knn       <tibble [1 × 4]> <opts[3]> <tune[+]>
 ```
 
 The `results` column contains the results of each call to `tune_grid()`
@@ -242,15 +245,16 @@ We can determine how well each combination did by looking at the best
 results per workflow:
 
 ``` r
-rank_results(chi_models, rank_metric = "mae", select_best = TRUE)
-#> # A tibble: 7 x 10
-#>   wflow_id .config .metric  mean std_err     n workflow preprocessor model  rank
-#>   <chr>    <chr>   <chr>   <dbl>   <dbl> <int> <list>   <chr>        <chr> <int>
-#> 1 simple_… Prepro… mae      1.85   0.557     9 <workfl… recipe       line…     1
-#> 2 simple_… Prepro… mae      2.18   0.463     9 <workfl… recipe       deci…     2
-#> 3 filter_… Prepro… mae      2.95   0.653     9 <workfl… recipe       deci…     3
-#> 4 pca_cart Prepro… mae      3.00   0.608     9 <workfl… recipe       deci…     4
-#> 5 simple_… Prepro… mae      3.34   0.673     9 <workfl… recipe       near…     5
-#> 6 filter_… Prepro… mae      3.50   0.663     9 <workfl… recipe       near…     6
-#> 7 pca_knn  Prepro… mae      3.81   0.518     9 <workfl… recipe       near…     7
+rank_results(chi_models, rank_metric = "mae", select_best = TRUE) %>% 
+   select(rank, mean, model, wflow_id, .config)
+#> # A tibble: 7 x 5
+#>    rank  mean model            wflow_id      .config              
+#>   <int> <dbl> <chr>            <chr>         <chr>                
+#> 1     1  1.85 linear_reg       simple_glmnet Preprocessor1_Model07
+#> 2     2  2.18 decision_tree    simple_cart   Preprocessor1_Model09
+#> 3     3  2.95 decision_tree    filter_cart   Preprocessor07_Model1
+#> 4     4  3.00 decision_tree    pca_cart      Preprocessor3_Model2 
+#> 5     5  3.34 nearest_neighbor simple_knn    Preprocessor1_Model05
+#> 6     6  3.50 nearest_neighbor filter_knn    Preprocessor07_Model1
+#> 7     7  3.81 nearest_neighbor pca_knn       Preprocessor4_Model1
 ```

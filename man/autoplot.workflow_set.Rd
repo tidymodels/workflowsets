@@ -29,15 +29,27 @@ and plotted. Alternatively, a value of the workflow set's \code{wflow_id} can be
 given and the \code{autoplot()} method is executed on that workflow's results.}
 
 \item{select_best}{A logical; should the results only contain the numerically
-best submodel per workflow.}
+best submodel per workflow?}
 
 \item{std_errs}{The number of standard errors to plot (if the standard error
 exists).}
 
 \item{...}{Other options to pass to \code{autoplot()}.}
 }
+\value{
+A ggplot object.
+}
 \description{
-Plot the results of a workflow set
+This \code{autoplot()} method can performance metrics that have been ranked using
+a metric. It can also run \code{autoplot()} on the individual results (per
+\code{wflow_id}).
+}
+\details{
+The x-axis is the workflow rank in the set (a value of one being the best)
+versus the performance metric(s) on the y-axis. With multiple metrics, there
+will be facets for each metric.
+
+If multiple resamples are used, confidence bounds are shown for each result.
 }
 \examples{
 autoplot(two_class_res)

@@ -1,6 +1,8 @@
 #' @import ggplot2
+#' @import vctrs
 #' @importFrom stats qnorm as.formula model.frame
 #' @importFrom tibble obj_sum type_sum
+#' @importFrom dplyr dplyr_reconstruct
 #'
 utils::globalVariables(
    c(".config", ".estimator", ".metric", "info", "metric", "mod_nm",
