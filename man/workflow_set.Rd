@@ -8,7 +8,7 @@ workflow_set(preproc, models, cross = TRUE)
 }
 \arguments{
 \item{preproc}{A list (preferably named) with preprocessing objects:
-formulas, recipes, or selectors.}
+formulas, recipes, or \code{\link[workflows:add_variables]{workflows::workflow_variables()}}.}
 
 \item{models}{A list (preferably named) of \code{parsnip} model specifications.}
 
@@ -24,6 +24,7 @@ Generate a set of workflow objects from preprocessing and model objects
 }
 \examples{
 library(workflowsets)
+library(workflows)
 library(modeldata)
 library(recipes)
 library(parsnip)
@@ -75,11 +76,11 @@ cell_set <- workflow_set(preproc, models, cross = TRUE)
 cell_set
 
 # ------------------------------------------------------------------------------
-# Using selector functions and formulas
+# Using variables and formulas
 
 # Select predictors by their names
 channels <- paste0("ch_", 1:4)
-preproc <- purrr::map(channels, ~ selectors(class, c(contains(!!.x))))
+preproc <- purrr::map(channels, ~ workflow_variables(class, c(contains(!!.x))))
 names(preproc) <- channels
 preproc$everything <- class ~ .
 preproc
