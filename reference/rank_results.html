@@ -43,7 +43,7 @@
 
 
 <meta property="og:title" content="Rank the results by a metric — rank_results" />
-<meta property="og:description" content="Rank the results by a metric" />
+<meta property="og:description" content="This function sorts the results by a specific performance metric." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -125,7 +125,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Rank the results by a metric</p>
+    <p>This function sorts the results by a specific performance metric.</p>
     </div>
 
     <pre class="usage"><span class='fu'>rank_results</span><span class='op'>(</span><span class='va'>x</span>, rank_metric <span class='op'>=</span> <span class='cn'>NULL</span>, select_best <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
@@ -148,6 +148,18 @@ best submodel per workflow.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A tibble with columns: <code>wflow_id</code>, <code>.config</code>, <code>.metric</code>, <code>mean</code>,
+<code>std_err</code>, <code>n</code>, <code>preprocessor</code>, <code>model</code>, and <code>rank</code>.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>If some models have the exact same performance,
+<code><a href='https://rdrr.io/r/base/rank.html'>rank(value, ties.method = "random")</a></code> is used (with a reproducible seed) so
+that all ranks are integers.</p>
+<p>No columns are returned for the tuning parameters since they are likely to
+be different (or not exist) for some models. The <code>wflow_id</code> and <code>.config</code>
+columns can be used to determine the corresponding parameter values.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>rank_results</span><span class='op'>(</span><span class='va'>chi_features_res</span><span class='op'>)</span>

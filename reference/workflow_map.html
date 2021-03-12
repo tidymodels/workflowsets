@@ -169,7 +169,11 @@ set. The various <code>tune_*()</code> functions can be used as well as
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An updated workflow set.</p>
+    <p>An updated workflow set. The <code>option</code> column will be updated with
+any options for the <code>tune</code> package functions given to <code>workflow_map()</code>. Also,
+the results will be added to the <code>result</code> column. If the computations for a
+workflow fail, an <code>try-catch</code> object will be saved in place of the results
+(without stopping execution).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>When passing options, anything passed in the <code>...</code> will be combined with any
@@ -177,6 +181,12 @@ values in the <code>option</code> column. The values in <code>...</code> will ov
 column's values and the new options are added to the <code>options</code> column.</p>
 <p>Any failures in execution result in the corresponding row of <code>results</code> to
 contain a <code>try-error</code> object.</p>
+<p>In cases where a model has no tuning parameters is mapped to one of the
+tuning functions, <code>[tune::fit_resamples()]</code> will be used instead and a
+warning is issued.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='workflow_set.html'>workflow_set()</a></code>, <code><a href='as_workflow_set.html'>as_workflow_set()</a></code>, <code><a href='pull_workflow_result.html'>pull_workflow_result()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
