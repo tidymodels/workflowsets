@@ -196,19 +196,19 @@ chi_models <-
    workflow_map("tune_grid", resamples = splits, grid = 10, 
                 metrics = metric_set(mae), verbose = TRUE)
 #> i 1 of 7 tuning:     simple_glmnet
-#> ✓ 1 of 7 tuning:     simple_glmnet (23.9s)
+#> ✓ 1 of 7 tuning:     simple_glmnet (23.6s)
 #> i 2 of 7 tuning:     simple_cart
-#> ✓ 2 of 7 tuning:     simple_cart (25.2s)
+#> ✓ 2 of 7 tuning:     simple_cart (24.9s)
 #> i 3 of 7 tuning:     simple_knn
-#> ✓ 3 of 7 tuning:     simple_knn (25.3s)
+#> ✓ 3 of 7 tuning:     simple_knn (24.4s)
 #> i 4 of 7 tuning:     filter_cart
-#> ✓ 4 of 7 tuning:     filter_cart (39.3s)
+#> ✓ 4 of 7 tuning:     filter_cart (38.2s)
 #> i 5 of 7 tuning:     filter_knn
-#> ✓ 5 of 7 tuning:     filter_knn (39.8s)
+#> ✓ 5 of 7 tuning:     filter_knn (38.4s)
 #> i 6 of 7 tuning:     pca_cart
-#> ✓ 6 of 7 tuning:     pca_cart (30.9s)
+#> ✓ 6 of 7 tuning:     pca_cart (30.3s)
 #> i 7 of 7 tuning:     pca_knn
-#> ✓ 7 of 7 tuning:     pca_knn (31.4s)
+#> ✓ 7 of 7 tuning:     pca_knn (29.9s)
 chi_models
 #> # A workflow set/tibble: 7 x 4
 #>   wflow_id      info             option    result   

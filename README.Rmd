@@ -197,6 +197,6 @@ rank_results(chi_models, rank_metric = "mae", select_best = TRUE) %>%
    select(rank, mean, model, wflow_id, .config)
 ```
 
-```{r save, include = FALSE}
+```{r save, eval = FALSE, echo = FALSE}
 save(chi_models, file = "data/chi_models.rda", compress = "bzip2", version = 2)
 ```
