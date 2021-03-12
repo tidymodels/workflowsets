@@ -42,7 +42,7 @@ are retained. If \code{TRUE}, the \code{parameters} argument is ignored.}
 A tibble.
 }
 \description{
-Obtain and format results produced by tuning functions for workflow sets
+Return a tibble of performance metrics for all models or submodels.
 }
 \details{
 When applied to a workflow set, the metrics and predictions that are returned
@@ -57,57 +57,9 @@ Alternatively, the \code{map()} function can be used to get the metrics from the
 original objects (see the example below).
 }
 \examples{
-library(workflowsets)
-library(modeldata)
-library(recipes)
-library(parsnip)
 library(dplyr)
-library(rsample)
-library(tune)
-library(yardstick)
 library(purrr)
 library(tidyr)
-
-# ------------------------------------------------------------------------------
-
-data(cells)
-cells <- cells \%>\% dplyr::select(-case)
-
-set.seed(1)
-val_set <- validation_split(cells)
-
-# ------------------------------------------------------------------------------
-
-basic_recipe <-
-   recipe(class ~ ., data = cells) \%>\%
-   step_YeoJohnson(all_predictors()) \%>\%
-   step_normalize(all_predictors())
-
-pca_recipe <-
-   basic_recipe \%>\%
-   step_pca(all_predictors(), num_comp = tune())
-
-ss_recipe <-
-   basic_recipe \%>\%
-   step_spatialsign(all_predictors())
-
-# ------------------------------------------------------------------------------
-
-knn_mod <-
-   nearest_neighbor(neighbors = tune(), weight_func = tune()) \%>\%
-   set_engine("kknn") \%>\%
-   set_mode("classification")
-
-lr_mod <-
-   logistic_reg() \%>\%
-   set_engine("glm")
-
-# ------------------------------------------------------------------------------
-
-preproc <- list(none = basic_recipe, pca = pca_recipe, sp_sign = ss_recipe)
-models <- list(knn = knn_mod, logistic = lr_mod)
-
-cell_set <- workflow_set(preproc, models, cross = TRUE)
 
 # ------------------------------------------------------------------------------
 
@@ -121,4 +73,9 @@ two_class_res \%>\%
   dplyr::select(wflow_id, metrics) \%>\%
   tidyr::unnest(cols = metrics)
 }
+
+collect_metrics(two_class_res, summarize = FALSE)
+}
+\seealso{
+\code{\link[tune:collect_predictions]{tune::collect_metrics()}}, \code{\link[=rank_results]{rank_results()}}
 }

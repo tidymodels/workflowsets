@@ -38,11 +38,12 @@ manually via \code{\link[=option_add]{option_add()}} or automatically when optio
 Generate a set of workflow objects from preprocessing and model objects
 }
 \details{
-The preprocessors that can be combined with the model objects can include:
+The preprocessors that can be combined with the model objects can be one or
+more of:
 \itemize{
-\item A basic R formula.
-\item A recipe definition (un-prepared).
-\item A selectors object.
+\item A traditional R formula.
+\item A recipe definition (un-prepared) via \code{\link[recipes:recipe]{recipes::recipe()}}.
+\item A selectors object created by \code{\link[workflows:add_variables]{workflows::workflow_variables()}}.
 }
 
 Since \code{preproc} is a named list column, any combination of these can be
@@ -111,7 +112,7 @@ names(preproc) <- channels
 preproc$everything <- class ~ .
 preproc
 
-cell_set_by_group <- workflow_set(preproc, models["logistic"], cross = TRUE)
+cell_set_by_group <- workflow_set(preproc, models["logistic"])
 cell_set_by_group
 }
 \seealso{

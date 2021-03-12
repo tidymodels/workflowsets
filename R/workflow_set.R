@@ -9,11 +9,12 @@
 #' @seealso [workflow_map()], [comment_add()], [option_add()],
 #' [as_workflow_set()]
 #' @details
-#' The preprocessors that can be combined with the model objects can include:
+#' The preprocessors that can be combined with the model objects can be one or
+#' more of:
 #'
-#'  * A basic R formula.
-#'  * A recipe definition (un-prepared).
-#'  * A selectors object.
+#'  * A traditional R formula.
+#'  * A recipe definition (un-prepared) via [recipes::recipe()].
+#'  * A selectors object created by [workflows::workflow_variables()].
 #'
 #' Since `preproc` is a named list column, any combination of these can be
 #' used in that argument (i.e., `preproc` can be mixed types).
@@ -96,7 +97,7 @@
 #' preproc$everything <- class ~ .
 #' preproc
 #'
-#' cell_set_by_group <- workflow_set(preproc, models["logistic"], cross = TRUE)
+#' cell_set_by_group <- workflow_set(preproc, models["logistic"])
 #' cell_set_by_group
 #' @export
 workflow_set <- function(preproc, models, cross = TRUE) {
