@@ -1,39 +1,54 @@
+library(parsnip)
 suppressPackageStartupMessages(library(rsample))
-
-data(two_class_dat, package = "modeldata")
+suppressPackageStartupMessages(library(tune))
+library(kknn)
 
 # ------------------------------------------------------------------------------
+
+lr_spec <- linear_reg() %>% set_engine("lm")
+knn_spec <-
+   nearest_neighbor(neighbors = tune()) %>%
+   set_engine("kknn") %>%
+   set_mode("regression")
 
 set.seed(1)
-folds <- vfold_cv(two_class_dat, v = 3)
+folds <- vfold_cv(mtcars, v = 3)
+
+car_set_1 <-
+   workflow_set(
+      list(reg = mpg ~ ., nonlin = mpg ~ wt + 1/sqrt(disp)),
+      list(lm = lr_spec, knn = knn_spec)
+   ) %>%
+   dplyr::slice(-4)
 
 # ------------------------------------------------------------------------------
-
 
 test_that("basic mapping", {
    expect_message(
-      expect_message(
+      expect_message({
          expect_error({
             res_1 <-
-               two_class_set %>%
-               workflow_map(seed = 1, resamples = folds, grid = 2)
+               car_set_1 %>%
+               workflow_map(resamples = folds, seed = 2, grid = 2)
          },
-         regexp = NA),
-         "No tuning parameters"
+         regexp = NA)
+      },
+      "No tuning parameters"
       ),
       "No tuning parameters"
    )
 
-   # check reproducability
+   # check reproducibility
    expect_message(
-      expect_message(
+      expect_message({
          expect_error({
             res_2 <-
-               two_class_set %>%
-               workflow_map(seed = 1, resamples = folds, grid = 2)
+               car_set_1 %>%
+               workflow_map(resamples = folds, seed = 2, grid = 2)
          },
-         regexp = NA),
-         "No tuning parameters"
+         regexp = NA)
+      },
+      "No tuning parameters"
       ),
       "No tuning parameters"
    )
@@ -57,8 +72,8 @@ test_that("map logging", {
       logging_res <-
          capture.output(
             res <-
-               two_class_set %>%
-               workflow_map(seed = 1, resamples = folds, grid = 2, verbose = TRUE),
+               car_set_1 %>%
+               workflow_map(resamples = folds, seed = 2, verbose = TRUE),
             type = "message"
          )
    },
