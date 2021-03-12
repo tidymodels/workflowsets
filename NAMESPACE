@@ -3,7 +3,7 @@
 S3method(autoplot,workflow_set)
 S3method(collect_metrics,workflow_set)
 S3method(collect_predictions,workflow_set)
-S3method(print,options)
+S3method(print,workflow_set_options)
 S3method(size_sum,workflow_set_options)
 S3method(tbl_sum,workflow_set)
 S3method(type_sum,workflow_set_options)

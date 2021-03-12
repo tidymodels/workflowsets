@@ -135,7 +135,7 @@ append_options <- function(model, global) {
 }
 
 #' @export
-print.options <- function(x, ...) {
+print.workflow_set_options <- function(x, ...) {
    if (length(x) > 0) {
       cat("a list of options with names: ",
           paste0("'", names(x), "'", collapse = ", "))
