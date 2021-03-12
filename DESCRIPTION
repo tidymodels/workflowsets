@@ -21,7 +21,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1.9001
 Imports: 
     rlang,
-    tune (>= 0.1.3.9001),
+    tune (>= 0.1.3),
     withr,
     dplyr,
     purrr,
@@ -47,8 +47,6 @@ Suggests:
     kknn,
     knitr,
     rmarkdown
-Remotes: 
-    tidymodels/tune
 Depends: 
     R (>= 2.10)
 Config/testthat/edition: 3
