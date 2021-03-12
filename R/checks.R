@@ -218,7 +218,7 @@ has_valid_column_option_structure <- function(x) {
 }
 has_valid_column_option_inner_types <- function(x) {
    option <- x$option
-   valid_options_indicator <- purrr::map_lgl(option, inherits, "options")
+   valid_options_indicator <- purrr::map_lgl(option, inherits, "workflow_set_options")
    all(valid_options_indicator)
 }
 

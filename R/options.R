@@ -122,7 +122,7 @@ option_add_parameters <- function(x, id = NULL, strict = FALSE) {
 
 rm_elem <- function(x, nms) {
    x <- x[!(names(x) %in% nms)]
-   new_options(!!!x)
+   new_workflow_set_options(!!!x)
 }
 
 append_options <- function(model, global) {
@@ -135,11 +135,11 @@ append_options <- function(model, global) {
    }
 
    all_opt <- c(model, global)
-   new_options(!!!all_opt)
+   new_workflow_set_options(!!!all_opt)
 }
 
 #' @export
-print.options <- function(x, ...) {
+print.workflow_set_options <- function(x, ...) {
    if (length(x) > 0) {
       cat("a list of options with names: ",
           paste0("'", names(x), "'", collapse = ", "))
@@ -152,29 +152,30 @@ print.options <- function(x, ...) {
 
 #' Make a classed list of options
 #'
-#' This function returns a named list with an extra class of `"options"` that
-#' has corresponding formatting methods for printing inside of tibbles.
+#' This function returns a named list with an extra class of
+#' `"workflow_set_options"` that has corresponding formatting methods for
+#' printing inside of tibbles.
 #' @param ... A set of named options (or nothing)
 #' @return A classed list.
 #' @examples
 #' option_list(a = 1, b = 2)
 #' option_list()
 #' @export
-option_list <- function(...) new_options(...)
+option_list <- function(...) new_workflow_set_options(...)
 
-new_options <- function(...) {
+new_workflow_set_options <- function(...) {
    res <- rlang::list2(...)
    if (any(names(res) == "")) {
       rlang::abort("All options should be named.")
    }
-   structure(res, class = c("options", "list"))
+   structure(res, class = c("workflow_set_options", "list"))
 }
 
 #' @export
-type_sum.options <- function(x) {
+type_sum.workflow_set_options <- function(x) {
    paste0("opts[", length(x), "]")
 }
 #' @export
-size_sum.options <- function(x) {
+size_sum.workflow_set_options <- function(x) {
    ""
 }

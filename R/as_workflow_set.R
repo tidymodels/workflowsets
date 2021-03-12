@@ -23,7 +23,7 @@ as_workflow_set <- function(...) {
       dplyr::mutate(
          workflow  = unname(wflows),
          info = purrr::map(workflow, get_info),
-         option    = purrr::map(1:nrow(res), ~ new_options())
+         option    = purrr::map(1:nrow(res), ~ new_workflow_set_options())
       )
    res$result <- unname(object)
 
