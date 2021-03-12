@@ -94,7 +94,7 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
    on.exit(return(new_workflow_set(object)))
 }
 
-
+# nocov
 allowed_fn <-
    tibble::tibble(
       func = c("tune_grid", "tune_bayes", "fit_resamples", "tune_race_anova",
@@ -102,6 +102,7 @@ allowed_fn <-
       pkg = c(rep("tune", 3), rep("finetune", 3))
    )
 allowed_fn_list <- paste0("'", allowed_fn$func, "'", collapse = ", ")
+# nocov end
 
 # ------------------------------------------------------------------------------
 

@@ -1,5 +1,7 @@
 #' Obtain and format results produced by tuning functions for workflow sets
 #'
+#' Return a tibble of performance metrics for all models or submodels.
+#'
 #' @param x A `workflow_set` object where all workflows have been evaluated.
 #' @param summarize A logical for whether the performance estimates should be
 #'  summarized via the mean (over resamples) or the raw performance values (per
@@ -29,58 +31,11 @@
 #' Alternatively, the `map()` function can be used to get the metrics from the
 #' original objects (see the example below).
 #'
+#' @seealso [tune::collect_metrics()], [rank_results()]
 #' @examples
-#' library(workflowsets)
-#' library(modeldata)
-#' library(recipes)
-#' library(parsnip)
 #' library(dplyr)
-#' library(rsample)
-#' library(tune)
-#' library(yardstick)
 #' library(purrr)
 #' library(tidyr)
-#'
-#' # ------------------------------------------------------------------------------
-#'
-#' data(cells)
-#' cells <- cells %>% dplyr::select(-case)
-#'
-#' set.seed(1)
-#' val_set <- validation_split(cells)
-#'
-#' # ------------------------------------------------------------------------------
-#'
-#' basic_recipe <-
-#'    recipe(class ~ ., data = cells) %>%
-#'    step_YeoJohnson(all_predictors()) %>%
-#'    step_normalize(all_predictors())
-#'
-#' pca_recipe <-
-#'    basic_recipe %>%
-#'    step_pca(all_predictors(), num_comp = tune())
-#'
-#' ss_recipe <-
-#'    basic_recipe %>%
-#'    step_spatialsign(all_predictors())
-#'
-#' # ------------------------------------------------------------------------------
-#'
-#' knn_mod <-
-#'    nearest_neighbor(neighbors = tune(), weight_func = tune()) %>%
-#'    set_engine("kknn") %>%
-#'    set_mode("classification")
-#'
-#' lr_mod <-
-#'    logistic_reg() %>%
-#'    set_engine("glm")
-#'
-#' # ------------------------------------------------------------------------------
-#'
-#' preproc <- list(none = basic_recipe, pca = pca_recipe, sp_sign = ss_recipe)
-#' models <- list(knn = knn_mod, logistic = lr_mod)
-#'
-#' cell_set <- workflow_set(preproc, models, cross = TRUE)
 #'
 #' # ------------------------------------------------------------------------------
 #'
@@ -94,6 +49,8 @@
 #'   dplyr::select(wflow_id, metrics) %>%
 #'   tidyr::unnest(cols = metrics)
 #' }
+#'
+#' collect_metrics(two_class_res, summarize = FALSE)
 #' @export
 collect_metrics.workflow_set <- function(x, summarize = TRUE, ...) {
    check_incompete(x, fail = TRUE)
@@ -130,12 +87,6 @@ reorder_cols <- function(x) {
       cols <- c("wflow_id", ".config", "preproc", "model")
    }
    dplyr::relocate(x, !!!cols)
-}
-maybe_add_iter <- function(x) {
-   if (!any(names(x) == ".iter")) {
-      x <- dplyr::mutate(x, .iter = 0)
-   }
-   x
 }
 
 #' @export

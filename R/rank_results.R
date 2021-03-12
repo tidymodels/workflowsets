@@ -87,15 +87,6 @@ rank_results <- function(x, rank_metric = NULL, select_best = FALSE) {
 
 }
 
-
-get_preproc_type <- function(x) {
-   purrr::map_chr(x$workflow, preproc_type)
-}
-
-get_model_type <- function(x) {
-   purrr::map_chr(x$workflow, model_type)
-}
-
 get_num_resamples <- function(x) {
    purrr::map_dfr(x$splits, ~ .x$id) %>%
       dplyr::distinct() %>%
