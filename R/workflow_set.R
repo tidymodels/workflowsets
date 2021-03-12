@@ -1,7 +1,7 @@
 #' Generate a set of workflow objects from preprocessing and model objects
 #'
 #' @param preproc A list (preferably named) with preprocessing objects:
-#'  formulas, recipes, or selectors.
+#'  formulas, recipes, or [workflows::workflow_variables()].
 #' @param models A list (preferably named) of `parsnip` model specifications.
 #' @param cross A logical: should all combinations of the preprocessors and
 #'  models be used to create the workflows? If `FALSE`, the length of `preproc`
@@ -35,6 +35,7 @@
 #'     [workflow_map()] is used.
 #' @examples
 #' library(workflowsets)
+#' library(workflows)
 #' library(modeldata)
 #' library(recipes)
 #' library(parsnip)
@@ -86,11 +87,11 @@
 #' cell_set
 #'
 #' # ------------------------------------------------------------------------------
-#' # Using selector functions and formulas
+#' # Using variables and formulas
 #'
 #' # Select predictors by their names
 #' channels <- paste0("ch_", 1:4)
-#' preproc <- purrr::map(channels, ~ selectors(class, c(contains(!!.x))))
+#' preproc <- purrr::map(channels, ~ workflow_variables(class, c(contains(!!.x))))
 #' names(preproc) <- channels
 #' preproc$everything <- class ~ .
 #' preproc
@@ -187,11 +188,7 @@ new_workflow_set <- function(x) {
 
 preproc_type <- function(x) {
    x <- workflows::pull_workflow_preprocessor(x)
-   res <- class(x)[1]
-   if (res == "list") {
-      res <- "selector"
-   }
-   res
+   class(x)[1]
 }
 
 model_type <- function(x) {
