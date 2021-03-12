@@ -1,4 +1,8 @@
-#' Functions for options in a workflow set
+#' Add and edit options saved in a workflow set
+#'
+#' These functions are helpful for manipulating the information in the `option`
+#' column.
+#'
 #' @export
 #' @param x A workflow set
 #' @param ... A list of named options. For `option_remove()` this can be a
