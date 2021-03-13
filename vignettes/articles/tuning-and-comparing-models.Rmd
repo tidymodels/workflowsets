@@ -168,7 +168,8 @@ We can produce a contour plot for the class boundary then overlay the data:
 ggplot(grid, aes(x = X1, y = X2)) + 
   geom_contour(aes(z = .pred_Class2), breaks = 0.5, col = "black") + 
   geom_point(data = test_set, aes(col = class), alpha = 0.5) + 
-  coord_fixed(ratio = 1)
+  coord_fixed(ratio = 1)+ 
+  scale_color_brewer(palette = "Dark2")
 ```
 
 The workflow set allows us to screen many models to find one that does very well. This can be combined with parallel processing and, especially, racing methods from the [`finetune`](https://finetune.tidymodels.org/reference/tune_race_anova.html) package to optimize the efficiency. 
