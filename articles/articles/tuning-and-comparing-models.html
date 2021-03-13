@@ -153,11 +153,11 @@
   <span class="va">all_workflows</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../../reference/workflow_map.html">workflow_map</a></span><span class="op">(</span>resamples <span class="op">=</span> <span class="va">train_resamples</span>, grid <span class="op">=</span> <span class="fl">20</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; i 1 of 3 tuning:     formula_regularized</span>
-<span class="co">#&gt; ✔ 1 of 3 tuning:     formula_regularized (3m 6s)</span>
+<span class="co">#&gt; ✔ 1 of 3 tuning:     formula_regularized (3m 25.6s)</span>
 <span class="co">#&gt; i 2 of 3 tuning:     formula_mars</span>
-<span class="co">#&gt; ✔ 2 of 3 tuning:     formula_mars (19.7s)</span>
+<span class="co">#&gt; ✔ 2 of 3 tuning:     formula_mars (20.9s)</span>
 <span class="co">#&gt; i 3 of 3 tuning:     formula_cart</span>
-<span class="co">#&gt; ✔ 3 of 3 tuning:     formula_cart (2m 51.2s)</span>
+<span class="co">#&gt; ✔ 3 of 3 tuning:     formula_cart (3m 6.1s)</span>
 <span class="va">all_workflows</span>
 <span class="co">#&gt; # A workflow set/tibble: 3 x 4</span>
 <span class="co">#&gt;   wflow_id            info             option    result   </span>
@@ -186,14 +186,15 @@
 
 <span class="co"># or a handy plot: </span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">all_workflows</span>, metric <span class="op">=</span> <span class="st">"roc_auc"</span><span class="op">)</span></code></pre></div>
-<p><img src="tuning-and-comparing-models_files/figure-html/rank_res-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="tuning-and-comparing-models_files/figure-html/rank_res-1.png" width="100%" style="display: block; margin: auto;"></p>
 <p>It looks like the MARS model did well. We can plot its results and also pull out the tuning object too:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">all_workflows</span>, metric <span class="op">=</span> <span class="st">"roc_auc"</span>, which <span class="op">=</span> <span class="st">"formula_mars"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">all_workflows</span>, metric <span class="op">=</span> <span class="st">"roc_auc"</span>, id <span class="op">=</span> <span class="st">"formula_mars"</span><span class="op">)</span></code></pre></div>
 <p><img src="tuning-and-comparing-models_files/figure-html/mars-1.png" width="576" style="display: block; margin: auto;"></p>
+<p>Not much of a difference in performance; it may be prudent to use the additive model (via <code>prod_degree = 1</code>).</p>
+<p>We can also pull out the results of <code><a href="https://tune.tidymodels.org/reference/tune_grid.html">tune_grid()</a></code> for this model:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">mars_results</span> <span class="op">&lt;-</span> 
+<code class="sourceCode R"><span class="va">mars_results</span> <span class="op">&lt;-</span> 
   <span class="va">all_workflows</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../../reference/pull_workflow_result.html">pull_workflow_result</a></span><span class="op">(</span><span class="st">"formula_mars"</span><span class="op">)</span>
 <span class="va">mars_results</span>
@@ -236,7 +237,7 @@
 
 <span class="va">mars_workflow_fit</span> <span class="op">&lt;-</span> 
   <span class="va">mars_workflow</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://tune.tidymodels.org/reference/finalize_model.html">finalize_workflow</a></span><span class="op">(</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>prod_degree <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://tune.tidymodels.org/reference/finalize_model.html">finalize_workflow</a></span><span class="op">(</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>prod_degree <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://generics.r-lib.org/reference/fit.html">fit</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">train_set</span><span class="op">)</span>
 <span class="va">mars_workflow_fit</span>
 <span class="co">#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════</span>
@@ -249,7 +250,7 @@
 <span class="co">#&gt; ── Model ───────────────────────────────────────────────────────────────────────</span>
 <span class="co">#&gt; Call:</span>
 <span class="co">#&gt; mda::fda(formula = ..y ~ ., data = data, method = earth::earth, </span>
-<span class="co">#&gt;     degree = ~2)</span>
+<span class="co">#&gt;     degree = ~1)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Dimension: 1 </span>
 <span class="co">#&gt; </span>
@@ -257,7 +258,7 @@
 <span class="co">#&gt;  v1 </span>
 <span class="co">#&gt; 100 </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Training Misclassification Error: 0.09867 ( N = 375 )</span></code></pre></div>
+<span class="co">#&gt; Training Misclassification Error: 0.10933 ( N = 375 )</span></code></pre></div>
 <p>Let’s see how well these data work on the test set:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Make a grid to predict the whole space:</span>
@@ -275,7 +276,7 @@
   <span class="fu">geom_point</span><span class="op">(</span>data <span class="op">=</span> <span class="va">test_set</span>, <span class="fu">aes</span><span class="op">(</span>col <span class="op">=</span> <span class="va">class</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">coord_fixed</span><span class="op">(</span>ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="tuning-and-comparing-models_files/figure-html/2d-boundary-1.png" width="480" style="display: block; margin: auto;"></p>
-<p>Th workflow set allows us to screen many models to find one that does very well. This can be combined with parallel processing and, especially, racing methods from the <a href="https://finetune.tidymodels.org/reference/tune_race_anova.html"><code>finetune</code></a> package to optimize the efficiency.</p>
+<p>The workflow set allows us to screen many models to find one that does very well. This can be combined with parallel processing and, especially, racing methods from the <a href="https://finetune.tidymodels.org/reference/tune_race_anova.html"><code>finetune</code></a> package to optimize the efficiency.</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
