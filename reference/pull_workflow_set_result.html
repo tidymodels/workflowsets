@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Example Data Sets — two_class_set • workflowsets</title>
+<title>Extract elements from a workflow set — pull_workflow_set_result • workflowsets</title>
 
 
 <!-- jquery -->
@@ -42,8 +42,10 @@
 
 
 
-<meta property="og:title" content="Example Data Sets — two_class_set" />
-<meta property="og:description" content="Example Data Sets" />
+<meta property="og:title" content="Extract elements from a workflow set — pull_workflow_set_result" />
+<meta property="og:description" content="pull_workflow_set_result() retrieves the results of workflow_map() for a
+particular workflow while pull_workflow() extracts the unfitted workflow
+from the info column." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -124,45 +126,71 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Example Data Sets</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/workflowsets/blob/master/R/data.R'><code>R/data.R</code></a></small>
-    <div class="hidden name"><code>two_class_set.Rd</code></div>
+    <h1>Extract elements from a workflow set</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/workflowsets/blob/master/R/pull.R'><code>R/pull.R</code></a></small>
+    <div class="hidden name"><code>pull_workflow_set_result.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Example Data Sets</p>
+    <p><code>pull_workflow_set_result()</code> retrieves the results of <code><a href='workflow_map.html'>workflow_map()</a></code> for a
+particular workflow while <code>pull_workflow()</code> extracts the unfitted workflow
+from the <code>info</code> column.</p>
     </div>
 
+    <pre class="usage"><span class='fu'>pull_workflow_set_result</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>id</span><span class='op'>)</span>
 
+<span class='fu'>pull_workflow</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>id</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A workflow set.</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A single character string for a workflow ID.</p></td>
+    </tr>
+    </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Workflow sets.</p>
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Example workflow sets and associated model fits.</p>
-<p><code>two_class_set</code> and <code>two_class_res</code> were generated using the data in the
-package file <code>example-data/two-class-set.R</code></p>
-<p><code>chi_features_set</code> and <code>chi_features_res</code> were generated using the data in the
-package file <code>example-data/chi-features-res.R</code>. It is meant to approximate
-the sequence of models built in Section 1.3 of Kuhn and Johnson (2019).</p>
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Max Kuhn and Kjell Johnson (2019) <em>Feature Engineering and
-Selection</em>, <a href='https://bookdown.org/max/FES/a-more-complex-example.html'>https://bookdown.org/max/FES/a-more-complex-example.html</a></p>
+    <p><code>pull_workflow_set_result()</code> produces a <code>tune_result</code> or
+<code>resample_results</code> object. <code>pull_workflow()</code> returns an unfit workflow
+object.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>two_class_set</span><span class='op'>)</span>
-<span class='va'>two_class_set</span>
-</div><div class='output co'>#&gt; <span style='color: #949494;'># A workflow set/tibble: 6 x 4</span><span>
-#&gt;   wflow_id      info             option    result    
-#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span>         </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>           </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>    </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>    
-#&gt; </span><span style='color: #BCBCBC;'>1</span><span> none_cart     </span><span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>2</span><span> none_glm      </span><span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>3</span><span> none_mars     </span><span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>4</span><span> yj_trans_cart </span><span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>5</span><span> yj_trans_glm  </span><span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span>
-#&gt; </span><span style='color: #BCBCBC;'>6</span><span> yj_trans_mars </span><span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span><span> </span><span style='color: #949494;'>&lt;opts[0]&gt;</span><span> </span><span style='color: #949494;'>&lt;list [0]&gt;</span><span></div></span></pre>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidymodels/tune'>tune</a></span><span class='op'>)</span>
+
+<span class='fu'>pull_workflow_set_result</span><span class='op'>(</span><span class='va'>two_class_res</span>, <span class='st'>"none_cart"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # Tuning results
+#&gt; # 5-fold cross-validation 
+#&gt; <span style='color: #949494;'># A tibble: 5 x 4</span><span>
+#&gt;   splits            id    .metrics          .notes          
+#&gt;   </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;chr&gt;</span><span> </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>            </span><span style='color: #949494;font-style: italic;'>&lt;list&gt;</span><span>          
+#&gt; </span><span style='color: #BCBCBC;'>1</span><span> </span><span style='color: #949494;'>&lt;split [632/159]&gt;</span><span> Fold1 </span><span style='color: #949494;'>&lt;tibble [20 × 6]&gt;</span><span> </span><span style='color: #949494;'>&lt;tibble [0 × 1]&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>2</span><span> </span><span style='color: #949494;'>&lt;split [633/158]&gt;</span><span> Fold2 </span><span style='color: #949494;'>&lt;tibble [20 × 6]&gt;</span><span> </span><span style='color: #949494;'>&lt;tibble [0 × 1]&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>3</span><span> </span><span style='color: #949494;'>&lt;split [633/158]&gt;</span><span> Fold3 </span><span style='color: #949494;'>&lt;tibble [20 × 6]&gt;</span><span> </span><span style='color: #949494;'>&lt;tibble [0 × 1]&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>4</span><span> </span><span style='color: #949494;'>&lt;split [633/158]&gt;</span><span> Fold4 </span><span style='color: #949494;'>&lt;tibble [20 × 6]&gt;</span><span> </span><span style='color: #949494;'>&lt;tibble [0 × 1]&gt;</span><span>
+#&gt; </span><span style='color: #BCBCBC;'>5</span><span> </span><span style='color: #949494;'>&lt;split [633/158]&gt;</span><span> Fold5 </span><span style='color: #949494;'>&lt;tibble [20 × 6]&gt;</span><span> </span><span style='color: #949494;'>&lt;tibble [0 × 1]&gt;</span><span></div><div class='input'>
+<span class='fu'>pull_workflow</span><span class='op'>(</span><span class='va'>two_class_res</span>, <span class='st'>"none_cart"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+#&gt; </span><span style='font-style: italic;'>Preprocessor:</span><span> Formula
+#&gt; </span><span style='font-style: italic;'>Model:</span><span> decision_tree()
+#&gt; 
+#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────
+#&gt; Class ~ A + B
+#&gt; 
+#&gt; ── Model ───────────────────────────────────────────────────────────────────────
+#&gt; Decision Tree Model Specification (classification)
+#&gt; 
+#&gt; Main Arguments:
+#&gt;   cost_complexity = tune()
+#&gt;   min_n = tune()
+#&gt; 
+#&gt; Computational engine: rpart 
+#&gt; </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

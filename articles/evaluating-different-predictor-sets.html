@@ -61,7 +61,12 @@
 <li>
   <a href="../news/index.html">News</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/tidymodels/workflowsets/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
 </div>
 <!--/.nav-collapse -->
@@ -78,7 +83,7 @@
       <h1 data-toc-skip>Evaluating different predictor sets</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/tidymodels/workflowsets/blob/master/vignettes/evaluating-different-predictor-sets.Rmd"><code>vignettes/evaluating-different-predictor-sets.Rmd</code></a></small>
       <div class="hidden name"><code>evaluating-different-predictor-sets.Rmd</code></div>
 
     </div>
@@ -96,7 +101,7 @@
 <p>There are 19 predictors, mostly numeric. This include aspects of their account, such as <code>number_customer_service_calls</code>. The outcome is a factor with two levels: “yes” and “no”.</p>
 <p>We’ll use a logistic regression to model the data. Since the data set is not small, we’ll use basic 10-fold cross-validation to get resampled performance estimates.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">workflowsets</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/workflowsets">workflowsets</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://parsnip.tidymodels.org">parsnip</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rsample.tidymodels.org">rsample</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>

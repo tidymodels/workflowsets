@@ -65,7 +65,12 @@
 <li>
   <a href="news/index.html">News</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/tidymodels/workflowsets/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
 </div>
 <!--/.nav-collapse -->
@@ -99,8 +104,7 @@
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<p>It is often a good idea to try different types of models and preprocessing methods on a specific data set. tidymodels provides tools for this purpose: recipes for preprocessing/feature engineering and model specifications.</p>
-<p>Once a few options are available, it might be helpful to evaluate a large combination of these techniques. workflowsets has functions for creating and evaluating combinations of modeling elements.</p>
+<p>It is often a good idea to try different types of models and preprocessing methods on a specific data set. tidymodels provides tools for this purpose: recipes for preprocessing/feature engineering and model specifications. workflowsets has functions for creating and evaluating combinations of modeling elements.</p>
 <p>For example, the Chicago train ridership data has many numeric predictors that are highly correlated. There are a few approaches to compensating for this issue during modeling:</p>
 <ol>
 <li><p>Use a feature filter to remove redundant predictors.</p></li>
@@ -110,7 +114,7 @@
 <p>The first two methods can be used with any model while the last option is only available for specific models. Let’s create a basic recipe that we will build on:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidymodels.tidymodels.org">tidymodels</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">workflowsets</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/workflowsets">workflowsets</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">Chicago</span><span class="op">)</span>
 <span class="co"># Use a small sample to keep file sizes down:</span>
 <span class="va">Chicago</span> <span class="op">&lt;-</span> <span class="va">Chicago</span> <span class="op">%&gt;%</span> <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">365</span><span class="op">)</span>
@@ -217,19 +221,19 @@
    <span class="fu"><a href="reference/workflow_map.html">workflow_map</a></span><span class="op">(</span><span class="st">"tune_grid"</span>, resamples <span class="op">=</span> <span class="va">splits</span>, grid <span class="op">=</span> <span class="fl">10</span>, 
                 metrics <span class="op">=</span> <span class="fu">metric_set</span><span class="op">(</span><span class="va">mae</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; i 1 of 7 tuning:     simple_glmnet</span>
-<span class="co">#&gt; ✓ 1 of 7 tuning:     simple_glmnet (23.6s)</span>
+<span class="co">#&gt; ✓ 1 of 7 tuning:     simple_glmnet (24s)</span>
 <span class="co">#&gt; i 2 of 7 tuning:     simple_cart</span>
-<span class="co">#&gt; ✓ 2 of 7 tuning:     simple_cart (24.9s)</span>
+<span class="co">#&gt; ✓ 2 of 7 tuning:     simple_cart (25.1s)</span>
 <span class="co">#&gt; i 3 of 7 tuning:     simple_knn</span>
-<span class="co">#&gt; ✓ 3 of 7 tuning:     simple_knn (24.4s)</span>
+<span class="co">#&gt; ✓ 3 of 7 tuning:     simple_knn (24.7s)</span>
 <span class="co">#&gt; i 4 of 7 tuning:     filter_cart</span>
-<span class="co">#&gt; ✓ 4 of 7 tuning:     filter_cart (38.2s)</span>
+<span class="co">#&gt; ✓ 4 of 7 tuning:     filter_cart (39.5s)</span>
 <span class="co">#&gt; i 5 of 7 tuning:     filter_knn</span>
-<span class="co">#&gt; ✓ 5 of 7 tuning:     filter_knn (38.4s)</span>
+<span class="co">#&gt; ✓ 5 of 7 tuning:     filter_knn (39.8s)</span>
 <span class="co">#&gt; i 6 of 7 tuning:     pca_cart</span>
-<span class="co">#&gt; ✓ 6 of 7 tuning:     pca_cart (30.3s)</span>
+<span class="co">#&gt; ✓ 6 of 7 tuning:     pca_cart (30.8s)</span>
 <span class="co">#&gt; i 7 of 7 tuning:     pca_knn</span>
-<span class="co">#&gt; ✓ 7 of 7 tuning:     pca_knn (29.9s)</span>
+<span class="co">#&gt; ✓ 7 of 7 tuning:     pca_knn (30.6s)</span>
 <span class="va">chi_models</span>
 <span class="co">#&gt; # A workflow set/tibble: 7 x 4</span>
 <span class="co">#&gt;   wflow_id      info             option    result   </span>
@@ -246,7 +250,7 @@
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">chi_models</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-plot-1.svg" width="100%"></p>
-<p>or the best form each workflow:</p>
+<p>or the best from each workflow:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot</a></span><span class="op">(</span><span class="va">chi_models</span>, select_best <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="reference/figures/README-plot-best-1.svg" width="100%"></p>
@@ -269,7 +273,14 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div class="license">
+    <div class="links">
+<h2>Links</h2>
+<ul class="list-unstyled">
+<li>Browse source code at <br><a href="https://github.com/tidymodels/workflowsets/">https://​github.com/​tidymodels/​workflowsets/​</a>
+</li>
+</ul>
+</div>
+<div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>

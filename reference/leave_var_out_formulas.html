@@ -106,7 +106,12 @@ each predictor." />
 <li>
   <a href="../news/index.html">News</a>
 </li>
-        
+        <li>
+  <a href="https://github.com/tidymodels/workflowsets/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -121,7 +126,7 @@ each predictor." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create formulas without each predictor</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/workflowsets/blob/master/R/leave_var_out_formulas.R'><code>R/leave_var_out_formulas.R</code></a></small>
     <div class="hidden name"><code>leave_var_out_formulas.Rd</code></div>
     </div>
 
@@ -205,7 +210,7 @@ such terms).</p>
 #&gt; 
 #&gt; $everything
 #&gt; bill_length_mm ~ .
-#&gt; &lt;environment: 0x55ae91670bf8&gt;
+#&gt; &lt;environment: 0x55c8d417cb78&gt;
 #&gt; </div><div class='input'>
 <span class='fu'>leave_var_out_formulas</span><span class='op'>(</span>
    <span class='va'>bill_length_mm</span> <span class='op'>~</span> <span class='op'>(</span><span class='va'>island</span> <span class='op'>+</span> <span class='va'>sex</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>+</span> <span class='va'>flipper_length_mm</span>,
@@ -229,7 +234,7 @@ such terms).</p>
 #&gt; 
 #&gt; $everything
 #&gt; bill_length_mm ~ (island + sex)^2 + flipper_length_mm
-#&gt; &lt;environment: 0x55ae91670bf8&gt;
+#&gt; &lt;environment: 0x55c8d417cb78&gt;
 #&gt; </div><div class='input'>
 <span class='fu'>leave_var_out_formulas</span><span class='op'>(</span>
    <span class='va'>bill_length_mm</span> <span class='op'>~</span> <span class='op'>(</span><span class='va'>island</span> <span class='op'>+</span> <span class='va'>sex</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>+</span> <span class='va'>flipper_length_mm</span> <span class='op'>+</span>
@@ -258,7 +263,7 @@ such terms).</p>
 #&gt; 
 #&gt; $everything
 #&gt; bill_length_mm ~ (island + sex)^2 + flipper_length_mm + I(flipper_length_mm^2)
-#&gt; &lt;environment: 0x55ae91670bf8&gt;
+#&gt; &lt;environment: 0x55c8d417cb78&gt;
 #&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
