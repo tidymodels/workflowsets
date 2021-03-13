@@ -47,7 +47,7 @@ contain a \code{try-error} object.
 
 In cases where a model has no tuning parameters is mapped to one of the
 tuning functions, \code{\link[tune:fit_resamples]{tune::fit_resamples()}} will be used instead and a
-warning is issued.
+warning is issued if \code{verbose = TRUE}.
 }
 \examples{
 

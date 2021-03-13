@@ -24,34 +24,20 @@ car_set_1 <-
 # ------------------------------------------------------------------------------
 
 test_that("basic mapping", {
-   expect_message(
-      expect_message({
-         expect_error({
-            res_1 <-
-               car_set_1 %>%
-               workflow_map(resamples = folds, seed = 2, grid = 2)
-         },
-         regexp = NA)
-      },
-      "No tuning parameters"
-      ),
-      "No tuning parameters"
-   )
+   expect_error({
+      res_1 <-
+         car_set_1 %>%
+         workflow_map(resamples = folds, seed = 2, grid = 2)
+   },
+   regexp = NA)
 
    # check reproducibility
-   expect_message(
-      expect_message({
-         expect_error({
-            res_2 <-
-               car_set_1 %>%
-               workflow_map(resamples = folds, seed = 2, grid = 2)
-         },
-         regexp = NA)
-      },
-      "No tuning parameters"
-      ),
-      "No tuning parameters"
-   )
+   expect_error({
+      res_2 <-
+         car_set_1 %>%
+         workflow_map(resamples = folds, seed = 2, grid = 2)
+   },
+   regexp = NA)
    expect_equal(collect_metrics(res_1), collect_metrics(res_2))
 
    # ---------------------------------------------------------------------------
