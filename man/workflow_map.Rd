@@ -46,7 +46,7 @@ Any failures in execution result in the corresponding row of \code{results} to
 contain a \code{try-error} object.
 
 In cases where a model has no tuning parameters is mapped to one of the
-tuning functions, \verb{[tune::fit_resamples()]} will be used instead and a
+tuning functions, \code{\link[tune:fit_resamples]{tune::fit_resamples()}} will be used instead and a
 warning is issued.
 }
 \examples{
@@ -61,5 +61,5 @@ if (FALSE) {
 rank_results(chi_features_res)
 }
 \seealso{
-\code{\link[=workflow_set]{workflow_set()}}, \code{\link[=as_workflow_set]{as_workflow_set()}}, \code{\link[=pull_workflow_result]{pull_workflow_result()}}
+\code{\link[=workflow_set]{workflow_set()}}, \code{\link[=as_workflow_set]{as_workflow_set()}}, \code{\link[=pull_workflow_set_result]{pull_workflow_set_result()}}
 }

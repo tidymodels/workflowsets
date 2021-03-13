@@ -39,11 +39,8 @@ devtools::install_github("tidymodels/workflowsets")
 It is often a good idea to try different types of models and
 preprocessing methods on a specific data set. tidymodels provides tools
 for this purpose: recipes for preprocessing/feature engineering and
-model specifications.
-
-Once a few options are available, it might be helpful to evaluate a
-large combination of these techniques. workflowsets has functions for
-creating and evaluating combinations of modeling elements.
+model specifications. workflowsets has functions for creating and
+evaluating combinations of modeling elements.
 
 For example, the Chicago train ridership data has many numeric
 predictors that are highly correlated. There are a few approaches to
@@ -196,19 +193,19 @@ chi_models <-
    workflow_map("tune_grid", resamples = splits, grid = 10, 
                 metrics = metric_set(mae), verbose = TRUE)
 #> i 1 of 7 tuning:     simple_glmnet
-#> ✓ 1 of 7 tuning:     simple_glmnet (23.6s)
+#> ✓ 1 of 7 tuning:     simple_glmnet (24s)
 #> i 2 of 7 tuning:     simple_cart
-#> ✓ 2 of 7 tuning:     simple_cart (24.9s)
+#> ✓ 2 of 7 tuning:     simple_cart (25.1s)
 #> i 3 of 7 tuning:     simple_knn
-#> ✓ 3 of 7 tuning:     simple_knn (24.4s)
+#> ✓ 3 of 7 tuning:     simple_knn (24.7s)
 #> i 4 of 7 tuning:     filter_cart
-#> ✓ 4 of 7 tuning:     filter_cart (38.2s)
+#> ✓ 4 of 7 tuning:     filter_cart (39.5s)
 #> i 5 of 7 tuning:     filter_knn
-#> ✓ 5 of 7 tuning:     filter_knn (38.4s)
+#> ✓ 5 of 7 tuning:     filter_knn (39.8s)
 #> i 6 of 7 tuning:     pca_cart
-#> ✓ 6 of 7 tuning:     pca_cart (30.3s)
+#> ✓ 6 of 7 tuning:     pca_cart (30.8s)
 #> i 7 of 7 tuning:     pca_knn
-#> ✓ 7 of 7 tuning:     pca_knn (29.9s)
+#> ✓ 7 of 7 tuning:     pca_knn (30.6s)
 chi_models
 #> # A workflow set/tibble: 7 x 4
 #>   wflow_id      info             option    result   
@@ -233,7 +230,7 @@ autoplot(chi_models)
 
 <img src="man/figures/README-plot-1.svg" width="100%" />
 
-or the best form each workflow:
+or the best from each workflow:
 
 ``` r
 autoplot(chi_models, select_best = TRUE)

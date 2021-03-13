@@ -15,7 +15,7 @@
 #' the results will be added to the `result` column. If the computations for a
 #' workflow fail, an `try-catch` object will be saved in place of the results
 #' (without stopping execution).
-#' @seealso [workflow_set()], [as_workflow_set()], [pull_workflow_result()]
+#' @seealso [workflow_set()], [as_workflow_set()], [pull_workflow_set_result()]
 #' @details
 #'
 #' When passing options, anything passed in the `...` will be combined with any
@@ -26,7 +26,7 @@
 #' contain a `try-error` object.
 #'
 #' In cases where a model has no tuning parameters is mapped to one of the
-#' tuning functions, `[tune::fit_resamples()]` will be used instead and a
+#' tuning functions, [tune::fit_resamples()] will be used instead and a
 #' warning is issued.
 #'
 #' @examples

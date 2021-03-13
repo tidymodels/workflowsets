@@ -22,12 +22,12 @@ test_that("pulling objects", {
    )
 
    expect_equal(
-      car_set_1 %>% pull_workflow_result("reg_lm"),
+      car_set_1 %>% pull_workflow_set_result("reg_lm"),
       car_set_1$result[[1]]
    )
 
    expect_error(
-      car_set_1 %>% pull_workflow_result("Gideon Nav"),
+      car_set_1 %>% pull_workflow_set_result("Gideon Nav"),
       "No workflow ID found"
    )
 

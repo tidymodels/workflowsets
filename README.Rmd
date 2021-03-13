@@ -42,9 +42,7 @@ devtools::install_github("tidymodels/workflowsets")
 
 ## Example
 
-It is often a good idea to try different types of models and preprocessing methods on a specific data set. tidymodels provides tools for this purpose: recipes for preprocessing/feature engineering and model specifications. 
-
-Once a few options are available, it might be helpful to evaluate a large combination of these techniques. workflowsets has functions for creating and evaluating combinations of modeling elements. 
+It is often a good idea to try different types of models and preprocessing methods on a specific data set. tidymodels provides tools for this purpose: recipes for preprocessing/feature engineering and model specifications.  workflowsets has functions for creating and evaluating combinations of modeling elements. 
 
 For example, the Chicago train ridership data has many numeric predictors that are highly correlated. There are a few approaches to compensating for this issue during modeling:
 
@@ -183,7 +181,7 @@ The `autoplot()` method shows the rankings of the workflows:
 autoplot(chi_models)
 ```
 
-or the best form each workflow: 
+or the best from each workflow: 
 
 
 ```{r plot-best, fig.height = 4, dev = "svg"}
