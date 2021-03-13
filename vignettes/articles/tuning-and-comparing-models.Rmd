@@ -130,7 +130,7 @@ We can also pull out the results of `tune_grid()` for this model:
 ```{r mars-results-print}
 mars_results <- 
   all_workflows %>% 
-  pull_workflow_result("formula_mars")
+  pull_workflow_set_result("formula_mars")
 mars_results
 ```
 
