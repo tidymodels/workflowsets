@@ -110,7 +110,7 @@ The `result` column now has the results of each `tune_grid()` call.
 
 From these results, we can get quick assessments of how well these models classified the data: 
 
-```{r rank_res, fig.width=6, fig.height=4.25}
+```{r rank_res, fig.width=8, fig.height=5.5, out.width="100%"}
 rank_results(all_workflows, rank_metric = "roc_auc")
 
 # or a handy plot: 
@@ -120,8 +120,14 @@ autoplot(all_workflows, metric = "roc_auc")
 It looks like the MARS model did well. We can plot its results and also pull out the tuning object too: 
 
 ```{r mars, fig.width=6, fig.height=4.25}
-autoplot(all_workflows, metric = "roc_auc", which = "formula_mars")
+autoplot(all_workflows, metric = "roc_auc", id = "formula_mars")
+```
 
+Not much of a difference in performance; it may be prudent to use the additive model (via `prod_degree = 1`).
+
+We can also pull out the results of `tune_grid()` for this model: 
+
+```{r mars-results-print}
 mars_results <- 
   all_workflows %>% 
   pull_workflow_result("formula_mars")
@@ -138,7 +144,7 @@ mars_workflow
 
 mars_workflow_fit <- 
   mars_workflow %>% 
-  finalize_workflow(tibble(prod_degree = 2)) %>% 
+  finalize_workflow(tibble(prod_degree = 1)) %>% 
   fit(data = train_set)
 mars_workflow_fit
 ```
@@ -165,4 +171,4 @@ ggplot(grid, aes(x = X1, y = X2)) +
   coord_fixed(ratio = 1)
 ```
 
-Th workflow set allows us to screen many models to find one that does very well. This can be combined with parallel processing and, especially, racing methods from the [`finetune`](https://finetune.tidymodels.org/reference/tune_race_anova.html) package to optimize the efficiency. 
+The workflow set allows us to screen many models to find one that does very well. This can be combined with parallel processing and, especially, racing methods from the [`finetune`](https://finetune.tidymodels.org/reference/tune_race_anova.html) package to optimize the efficiency. 
