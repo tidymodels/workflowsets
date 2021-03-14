@@ -1,6 +1,6 @@
 Package: workflowsets
 Title: Create a Collection of 'tidymodels' Workflows from Lists of Models and Preprocessors
-Version: 0.0.0.9001
+Version: 0.0.1
 Authors@R: 
     c(person(given = "Max",
              family = "Kuhn",
