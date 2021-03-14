@@ -29,15 +29,14 @@ The goal of workflowsets is to allow users to create and easily fit a large numb
 You can install the released version of workflowsets from [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
-# not yet!
-# install.packages("workflowsets")
+install.packages("workflowsets")
 ```
 
 And the development version from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("tidymodels/workflowsets")
+install.packages("pak")
+pak::pak("tidymodels/workflowsets")
 ```
 
 ## Example
