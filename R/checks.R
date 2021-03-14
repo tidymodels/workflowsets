@@ -86,18 +86,18 @@ recheck_options <- function(opts, .fn) {
 }
 
 
-check_fn <- function(fn, x) {
+check_fn <- function(fn, x, verbose) {
    has_tune <- nrow(tune::tune_args(x)) > 0
    if (!has_tune & fn != "fit_resamples") {
       fn <- "fit_resamples"
-      cols <- tune::get_tune_colors()
-      msg <- "No tuning parameters. `fit_resamples()` will be attempted"
-      message(cols$symbol$info("i"), "\t", cols$message$info(msg))
+      if (verbose) {
+         cols <- tune::get_tune_colors()
+         msg <- "No tuning parameters. `fit_resamples()` will be attempted"
+         message(cols$symbol$info("i"), "\t", cols$message$info(msg))
+      }
    }
    fn
 }
-
-
 
 check_names <- function(x) {
    nms <- names(x)

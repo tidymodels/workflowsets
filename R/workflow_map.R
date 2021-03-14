@@ -27,7 +27,7 @@
 #'
 #' In cases where a model has no tuning parameters is mapped to one of the
 #' tuning functions, [tune::fit_resamples()] will be used instead and a
-#' warning is issued.
+#' warning is issued if `verbose = TRUE`.
 #'
 #' @examples
 #'
@@ -71,13 +71,13 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
    # new fingerprinting option.
 
    for (iter in iter_seq) {
-      log_progress(verbose, object$wflow_id[[iter]], NULL, iter_chr[iter],
-                   n, fn, NULL)
-
       wflow <- pull_workflow(object, object$wflow_id[[iter]])
 
-      .fn <- check_fn(fn, wflow)
+      .fn <- check_fn(fn, wflow, verbose)
       .fn_info <- dplyr::filter(allowed_fn, func == .fn)
+
+      log_progress(verbose, object$wflow_id[[iter]], NULL, iter_chr[iter],
+                   n, .fn, NULL)
 
       opt <- recheck_options(object$option[[iter]], .fn)
       run_time <- system.time({
@@ -89,7 +89,7 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
       })
       object <- new_workflow_set(object)
       log_progress(verbose, object$wflow_id[[iter]], object$result[[iter]],
-                   iter_chr[iter], n, fn, run_time)
+                   iter_chr[iter], n, .fn, run_time)
    }
    on.exit(return(new_workflow_set(object)))
 }
