@@ -30,15 +30,13 @@
 #' warning is issued if `verbose = TRUE`.
 #'
 #' @examples
+#' # An example of processed results
+#' chi_features_res
 #'
-#' # Duplicating the existing results
-#' if (FALSE) {
-#'    two_class_res <-
-#'       two_class_set %>%
-#'       workflow_map(resamples = folds, grid = 10, seed = 2, verbose = TRUE)
+#' # Code examples at
+#' if (interactive()) {
+#'   system.file("example-data", package = "workflowsets")
 #' }
-#'
-#' rank_results(chi_features_res)
 #' @export
 workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
                          seed = sample.int(10^4, 1), ...) {

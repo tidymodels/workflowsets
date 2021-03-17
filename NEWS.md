@@ -1,3 +1,3 @@
-# tbd 0.0.1
+# workflowsets 0.0.1
 
 * First CRAN version
