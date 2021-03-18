@@ -23,15 +23,14 @@ You can install the released version of workflowsets from
 [CRAN](https://CRAN.R-project.org) with:
 
 ``` r
-# not yet!
-# install.packages("workflowsets")
+install.packages("workflowsets")
 ```
 
 And the development version from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("tidymodels/workflowsets")
+install.packages("pak")
+pak::pak("tidymodels/workflowsets")
 ```
 
 ## Example
@@ -193,19 +192,19 @@ chi_models <-
    workflow_map("tune_grid", resamples = splits, grid = 10, 
                 metrics = metric_set(mae), verbose = TRUE)
 #> i 1 of 7 tuning:     simple_glmnet
-#> ✓ 1 of 7 tuning:     simple_glmnet (24s)
+#> ✓ 1 of 7 tuning:     simple_glmnet (23.9s)
 #> i 2 of 7 tuning:     simple_cart
-#> ✓ 2 of 7 tuning:     simple_cart (25.1s)
+#> ✓ 2 of 7 tuning:     simple_cart (25s)
 #> i 3 of 7 tuning:     simple_knn
-#> ✓ 3 of 7 tuning:     simple_knn (24.7s)
+#> ✓ 3 of 7 tuning:     simple_knn (25.4s)
 #> i 4 of 7 tuning:     filter_cart
-#> ✓ 4 of 7 tuning:     filter_cart (39.5s)
+#> ✓ 4 of 7 tuning:     filter_cart (39s)
 #> i 5 of 7 tuning:     filter_knn
-#> ✓ 5 of 7 tuning:     filter_knn (39.8s)
+#> ✓ 5 of 7 tuning:     filter_knn (40.6s)
 #> i 6 of 7 tuning:     pca_cart
-#> ✓ 6 of 7 tuning:     pca_cart (30.8s)
+#> ✓ 6 of 7 tuning:     pca_cart (31.6s)
 #> i 7 of 7 tuning:     pca_knn
-#> ✓ 7 of 7 tuning:     pca_knn (30.6s)
+#> ✓ 7 of 7 tuning:     pca_knn (31.3s)
 chi_models
 #> # A workflow set/tibble: 7 x 4
 #>   wflow_id      info             option    result   

@@ -50,15 +50,13 @@ tuning functions, \code{\link[tune:fit_resamples]{tune::fit_resamples()}} will b
 warning is issued if \code{verbose = TRUE}.
 }
 \examples{
+# An example of processed results
+chi_features_res
 
-# Duplicating the existing results
-if (FALSE) {
-   two_class_res <-
-      two_class_set \%>\%
-      workflow_map(resamples = folds, grid = 10, seed = 2, verbose = TRUE)
+# Code examples at
+if (interactive()) {
+  system.file("example-data", package = "workflowsets")
 }
-
-rank_results(chi_features_res)
 }
 \seealso{
 \code{\link[=workflow_set]{workflow_set()}}, \code{\link[=as_workflow_set]{as_workflow_set()}}, \code{\link[=pull_workflow_set_result]{pull_workflow_set_result()}}
