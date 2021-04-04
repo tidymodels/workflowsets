@@ -8,7 +8,8 @@ utils::globalVariables(
    c(".config", ".estimator", ".metric", "info", "metric", "mod_nm",
      "model", "n", "pp_nm", "preprocessor", "preproc", "object",
      "result", "std_err", "wflow_id", "func", "is_race", "num_rs", "option",
-     "metrics", "predictions", "hash", "id", "workflow", "comment")
+     "metrics", "predictions", "hash", "id", "workflow", "comment","wf_finalize",
+     ".last_fit_model",".model_name")
 )
 
 # ------------------------------------------------------------------------------
