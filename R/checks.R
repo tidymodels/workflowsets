@@ -184,7 +184,11 @@ has_valid_column_result_fingerprints <- function(x) {
    racing_indicator <- purrr::map_lgl(result, inherits, "tune_race")
    result <- result[!racing_indicator]
 
-   hashes <- purrr::map_chr(result, rsample::.get_fingerprint)
+   if (inherits(x, "tune_results") ) {
+      hashes <- purrr::map_chr(result, rsample::.get_fingerprint)
+   } else {
+      hashes <- NA_character_
+   }
 
    # Drop NAs for results created before rsample 0.1.0, which won't have a hash
    pre_0.1.0 <- is.na(hashes)
@@ -205,12 +209,11 @@ is_valid_result_inner_type <- function(x) {
       # Default, before any results are filled
       return(TRUE)
    }
-   inherits(x, "tune_results")
+   inherits(x, "tune_results") | inherits(x, "try-error")
 }
 is_default_result_element <- function(x) {
    identical(x, list())
 }
-
 
 has_valid_column_option_structure <- function(x) {
    option <- x$option
@@ -243,4 +246,28 @@ has_valid_column_wflow_id_strings <- function(x) {
 
    TRUE
 }
+
+has_all_pkgs <- function(w) {
+   pkgs <- generics::required_pkgs(w, infra = FALSE)
+   if (length(pkgs) > 0 ) {
+      is_inst <- purrr::map_lgl(pkgs, ~ rlang::is_true(requireNamespace(.x, quietly = TRUE)))
+      if (!all(is_inst)) {
+         cols <- tune::get_tune_colors()
+         msg <- paste0("The workflow requires packages that are not installed: ",
+                       paste0("'", cols$message$danger(pkgs[!is_inst]), "'", collapse = ", "),
+                       ". Skipping this workflow.")
+         message(
+            cols$symbol$danger(cli::symbol$cross), " ",
+            cols$message$warning(msg)
+         )
+         res <- FALSE
+      } else {
+         res <- TRUE
+      }
+   } else {
+      res <- TRUE
+   }
+   res
+}
+
 
