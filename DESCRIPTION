@@ -33,7 +33,8 @@ Imports:
     ggplot2,
     stats,
     prettyunits,
-    rsample (>= 0.0.9)
+    rsample (>= 0.0.9),
+    generics
 Language: en-US
 Suggests: 
     spelling,

@@ -29,6 +29,9 @@
 #' tuning functions, [tune::fit_resamples()] will be used instead and a
 #' warning is issued if `verbose = TRUE`.
 #'
+#' If a workflow required packages that are not installed, a message is printed
+#' and `workflow_map()` continues with the next workflow (if any).
+#'
 #' @examples
 #' # An example of processed results
 #' chi_features_res
@@ -70,24 +73,26 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
 
    for (iter in iter_seq) {
       wflow <- pull_workflow(object, object$wflow_id[[iter]])
-
       .fn <- check_fn(fn, wflow, verbose)
       .fn_info <- dplyr::filter(allowed_fn, func == .fn)
 
       log_progress(verbose, object$wflow_id[[iter]], NULL, iter_chr[iter],
                    n, .fn, NULL)
 
-      opt <- recheck_options(object$option[[iter]], .fn)
-      run_time <- system.time({
-         cl <- rlang::call2(.fn, .ns = .fn_info$pkg, object = wflow, !!!opt)
-         withr::with_seed(
-            seed[1],
-            object$result[[iter]] <- try(rlang::eval_tidy(cl), silent = TRUE)
-         )
-      })
-      object <- new_workflow_set(object)
-      log_progress(verbose, object$wflow_id[[iter]], object$result[[iter]],
-                   iter_chr[iter], n, .fn, run_time)
+      if (has_all_pkgs(wflow)) {
+
+         opt <- recheck_options(object$option[[iter]], .fn)
+         run_time <- system.time({
+            cl <- rlang::call2(.fn, .ns = .fn_info$pkg, object = wflow, !!!opt)
+            withr::with_seed(
+               seed[1],
+               object$result[[iter]] <- try(rlang::eval_tidy(cl), silent = TRUE)
+            )
+         })
+         object <- new_workflow_set(object)
+         log_progress(verbose, object$wflow_id[[iter]], object$result[[iter]],
+                      iter_chr[iter], n, .fn, run_time)
+      }
    }
    on.exit(return(new_workflow_set(object)))
 }
@@ -111,6 +116,20 @@ log_progress <- function(verbose, id, res, iter, n, .fn, elapsed) {
    cols <- tune::get_tune_colors()
    event <- ifelse(grepl("tune", .fn), "tuning:    ", "resampling:")
    msg <- paste0(iter, " of ", n, " ", event, " ", id)
+
+   if (inherits(res, "try-error")) {
+      # When a bad arg is passed (usually)
+      errors_msg <- gsub("\n", "", as.character(res))
+      errors_msg <- gsub("Error : ", "", errors_msg, fixed = TRUE)
+      message(
+         cols$symbol$danger(cli::symbol$cross), " ",
+         cols$message$info(msg),
+         cols$message$info(" failed with: "),
+         cols$message$danger(errors_msg)
+      )
+      return(invisible(NULL))
+   }
+
    if (is.null(res)) {
       message(
          cols$symbol$info("i"), " ",
@@ -122,11 +141,13 @@ log_progress <- function(verbose, id, res, iter, n, .fn, elapsed) {
          if (all_null) {
             res <- collect_notes(res)
          }
+         errors_msg <- gsub("\n", "", as.character(res))
+         errors_msg <- gsub("Error : ", "", errors_msg, fixed = TRUE)
          message(
             cols$symbol$danger(cli::symbol$cross), " ",
             cols$message$info(msg),
-            cols$message$danger(" failed with "),
-            cols$message$danger(as.character(res))
+            cols$message$info(" failed with "),
+            cols$message$danger(errors_msg)
          )
       } else {
          time_msg <- paste0(" (", prettyunits::pretty_sec(elapsed[3]), ")")

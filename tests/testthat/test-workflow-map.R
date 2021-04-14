@@ -10,6 +10,9 @@ knn_spec <-
    nearest_neighbor(neighbors = tune()) %>%
    set_engine("kknn") %>%
    set_mode("regression")
+glmn_spec <-
+   linear_reg(penalty = tune()) %>%
+   set_engine("glmnet")
 
 set.seed(1)
 folds <- vfold_cv(mtcars, v = 3)
@@ -69,5 +72,61 @@ test_that("map logging", {
    expect_snapshot(
       cat(logging_res, sep = "\n")
    )
+})
+
+
+
+test_that("missing packages", {
+   skip_if(rlang::is_installed("rlang"))
+   car_set_2 <-
+      workflow_set(
+         list(reg = mpg ~ .),
+         list(glmn = glmn_spec)
+      )
+
+   expect_message({
+      res <-
+         car_set_2 %>%
+         workflow_map(resamples = folds, seed = 2, verbose = FALSE)
+   },
+   regex = "glmnet"
+   )
+   expect_true(inherits(res, "workflow_set"))
+   expect_equal(res$result[[1]], list())
+})
+
+
+
+test_that("failers", {
+   skip_on_cran()
+   car_set_3 <-
+      workflow_set(
+         list(reg = mpg ~ .),
+         list(knn = knn_spec, lm = lr_spec)
+      )
+
+   expect_error({
+      res_quiet <-
+         car_set_3 %>%
+         workflow_map(resamples = folds, seed = 2, verbose = FALSE, grid = "a")
+   },
+   regex = NA
+   )
+   expect_true(inherits(res_quiet, "workflow_set"))
+   expect_true(inherits(res_quiet$result[[1]], "try-error"))
+
+   expect_message(
+      expect_error({
+         res_loud <-
+            car_set_3 %>%
+            workflow_map(resamples = folds, seed = 2, verbose = TRUE, grid = "a")
+      },
+      regex = NA
+      ),
+      regex = "should be a positive integer or a data frame"
+   )
+   expect_true(inherits(res_loud, "workflow_set"))
+   expect_true(inherits(res_loud$result[[1]], "try-error"))
+
 })
 

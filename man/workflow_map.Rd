@@ -48,6 +48,9 @@ contain a \code{try-error} object.
 In cases where a model has no tuning parameters is mapped to one of the
 tuning functions, \code{\link[tune:fit_resamples]{tune::fit_resamples()}} will be used instead and a
 warning is issued if \code{verbose = TRUE}.
+
+If a workflow required packages that are not installed, a message is printed
+and \code{workflow_map()} continues with the next workflow (if any).
 }
 \examples{
 # An example of processed results
