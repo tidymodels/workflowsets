@@ -184,7 +184,9 @@ has_valid_column_result_fingerprints <- function(x) {
    racing_indicator <- purrr::map_lgl(result, inherits, "tune_race")
    result <- result[!racing_indicator]
 
-   if (inherits(x, "tune_results") ) {
+   tune_indicator <- purrr::map_lgl(result, inherits, "tune_results")
+   result <- result[tune_indicator]
+   if (length(result) > 0) {
       hashes <- purrr::map_chr(result, rsample::.get_fingerprint)
    } else {
       hashes <- NA_character_
