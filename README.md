@@ -127,17 +127,17 @@ chi_models <-
    )
 chi_models
 #> # A workflow set/tibble: 9 x 4
-#>   wflow_id      info             option    result    
-#>   <chr>         <list>           <list>    <list>    
-#> 1 simple_glmnet <tibble [1 × 4]> <opts[0]> <list [0]>
-#> 2 simple_cart   <tibble [1 × 4]> <opts[0]> <list [0]>
-#> 3 simple_knn    <tibble [1 × 4]> <opts[0]> <list [0]>
-#> 4 filter_glmnet <tibble [1 × 4]> <opts[0]> <list [0]>
-#> 5 filter_cart   <tibble [1 × 4]> <opts[0]> <list [0]>
-#> 6 filter_knn    <tibble [1 × 4]> <opts[0]> <list [0]>
-#> 7 pca_glmnet    <tibble [1 × 4]> <opts[0]> <list [0]>
-#> 8 pca_cart      <tibble [1 × 4]> <opts[0]> <list [0]>
-#> 9 pca_knn       <tibble [1 × 4]> <opts[0]> <list [0]>
+#>   wflow_id      info                 option    result    
+#>   <chr>         <list>               <list>    <list>    
+#> 1 simple_glmnet <tibble[,4] [1 × 4]> <opts[0]> <list [0]>
+#> 2 simple_cart   <tibble[,4] [1 × 4]> <opts[0]> <list [0]>
+#> 3 simple_knn    <tibble[,4] [1 × 4]> <opts[0]> <list [0]>
+#> 4 filter_glmnet <tibble[,4] [1 × 4]> <opts[0]> <list [0]>
+#> 5 filter_cart   <tibble[,4] [1 × 4]> <opts[0]> <list [0]>
+#> 6 filter_knn    <tibble[,4] [1 × 4]> <opts[0]> <list [0]>
+#> 7 pca_glmnet    <tibble[,4] [1 × 4]> <opts[0]> <list [0]>
+#> 8 pca_cart      <tibble[,4] [1 × 4]> <opts[0]> <list [0]>
+#> 9 pca_knn       <tibble[,4] [1 × 4]> <opts[0]> <list [0]>
 ```
 
 It doesn’t make sense to use PCA or a filter with a `glmnet` model. We
@@ -192,30 +192,30 @@ chi_models <-
    workflow_map("tune_grid", resamples = splits, grid = 10, 
                 metrics = metric_set(mae), verbose = TRUE)
 #> i 1 of 7 tuning:     simple_glmnet
-#> ✓ 1 of 7 tuning:     simple_glmnet (26.1s)
+#> ✓ 1 of 7 tuning:     simple_glmnet (25.4s)
 #> i 2 of 7 tuning:     simple_cart
-#> ✓ 2 of 7 tuning:     simple_cart (28.7s)
+#> ✓ 2 of 7 tuning:     simple_cart (27s)
 #> i 3 of 7 tuning:     simple_knn
-#> ✓ 3 of 7 tuning:     simple_knn (28.2s)
+#> ✓ 3 of 7 tuning:     simple_knn (26.7s)
 #> i 4 of 7 tuning:     filter_cart
-#> ✓ 4 of 7 tuning:     filter_cart (46.6s)
+#> ✓ 4 of 7 tuning:     filter_cart (42.1s)
 #> i 5 of 7 tuning:     filter_knn
-#> ✓ 5 of 7 tuning:     filter_knn (48.6s)
+#> ✓ 5 of 7 tuning:     filter_knn (41.8s)
 #> i 6 of 7 tuning:     pca_cart
-#> ✓ 6 of 7 tuning:     pca_cart (37.8s)
+#> ✓ 6 of 7 tuning:     pca_cart (33s)
 #> i 7 of 7 tuning:     pca_knn
-#> ✓ 7 of 7 tuning:     pca_knn (36s)
+#> ✓ 7 of 7 tuning:     pca_knn (33s)
 chi_models
 #> # A workflow set/tibble: 7 x 4
-#>   wflow_id      info             option    result   
-#>   <chr>         <list>           <list>    <list>   
-#> 1 simple_glmnet <tibble [1 × 4]> <opts[3]> <tune[+]>
-#> 2 simple_cart   <tibble [1 × 4]> <opts[3]> <tune[+]>
-#> 3 simple_knn    <tibble [1 × 4]> <opts[3]> <tune[+]>
-#> 4 filter_cart   <tibble [1 × 4]> <opts[3]> <tune[+]>
-#> 5 filter_knn    <tibble [1 × 4]> <opts[3]> <tune[+]>
-#> 6 pca_cart      <tibble [1 × 4]> <opts[3]> <tune[+]>
-#> 7 pca_knn       <tibble [1 × 4]> <opts[3]> <tune[+]>
+#>   wflow_id      info                 option    result   
+#>   <chr>         <list>               <list>    <list>   
+#> 1 simple_glmnet <tibble[,4] [1 × 4]> <opts[3]> <tune[+]>
+#> 2 simple_cart   <tibble[,4] [1 × 4]> <opts[3]> <tune[+]>
+#> 3 simple_knn    <tibble[,4] [1 × 4]> <opts[3]> <tune[+]>
+#> 4 filter_cart   <tibble[,4] [1 × 4]> <opts[3]> <tune[+]>
+#> 5 filter_knn    <tibble[,4] [1 × 4]> <opts[3]> <tune[+]>
+#> 6 pca_cart      <tibble[,4] [1 × 4]> <opts[3]> <tune[+]>
+#> 7 pca_knn       <tibble[,4] [1 × 4]> <opts[3]> <tune[+]>
 ```
 
 The `results` column contains the results of each call to `tune_grid()`
