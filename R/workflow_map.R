@@ -53,7 +53,7 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
 
    on.exit({
       cols <- tune::get_tune_colors()
-      message(cols$symbol$danger("Execution stepped; returning current results"))
+      message(cols$symbol$danger("Execution stopped; returning current results"))
       return(new_workflow_set(object))
       })
 
