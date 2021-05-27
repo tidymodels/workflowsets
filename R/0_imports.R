@@ -3,7 +3,8 @@
 #' @importFrom stats qnorm as.formula model.frame
 #' @importFrom tibble obj_sum type_sum
 #' @importFrom dplyr dplyr_reconstruct
-#'
+#' @importFrom lifecycle deprecated
+
 utils::globalVariables(
    c(".config", ".estimator", ".metric", "info", "metric", "mod_nm",
      "model", "n", "pp_nm", "preprocessor", "preproc", "object",
@@ -52,3 +53,8 @@ dplyr::`%>%`
 #' @importFrom ggplot2 autoplot
 #' @export
 ggplot2::autoplot
+
+#' @importFrom hardhat extract_workflow
+#' @export
+hardhat::extract_workflow
+

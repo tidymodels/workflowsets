@@ -27,7 +27,7 @@
 #'  * `info` is a list column with tibbles containing more specific information,
 #'     including any comments added using [comment_add()]. This tibble also
 #'     contains the workflow object (which can be easily retrieved using
-#'     [pull_workflow()]).
+#'     [extract_workflow()]).
 #'  * `option` is a list column that will include a list of optional arguments
 #'     passed to the functions from the `tune` package. They can be added
 #'     manually via [option_add()] or automatically when options are passed to

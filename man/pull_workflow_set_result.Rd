@@ -24,6 +24,12 @@ object.
 particular workflow while \code{pull_workflow()} extracts the unfitted workflow
 from the \code{info} column.
 }
+\details{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
+
+The \code{extract_workflow_set_result()} and \code{extract_workflow()} function should
+be used instead of these functions.
+}
 \examples{
 library(tune)
 

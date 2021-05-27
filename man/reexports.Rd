@@ -13,6 +13,7 @@
 \alias{collect_predictions}
 \alias{\%>\%}
 \alias{autoplot}
+\alias{extract_workflow}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -23,6 +24,8 @@ below to see their documentation.
   \item{dplyr}{\code{\link[dplyr:reexports]{\%>\%}}}
 
   \item{ggplot2}{\code{\link[ggplot2]{autoplot}}}
+
+  \item{hardhat}{\code{\link[hardhat:hardhat-extract]{extract_workflow}}}
 
   \item{tibble}{\code{\link[tibble:reexports]{size_sum}}, \code{\link[tibble:reexports]{tbl_sum}}, \code{\link[tibble:reexports]{type_sum}}}
 
