@@ -3,11 +3,29 @@
 \name{extract_workflow_set_result}
 \alias{extract_workflow_set_result}
 \alias{extract_workflow.workflow_set}
+\alias{extract_spec_parsnip.workflow_set}
+\alias{extract_recipe.workflow_set}
+\alias{extract_fit_parsnip.workflow_set}
+\alias{extract_fit_engine.workflow_set}
+\alias{extract_mold.workflow_set}
+\alias{extract_preprocessor.workflow_set}
 \title{Extract elements from a workflow set}
 \usage{
 extract_workflow_set_result(x, id, ...)
 
 \method{extract_workflow}{workflow_set}(x, id, ...)
+
+\method{extract_spec_parsnip}{workflow_set}(x, id, ...)
+
+\method{extract_recipe}{workflow_set}(x, id, ...)
+
+\method{extract_fit_parsnip}{workflow_set}(x, id, ...)
+
+\method{extract_fit_engine}{workflow_set}(x, id, ...)
+
+\method{extract_mold}{workflow_set}(x, id, ...)
+
+\method{extract_preprocessor}{workflow_set}(x, id, ...)
 }
 \arguments{
 \item{x}{A workflow set.}

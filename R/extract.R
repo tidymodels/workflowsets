@@ -19,19 +19,72 @@
 #' extract_workflow(two_class_res, "none_cart")
 #' @export
 extract_workflow_set_result <- function(x, id, ...) {
-   if (length(id) != 1) {
-      rlang::abort("'id' should have a single value.")
-   }
+   check_id(x, id)
    y <- x %>% dplyr::filter(wflow_id == id[1])
-   if (nrow(y) != 1) {
-      halt("No workflow ID found for '", id[1], "'")
-   }
    y$result[[1]]
 }
 
 #' @export
 #' @rdname extract_workflow_set_result
 extract_workflow.workflow_set <- function(x, id, ...) {
+   check_id(x, id)
+   y <- x %>% dplyr::filter(wflow_id == id[1])
+   y$info[[1]]$workflow[[1]]
+}
+
+#' @export
+#' @rdname extract_workflow_set_result
+extract_spec_parsnip.workflow_set <- function(x, id, ...) {
+   check_id(x, id)
+   y <- x %>% dplyr::filter(wflow_id == id[1])
+   extract_spec_parsnip(y$info[[1]]$workflow[[1]])
+}
+
+
+#' @export
+#' @rdname extract_workflow_set_result
+extract_recipe.workflow_set <- function(x, id, ...) {
+   check_id(x, id)
+   y <- x %>% dplyr::filter(wflow_id == id[1])
+   extract_recipe(y$info[[1]]$workflow[[1]])
+}
+
+#' @export
+#' @rdname extract_workflow_set_result
+extract_fit_parsnip.workflow_set <- function(x, id, ...) {
+   check_id(x, id)
+   y <- x %>% dplyr::filter(wflow_id == id[1])
+   extract_fit_parsnip(y$info[[1]]$workflow[[1]])
+}
+
+#' @export
+#' @rdname extract_workflow_set_result
+extract_fit_engine.workflow_set <- function(x, id, ...) {
+   check_id(x, id)
+   y <- x %>% dplyr::filter(wflow_id == id[1])
+   extract_fit_engine(y$info[[1]]$workflow[[1]])
+}
+
+#' @export
+#' @rdname extract_workflow_set_result
+extract_mold.workflow_set <- function(x, id, ...) {
+   check_id(x, id)
+   y <- x %>% dplyr::filter(wflow_id == id[1])
+   extract_mold(y$info[[1]]$workflow[[1]])
+}
+
+#' @export
+#' @rdname extract_workflow_set_result
+extract_preprocessor.workflow_set <- function(x, id, ...) {
+   check_id(x, id)
+   y <- x %>% dplyr::filter(wflow_id == id[1])
+   extract_preprocessor(y$info[[1]]$workflow[[1]])
+}
+
+# ------------------------------------------------------------------------------
+
+
+check_id <- function(x, id) {
    if (length(id) != 1) {
       rlang::abort("'id' should have a single value.")
    }
@@ -39,5 +92,7 @@ extract_workflow.workflow_set <- function(x, id, ...) {
    if (nrow(y) != 1) {
       halt("No workflow ID found for '", id[1], "'")
    }
-   y$info[[1]]$workflow[[1]]
+   invisible(NULL)
 }
+
+
