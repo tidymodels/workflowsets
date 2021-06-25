@@ -139,12 +139,12 @@ get_info <- function(x) {
 }
 
 preproc_type <- function(x) {
-   x <- workflows::pull_workflow_preprocessor(x)
+   x <- extract_preprocessor(x)
    class(x)[1]
 }
 
 model_type <- function(x) {
-   x <- workflows::pull_workflow_spec(x)
+   x <- extract_spec_parsnip(x)
    class(x)[1]
 }
 
