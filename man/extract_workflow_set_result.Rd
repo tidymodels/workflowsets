@@ -9,7 +9,7 @@
 \alias{extract_fit_engine.workflow_set}
 \alias{extract_mold.workflow_set}
 \alias{extract_preprocessor.workflow_set}
-\title{Extract elements from a workflow set}
+\title{Extract elements of workflow sets}
 \usage{
 extract_workflow_set_result(x, id, ...)
 
@@ -33,18 +33,36 @@ extract_workflow_set_result(x, id, ...)
 \item{id}{A single character string for a workflow ID.}
 
 \item{...}{Other options (not currently used).}
+
+\item{estimated}{A logical for whether the original (unfit) recipe or the
+fitted recipe should be returned.}
 }
 \value{
-\code{extract_workflow_set_result()} produces a \code{tune_result} or
-\code{resample_results} object. \code{extract_workflow()} returns an unfit workflow
-object.
+The extracted value from the object, \code{x}, as described in the
+description section.
 }
 \description{
-\code{extract_workflow_set_result()} retrieves the results of \code{\link[=workflow_map]{workflow_map()}} for a
-particular workflow while \code{extract_workflow()} extracts the unfitted workflow
-from the \code{info} column. These functions supersede \code{pull_workflow_set_result()}
-and \code{pull_workflow()} (since their names are more consistent with other
-tidymodels functions).
+These functions extract various elements from a workflow object. If they do
+not exist yet, an error is thrown.
+\itemize{
+\item \code{extract_preprocessor()} returns the formula, recipe, or variable
+expressions used for preprocessing.
+\item \code{extract_spec_parsnip()} returns the parsnip model specification.
+\item \code{extract_fit_parsnip()} returns the parsnip model fit object.
+\item \code{extract_fit_engine()} returns the engine specific fit embedded within
+a parsnip model fit. For example, when using \code{\link[parsnip:linear_reg]{parsnip::linear_reg()}}
+with the \code{"lm"} engine, this would return the underlying \code{lm} object.
+\item \code{extract_mold()} returns the preprocessed "mold" object returned
+from \code{\link[hardhat:mold]{hardhat::mold()}}. It contains information about the preprocessing,
+including either the prepped recipe, the formula terms object, or
+variable selectors.
+\item \code{extract_recipe()} returns the recipe. The \code{estimated} argument specifies
+whether the fitted or original recipe is returned.
+\item \code{extract_workflow_set_result()} retrieves the results of \code{\link[=workflow_map]{workflow_map()}}
+for a particular workflow.
+\item \code{extract_workflow()} returns the workflow object. The workflow will not
+have been estimated.
+}
 }
 \details{
 Extracting the underlying fit objects can be helpful for describing the

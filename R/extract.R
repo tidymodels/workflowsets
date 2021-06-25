@@ -1,12 +1,38 @@
-#' Extract elements from a workflow set
+#' Extract elements of workflow sets
 #'
-#' `extract_workflow_set_result()` retrieves the results of [workflow_map()] for a
-#' particular workflow while `extract_workflow()` extracts the unfitted workflow
-#' from the `info` column. These functions supersede `pull_workflow_set_result()`
-#' and `pull_workflow()` (since their names are more consistent with other
-#' tidymodels functions).
+#' @description
+#' These functions extract various elements from a workflow object. If they do
+#' not exist yet, an error is thrown.
+#'
+#' - `extract_preprocessor()` returns the formula, recipe, or variable
+#'   expressions used for preprocessing.
+#'
+#' - `extract_spec_parsnip()` returns the parsnip model specification.
+#'
+#' - `extract_fit_parsnip()` returns the parsnip model fit object.
+#'
+#' - `extract_fit_engine()` returns the engine specific fit embedded within
+#'   a parsnip model fit. For example, when using [parsnip::linear_reg()]
+#'   with the `"lm"` engine, this would return the underlying `lm` object.
+#'
+#' - `extract_mold()` returns the preprocessed "mold" object returned
+#'   from [hardhat::mold()]. It contains information about the preprocessing,
+#'   including either the prepped recipe, the formula terms object, or
+#'   variable selectors.
+#'
+#' - `extract_recipe()` returns the recipe. The `estimated` argument specifies
+#'    whether the fitted or original recipe is returned.
+#'
+#'  - `extract_workflow_set_result()` retrieves the results of [workflow_map()]
+#'    for a particular workflow.
+#'
+#' - `extract_workflow()` returns the workflow object. The workflow will not
+#'    have been estimated.
+#'
 #' @param x A workflow set.
 #' @param id A single character string for a workflow ID.
+#' @param estimated A logical for whether the original (unfit) recipe or the
+#' fitted recipe should be returned.
 #' @param ... Other options (not currently used).
 #' @details
 #' Extracting the underlying fit objects can be helpful for describing the
@@ -28,9 +54,9 @@
 #'    # or
 #'    workflow_fit %>% extract_fit_parsnip() %>% predict(new_data)
 #' ```
-#' @return `extract_workflow_set_result()` produces a `tune_result` or
-#' `resample_results` object. `extract_workflow()` returns an unfit workflow
-#' object.
+#' @return
+#' The extracted value from the object, `x`, as described in the
+#' description section.
 #' @examples
 #' library(tune)
 #'
