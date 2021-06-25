@@ -17,7 +17,7 @@ extract_workflow_set_result(x, id, ...)
 
 \method{extract_spec_parsnip}{workflow_set}(x, id, ...)
 
-\method{extract_recipe}{workflow_set}(x, id, ...)
+\method{extract_recipe}{workflow_set}(x, id, estimated = TRUE, ...)
 
 \method{extract_fit_parsnip}{workflow_set}(x, id, ...)
 
@@ -45,6 +45,23 @@ particular workflow while \code{extract_workflow()} extracts the unfitted workfl
 from the \code{info} column. These functions supersede \code{pull_workflow_set_result()}
 and \code{pull_workflow()} (since their names are more consistent with other
 tidymodels functions).
+}
+\details{
+Extracting the underlying fit objects can be helpful for describing the
+model via \code{print()}, \code{summarize()}, \code{plot()}, and so on.
+
+However, users should not invoke the \code{predict()} method on an extracted
+model. There may be preprocessing operations that \code{workflows} has executed on
+the data prior to giving it to the model. Bypassing these can lead to errors
+or silently generating incorrect predictions.
+
+\emph{Good}:\if{html}{\out{<div class="r">}}\preformatted{   workflow_fit \%>\% predict(new_data)
+}\if{html}{\out{</div>}}
+
+\emph{Bad}:\if{html}{\out{<div class="r">}}\preformatted{   workflow_fit \%>\% extract_fit_engine()  \%>\% predict(new_data)
+   # or
+   workflow_fit \%>\% extract_fit_parsnip() \%>\% predict(new_data)
+}\if{html}{\out{</div>}}
 }
 \examples{
 library(tune)

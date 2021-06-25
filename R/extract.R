@@ -8,6 +8,26 @@
 #' @param x A workflow set.
 #' @param id A single character string for a workflow ID.
 #' @param ... Other options (not currently used).
+#' @details
+#' Extracting the underlying fit objects can be helpful for describing the
+#'  model via `print()`, `summarize()`, `plot()`, and so on.
+#'
+#' However, users should not invoke the `predict()` method on an extracted
+#'  model. There may be preprocessing operations that `workflows` has executed on
+#'  the data prior to giving it to the model. Bypassing these can lead to errors
+#'  or silently generating incorrect predictions.
+#'
+#' *Good*:
+#' ```r
+#'    workflow_fit %>% predict(new_data)
+#' ```
+#'
+#' *Bad*:
+#' ```r
+#'    workflow_fit %>% extract_fit_engine()  %>% predict(new_data)
+#'    # or
+#'    workflow_fit %>% extract_fit_parsnip() %>% predict(new_data)
+#' ```
 #' @return `extract_workflow_set_result()` produces a `tune_result` or
 #' `resample_results` object. `extract_workflow()` returns an unfit workflow
 #' object.
@@ -43,10 +63,10 @@ extract_spec_parsnip.workflow_set <- function(x, id, ...) {
 
 #' @export
 #' @rdname extract_workflow_set_result
-extract_recipe.workflow_set <- function(x, id, ...) {
+extract_recipe.workflow_set <- function(x, id, estimated = TRUE, ...) {
    check_id(x, id)
    y <- x %>% dplyr::filter(wflow_id == id[1])
-   extract_recipe(y$info[[1]]$workflow[[1]])
+   extract_recipe(y$info[[1]]$workflow[[1]], estimated = estimated)
 }
 
 #' @export
