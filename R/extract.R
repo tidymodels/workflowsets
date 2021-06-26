@@ -36,7 +36,7 @@
 #' @param ... Other options (not currently used).
 #' @details
 #' Extracting the underlying fit objects can be helpful for describing the
-#'  model via `print()`, `summarize()`, `plot()`, and so on.
+#'  model via `print()`, `summary()`, `plot()`, and so on.
 #'
 #' However, users should not invoke the `predict()` method on an extracted
 #'  model. There may be preprocessing operations that `workflows` has executed on
@@ -140,5 +140,4 @@ check_id <- function(x, id) {
    }
    invisible(NULL)
 }
-
 
