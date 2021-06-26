@@ -65,8 +65,9 @@ have been estimated.
 }
 }
 \details{
-Extracting the underlying fit objects can be helpful for describing the
-model via \code{print()}, \code{summarize()}, \code{plot()}, and so on.
+Extracting the underlying engine fit can be helpful for describing the
+model (via \code{print()}, \code{summary()}, \code{plot()}, etc.) or for variable
+importance/explainers.
 
 However, users should not invoke the \code{predict()} method on an extracted
 model. There may be preprocessing operations that \code{workflows} has executed on
