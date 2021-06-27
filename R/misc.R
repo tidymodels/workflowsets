@@ -75,6 +75,6 @@ pick_metric <- function(x, rank_metric, select_metrics = NULL) {
       }
       direction <-  metrics$direction[metrics$metric == rank_metric]
    }
-   list(metric = rank_metric, direction = direction)
+   list(metric = as.character(rank_metric), direction = as.character(direction))
 }
 
