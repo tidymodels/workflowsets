@@ -20,10 +20,10 @@
 #' exists).
 #' @param ... Other options to pass to `autoplot()`.
 #' @details
-#' This function is intended to produce a plot that has helpful information
-#'  across all possible applications of a workflow set. A more appropriate plot
-#'  for your application can be created by calling [rank_results()] and using
-#'  standard `ggplot2` code to create a visualization.
+#' This function is intended to produce a default plot to visualize helpful
+#'  information across all possible applications of a workflow set. A more
+#'  appropriate plot for your specific analysis can be created by
+#'  calling [rank_results()] and using standard `ggplot2` code for plotting.
 #'
 #' The x-axis is the workflow rank in the set (a value of one being the best)
 #' versus the performance metric(s) on the y-axis. With multiple metrics, there

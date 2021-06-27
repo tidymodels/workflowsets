@@ -46,10 +46,10 @@ a metric. It can also run \code{autoplot()} on the individual results (per
 \code{wflow_id}).
 }
 \details{
-This function is intended to produce a plot that has helpful information
-across all possible applications of a workflow set. A more appropriate plot
-for your application can be created by calling \code{\link[=rank_results]{rank_results()}} and using
-standard \code{ggplot2} code to create a visualization.
+This function is intended to produce a default plot to visualize helpful
+information across all possible applications of a workflow set. A more
+appropriate plot for your specific analysis can be created by
+calling \code{\link[=rank_results]{rank_results()}} and using standard \code{ggplot2} code for plotting.
 
 The x-axis is the workflow rank in the set (a value of one being the best)
 versus the performance metric(s) on the y-axis. With multiple metrics, there
