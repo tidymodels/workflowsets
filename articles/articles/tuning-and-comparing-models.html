@@ -98,7 +98,7 @@
 
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">parabolic</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">parabolic</span><span class="op">)</span>
-<span class="co">#&gt; tibble[,3] [500 × 3] (S3: tbl_df/tbl/data.frame)</span>
+<span class="co">#&gt; tibble [500 × 3] (S3: tbl_df/tbl/data.frame)</span>
 <span class="co">#&gt;  $ X1   : num [1:500] 3.29 1.47 1.66 1.6 2.17 ...</span>
 <span class="co">#&gt;  $ X2   : num [1:500] 1.661 0.414 0.791 0.276 3.166 ...</span>
 <span class="co">#&gt;  $ class: Factor w/ 2 levels "Class1","Class2": 1 2 2 2 1 1 2 1 2 1 ...</span></code></pre></div>
@@ -145,11 +145,11 @@
   <span class="op">)</span>
 <span class="va">all_workflows</span>
 <span class="co">#&gt; # A workflow set/tibble: 3 x 4</span>
-<span class="co">#&gt;   wflow_id            info                 option    result    </span>
-<span class="co">#&gt;   &lt;chr&gt;               &lt;list&gt;               &lt;list&gt;    &lt;list&gt;    </span>
-<span class="co">#&gt; 1 formula_regularized &lt;tibble[,4] [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;</span>
-<span class="co">#&gt; 2 formula_mars        &lt;tibble[,4] [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;</span>
-<span class="co">#&gt; 3 formula_cart        &lt;tibble[,4] [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;</span></code></pre></div>
+<span class="co">#&gt;   wflow_id            info             option      result    </span>
+<span class="co">#&gt;   &lt;chr&gt;               &lt;list&gt;           &lt;list&gt;      &lt;list&gt;    </span>
+<span class="co">#&gt; 1 formula_regularized &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;list [0]&gt;</span>
+<span class="co">#&gt; 2 formula_mars        &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;list [0]&gt;</span>
+<span class="co">#&gt; 3 formula_cart        &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;list [0]&gt;</span></code></pre></div>
 <p>Since these models all have tuning parameters, we can apply the <code><a href="../../reference/workflow_map.html">workflow_map()</a></code> function to execute grid search for each of these models with a common set of arguments. The default function to apply across the workflows is <code><a href="https://tune.tidymodels.org/reference/tune_grid.html">tune_grid()</a></code> but other <code>tune_*()</code> functions can be used by passing the function name as the first argument.</p>
 <p>Let’s use the same grid size for each model. For the MARS model, there are only two possible tuning parameter values nut <code><a href="https://tune.tidymodels.org/reference/tune_grid.html">tune_grid()</a></code> is forgiving about our request of 20 parameter values.</p>
 <p>The <code>verbose</code> option provides a concise listing for which workflow is being processed:</p>
@@ -158,18 +158,18 @@
   <span class="va">all_workflows</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="../../reference/workflow_map.html">workflow_map</a></span><span class="op">(</span>resamples <span class="op">=</span> <span class="va">train_resamples</span>, grid <span class="op">=</span> <span class="fl">20</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; i 1 of 3 tuning:     formula_regularized</span>
-<span class="co">#&gt; ✔ 1 of 3 tuning:     formula_regularized (3m 16.1s)</span>
+<span class="co">#&gt; ✔ 1 of 3 tuning:     formula_regularized (3m 29.8s)</span>
 <span class="co">#&gt; i 2 of 3 tuning:     formula_mars</span>
-<span class="co">#&gt; ✔ 2 of 3 tuning:     formula_mars (20.2s)</span>
+<span class="co">#&gt; ✔ 2 of 3 tuning:     formula_mars (21.1s)</span>
 <span class="co">#&gt; i 3 of 3 tuning:     formula_cart</span>
-<span class="co">#&gt; ✔ 3 of 3 tuning:     formula_cart (3m 2.5s)</span>
+<span class="co">#&gt; ✔ 3 of 3 tuning:     formula_cart (3m 14.9s)</span>
 <span class="va">all_workflows</span>
 <span class="co">#&gt; # A workflow set/tibble: 3 x 4</span>
-<span class="co">#&gt;   wflow_id            info                 option    result   </span>
-<span class="co">#&gt;   &lt;chr&gt;               &lt;list&gt;               &lt;list&gt;    &lt;list&gt;   </span>
-<span class="co">#&gt; 1 formula_regularized &lt;tibble[,4] [1 × 4]&gt; &lt;opts[2]&gt; &lt;tune[+]&gt;</span>
-<span class="co">#&gt; 2 formula_mars        &lt;tibble[,4] [1 × 4]&gt; &lt;opts[2]&gt; &lt;tune[+]&gt;</span>
-<span class="co">#&gt; 3 formula_cart        &lt;tibble[,4] [1 × 4]&gt; &lt;opts[2]&gt; &lt;tune[+]&gt;</span></code></pre></div>
+<span class="co">#&gt;   wflow_id            info             option      result   </span>
+<span class="co">#&gt;   &lt;chr&gt;               &lt;list&gt;           &lt;list&gt;      &lt;list&gt;   </span>
+<span class="co">#&gt; 1 formula_regularized &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;tune[+]&gt;</span>
+<span class="co">#&gt; 2 formula_mars        &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;tune[+]&gt;</span>
+<span class="co">#&gt; 3 formula_cart        &lt;tibble [1 × 4]&gt; &lt;wrkflw__ &gt; &lt;tune[+]&gt;</span></code></pre></div>
 <p>The <code>result</code> column now has the results of each <code><a href="https://tune.tidymodels.org/reference/tune_grid.html">tune_grid()</a></code> call.</p>
 <p>From these results, we can get quick assessments of how well these models classified the data:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -177,16 +177,16 @@
 <span class="co">#&gt; # A tibble: 84 x 9</span>
 <span class="co">#&gt;    wflow_id    .config    .metric  mean std_err     n preprocessor model    rank</span>
 <span class="co">#&gt;    &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;   &lt;int&gt;</span>
-<span class="co">#&gt;  1 formula_ma… Preproces… accura… 0.883 0.00412    25 formula      discri…     1</span>
-<span class="co">#&gt;  2 formula_ma… Preproces… roc_auc 0.952 0.00285    25 formula      discri…     1</span>
-<span class="co">#&gt;  3 formula_ma… Preproces… accura… 0.886 0.00402    25 formula      discri…     2</span>
-<span class="co">#&gt;  4 formula_ma… Preproces… roc_auc 0.950 0.00324    25 formula      discri…     2</span>
+<span class="co">#&gt;  1 formula_ma… Preproces… accura… 0.911 0.00407    25 formula      discri…     1</span>
+<span class="co">#&gt;  2 formula_ma… Preproces… roc_auc 0.969 0.00319    25 formula      discri…     1</span>
+<span class="co">#&gt;  3 formula_ma… Preproces… accura… 0.904 0.00388    25 formula      discri…     2</span>
+<span class="co">#&gt;  4 formula_ma… Preproces… roc_auc 0.968 0.00213    25 formula      discri…     2</span>
 <span class="co">#&gt;  5 formula_re… Preproces… accura… 0.872 0.00547    25 formula      discri…     3</span>
-<span class="co">#&gt;  6 formula_re… Preproces… roc_auc 0.946 0.00340    25 formula      discri…     3</span>
-<span class="co">#&gt;  7 formula_re… Preproces… accura… 0.849 0.00796    25 formula      discri…     4</span>
-<span class="co">#&gt;  8 formula_re… Preproces… roc_auc 0.945 0.00350    25 formula      discri…     4</span>
-<span class="co">#&gt;  9 formula_re… Preproces… accura… 0.856 0.00647    25 formula      discri…     5</span>
-<span class="co">#&gt; 10 formula_re… Preproces… roc_auc 0.942 0.00356    25 formula      discri…     5</span>
+<span class="co">#&gt;  6 formula_re… Preproces… roc_auc 0.952 0.00293    25 formula      discri…     3</span>
+<span class="co">#&gt;  7 formula_re… Preproces… accura… 0.858 0.00564    25 formula      discri…     4</span>
+<span class="co">#&gt;  8 formula_re… Preproces… roc_auc 0.951 0.00253    25 formula      discri…     4</span>
+<span class="co">#&gt;  9 formula_re… Preproces… accura… 0.837 0.00712    25 formula      discri…     5</span>
+<span class="co">#&gt; 10 formula_re… Preproces… roc_auc 0.951 0.00290    25 formula      discri…     5</span>
 <span class="co">#&gt; # … with 74 more rows</span>
 
 <span class="co"># or a handy plot: </span>
@@ -206,18 +206,18 @@
 <span class="co">#&gt; # Tuning results</span>
 <span class="co">#&gt; # Bootstrap sampling </span>
 <span class="co">#&gt; # A tibble: 25 x 4</span>
-<span class="co">#&gt;    splits            id          .metrics             .notes              </span>
-<span class="co">#&gt;    &lt;list&gt;            &lt;chr&gt;       &lt;list&gt;               &lt;list&gt;              </span>
-<span class="co">#&gt;  1 &lt;split [375/134]&gt; Bootstrap01 &lt;tibble[,5] [4 × 5]&gt; &lt;tibble[,1] [0 × 1]&gt;</span>
-<span class="co">#&gt;  2 &lt;split [375/132]&gt; Bootstrap02 &lt;tibble[,5] [4 × 5]&gt; &lt;tibble[,1] [0 × 1]&gt;</span>
-<span class="co">#&gt;  3 &lt;split [375/142]&gt; Bootstrap03 &lt;tibble[,5] [4 × 5]&gt; &lt;tibble[,1] [0 × 1]&gt;</span>
-<span class="co">#&gt;  4 &lt;split [375/146]&gt; Bootstrap04 &lt;tibble[,5] [4 × 5]&gt; &lt;tibble[,1] [0 × 1]&gt;</span>
-<span class="co">#&gt;  5 &lt;split [375/135]&gt; Bootstrap05 &lt;tibble[,5] [4 × 5]&gt; &lt;tibble[,1] [0 × 1]&gt;</span>
-<span class="co">#&gt;  6 &lt;split [375/131]&gt; Bootstrap06 &lt;tibble[,5] [4 × 5]&gt; &lt;tibble[,1] [0 × 1]&gt;</span>
-<span class="co">#&gt;  7 &lt;split [375/139]&gt; Bootstrap07 &lt;tibble[,5] [4 × 5]&gt; &lt;tibble[,1] [0 × 1]&gt;</span>
-<span class="co">#&gt;  8 &lt;split [375/136]&gt; Bootstrap08 &lt;tibble[,5] [4 × 5]&gt; &lt;tibble[,1] [0 × 1]&gt;</span>
-<span class="co">#&gt;  9 &lt;split [375/137]&gt; Bootstrap09 &lt;tibble[,5] [4 × 5]&gt; &lt;tibble[,1] [0 × 1]&gt;</span>
-<span class="co">#&gt; 10 &lt;split [375/139]&gt; Bootstrap10 &lt;tibble[,5] [4 × 5]&gt; &lt;tibble[,1] [0 × 1]&gt;</span>
+<span class="co">#&gt;    splits            id          .metrics         .notes          </span>
+<span class="co">#&gt;    &lt;list&gt;            &lt;chr&gt;       &lt;list&gt;           &lt;list&gt;          </span>
+<span class="co">#&gt;  1 &lt;split [375/134]&gt; Bootstrap01 &lt;tibble [4 × 5]&gt; &lt;tibble [0 × 1]&gt;</span>
+<span class="co">#&gt;  2 &lt;split [375/132]&gt; Bootstrap02 &lt;tibble [4 × 5]&gt; &lt;tibble [0 × 1]&gt;</span>
+<span class="co">#&gt;  3 &lt;split [375/142]&gt; Bootstrap03 &lt;tibble [4 × 5]&gt; &lt;tibble [0 × 1]&gt;</span>
+<span class="co">#&gt;  4 &lt;split [375/146]&gt; Bootstrap04 &lt;tibble [4 × 5]&gt; &lt;tibble [0 × 1]&gt;</span>
+<span class="co">#&gt;  5 &lt;split [375/135]&gt; Bootstrap05 &lt;tibble [4 × 5]&gt; &lt;tibble [0 × 1]&gt;</span>
+<span class="co">#&gt;  6 &lt;split [375/131]&gt; Bootstrap06 &lt;tibble [4 × 5]&gt; &lt;tibble [0 × 1]&gt;</span>
+<span class="co">#&gt;  7 &lt;split [375/139]&gt; Bootstrap07 &lt;tibble [4 × 5]&gt; &lt;tibble [0 × 1]&gt;</span>
+<span class="co">#&gt;  8 &lt;split [375/136]&gt; Bootstrap08 &lt;tibble [4 × 5]&gt; &lt;tibble [0 × 1]&gt;</span>
+<span class="co">#&gt;  9 &lt;split [375/137]&gt; Bootstrap09 &lt;tibble [4 × 5]&gt; &lt;tibble [0 × 1]&gt;</span>
+<span class="co">#&gt; 10 &lt;split [375/139]&gt; Bootstrap10 &lt;tibble [4 × 5]&gt; &lt;tibble [0 × 1]&gt;</span>
 <span class="co">#&gt; # … with 15 more rows</span></code></pre></div>
 <p>Let’s get that workflow object and finalize the model:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -263,7 +263,7 @@
 <span class="co">#&gt;  v1 </span>
 <span class="co">#&gt; 100 </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Training Misclassification Error: 0.10933 ( N = 375 )</span></code></pre></div>
+<span class="co">#&gt; Training Misclassification Error: 0.08533 ( N = 375 )</span></code></pre></div>
 <p>Let’s see how well these data work on the test set:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Make a grid to predict the whole space:</span>
