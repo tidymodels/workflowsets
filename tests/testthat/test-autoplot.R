@@ -54,3 +54,27 @@ test_that("autoplot for specific workflow result", {
    )
 
 })
+
+test_that("automatic selection of rank metric", {
+   expect_equal(
+      workflowsets:::pick_metric(two_class_res, NULL, NULL),
+      list(metric = "roc_auc", direction = "maximize")
+   )
+   expect_equal(
+      workflowsets:::pick_metric(two_class_res, NULL, "accuracy"),
+      list(metric = "accuracy", direction = "maximize")
+   )
+   expect_equal(
+      workflowsets:::pick_metric(two_class_res, "accuracy"),
+      list(metric = "accuracy", direction = "maximize")
+   )
+   expect_equal(
+      workflowsets:::pick_metric(two_class_res, "roc_auc"),
+      list(metric = "roc_auc", direction = "maximize")
+   )
+   expect_error(
+      workflowsets:::pick_metric(two_class_res, "roc_auc", "accuracy"),
+      "was not in the results"
+   )
+})
+
