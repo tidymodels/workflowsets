@@ -18,7 +18,8 @@
 \item{object}{A \code{workflow_set} whose elements have results.}
 
 \item{rank_metric}{A character string for which metric should be used to rank
-the results.}
+the results. If none is given, the first metric in the metric set is used
+(after filtering by the \code{metric} option).}
 
 \item{metric}{A character vector for which metrics (apart from \code{rank_metric})
 to be included in the visualization.}
@@ -45,11 +46,17 @@ a metric. It can also run \code{autoplot()} on the individual results (per
 \code{wflow_id}).
 }
 \details{
+This function is intended to produce a default plot to visualize helpful
+information across all possible applications of a workflow set. A more
+appropriate plot for your specific analysis can be created by
+calling \code{\link[=rank_results]{rank_results()}} and using standard \code{ggplot2} code for plotting.
+
 The x-axis is the workflow rank in the set (a value of one being the best)
 versus the performance metric(s) on the y-axis. With multiple metrics, there
 will be facets for each metric.
 
-If multiple resamples are used, confidence bounds are shown for each result.
+If multiple resamples are used, confidence bounds are shown for each result
+(90\% confidence, by default).
 }
 \examples{
 autoplot(two_class_res)

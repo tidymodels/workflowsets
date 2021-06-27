@@ -6,7 +6,8 @@
 #'
 #' @param object A `workflow_set` whose elements have results.
 #' @param rank_metric A character string for which metric should be used to rank
-#' the results.
+#' the results. If none is given, the first metric in the metric set is used
+#' (after filtering by the `metric` option).
 #' @param id A character string for what to plot. If a value of
 #' `"workflow_set"` is used, the results of each model (and sub-model) are ordered
 #' and plotted. Alternatively, a value of the workflow set's `wflow_id` can be
@@ -19,11 +20,17 @@
 #' exists).
 #' @param ... Other options to pass to `autoplot()`.
 #' @details
+#' This function is intended to produce a default plot to visualize helpful
+#'  information across all possible applications of a workflow set. A more
+#'  appropriate plot for your specific analysis can be created by
+#'  calling [rank_results()] and using standard `ggplot2` code for plotting.
+#'
 #' The x-axis is the workflow rank in the set (a value of one being the best)
 #' versus the performance metric(s) on the y-axis. With multiple metrics, there
 #' will be facets for each metric.
 #'
-#' If multiple resamples are used, confidence bounds are shown for each result.
+#' If multiple resamples are used, confidence bounds are shown for each result
+#' (90% confidence, by default).
 #' @return A ggplot object.
 #' @examples
 #' autoplot(two_class_res)
@@ -45,9 +52,9 @@ autoplot.workflow_set <- function(object, rank_metric = NULL, metric = NULL,
 
 rank_plot <- function(object, rank_metric = NULL, metric = NULL,
                       select_best = FALSE, std_errs = 1, ...) {
-   metric_info <- pick_metric(object, rank_metric)
+   metric_info <- pick_metric(object, rank_metric, metric)
    metrics <- collate_metrics(object)
-   res <- rank_results(object, rank_metric = rank_metric, select_best = select_best)
+   res <- rank_results(object, rank_metric = metric_info$metric, select_best = select_best)
 
    if (!is.null(metric)) {
       keep_metrics <- unique(c(rank_metric, metric))
@@ -65,7 +72,7 @@ rank_plot <- function(object, rank_metric = NULL, metric = NULL,
       res$.metric <- factor(as.character(res$.metric), levels = metrics$metric)
       p <-
          p +
-         facet_wrap(~ .metric, scales = "free_y") +
+         facet_wrap(~ .metric, scales = "free_y", as.table = FALSE) +
          labs(x = "Workflow Rank", y = "Metric")
    } else {
       p <- p + labs(x = "Workflow Rank", y = metric_info$metric)
