@@ -70,7 +70,7 @@ extract_spec_parsnip.workflow_set <- function(x, id, ...) {
 
 #' @export
 #' @rdname extract_workflow_set_result
-extract_recipe.workflow_set <- function(x, id, estimated = TRUE, ...) {
+extract_recipe.workflow_set <- function(x, id, ..., estimated = TRUE) {
    y <- filter_id(x, id)
    extract_recipe(y$info[[1]]$workflow[[1]], estimated = estimated)
 }
