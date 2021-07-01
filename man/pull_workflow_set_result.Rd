@@ -25,9 +25,9 @@ particular workflow while \code{pull_workflow()} extracts the unfitted workflow
 from the \code{info} column.
 }
 \details{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#superseded}{\figure{lifecycle-superseded.svg}{options: alt='[Superseded]'}}}{\strong{[Superseded]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#soft-deprecated}{\figure{lifecycle-soft-deprecated.svg}{options: alt='[Soft-deprecated]'}}}{\strong{[Soft-deprecated]}}
 
-The \code{extract_workflow_set_result()} and \code{extract_workflow()} function should
+The \code{\link[=extract_workflow_set_result]{extract_workflow_set_result()}} and \code{\link[=extract_workflow]{extract_workflow()}} functions should
 be used instead of these functions.
 }
 \examples{

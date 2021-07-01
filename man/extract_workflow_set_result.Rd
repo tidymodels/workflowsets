@@ -51,36 +51,22 @@ expressions used for preprocessing.
 \item \code{extract_fit_parsnip()} returns the parsnip model fit object.
 \item \code{extract_fit_engine()} returns the engine specific fit embedded within
 a parsnip model fit. For example, when using \code{\link[parsnip:linear_reg]{parsnip::linear_reg()}}
-with the \code{"lm"} engine, this would return the underlying \code{lm} object.
+with the \code{"lm"} engine, this returns the underlying \code{lm} object.
 \item \code{extract_mold()} returns the preprocessed "mold" object returned
 from \code{\link[hardhat:mold]{hardhat::mold()}}. It contains information about the preprocessing,
 including either the prepped recipe, the formula terms object, or
 variable selectors.
 \item \code{extract_recipe()} returns the recipe. The \code{estimated} argument specifies
 whether the fitted or original recipe is returned.
-\item \code{extract_workflow_set_result()} retrieves the results of \code{\link[=workflow_map]{workflow_map()}}
+\item \code{extract_workflow_set_result()} returns the results of \code{\link[=workflow_map]{workflow_map()}}
 for a particular workflow.
 \item \code{extract_workflow()} returns the workflow object. The workflow will not
 have been estimated.
 }
 }
 \details{
-Extracting the underlying engine fit can be helpful for describing the
-model (via \code{print()}, \code{summary()}, \code{plot()}, etc.) or for variable
-importance/explainers.
-
-However, users should not invoke the \code{predict()} method on an extracted
-model. There may be preprocessing operations that \code{workflows} has executed on
-the data prior to giving it to the model. Bypassing these can lead to errors
-or silently generating incorrect predictions.
-
-\emph{Good}:\if{html}{\out{<div class="r">}}\preformatted{   workflow_fit \%>\% predict(new_data)
-}\if{html}{\out{</div>}}
-
-\emph{Bad}:\if{html}{\out{<div class="r">}}\preformatted{   workflow_fit \%>\% extract_fit_engine()  \%>\% predict(new_data)
-   # or
-   workflow_fit \%>\% extract_fit_parsnip() \%>\% predict(new_data)
-}\if{html}{\out{</div>}}
+These functions superseed the \verb{pull_*()} functions (e.g.,
+\code{\link[=pull_workflow_set_result]{pull_workflow_set_result()}}).
 }
 \examples{
 library(tune)
