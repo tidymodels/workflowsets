@@ -6,9 +6,6 @@
 \alias{tbl_sum}
 \alias{type_sum}
 \alias{size_sum}
-\alias{tune_grid}
-\alias{tune_bayes}
-\alias{fit_resamples}
 \alias{collect_metrics}
 \alias{collect_predictions}
 \alias{\%>\%}
@@ -35,6 +32,6 @@ below to see their documentation.
 
   \item{tibble}{\code{\link[tibble:reexports]{size_sum}}, \code{\link[tibble:reexports]{tbl_sum}}, \code{\link[tibble:reexports]{type_sum}}}
 
-  \item{tune}{\code{\link[tune:collect_predictions]{collect_metrics}}, \code{\link[tune]{collect_predictions}}, \code{\link[tune]{fit_resamples}}, \code{\link[tune]{tune_bayes}}, \code{\link[tune]{tune_grid}}}
+  \item{tune}{\code{\link[tune:collect_predictions]{collect_metrics}}, \code{\link[tune]{collect_predictions}}}
 }}
 

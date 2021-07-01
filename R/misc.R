@@ -56,20 +56,25 @@ collate_metrics <- function(x) {
       dplyr::arrange(order)
 }
 
-pick_metric <- function(x, metric) {
+pick_metric <- function(x, rank_metric, select_metrics = NULL) {
    # mostly to check for completeness and consistency:
    tmp <- collect_metrics(x)
-
    metrics <- collate_metrics(x)
-   if (is.null(metric)) {
-      metric <- metrics$metric[1]
+
+   if (!is.null(select_metrics)) {
+      tmp <- dplyr::filter(tmp, .metric %in% select_metrics)
+      metrics <- dplyr::filter(metrics, metric %in% select_metrics)
+   }
+
+   if (is.null(rank_metric)) {
+      rank_metric <- metrics$metric[1]
       direction <- metrics$direction[1]
    } else {
-      if (!any(metrics$metric == metric)) {
-         halt("Metric '", metric, "' was not in the results.")
+      if (!any(metrics$metric == rank_metric)) {
+         halt("Metric '", rank_metric, "' was not in the results.")
       }
-      direction <-  metrics$direction[metrics$metric == metric]
+      direction <-  metrics$direction[metrics$metric == rank_metric]
    }
-   list(metric = metric, direction = direction)
+   list(metric = as.character(rank_metric), direction = as.character(direction))
 }
 
