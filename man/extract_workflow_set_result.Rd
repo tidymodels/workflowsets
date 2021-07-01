@@ -17,7 +17,7 @@ extract_workflow_set_result(x, id, ...)
 
 \method{extract_spec_parsnip}{workflow_set}(x, id, ...)
 
-\method{extract_recipe}{workflow_set}(x, id, estimated = TRUE, ...)
+\method{extract_recipe}{workflow_set}(x, id, ..., estimated = TRUE)
 
 \method{extract_fit_parsnip}{workflow_set}(x, id, ...)
 
@@ -42,8 +42,8 @@ The extracted value from the object, \code{x}, as described in the
 description section.
 }
 \description{
-These functions extract various elements from a workflow object. If they do
-not exist yet, an error is thrown.
+These functions extract various elements from a workflow sert object. If they
+do not exist yet, an error is thrown.
 \itemize{
 \item \code{extract_preprocessor()} returns the formula, recipe, or variable
 expressions used for preprocessing.

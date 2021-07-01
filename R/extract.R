@@ -1,8 +1,8 @@
 #' Extract elements of workflow sets
 #'
 #' @description
-#' These functions extract various elements from a workflow object. If they do
-#' not exist yet, an error is thrown.
+#' These functions extract various elements from a workflow sert object. If they
+#' do not exist yet, an error is thrown.
 #'
 #' - `extract_preprocessor()` returns the formula, recipe, or variable
 #'   expressions used for preprocessing.
@@ -71,9 +71,24 @@ extract_spec_parsnip.workflow_set <- function(x, id, ...) {
 #' @export
 #' @rdname extract_workflow_set_result
 extract_recipe.workflow_set <- function(x, id, ..., estimated = TRUE) {
+   check_empty_dots(...)
+   if (!rlang::is_bool(estimated)) {
+      rlang::abort("`estimated` must be a single `TRUE` or `FALSE`.")
+   }
    y <- filter_id(x, id)
    extract_recipe(y$info[[1]]$workflow[[1]], estimated = estimated)
 }
+check_empty_dots <- function(...) {
+   opts <- list(...)
+   if (any(names(opts) == "estimated")) {
+      rlang::abort("'estimated' should be a named argument.")
+   }
+   if (length(opts) > 0) {
+      rlang::abort("'...' are not used in this function.")
+   }
+   invisible(NULL)
+}
+
 
 #' @export
 #' @rdname extract_workflow_set_result
