@@ -2,7 +2,7 @@
 #'
 #' `workflow_map()` will execute the same function across the workflows in the
 #' set. The various `tune_*()` functions can be used as well as
-#' `fit_resamples()`.
+#' [tune::fit_resamples()].
 #' @param object A workflow set.
 #' @param fn The function to run. Acceptable values are: [tune::tune_grid()],
 #' [tune::tune_bayes()], [tune::fit_resamples()], `finetune::tune_race_anova()`,
