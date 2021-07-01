@@ -20,12 +20,12 @@ pull_workflow(x, id)
 object.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#soft-deprecated}{\figure{lifecycle-soft-deprecated.svg}{options: alt='[Soft-deprecated]'}}}{\strong{[Soft-deprecated]}}
+}
+\details{
 \code{pull_workflow_set_result()} retrieves the results of \code{\link[=workflow_map]{workflow_map()}} for a
 particular workflow while \code{pull_workflow()} extracts the unfitted workflow
 from the \code{info} column.
-}
-\details{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#soft-deprecated}{\figure{lifecycle-soft-deprecated.svg}{options: alt='[Soft-deprecated]'}}}{\strong{[Soft-deprecated]}}
 
 The \code{\link[=extract_workflow_set_result]{extract_workflow_set_result()}} and \code{\link[=extract_workflow]{extract_workflow()}} functions should
 be used instead of these functions.

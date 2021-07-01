@@ -1,10 +1,12 @@
 #' Extract elements from a workflow set
 #'
+#' `r lifecycle::badge("soft-deprecated")`
+#'
 #' `pull_workflow_set_result()` retrieves the results of [workflow_map()] for a
 #' particular workflow while `pull_workflow()` extracts the unfitted workflow
 #' from the `info` column.
 #'
-#' `r lifecycle::badge("soft-deprecated")`
+#'
 #' @param x A workflow set.
 #' @param id A single character string for a workflow ID.
 #' @details
@@ -21,7 +23,9 @@
 #' pull_workflow(two_class_res, "none_cart")
 #' @export
 pull_workflow_set_result <- function(x, id) {
-   lifecycle::deprecate_soft("0.1.0", "pull_workflow_set_result()", "extract_workflow_set_result()")
+   lifecycle::deprecate_soft("0.1.0",
+                             "pull_workflow_set_result()",
+                             "extract_workflow_set_result()")
    if (length(id) != 1) {
       rlang::abort("'id' should have a single value.")
    }
