@@ -57,5 +57,5 @@ URL: https://github.com/tidymodels/workflowsets,
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Remotes: 
-    tidymodels/hardhat@feature/extract-generics,
-    tidymodels/workflows@extracts
+    tidymodels/hardhat,
+    tidymodels/workflows
