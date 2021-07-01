@@ -65,7 +65,7 @@ have been estimated.
 }
 }
 \details{
-These functions superseed the \verb{pull_*()} functions (e.g.,
+These functions supersede the \verb{pull_*()} functions (e.g.,
 \code{\link[=pull_workflow_set_result]{pull_workflow_set_result()}}).
 }
 \examples{

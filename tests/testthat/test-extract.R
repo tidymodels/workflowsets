@@ -62,11 +62,11 @@ test_that('extracts', {
 
    expect_error(
       car_set_1 %>% extract_workflow_set_result("Gideon Nav"),
-      "No workflow ID found"
+      "`id` must correspond to a single row in `x`"
    )
 
    expect_error(
       car_set_1 %>% extract_workflow("Coronabeth Tridentarius"),
-      "No workflow ID found"
+      "`id` must correspond to a single row in `x`"
    )
 })
