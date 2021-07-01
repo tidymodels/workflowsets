@@ -13,7 +13,7 @@
 #'
 #' - `extract_fit_engine()` returns the engine specific fit embedded within
 #'   a parsnip model fit. For example, when using [parsnip::linear_reg()]
-#'   with the `"lm"` engine, this would return the underlying `lm` object.
+#'   with the `"lm"` engine, this returns the underlying `lm` object.
 #'
 #' - `extract_mold()` returns the preprocessed "mold" object returned
 #'   from [hardhat::mold()]. It contains information about the preprocessing,
@@ -23,7 +23,7 @@
 #' - `extract_recipe()` returns the recipe. The `estimated` argument specifies
 #'    whether the fitted or original recipe is returned.
 #'
-#'  - `extract_workflow_set_result()` retrieves the results of [workflow_map()]
+#'  - `extract_workflow_set_result()` returns the results of [workflow_map()]
 #'    for a particular workflow.
 #'
 #' - `extract_workflow()` returns the workflow object. The workflow will not
@@ -141,4 +141,3 @@ check_id <- function(x, id) {
    }
    invisible(NULL)
 }
-

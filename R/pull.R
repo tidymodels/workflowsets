@@ -4,11 +4,11 @@
 #' particular workflow while `pull_workflow()` extracts the unfitted workflow
 #' from the `info` column.
 #'
-#' `r lifecycle::badge('superseded')`
+#' `r lifecycle::badge("soft-deprecated")`
 #' @param x A workflow set.
 #' @param id A single character string for a workflow ID.
 #' @details
-#' The `extract_workflow_set_result()` and `extract_workflow()` function should
+#' The [extract_workflow_set_result()] and [extract_workflow()] functions should
 #' be used instead of these functions.
 #' @return `pull_workflow_set_result()` produces a `tune_result` or
 #' `resample_results` object. `pull_workflow()` returns an unfit workflow
