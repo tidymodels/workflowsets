@@ -42,7 +42,7 @@ The extracted value from the object, \code{x}, as described in the
 description section.
 }
 \description{
-These functions extract various elements from a workflow sert object. If they
+These functions extract various elements from a workflow set object. If they
 do not exist yet, an error is thrown.
 \itemize{
 \item \code{extract_preprocessor()} returns the formula, recipe, or variable
