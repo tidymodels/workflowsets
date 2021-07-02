@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract elements from a workflow set — pull_workflow_set_result • workflowsets</title>
+<title>Extract elements of workflow sets — extract_workflow_set_result • workflowsets</title>
 
 
 <!-- jquery -->
@@ -42,8 +42,28 @@
 
 
 
-<meta property="og:title" content="Extract elements from a workflow set — pull_workflow_set_result" />
-<meta property="og:description" content="" />
+<meta property="og:title" content="Extract elements of workflow sets — extract_workflow_set_result" />
+<meta property="og:description" content="These functions extract various elements from a workflow set object. If they
+do not exist yet, an error is thrown.
+extract_preprocessor() returns the formula, recipe, or variable
+expressions used for preprocessing.
+extract_spec_parsnip() returns the parsnip model specification.
+extract_fit_parsnip() returns the parsnip model fit object.
+extract_fit_engine() returns the engine specific fit embedded within
+a parsnip model fit. For example, when using parsnip::linear_reg()
+with the &quot;lm&quot; engine, this returns the underlying lm object.
+extract_mold() returns the preprocessed &quot;mold&quot; object returned
+from hardhat::mold(). It contains information about the preprocessing,
+including either the prepped recipe, the formula terms object, or
+variable selectors.
+extract_recipe() returns the recipe. The estimated argument specifies
+whether the fitted or original recipe is returned.
+extract_workflow_set_result() returns the results of workflow_map()
+for a particular workflow.
+extract_workflow() returns the workflow object. The workflow will not
+have been estimated.
+
+" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -124,18 +144,57 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract elements from a workflow set</h1>
-    <small class="dont-index">Source: <a href='https://github.com/tidymodels/workflowsets/blob/master/R/pull.R'><code>R/pull.R</code></a></small>
-    <div class="hidden name"><code>pull_workflow_set_result.Rd</code></div>
+    <h1>Extract elements of workflow sets</h1>
+    <small class="dont-index">Source: <a href='https://github.com/tidymodels/workflowsets/blob/master/R/extract.R'><code>R/extract.R</code></a></small>
+    <div class="hidden name"><code>extract_workflow_set_result.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p><a href='https://lifecycle.r-lib.org/articles/stages.html#soft-deprecated'><img src='figures/lifecycle-soft-deprecated.svg' alt='[Soft-deprecated]' /></a></p>
+    <p>These functions extract various elements from a workflow set object. If they
+do not exist yet, an error is thrown.</p><ul>
+<li><p><code><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_preprocessor()</a></code> returns the formula, recipe, or variable
+expressions used for preprocessing.</p></li>
+<li><p><code><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_spec_parsnip()</a></code> returns the parsnip model specification.</p></li>
+<li><p><code><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_fit_parsnip()</a></code> returns the parsnip model fit object.</p></li>
+<li><p><code><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_fit_engine()</a></code> returns the engine specific fit embedded within
+a parsnip model fit. For example, when using <code><a href='https://parsnip.tidymodels.org/reference/linear_reg.html'>parsnip::linear_reg()</a></code>
+with the <code>"lm"</code> engine, this returns the underlying <code>lm</code> object.</p></li>
+<li><p><code><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_mold()</a></code> returns the preprocessed "mold" object returned
+from <code><a href='https://rdrr.io/pkg/hardhat/man/mold.html'>hardhat::mold()</a></code>. It contains information about the preprocessing,
+including either the prepped recipe, the formula terms object, or
+variable selectors.</p></li>
+<li><p><code><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_recipe()</a></code> returns the recipe. The <code>estimated</code> argument specifies
+whether the fitted or original recipe is returned.</p></li>
+<li><p><code>extract_workflow_set_result()</code> returns the results of <code><a href='workflow_map.html'>workflow_map()</a></code>
+for a particular workflow.</p></li>
+<li><p><code><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_workflow()</a></code> returns the workflow object. The workflow will not
+have been estimated.</p></li>
+</ul>
+
     </div>
 
-    <pre class="usage"><span class='fu'>pull_workflow_set_result</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>id</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>extract_workflow_set_result</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>id</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>pull_workflow</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>id</span><span class='op'>)</span></pre>
+<span class='co'># S3 method for workflow_set</span>
+<span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_workflow</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>id</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for workflow_set</span>
+<span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_spec_parsnip</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>id</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for workflow_set</span>
+<span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_recipe</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>id</span>, <span class='va'>...</span>, estimated <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='co'># S3 method for workflow_set</span>
+<span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_fit_parsnip</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>id</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for workflow_set</span>
+<span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_fit_engine</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>id</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for workflow_set</span>
+<span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_mold</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>id</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for workflow_set</span>
+<span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_preprocessor</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>id</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,27 +207,34 @@
       <th>id</th>
       <td><p>A single character string for a workflow ID.</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Other options (not currently used).</p></td>
+    </tr>
+    <tr>
+      <th>estimated</th>
+      <td><p>A logical for whether the original (unfit) recipe or the
+fitted recipe should be returned.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>pull_workflow_set_result()</code> produces a <code>tune_result</code> or
-<code>resample_results</code> object. <code>pull_workflow()</code> returns an unfit workflow
-object.</p>
+    <p>The extracted value from the object, <code>x</code>, as described in the
+description section.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>pull_workflow_set_result()</code> retrieves the results of <code><a href='workflow_map.html'>workflow_map()</a></code> for a
-particular workflow while <code>pull_workflow()</code> extracts the unfitted workflow
-from the <code>info</code> column.</p>
-<p>The <code><a href='extract_workflow_set_result.html'>extract_workflow_set_result()</a></code> and <code><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_workflow()</a></code> functions should
-be used instead of these functions.</p>
+    <p>These functions supersede the <code>pull_*()</code> functions (e.g.,
+<code><a href='pull_workflow_set_result.html'>pull_workflow_set_result()</a></code>).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidymodels/tune'>tune</a></span><span class='op'>)</span>
-
-<span class='fu'>pull_workflow_set_result</span><span class='op'>(</span><span class='va'>two_class_res</span>, <span class='st'>"none_cart"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: `pull_workflow_set_result()` was deprecated in workflowsets 0.1.0.</span>
-#&gt; <span class='warning'>Please use `extract_workflow_set_result()` instead.</span></div><div class='output co'>#&gt; # Tuning results
+</div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>Attaching package: ‘tune’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:workflowsets’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    extract_recipe</span></div><div class='input'>
+<span class='fu'>extract_workflow_set_result</span><span class='op'>(</span><span class='va'>two_class_res</span>, <span class='st'>"none_cart"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; # Tuning results
 #&gt; # 5-fold cross-validation 
 #&gt; <span style='color: #949494;'># A tibble: 5 x 4</span>
 #&gt;   splits            id    .metrics          .notes          
@@ -178,9 +244,8 @@ be used instead of these functions.</p>
 #&gt; <span style='color: #BCBCBC;'>3</span> <span style='color: #949494;'>&lt;split [633/158]&gt;</span> Fold3 <span style='color: #949494;'>&lt;tibble [20 × 6]&gt;</span> <span style='color: #949494;'>&lt;tibble [0 × 1]&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>4</span> <span style='color: #949494;'>&lt;split [633/158]&gt;</span> Fold4 <span style='color: #949494;'>&lt;tibble [20 × 6]&gt;</span> <span style='color: #949494;'>&lt;tibble [0 × 1]&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>5</span> <span style='color: #949494;'>&lt;split [633/158]&gt;</span> Fold5 <span style='color: #949494;'>&lt;tibble [20 × 6]&gt;</span> <span style='color: #949494;'>&lt;tibble [0 × 1]&gt;</span></div><div class='input'>
-<span class='fu'>pull_workflow</span><span class='op'>(</span><span class='va'>two_class_res</span>, <span class='st'>"none_cart"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: `pull_workflow()` was deprecated in workflowsets 0.1.0.</span>
-#&gt; <span class='warning'>Please use `extract_worklfow()` instead.</span></div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
+<span class='fu'><a href='https://rdrr.io/pkg/hardhat/man/hardhat-extract.html'>extract_workflow</a></span><span class='op'>(</span><span class='va'>two_class_res</span>, <span class='st'>"none_cart"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ══ Workflow ════════════════════════════════════════════════════════════════════
 #&gt; <span style='font-style: italic;'>Preprocessor:</span> Formula
 #&gt; <span style='font-style: italic;'>Model:</span> decision_tree()
 #&gt; 
