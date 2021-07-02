@@ -27,7 +27,7 @@
 #'  * `info` is a list column with tibbles containing more specific information,
 #'     including any comments added using [comment_add()]. This tibble also
 #'     contains the workflow object (which can be easily retrieved using
-#'     [pull_workflow()]).
+#'     [extract_workflow()]).
 #'  * `option` is a list column that will include a list of optional arguments
 #'     passed to the functions from the `tune` package. They can be added
 #'     manually via [option_add()] or automatically when options are passed to
@@ -139,12 +139,12 @@ get_info <- function(x) {
 }
 
 preproc_type <- function(x) {
-   x <- workflows::pull_workflow_preprocessor(x)
+   x <- extract_preprocessor(x)
    class(x)[1]
 }
 
 model_type <- function(x) {
-   x <- workflows::pull_workflow_spec(x)
+   x <- extract_spec_parsnip(x)
    class(x)[1]
 }
 

@@ -34,7 +34,9 @@ Imports:
     stats,
     prettyunits,
     rsample (>= 0.0.9),
-    generics
+    generics,
+    hardhat (>= 0.1.5.9000),
+    lifecycle (>= 1.0.0)
 Language: en-US
 Suggests: 
     spelling,
@@ -54,3 +56,6 @@ URL: https://github.com/tidymodels/workflowsets,
     https://workflowsets.tidymodels.org
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+Remotes: 
+    tidymodels/hardhat,
+    tidymodels/workflows

@@ -25,7 +25,7 @@ combination. These can be changed but must be unique.
 \item \code{info} is a list column with tibbles containing more specific information,
 including any comments added using \code{\link[=comment_add]{comment_add()}}. This tibble also
 contains the workflow object (which can be easily retrieved using
-\code{\link[=pull_workflow]{pull_workflow()}}).
+\code{\link[=extract_workflow]{extract_workflow()}}).
 \item \code{option} is a list column that will include a list of optional arguments
 passed to the functions from the \code{tune} package. They can be added
 manually via \code{\link[=option_add]{option_add()}} or automatically when options are passed to
