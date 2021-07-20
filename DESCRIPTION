@@ -35,7 +35,7 @@ Imports:
     prettyunits,
     rsample (>= 0.0.9),
     generics,
-    hardhat (>= 0.1.5.9000),
+    hardhat (>= 0.1.6),
     lifecycle (>= 1.0.0)
 Language: en-US
 Suggests: 
