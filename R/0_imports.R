@@ -26,6 +26,10 @@ tibble::type_sum
 #' @export
 tibble::size_sum
 
+#' @importFrom tibble obj_sum
+#' @export
+tibble::obj_sum
+
 #' @importFrom tune collect_metrics
 #' @export
 tune::collect_metrics

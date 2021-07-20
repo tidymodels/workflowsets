@@ -6,6 +6,7 @@
 \alias{tbl_sum}
 \alias{type_sum}
 \alias{size_sum}
+\alias{obj_sum}
 \alias{collect_metrics}
 \alias{collect_predictions}
 \alias{\%>\%}
@@ -30,7 +31,7 @@ below to see their documentation.
 
   \item{hardhat}{\code{\link[hardhat:hardhat-extract]{extract_fit_engine}}, \code{\link[hardhat:hardhat-extract]{extract_fit_parsnip}}, \code{\link[hardhat:hardhat-extract]{extract_mold}}, \code{\link[hardhat:hardhat-extract]{extract_preprocessor}}, \code{\link[hardhat:hardhat-extract]{extract_recipe}}, \code{\link[hardhat:hardhat-extract]{extract_spec_parsnip}}, \code{\link[hardhat:hardhat-extract]{extract_workflow}}}
 
-  \item{tibble}{\code{\link[tibble:reexports]{size_sum}}, \code{\link[tibble:reexports]{tbl_sum}}, \code{\link[tibble:reexports]{type_sum}}}
+  \item{tibble}{\code{\link[tibble:reexports]{obj_sum}}, \code{\link[tibble:reexports]{size_sum}}, \code{\link[tibble:reexports]{tbl_sum}}, \code{\link[tibble:reexports]{type_sum}}}
 
   \item{tune}{\code{\link[tune:collect_predictions]{collect_metrics}}, \code{\link[tune]{collect_predictions}}}
 }}

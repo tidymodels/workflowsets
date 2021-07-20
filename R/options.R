@@ -179,3 +179,7 @@ type_sum.workflow_set_options <- function(x) {
 size_sum.workflow_set_options <- function(x) {
    ""
 }
+#' @export
+obj_sum.workflow_set_options <- function(x) {
+   paste0("opts[", length(x), "]")
+}
