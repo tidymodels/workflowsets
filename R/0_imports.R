@@ -1,7 +1,7 @@
 #' @import ggplot2
 #' @import vctrs
 #' @importFrom stats qnorm as.formula model.frame
-#' @importFrom tibble obj_sum type_sum
+#' @importFrom tibble obj_sum type_sum tbl_sum size_sum
 #' @importFrom dplyr dplyr_reconstruct
 #' @importFrom lifecycle deprecated
 
@@ -13,18 +13,6 @@ utils::globalVariables(
 )
 
 # ------------------------------------------------------------------------------
-
-#' @importFrom tibble tbl_sum
-#' @export
-tibble::tbl_sum
-
-#' @importFrom tibble type_sum
-#' @export
-tibble::type_sum
-
-#' @importFrom tibble size_sum
-#' @export
-tibble::size_sum
 
 #' @importFrom tune collect_metrics
 #' @export

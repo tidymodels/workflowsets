@@ -9,53 +9,52 @@ Authors@R:
              comment = c(ORCID = "0000-0003-2402-136X")),
       person(given = "RStudio",
              role = "cph"))
-Description: A workflow is a combination of a model and preprocessors (e.g, a 
-    formula, recipe, etc.) (Kuhn and Silge (2021) <https://www.tmwr.org/>). In 
-    order to try different combinations of these, an object can be created that 
-    contains many workflows. There are functions to create workflows en masse 
-    as well as training them and visualizing the results. 
+Description: A workflow is a combination of a model and preprocessors
+    (e.g, a formula, recipe, etc.) (Kuhn and Silge (2021)
+    <https://www.tmwr.org/>). In order to try different combinations of
+    these, an object can be created that contains many workflows. There
+    are functions to create workflows en masse as well as training them
+    and visualizing the results.
 License: MIT + file LICENSE
-Encoding: UTF-8
-LazyData: true
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1.9001
+URL: https://github.com/tidymodels/workflowsets,
+    https://workflowsets.tidymodels.org
+Depends: 
+    R (>= 2.10)
 Imports: 
-    rlang,
-    tune (>= 0.1.3),
-    withr,
-    dplyr (>= 1.0.0),
-    purrr,
-    tibble (>= 3.1.0),
-    vctrs,
-    tidyr,
-    workflows (>= 0.2.2),
     cli,
-    ggplot2,
-    stats,
-    prettyunits,
-    rsample (>= 0.0.9),
+    dplyr (>= 1.0.0),
     generics,
+    ggplot2,
     hardhat (>= 0.1.6),
-    lifecycle (>= 1.0.0)
-Language: en-US
+    lifecycle (>= 1.0.0),
+    prettyunits,
+    purrr,
+    rlang,
+    rsample (>= 0.0.9),
+    stats,
+    tibble (>= 3.1.0),
+    tidyr,
+    tune (>= 0.1.3),
+    vctrs,
+    withr,
+    workflows (>= 0.2.3)
 Suggests: 
-    spelling,
-    recipes (>= 0.1.15),
-    modeldata,
-    parsnip,
-    testthat (>= 3.0.0),
     covr,
-    yardstick,
     dials,
     kknn,
     knitr,
-    rmarkdown
-Depends: 
-    R (>= 2.10)
-URL: https://github.com/tidymodels/workflowsets, 
-    https://workflowsets.tidymodels.org
+    modeldata,
+    parsnip,
+    recipes (>= 0.1.15),
+    rmarkdown,
+    spelling,
+    testthat (>= 3.0.0),
+    yardstick
+VignetteBuilder: 
+    knitr
 Config/testthat/edition: 3
-VignetteBuilder: knitr
-Remotes: 
-    tidymodels/hardhat,
-    tidymodels/workflows
+Encoding: UTF-8
+Language: en-US
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1.9001
