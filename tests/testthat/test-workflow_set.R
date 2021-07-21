@@ -252,3 +252,10 @@ test_that("constructor", {
    )
 
 })
+
+# ------------------------------------------------------------------------------
+
+test_that("pillar formatting", {
+   expect_snapshot_output(print(chi_features_set))
+   expect_snapshot_output(print(chi_features_res))
+})
