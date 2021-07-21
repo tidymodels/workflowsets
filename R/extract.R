@@ -37,7 +37,7 @@
 #' @details
 #'
 #' These functions supersede the `pull_*()` functions (e.g.,
-#' [pull_workflow_set_result()]).
+#' [extract_workflow_set_result()]).
 #' @return
 #' The extracted value from the object, `x`, as described in the
 #' description section.

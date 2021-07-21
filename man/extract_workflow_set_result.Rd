@@ -66,7 +66,7 @@ have been estimated.
 }
 \details{
 These functions supersede the \verb{pull_*()} functions (e.g.,
-\code{\link[=pull_workflow_set_result]{pull_workflow_set_result()}}).
+\code{\link[=extract_workflow_set_result]{extract_workflow_set_result()}}).
 }
 \examples{
 library(tune)
