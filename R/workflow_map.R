@@ -15,7 +15,7 @@
 #' the results will be added to the `result` column. If the computations for a
 #' workflow fail, an `try-catch` object will be saved in place of the results
 #' (without stopping execution).
-#' @seealso [workflow_set()], [as_workflow_set()], [pull_workflow_set_result()]
+#' @seealso [workflow_set()], [as_workflow_set()], [extract_workflow_set_result()]
 #' @details
 #'
 #' When passing options, anything passed in the `...` will be combined with any
@@ -72,7 +72,7 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
    # new fingerprinting option.
 
    for (iter in iter_seq) {
-      wflow <- pull_workflow(object, object$wflow_id[[iter]])
+      wflow <- extract_workflow(object, object$wflow_id[[iter]])
       .fn <- check_fn(fn, wflow, verbose)
       .fn_info <- dplyr::filter(allowed_fn, func == .fn)
 
