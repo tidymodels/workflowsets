@@ -246,14 +246,14 @@ used in that argument (i.e., <code>preproc</code> can be mixed types).</p>
 <span class='va'>cell_set</span> <span class='op'>&lt;-</span> <span class='fu'>workflow_set</span><span class='op'>(</span><span class='va'>preproc</span>, <span class='va'>models</span>, cross <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='va'>cell_set</span>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A workflow set/tibble: 6 x 4</span>
-#&gt;   wflow_id         info             option      result    
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>    
-#&gt; <span style='color: #BCBCBC;'>1</span> none_knn         <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;wrkflw__ &gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>2</span> none_logistic    <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;wrkflw__ &gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>3</span> pca_knn          <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;wrkflw__ &gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>4</span> pca_logistic     <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;wrkflw__ &gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>5</span> sp_sign_knn      <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;wrkflw__ &gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>6</span> sp_sign_logistic <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;wrkflw__ &gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span></div><div class='input'>
+#&gt;   wflow_id         info             option    result    
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>    
+#&gt; <span style='color: #BCBCBC;'>1</span> none_knn         <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;opts[0]&gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>2</span> none_logistic    <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;opts[0]&gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>3</span> pca_knn          <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;opts[0]&gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>4</span> pca_logistic     <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;opts[0]&gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>5</span> sp_sign_knn      <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;opts[0]&gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>6</span> sp_sign_logistic <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;opts[0]&gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span></div><div class='input'>
 <span class='co'># ------------------------------------------------------------------------------</span>
 <span class='co'># Using variables and formulas</span>
 
@@ -267,12 +267,12 @@ used in that argument (i.e., <code>preproc</code> can be mixed types).</p>
 #&gt; $outcomes
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^class</span>
-#&gt; env:  <span style='color: #0000BB;'>0x558f4dd853c0</span>
+#&gt; env:  <span style='color: #0000BB;'>0x55716a0066b0</span>
 #&gt; 
 #&gt; $predictors
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^c(contains("ch_1"))</span>
-#&gt; env:  <span style='color: #0000BB;'>0x558f4dd853c0</span>
+#&gt; env:  <span style='color: #0000BB;'>0x55716a0066b0</span>
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "workflow_variables"
@@ -281,12 +281,12 @@ used in that argument (i.e., <code>preproc</code> can be mixed types).</p>
 #&gt; $outcomes
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^class</span>
-#&gt; env:  <span style='color: #0000BB;'>0x558f4dd8b190</span>
+#&gt; env:  <span style='color: #0000BB;'>0x55716a00c560</span>
 #&gt; 
 #&gt; $predictors
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^c(contains("ch_2"))</span>
-#&gt; env:  <span style='color: #0000BB;'>0x558f4dd8b190</span>
+#&gt; env:  <span style='color: #0000BB;'>0x55716a00c560</span>
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "workflow_variables"
@@ -295,12 +295,12 @@ used in that argument (i.e., <code>preproc</code> can be mixed types).</p>
 #&gt; $outcomes
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^class</span>
-#&gt; env:  <span style='color: #0000BB;'>0x558f4dd8c8d0</span>
+#&gt; env:  <span style='color: #0000BB;'>0x55716a00fdb8</span>
 #&gt; 
 #&gt; $predictors
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^c(contains("ch_3"))</span>
-#&gt; env:  <span style='color: #0000BB;'>0x558f4dd8c8d0</span>
+#&gt; env:  <span style='color: #0000BB;'>0x55716a00fdb8</span>
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "workflow_variables"
@@ -309,30 +309,30 @@ used in that argument (i.e., <code>preproc</code> can be mixed types).</p>
 #&gt; $outcomes
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^class</span>
-#&gt; env:  <span style='color: #0000BB;'>0x558f4dd8e208</span>
+#&gt; env:  <span style='color: #0000BB;'>0x55716a011370</span>
 #&gt; 
 #&gt; $predictors
 #&gt; <span style='font-weight: bold;'>&lt;quosure&gt;</span>
 #&gt; expr: <span style='color: #0000BB;'>^c(contains("ch_4"))</span>
-#&gt; env:  <span style='color: #0000BB;'>0x558f4dd8e208</span>
+#&gt; env:  <span style='color: #0000BB;'>0x55716a011370</span>
 #&gt; 
 #&gt; attr(,"class")
 #&gt; [1] "workflow_variables"
 #&gt; 
 #&gt; $everything
 #&gt; class ~ .
-#&gt; &lt;environment: 0x558f46e8eb28&gt;
+#&gt; &lt;environment: 0x5571632aea28&gt;
 #&gt; </div><div class='input'>
 <span class='va'>cell_set_by_group</span> <span class='op'>&lt;-</span> <span class='fu'>workflow_set</span><span class='op'>(</span><span class='va'>preproc</span>, <span class='va'>models</span><span class='op'>[</span><span class='st'>"logistic"</span><span class='op'>]</span><span class='op'>)</span>
 <span class='va'>cell_set_by_group</span>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A workflow set/tibble: 5 x 4</span>
-#&gt;   wflow_id            info             option      result    
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>    
-#&gt; <span style='color: #BCBCBC;'>1</span> ch_1_logistic       <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;wrkflw__ &gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>2</span> ch_2_logistic       <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;wrkflw__ &gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>3</span> ch_3_logistic       <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;wrkflw__ &gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>4</span> ch_4_logistic       <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;wrkflw__ &gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>5</span> everything_logistic <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;wrkflw__ &gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span></div></pre>
+#&gt;   wflow_id            info             option    result    
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>               <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>    
+#&gt; <span style='color: #BCBCBC;'>1</span> ch_1_logistic       <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;opts[0]&gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>2</span> ch_2_logistic       <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;opts[0]&gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>3</span> ch_3_logistic       <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;opts[0]&gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>4</span> ch_4_logistic       <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;opts[0]&gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>5</span> everything_logistic <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;opts[0]&gt;</span> <span style='color: #949494;'>&lt;list [0]&gt;</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

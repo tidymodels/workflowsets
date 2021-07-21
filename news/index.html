@@ -131,7 +131,9 @@
 <a href="#workflowsets-development-version" class="anchor"></a>workflowsets (development version)<small> Unreleased </small>
 </h1>
 <ul>
-<li>Fixed an <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot()</a></code> bug where, if one metric is selected but a ranking metric is not specified, the wrong metric is used to order the workflows (<a href='https://github.com/tidymodels/workflowsets/issues/52'>#52</a>)</li>
+<li><p>Fixed an <code><a href="https://ggplot2.tidyverse.org/reference/autoplot.html">autoplot()</a></code> bug where, if one metric is selected but a ranking metric is not specified, the wrong metric is used to order the workflows (<a href='https://github.com/tidymodels/workflowsets/issues/52'>#52</a>)</p></li>
+<li><p>Updated pillar formatting for options objects.</p></li>
+<li><p>New <code>extract_*()</code> functions have been added that supersede the existing <code>pull_*()</code> functions. This is part of a larger move across the tidymodels packages towards a family of generic <code>extract_*()</code> functions. The <code>pull_*()</code> functions have been soft-deprecated, and will eventually be removed</p></li>
 </ul>
 </div>
     <div id="workflowsets-002" class="section level1">

@@ -199,11 +199,11 @@ and <code>workflow_map()</code> continues with the next workflow (if any).</p>
     <pre class="examples"><div class='input'><span class='co'># An example of processed results</span>
 <span class='va'>chi_features_res</span>
 </div><div class='output co'>#&gt; <span style='color: #949494;'># A workflow set/tibble: 3 x 4</span>
-#&gt;   wflow_id         info             option      result   
-#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>      <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>   
-#&gt; <span style='color: #BCBCBC;'>1</span> date_lm          <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;wrkflw__ &gt;</span> <span style='color: #949494;'>&lt;rsmp[+]&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>2</span> plus_holidays_lm <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;wrkflw__ &gt;</span> <span style='color: #949494;'>&lt;rsmp[+]&gt;</span>
-#&gt; <span style='color: #BCBCBC;'>3</span> plus_pca_lm      <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;wrkflw__ &gt;</span> <span style='color: #949494;'>&lt;tune[+]&gt;</span></div><div class='input'>
+#&gt;   wflow_id         info             option    result   
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>            <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>           <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>    <span style='color: #949494; font-style: italic;'>&lt;list&gt;</span>   
+#&gt; <span style='color: #BCBCBC;'>1</span> date_lm          <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;opts[2]&gt;</span> <span style='color: #949494;'>&lt;rsmp[+]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>2</span> plus_holidays_lm <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;opts[2]&gt;</span> <span style='color: #949494;'>&lt;rsmp[+]&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>3</span> plus_pca_lm      <span style='color: #949494;'>&lt;tibble [1 × 4]&gt;</span> <span style='color: #949494;'>&lt;opts[3]&gt;</span> <span style='color: #949494;'>&lt;tune[+]&gt;</span></div><div class='input'>
 <span class='co'># Code examples at</span>
 <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"example-data"</span>, package <span class='op'>=</span> <span class='st'>"workflowsets"</span><span class='op'>)</span>
