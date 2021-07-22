@@ -1,4 +1,4 @@
-# workflowsets (development version)
+# workflowsets 0.1.0
 
 * Fixed an `autoplot()` bug where, if one metric is selected but a ranking metric is not specified, the wrong metric is used to order the workflows (#52)
 
