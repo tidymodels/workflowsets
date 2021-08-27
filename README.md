@@ -8,6 +8,7 @@
 [![Codecov test
 coverage](https://codecov.io/gh/tidymodels/workflowsets/branch/main/graph/badge.svg)](https://codecov.io/gh/tidymodels/workflowsets?branch=main)
 [![R-CMD-check](https://github.com/tidymodels/workflowsets/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/workflowsets/actions)
+[![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 <!-- badges: end -->
 
 The goal of workflowsets is to allow users to create and easily fit a
@@ -126,18 +127,18 @@ chi_models <-
       cross = TRUE
    )
 chi_models
-#> # A workflow set/tibble: 9 x 4
-#>   wflow_id      info                 option    result    
-#>   <chr>         <list>               <list>    <list>    
-#> 1 simple_glmnet <tibble[,4] [1 × 4]> <opts[0]> <list [0]>
-#> 2 simple_cart   <tibble[,4] [1 × 4]> <opts[0]> <list [0]>
-#> 3 simple_knn    <tibble[,4] [1 × 4]> <opts[0]> <list [0]>
-#> 4 filter_glmnet <tibble[,4] [1 × 4]> <opts[0]> <list [0]>
-#> 5 filter_cart   <tibble[,4] [1 × 4]> <opts[0]> <list [0]>
-#> 6 filter_knn    <tibble[,4] [1 × 4]> <opts[0]> <list [0]>
-#> 7 pca_glmnet    <tibble[,4] [1 × 4]> <opts[0]> <list [0]>
-#> 8 pca_cart      <tibble[,4] [1 × 4]> <opts[0]> <list [0]>
-#> 9 pca_knn       <tibble[,4] [1 × 4]> <opts[0]> <list [0]>
+#> # A workflow set/tibble: 9 × 4
+#>   wflow_id      info             option    result    
+#>   <chr>         <list>           <list>    <list>    
+#> 1 simple_glmnet <tibble [1 × 4]> <opts[0]> <list [0]>
+#> 2 simple_cart   <tibble [1 × 4]> <opts[0]> <list [0]>
+#> 3 simple_knn    <tibble [1 × 4]> <opts[0]> <list [0]>
+#> 4 filter_glmnet <tibble [1 × 4]> <opts[0]> <list [0]>
+#> 5 filter_cart   <tibble [1 × 4]> <opts[0]> <list [0]>
+#> 6 filter_knn    <tibble [1 × 4]> <opts[0]> <list [0]>
+#> 7 pca_glmnet    <tibble [1 × 4]> <opts[0]> <list [0]>
+#> 8 pca_cart      <tibble [1 × 4]> <opts[0]> <list [0]>
+#> 9 pca_knn       <tibble [1 × 4]> <opts[0]> <list [0]>
 ```
 
 It doesn’t make sense to use PCA or a filter with a `glmnet` model. We
