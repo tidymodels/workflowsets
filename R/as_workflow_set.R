@@ -45,8 +45,7 @@
 #'    add_model(lr_spec) %>%
 #'    add_formula(Class ~ (.)^2)
 #'
-#' two_workflows <- list(main = main_effects, int = interactions)
-#' as_workflow_set(!!!two_workflows)
+#' as_workflow_set(main = main_effects, int = interactions)
 #'
 #' @export
 as_workflow_set <- function(...) {
