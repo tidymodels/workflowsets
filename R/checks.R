@@ -106,6 +106,8 @@ check_names <- function(x) {
       msg <- "Objects in these positions are not named:"
       msg <- paste(msg, paste0(bad, collapse = ", "))
       halt(msg)
+   } else if (all(is.null(nms))) {
+      halt("The values must be named.")
    }
    xtab <- table(nms)
    if (any(xtab > 1)) {
@@ -211,7 +213,7 @@ is_valid_result_inner_type <- function(x) {
       # Default, before any results are filled
       return(TRUE)
    }
-   inherits(x, "tune_results") | inherits(x, "try-error")
+   is.null(x) || inherits(x, "tune_results") || inherits(x, "try-error")
 }
 is_default_result_element <- function(x) {
    identical(x, list())
