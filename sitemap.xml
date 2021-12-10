@@ -1,7 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://workflowsets.tidymodels.org/404.html</loc>
+  </url>
+  <url>
+    <loc>https://workflowsets.tidymodels.org/CODE_OF_CONDUCT.html</loc>
+  </url>
+  <url>
+    <loc>https://workflowsets.tidymodels.org/CONTRIBUTING.html</loc>
+  </url>
+  <url>
+    <loc>https://workflowsets.tidymodels.org/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://workflowsets.tidymodels.org/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://workflowsets.tidymodels.org/SUPPORT.html</loc>
+  </url>
+  <url>
+    <loc>https://workflowsets.tidymodels.org/articles/evaluating-different-predictor-sets.html</loc>
+  </url>
+  <url>
+    <loc>https://workflowsets.tidymodels.org/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://workflowsets.tidymodels.org/articles/tuning-and-comparing-models.html</loc>
+  </url>
+  <url>
+    <loc>https://workflowsets.tidymodels.org/authors.html</loc>
+  </url>
+  <url>
     <loc>https://workflowsets.tidymodels.org/index.html</loc>
+  </url>
+  <url>
+    <loc>https://workflowsets.tidymodels.org/news/index.html</loc>
   </url>
   <url>
     <loc>https://workflowsets.tidymodels.org/reference/as_workflow_set.html</loc>
@@ -17,6 +50,9 @@
   </url>
   <url>
     <loc>https://workflowsets.tidymodels.org/reference/extract_workflow_set_result.html</loc>
+  </url>
+  <url>
+    <loc>https://workflowsets.tidymodels.org/reference/index.html</loc>
   </url>
   <url>
     <loc>https://workflowsets.tidymodels.org/reference/leave_var_out_formulas.html</loc>
@@ -44,11 +80,5 @@
   </url>
   <url>
     <loc>https://workflowsets.tidymodels.org/reference/workflow_set.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/articles/articles/tuning-and-comparing-models.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/articles/evaluating-different-predictor-sets.html</loc>
   </url>
 </urlset>
