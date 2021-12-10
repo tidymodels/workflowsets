@@ -106,6 +106,8 @@ check_names <- function(x) {
       msg <- "Objects in these positions are not named:"
       msg <- paste(msg, paste0(bad, collapse = ", "))
       halt(msg)
+   } else if (all(is.null(nms))) {
+      halt("The values must be named.")
    }
    xtab <- table(nms)
    if (any(xtab > 1)) {

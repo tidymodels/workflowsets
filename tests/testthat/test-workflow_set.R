@@ -115,6 +115,14 @@ test_that("creating workflow sets", {
 
    # ------------------------------------------------------------------------------
    # mixed inputs
+
+   expect_error(
+      car_set_4 <- as_workflow_set(!!!mixed_list),
+      regex = NA
+   )
+   expect_true(inherits(car_set_4$result[[1]], "tune_results"))
+   expect_true(is.null(car_set_4$result[[2]]))
+
 })
 
 test_that("correct object type and resamples", {

@@ -51,20 +51,15 @@
 as_workflow_set <- function(...) {
    object <- rlang::list2(...)
 
+   # These could be workflows or objects of class `tune_result`
    is_workflow <- purrr::map_lgl(object, ~ inherits(.x, "workflow"))
-   tune_index <- which(!is_workflow)
-
-   if (all(!is_workflow)) {
-      wflows <- purrr::map(object, tune::.get_tune_workflow)
-   } else if (any(!is_workflow)) {
-      wflows <- object
-      wflows[tune_index] <- purrr::map(object[tune_index], tune::.get_tune_workflow)
-   } else {
-      wflows <- object
-   }
+   wflows <- vector("list", length(is_workflow))
+   wflows[is_workflow] <- object[is_workflow]
+   wflows[!is_workflow]  <- purrr::map(object[!is_workflow], tune::.get_tune_workflow)
+   names(wflows) <- names(object)
 
    check_names(wflows)
-   check_for_workflow(wflows[])
+   check_for_workflow(wflows)
 
    res <- tibble::tibble(wflow_id = names(wflows))
    res <-
@@ -75,9 +70,7 @@ as_workflow_set <- function(...) {
          option    = purrr::map(1:nrow(res), ~ new_workflow_set_options())
       )
    res$result <- vector(mode = "list", length = nrow(res))
-   if (length(tune_index) > 1) {
-      res$result[tune_index] <- unname(object[tune_index])
-   }
+   res$result[!is_workflow] <- object[!is_workflow]
 
    res %>%
       dplyr::select(wflow_id, info, option, result) %>%
