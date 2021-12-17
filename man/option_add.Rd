@@ -13,7 +13,7 @@ option_remove(x, ...)
 option_add_parameters(x, id = NULL, strict = FALSE)
 }
 \arguments{
-\item{x}{A workflow set}
+\item{x}{A workflow set.}
 
 \item{...}{A list of named options. For \code{option_remove()} this can be a
 series of unquoted option names.}
@@ -29,9 +29,10 @@ replaced?}
 An updated workflow set.
 }
 \description{
-The \code{options} column is a workflow set controls options for the functions
-that are used to \emph{evaluate} the workflow, such as \code{\link[tune:fit_resamples]{tune::fit_resamples()}} or
-\code{\link[tune:tune_grid]{tune::tune_grid()}}.
+The \code{option} column controls options for the functions that are used to
+\emph{evaluate} the workflow set, such as \code{\link[tune:fit_resamples]{tune::fit_resamples()}} or
+\code{\link[tune:tune_grid]{tune::tune_grid()}}. Examples of common options to set for these functions
+include \code{param_info} and \code{grid}.
 
 These functions are helpful for manipulating the information in the \code{option}
 column.
@@ -48,10 +49,10 @@ Note that executing a function on the workflow set, such as \code{tune_grid()},
 will add any options given to that function to the \code{option} column.
 
 These functions do \emph{not} control options for the individual workflows, such as
-the model blueprint. When creating a workflow manually,
-\code{\link[workflows:add_model]{workflows::add_model()}} or \code{\link[workflows:add_recipe]{workflows::add_recipe()}} are helpful to control
-extra options. To alter these, use \code{\link[=update_workflow_model]{update_workflow_model()}} or
-\code{\link[=update_workflow_recipe]{update_workflow_recipe()}}.
+the recipe blueprint. When creating a workflow manually, use
+\code{\link[workflows:add_model]{workflows::add_model()}} or \code{\link[workflows:add_recipe]{workflows::add_recipe()}} to specify.
+extra options. To alter these in a workflow set, use
+\code{\link[=update_workflow_model]{update_workflow_model()}} or \code{\link[=update_workflow_recipe]{update_workflow_recipe()}}.
 }
 \examples{
 two_class_set \%>\%
