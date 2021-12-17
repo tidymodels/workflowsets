@@ -1,5 +1,10 @@
 #' Add and edit options saved in a workflow set
 #'
+#' @description
+#' The `options` column is a workflow set controls options for the functions
+#' that are used to _evaluate_ the workflow, such as [tune::fit_resamples()] or
+#' [tune::tune_grid()].
+#'
 #' These functions are helpful for manipulating the information in the `option`
 #' column.
 #'
@@ -23,6 +28,13 @@
 #'
 #' Note that executing a function on the workflow set, such as `tune_grid()`,
 #' will add any options given to that function to the `option` column.
+#'
+#' These functions do _not_ control options for the individual workflows, such as
+#' the model blueprint. When creating a workflow manually,
+#' [workflows::add_model()] or [workflows::add_recipe()] are helpful to control
+#' extra options. To alter these, use [update_workflow_model()] or
+#' [update_workflow_recipe()].
+#'
 #' @examples
 #' two_class_set %>%
 #'   option_add(a = 1)

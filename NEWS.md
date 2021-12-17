@@ -1,5 +1,7 @@
 # workflowsets (development version)
 
+* `update_workflow_model()` and `update_workflow_recipe()` were added. These are analogous to `workflows::add_model()` or `workflows::add_recipe()` (#64).
+
 # workflowsets 0.1.0
 
 * Fixed an `autoplot()` bug where, if one metric is selected but a ranking metric is not specified, the wrong metric is used to order the workflows (#52)
