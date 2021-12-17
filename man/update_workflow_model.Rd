@@ -20,24 +20,22 @@ indicates which workflow to update.}
 \item{formula}{An optional formula override to specify the terms of the
 model. Typically, the terms are extracted from the formula or recipe
 preprocessing methods. However, some models (like survival and bayesian
-models) use the formula not to preprocess, but to specify the structure of
-the model. In those cases, a formula specifying the model structure must be
-passed unchanged into the model call itself. This argument is used for those
-purposes.}
+models) use the formula not to preprocess, but to specify the structure
+of the model. In those cases, a formula specifying the model structure
+must be passed unchanged into the model call itself. This argument is
+used for those purposes.}
 
-\item{recipe}{A recipe created using \code{\link[recipes:recipe]{recipes::recipe()}}.}
+\item{recipe}{A recipe created using \code{\link[recipes:recipe]{recipes::recipe()}}}
 
 \item{blueprint}{A hardhat blueprint used for fine tuning the preprocessing.
-If \code{NULL}, \code{\link[hardhat:default_recipe_blueprint]{hardhat::default_recipe_blueprint()}} is used. Note that
-preprocessing done here is separate from preprocessing that might be done
-automatically by the underlying model.}
-}
-\value{
-An altered workflow set where the \code{results} column value for the
-selected  \code{id} has been reset to empty.
+
+If \code{NULL}, \code{\link[hardhat:default_recipe_blueprint]{hardhat::default_recipe_blueprint()}} is used.
+
+Note that preprocessing done here is separate from preprocessing that
+might be done automatically by the underlying model.}
 }
 \description{
-Workflows can take special inputs for the recipe (e.g. a blueprint) or a
+Workflows can take special arguments for the recipe (e.g. a blueprint) or a
 model (e.g. a special formula). However, when creating a workflow set, there
 is no way to specify these extra components.
 
