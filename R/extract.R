@@ -23,7 +23,7 @@
 #' - `extract_recipe()` returns the recipe. The `estimated` argument specifies
 #'    whether the fitted or original recipe is returned.
 #'
-#'  - `extract_workflow_set_result()` returns the results of [workflow_map()]
+#' - `extract_workflow_set_result()` returns the results of [workflow_map()]
 #'    for a particular workflow.
 #'
 #' - `extract_workflow()` returns the workflow object. The workflow will not
