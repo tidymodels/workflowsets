@@ -9,6 +9,8 @@
 \alias{extract_fit_engine.workflow_set}
 \alias{extract_mold.workflow_set}
 \alias{extract_preprocessor.workflow_set}
+\alias{extract_parameter_set_dials.workflow_set}
+\alias{extract_parameter_dials.workflow_set}
 \title{Extract elements of workflow sets}
 \usage{
 extract_workflow_set_result(x, id, ...)
@@ -26,6 +28,10 @@ extract_workflow_set_result(x, id, ...)
 \method{extract_mold}{workflow_set}(x, id, ...)
 
 \method{extract_preprocessor}{workflow_set}(x, id, ...)
+
+\method{extract_parameter_set_dials}{workflow_set}(x, id, ...)
+
+\method{extract_parameter_dials}{workflow_set}(x, id, parameter, ...)
 }
 \arguments{
 \item{x}{A workflow set.}
@@ -36,6 +42,8 @@ extract_workflow_set_result(x, id, ...)
 
 \item{estimated}{A logical for whether the original (unfit) recipe or the
 fitted recipe should be returned.}
+
+\item{parameter}{A single string for the parameter ID.}
 }
 \value{
 The extracted value from the object, \code{x}, as described in the
