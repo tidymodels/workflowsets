@@ -37,12 +37,12 @@ Imports:
     workflows (>= 0.2.4.9002)
 Suggests: 
     covr,
-    dials,
+    dials (>= 0.0.10.9001),
     kknn,
     knitr,
     modeldata,
-    parsnip,
-    recipes (>= 0.1.15),
+    parsnip (>= 0.1.7.9005),
+    recipes (>= 0.1.17.9001),
     rmarkdown,
     spelling,
     testthat (>= 3.0.0),
@@ -58,6 +58,9 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Remotes: 
+    tidymodels/dials@extract-parameter,
     tidymodels/hardhat@add-tune,
+    tidymodels/parsnip@extract-parameters,
+    tidymodels/recipes@extract-parameters,
     tidymodels/workflows@extract-parameters
     
