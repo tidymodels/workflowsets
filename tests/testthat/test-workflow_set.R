@@ -154,8 +154,8 @@ test_that("correct object type and resamples", {
 
    res_2 <- set_1
    res_2$result <-
-      map(res_2$wflow_id, ~ extract_workflow(res_2, id = .x)) %>%
-      purrr::map(~ fit_resamples(.x, resamples = bootstraps(mtcars, 3)))
+      purrr::map(res_2$wflow_id, ~ extract_workflow(res_2, id = .x)) %>%
+      purrr::map(~ tune::fit_resamples(.x, resamples = bootstraps(mtcars, 3)))
    expect_identical(
       workflowsets:::has_valid_column_result_inner_types(res_2),
       TRUE
