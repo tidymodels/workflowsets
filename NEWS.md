@@ -2,11 +2,9 @@
 
 * `as_workflow_set()` can now take a mixture of workflows or `tune_results` objects. 
 
-* New `extract_parameter_set_dials()` method to extract parameter sets from 
-  `workflow_set` objects.
+* New `extract_parameter_set_dials()` and `extract_parameter_dials()` methods to 
+  extract parameter sets and single parameters from `workflow_set` objects.
 
-* New `extract_parameter_dials()` method to extract a single parameter from 
-  `workflow_set` objects.
 
 # workflowsets 0.1.0
 
