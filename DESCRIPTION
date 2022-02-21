@@ -50,11 +50,8 @@ Suggests:
 VignetteBuilder: 
     knitr
 Config/Needs/website: 
-    tidymodels/dials,
     tidymodels/discrim, 
-    tidymodels/hardhat,
     tidymodels/parsnip,
-    tidymodels/recipes,
     tidymodels/tune,
     rpart, 
     mda, 
@@ -71,6 +68,5 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Remotes: 
     tidymodels/parsnip,
-    tidymodels/recipes,
     tidymodels/tune,
     tidymodels/workflows
