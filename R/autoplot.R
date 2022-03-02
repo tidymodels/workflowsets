@@ -41,53 +41,56 @@ autoplot.workflow_set <- function(object, rank_metric = NULL, metric = NULL,
                                   id = "workflow_set",
                                   select_best = FALSE,
                                   std_errs = qnorm(0.95), ...) {
-   if (id == "workflow_set") {
-      p <- rank_plot(object, rank_metric = rank_metric, metric = metric,
-                     select_best = select_best, std_errs = std_errs)
-   } else {
-      p <- autoplot(object$result[[which(object$wflow_id == id)]], metric = metric, ...)
-   }
-   p
+  if (id == "workflow_set") {
+    p <- rank_plot(object,
+      rank_metric = rank_metric, metric = metric,
+      select_best = select_best, std_errs = std_errs
+    )
+  } else {
+    p <- autoplot(object$result[[which(object$wflow_id == id)]], metric = metric, ...)
+  }
+  p
 }
 
 rank_plot <- function(object, rank_metric = NULL, metric = NULL,
                       select_best = FALSE, std_errs = 1, ...) {
-   metric_info <- pick_metric(object, rank_metric, metric)
-   metrics <- collate_metrics(object)
-   res <- rank_results(object, rank_metric = metric_info$metric, select_best = select_best)
+  metric_info <- pick_metric(object, rank_metric, metric)
+  metrics <- collate_metrics(object)
+  res <- rank_results(object, rank_metric = metric_info$metric, select_best = select_best)
 
-   if (!is.null(metric)) {
-      keep_metrics <- unique(c(rank_metric, metric))
-      res <- dplyr::filter(res, .metric %in% keep_metrics)
-   }
+  if (!is.null(metric)) {
+    keep_metrics <- unique(c(rank_metric, metric))
+    res <- dplyr::filter(res, .metric %in% keep_metrics)
+  }
 
-   num_metrics <- length(unique(res$.metric))
-   has_std_error <- !all(is.na(res$std_err))
+  num_metrics <- length(unique(res$.metric))
+  has_std_error <- !all(is.na(res$std_err))
 
-   p <-
-      ggplot(res, aes(x = rank, y = mean, col = model)) +
-      geom_point(aes(shape = preprocessor))
+  p <-
+    ggplot(res, aes(x = rank, y = mean, col = model)) +
+    geom_point(aes(shape = preprocessor))
 
-   if (num_metrics > 1) {
-      res$.metric <- factor(as.character(res$.metric), levels = metrics$metric)
-      p <-
-         p +
-         facet_wrap(~ .metric, scales = "free_y", as.table = FALSE) +
-         labs(x = "Workflow Rank", y = "Metric")
-   } else {
-      p <- p + labs(x = "Workflow Rank", y = metric_info$metric)
-   }
+  if (num_metrics > 1) {
+    res$.metric <- factor(as.character(res$.metric), levels = metrics$metric)
+    p <-
+      p +
+      facet_wrap(~.metric, scales = "free_y", as.table = FALSE) +
+      labs(x = "Workflow Rank", y = "Metric")
+  } else {
+    p <- p + labs(x = "Workflow Rank", y = metric_info$metric)
+  }
 
-   if (has_std_error) {
-      p <-
-         p +
-         geom_errorbar(
-            aes(ymin = mean - std_errs * std_err,
-                ymax = mean + std_errs * std_err),
-            width = diff(range(res$rank))/75
-         )
-   }
+  if (has_std_error) {
+    p <-
+      p +
+      geom_errorbar(
+        aes(
+          ymin = mean - std_errs * std_err,
+          ymax = mean + std_errs * std_err
+        ),
+        width = diff(range(res$rank)) / 75
+      )
+  }
 
-   p
-
+  p
 }

@@ -35,118 +35,120 @@
 #' two_class_set %>%
 #'   option_add_parameters()
 option_add <- function(x, ..., id = NULL, strict = FALSE) {
-   dots <- list(...)
-   if (length(dots) == 0) {
-      return(x)
-   }
+  dots <- list(...)
+  if (length(dots) == 0) {
+    return(x)
+  }
 
-   if (strict) {
-      act <- "fail"
-   } else {
-      act <- "warn"
-   }
+  if (strict) {
+    act <- "fail"
+  } else {
+    act <- "warn"
+  }
 
-   if (!is.null(id)) {
-      for (i in id) {
-         ind <- which(x$wflow_id == i)
-         if (length(ind) == 0) {
-            rlang::warn(paste("Don't have an 'id' value", i))
-         } else {
-            check_options(x$option[[ind]], x$wflow_id[[ind]], dots, action = act)
-            x$option[[ind]] <- append_options(x$option[[ind]], dots)
-         }
+  if (!is.null(id)) {
+    for (i in id) {
+      ind <- which(x$wflow_id == i)
+      if (length(ind) == 0) {
+        rlang::warn(paste("Don't have an 'id' value", i))
+      } else {
+        check_options(x$option[[ind]], x$wflow_id[[ind]], dots, action = act)
+        x$option[[ind]] <- append_options(x$option[[ind]], dots)
       }
-   } else {
-      check_options(x$option, x$wflow_id, dots, action = act)
-      x <- dplyr::mutate(x, option = purrr::map(option, append_options, dots))
-   }
-   x
+    }
+  } else {
+    check_options(x$option, x$wflow_id, dots, action = act)
+    x <- dplyr::mutate(x, option = purrr::map(option, append_options, dots))
+  }
+  x
 }
 
 
 #' @export
 #' @rdname option_add
 option_remove <- function(x, ...) {
-   dots <- rlang::enexprs(...)
-   if (length(dots) == 0) {
-      return(x)
-   }
-   dots <- purrr::map_chr(dots, rlang::expr_text)
+  dots <- rlang::enexprs(...)
+  if (length(dots) == 0) {
+    return(x)
+  }
+  dots <- purrr::map_chr(dots, rlang::expr_text)
 
-   x <- dplyr::mutate(x, option = purrr::map(option, rm_elem, dots))
-   x
+  x <- dplyr::mutate(x, option = purrr::map(option, rm_elem, dots))
+  x
 }
 
 
 
 maybe_param <- function(x) {
-   prm <-  dials::parameters(x)
-   if (nrow(prm) == 0) {
-      x <- list()
-   } else {
-      x <- list(param_info = prm)
-   }
-   x
+  prm <- dials::parameters(x)
+  if (nrow(prm) == 0) {
+    x <- list()
+  } else {
+    x <- list(param_info = prm)
+  }
+  x
 }
 #' @export
 #' @rdname option_add
 option_add_parameters <- function(x, id = NULL, strict = FALSE) {
-   prm <- purrr::map(x$info, ~ maybe_param(.x$workflow[[1]]))
-   num <- purrr::map_int(prm, length)
-   if (all(num == 0)) {
-      return(x)
-   }
+  prm <- purrr::map(x$info, ~ maybe_param(.x$workflow[[1]]))
+  num <- purrr::map_int(prm, length)
+  if (all(num == 0)) {
+    return(x)
+  }
 
-   if (strict) {
-      act <- "fail"
-   } else {
-      act <- "warn"
-   }
+  if (strict) {
+    act <- "fail"
+  } else {
+    act <- "warn"
+  }
 
-   if (!is.null(id)) {
-      for (i in id) {
-         ind <- which(x$wflow_id == i)
-         if (length(ind) == 0) {
-            rlang::warn(paste("Don't have an 'id' value", i))
-         } else {
-            check_options(x$option[[ind]], x$wflow_id[[ind]], prm[[ind]], action = act)
-            x$option[[ind]] <- append_options(x$option[[ind]], prm[[ind]])
-         }
+  if (!is.null(id)) {
+    for (i in id) {
+      ind <- which(x$wflow_id == i)
+      if (length(ind) == 0) {
+        rlang::warn(paste("Don't have an 'id' value", i))
+      } else {
+        check_options(x$option[[ind]], x$wflow_id[[ind]], prm[[ind]], action = act)
+        x$option[[ind]] <- append_options(x$option[[ind]], prm[[ind]])
       }
-   } else {
-      check_options(x$option, x$wflow_id, prm[1], action = act)
-      x <- dplyr::mutate(x, option = purrr::map2(option, prm, append_options))
-   }
-   x
+    }
+  } else {
+    check_options(x$option, x$wflow_id, prm[1], action = act)
+    x <- dplyr::mutate(x, option = purrr::map2(option, prm, append_options))
+  }
+  x
 }
 
 rm_elem <- function(x, nms) {
-   x <- x[!(names(x) %in% nms)]
-   new_workflow_set_options(!!!x)
+  x <- x[!(names(x) %in% nms)]
+  new_workflow_set_options(!!!x)
 }
 
 append_options <- function(model, global) {
-   old_names <- names(model)
-   new_names <- names(global)
-   common_names <- intersect(old_names, new_names)
+  old_names <- names(model)
+  new_names <- names(global)
+  common_names <- intersect(old_names, new_names)
 
-   if (length(common_names) > 0) {
-      model <- rm_elem(model, common_names)
-   }
+  if (length(common_names) > 0) {
+    model <- rm_elem(model, common_names)
+  }
 
-   all_opt <- c(model, global)
-   new_workflow_set_options(!!!all_opt)
+  all_opt <- c(model, global)
+  new_workflow_set_options(!!!all_opt)
 }
 
 #' @export
 print.workflow_set_options <- function(x, ...) {
-   if (length(x) > 0) {
-      cat("a list of options with names: ",
-          paste0("'", names(x), "'", collapse = ", "))
-   } else {
-      cat("an empty container for options")
-   }
-   cat("\n")
+  if (length(x) > 0) {
+    cat(
+      "a list of options with names: ",
+      paste0("'", names(x), "'", collapse = ", ")
+    )
+  } else {
+    cat("an empty container for options")
+  }
+  cat("\n")
 }
 
 
@@ -164,22 +166,22 @@ print.workflow_set_options <- function(x, ...) {
 option_list <- function(...) new_workflow_set_options(...)
 
 new_workflow_set_options <- function(...) {
-   res <- rlang::list2(...)
-   if (any(names(res) == "")) {
-      rlang::abort("All options should be named.")
-   }
-   structure(res, class = c("workflow_set_options", "list"))
+  res <- rlang::list2(...)
+  if (any(names(res) == "")) {
+    rlang::abort("All options should be named.")
+  }
+  structure(res, class = c("workflow_set_options", "list"))
 }
 
 #' @export
 type_sum.workflow_set_options <- function(x) {
-   paste0("opts[", length(x), "]")
+  paste0("opts[", length(x), "]")
 }
 #' @export
 size_sum.workflow_set_options <- function(x) {
-   ""
+  ""
 }
 #' @export
 obj_sum.workflow_set_options <- function(x) {
-   paste0("opts[", length(x), "]")
+  paste0("opts[", length(x), "]")
 }

@@ -56,28 +56,28 @@
 #' # ------------------------------------------------------------------------------
 #'
 #' basic_recipe <-
-#'    recipe(class ~ ., data = cells) %>%
-#'    step_YeoJohnson(all_predictors()) %>%
-#'    step_normalize(all_predictors())
+#'   recipe(class ~ ., data = cells) %>%
+#'   step_YeoJohnson(all_predictors()) %>%
+#'   step_normalize(all_predictors())
 #'
 #' pca_recipe <-
-#'    basic_recipe %>%
-#'    step_pca(all_predictors(), num_comp = tune())
+#'   basic_recipe %>%
+#'   step_pca(all_predictors(), num_comp = tune())
 #'
 #' ss_recipe <-
-#'    basic_recipe %>%
-#'    step_spatialsign(all_predictors())
+#'   basic_recipe %>%
+#'   step_spatialsign(all_predictors())
 #'
 #' # ------------------------------------------------------------------------------
 #'
 #' knn_mod <-
-#'    nearest_neighbor(neighbors = tune(), weight_func = tune()) %>%
-#'    set_engine("kknn") %>%
-#'    set_mode("classification")
+#'   nearest_neighbor(neighbors = tune(), weight_func = tune()) %>%
+#'   set_engine("kknn") %>%
+#'   set_mode("classification")
 #'
 #' lr_mod <-
-#'    logistic_reg() %>%
-#'    set_engine("glm")
+#'   logistic_reg() %>%
+#'   set_engine("glm")
 #'
 #' # ------------------------------------------------------------------------------
 #'
@@ -101,84 +101,86 @@
 #' cell_set_by_group
 #' @export
 workflow_set <- function(preproc, models, cross = TRUE) {
-   if (length(preproc) != length(models) &
-       (length(preproc) != 1 & length(models) != 1 &
-        !cross)
-   ) {
-      rlang::abort(
-         "The lengths of 'preproc' and 'models' are different and `cross = FALSE`."
-      )
-   }
+  if (length(preproc) != length(models) &
+    (length(preproc) != 1 & length(models) != 1 &
+      !cross)
+  ) {
+    rlang::abort(
+      "The lengths of 'preproc' and 'models' are different and `cross = FALSE`."
+    )
+  }
 
-   preproc <- fix_list_names(preproc)
-   models <- fix_list_names(models)
+  preproc <- fix_list_names(preproc)
+  models <- fix_list_names(models)
 
-   if (cross) {
-      res <- cross_objects(preproc, models)
-   } else {
-      res <- fuse_objects(preproc, models)
-   }
-   res <-
-      res %>%
-      dplyr::mutate(
-         workflow  = purrr::map2(preproc, model, make_workflow),
-         workflow  = unname(workflow),
-         info = purrr::map(workflow, get_info),
-         option  = purrr::map(1:nrow(res), ~ new_workflow_set_options()),
-         result   = purrr::map(1:nrow(res), ~ list())
-      ) %>%
-      dplyr::select(wflow_id, info, option, result)
-   new_workflow_set(res)
+  if (cross) {
+    res <- cross_objects(preproc, models)
+  } else {
+    res <- fuse_objects(preproc, models)
+  }
+  res <-
+    res %>%
+    dplyr::mutate(
+      workflow = purrr::map2(preproc, model, make_workflow),
+      workflow = unname(workflow),
+      info = purrr::map(workflow, get_info),
+      option = purrr::map(1:nrow(res), ~ new_workflow_set_options()),
+      result = purrr::map(1:nrow(res), ~ list())
+    ) %>%
+    dplyr::select(wflow_id, info, option, result)
+  new_workflow_set(res)
 }
 
 get_info <- function(x) {
-   tibble::tibble(workflow = list(x),
-                  preproc = preproc_type(x),
-                  model = model_type(x),
-                  comment = character(1))
+  tibble::tibble(
+    workflow = list(x),
+    preproc = preproc_type(x),
+    model = model_type(x),
+    comment = character(1)
+  )
 }
 
 preproc_type <- function(x) {
-   x <- extract_preprocessor(x)
-   class(x)[1]
+  x <- extract_preprocessor(x)
+  class(x)[1]
 }
 
 model_type <- function(x) {
-   x <- extract_spec_parsnip(x)
-   class(x)[1]
+  x <- extract_spec_parsnip(x)
+  class(x)[1]
 }
 
 fix_list_names <- function(x) {
-   prefix <- purrr::map_chr(x, ~ class(.x)[1])
-   prefix <- vctrs::vec_as_names(prefix, repair = "unique", quiet = TRUE)
-   prefix <- gsub("\\.\\.\\.", "_", prefix)
-   nms <- names(x)
-   if (is.null(nms)) {
-      names(x) <- prefix
-   } else if (any(nms == "")) {
-      no_name <- which(nms == "")
-      names(x)[no_name] <- prefix[no_name]
-   }
-   x
+  prefix <- purrr::map_chr(x, ~ class(.x)[1])
+  prefix <- vctrs::vec_as_names(prefix, repair = "unique", quiet = TRUE)
+  prefix <- gsub("\\.\\.\\.", "_", prefix)
+  nms <- names(x)
+  if (is.null(nms)) {
+    names(x) <- prefix
+  } else if (any(nms == "")) {
+    no_name <- which(nms == "")
+    names(x)[no_name] <- prefix[no_name]
+  }
+  x
 }
 
 
 cross_objects <- function(preproc, models) {
-   tidyr::crossing(preproc, models) %>%
-      dplyr::mutate(pp_nm = names(preproc), mod_nm = names(models)) %>%
-      dplyr::mutate(wflow_id = paste(pp_nm, mod_nm, sep = "_")) %>%
-      dplyr::select(wflow_id, preproc, model = models)
+  tidyr::crossing(preproc, models) %>%
+    dplyr::mutate(pp_nm = names(preproc), mod_nm = names(models)) %>%
+    dplyr::mutate(wflow_id = paste(pp_nm, mod_nm, sep = "_")) %>%
+    dplyr::select(wflow_id, preproc, model = models)
 }
 
 fuse_objects <- function(preproc, models) {
-   if (length(preproc) == 1 | length(models) == 1) {
-      return(cross_objects(preproc, models))
-   }
-   nms <-
-      tibble::tibble(wflow_id = paste(names(preproc), names(models), sep = "_"))
+  if (length(preproc) == 1 | length(models) == 1) {
+    return(cross_objects(preproc, models))
+  }
+  nms <-
+    tibble::tibble(wflow_id = paste(names(preproc), names(models), sep = "_"))
 
-   tibble::tibble(preproc = preproc, model = models) %>%
-      dplyr::bind_cols(nms)
+  tibble::tibble(preproc = preproc, model = models) %>%
+    dplyr::bind_cols(nms)
 }
 
 
@@ -189,92 +191,92 @@ fuse_objects <- function(preproc, models) {
 
 #' @export
 tbl_sum.workflow_set <- function(x) {
-   orig <- NextMethod()
-   c("A workflow set/tibble" = unname(orig))
+  orig <- NextMethod()
+  c("A workflow set/tibble" = unname(orig))
 }
 
 # ------------------------------------------------------------------------------
 
 #' @export
 `[.workflow_set` <- function(x, i, j, drop = FALSE, ...) {
-   out <- NextMethod()
-   workflow_set_maybe_reconstruct(out)
+  out <- NextMethod()
+  workflow_set_maybe_reconstruct(out)
 }
 
 # ------------------------------------------------------------------------------
 
 #' @export
 `names<-.workflow_set` <- function(x, value) {
-   out <- NextMethod()
-   workflow_set_maybe_reconstruct(out)
+  out <- NextMethod()
+  workflow_set_maybe_reconstruct(out)
 }
 
 # ------------------------------------------------------------------------------
 
 new_workflow_set <- function(x) {
-   if (!has_required_container_type(x)) {
-      halt("`x` must be a list.")
-   }
-   if (!has_required_container_columns(x)) {
-      columns <- required_container_columns()
-      halt(
-         "The object should have columns: ",
-         paste0("'", columns, "'", collapse = ", "),
-         "."
-      )
-   }
+  if (!has_required_container_type(x)) {
+    halt("`x` must be a list.")
+  }
+  if (!has_required_container_columns(x)) {
+    columns <- required_container_columns()
+    halt(
+      "The object should have columns: ",
+      paste0("'", columns, "'", collapse = ", "),
+      "."
+    )
+  }
 
-   if (!has_valid_column_info_structure(x)) {
-      halt("The 'info' column should be a list.")
-   }
-   if (!has_valid_column_info_inner_types(x)) {
-      halt("All elements of 'info' must be tibbles.")
-   }
-   if (!has_valid_column_info_inner_names(x)) {
-      columns <- required_info_inner_names()
-      halt(
-         "The 'info' columns should have columns: ",
-         paste0("'", columns, "'", collapse = ", "),
-         "."
-      )
-   }
+  if (!has_valid_column_info_structure(x)) {
+    halt("The 'info' column should be a list.")
+  }
+  if (!has_valid_column_info_inner_types(x)) {
+    halt("All elements of 'info' must be tibbles.")
+  }
+  if (!has_valid_column_info_inner_names(x)) {
+    columns <- required_info_inner_names()
+    halt(
+      "The 'info' columns should have columns: ",
+      paste0("'", columns, "'", collapse = ", "),
+      "."
+    )
+  }
 
-   if (!has_valid_column_result_structure(x)) {
-      halt("The 'result' column should be a list.")
-   }
-   if (!has_valid_column_result_inner_types(x)) {
-      halt("Some elements of 'result' do not have class `tune_results`.")
-   }
-   if (!has_valid_column_result_fingerprints(x)) {
-      halt(
-         "Different resamples were used in the workflow 'result's. ",
-         "All elements of 'result' must use the same resamples."
-      )
-   }
+  if (!has_valid_column_result_structure(x)) {
+    halt("The 'result' column should be a list.")
+  }
+  if (!has_valid_column_result_inner_types(x)) {
+    halt("Some elements of 'result' do not have class `tune_results`.")
+  }
+  if (!has_valid_column_result_fingerprints(x)) {
+    halt(
+      "Different resamples were used in the workflow 'result's. ",
+      "All elements of 'result' must use the same resamples."
+    )
+  }
 
-   if (!has_valid_column_option_structure(x)) {
-      halt("The 'option' column should be a list.")
-   }
-   if (!has_valid_column_option_inner_types(x)) {
-      halt("All elements of 'option' should have class 'workflow_set_options'.")
-   }
+  if (!has_valid_column_option_structure(x)) {
+    halt("The 'option' column should be a list.")
+  }
+  if (!has_valid_column_option_inner_types(x)) {
+    halt("All elements of 'option' should have class 'workflow_set_options'.")
+  }
 
-   if (!has_valid_column_wflow_id_structure(x)) {
-      halt("The 'wflow_id' column should be character.")
-   }
-   if (!has_valid_column_wflow_id_strings(x)) {
-      halt("The 'wflow_id' column should contain unique, non-missing character strings.")
-   }
+  if (!has_valid_column_wflow_id_structure(x)) {
+    halt("The 'wflow_id' column should be character.")
+  }
+  if (!has_valid_column_wflow_id_strings(x)) {
+    halt("The 'wflow_id' column should contain unique, non-missing character strings.")
+  }
 
-   new_workflow_set0(x)
+  new_workflow_set0(x)
 }
 
 new_workflow_set0 <- function(x) {
-   new_tibble0(x, class = "workflow_set")
+  new_tibble0(x, class = "workflow_set")
 }
 new_tibble0 <- function(x, ..., class = NULL) {
-   # Handle the 0-row case correctly by using `new_data_frame()`.
-   # This also correctly strips any attributes except `names` off `x`.
-   x <- vctrs::new_data_frame(x)
-   tibble::new_tibble(x, nrow = nrow(x), class = class)
+  # Handle the 0-row case correctly by using `new_data_frame()`.
+  # This also correctly strips any attributes except `names` off `x`.
+  x <- vctrs::new_data_frame(x)
+  tibble::new_tibble(x, nrow = nrow(x), class = class)
 }
