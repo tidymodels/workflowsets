@@ -1,3 +1,10 @@
+#' @keywords internal
+"_PACKAGE"
+
+## usethis namespace: start
+## usethis namespace: end
+NULL
+
 #' @import ggplot2
 #' @import vctrs
 #' @importFrom stats qnorm as.formula model.frame
