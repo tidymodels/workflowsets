@@ -193,19 +193,19 @@ chi_models <-
    workflow_map("tune_grid", resamples = splits, grid = 10, 
                 metrics = metric_set(mae), verbose = TRUE)
 #> i 1 of 7 tuning:     simple_glmnet
-#> ✓ 1 of 7 tuning:     simple_glmnet (16.2s)
+#> ✓ 1 of 7 tuning:     simple_glmnet (15.8s)
 #> i 2 of 7 tuning:     simple_cart
-#> ✓ 2 of 7 tuning:     simple_cart (17.8s)
+#> ✓ 2 of 7 tuning:     simple_cart (16.2s)
 #> i 3 of 7 tuning:     simple_knn
-#> ✓ 3 of 7 tuning:     simple_knn (17.5s)
+#> ✓ 3 of 7 tuning:     simple_knn (15.8s)
 #> i 4 of 7 tuning:     filter_cart
-#> ✓ 4 of 7 tuning:     filter_cart (27.7s)
+#> ✓ 4 of 7 tuning:     filter_cart (23.3s)
 #> i 5 of 7 tuning:     filter_knn
-#> ✓ 5 of 7 tuning:     filter_knn (25.7s)
+#> ✓ 5 of 7 tuning:     filter_knn (23.3s)
 #> i 6 of 7 tuning:     pca_cart
-#> ✓ 6 of 7 tuning:     pca_cart (21.9s)
+#> ✓ 6 of 7 tuning:     pca_cart (19.3s)
 #> i 7 of 7 tuning:     pca_knn
-#> ✓ 7 of 7 tuning:     pca_knn (21.6s)
+#> ✓ 7 of 7 tuning:     pca_knn (18.8s)
 chi_models
 #> # A workflow set/tibble: 7 × 4
 #>   wflow_id      info             option    result   
@@ -259,7 +259,7 @@ rank_results(chi_models, rank_metric = "mae", select_best = TRUE) %>%
 ## Contributing
 
 This project is released with a [Contributor Code of
-Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
+Conduct](https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.
 
 -   For questions and discussions about tidymodels packages, modeling,
