@@ -5,10 +5,10 @@
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/tidymodels/workflowsets/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidymodels/workflowsets/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/tidymodels/workflowsets/branch/main/graph/badge.svg)](https://codecov.io/gh/tidymodels/workflowsets?branch=main)
-[![R-CMD-check](https://github.com/tidymodels/workflowsets/workflows/R-CMD-check/badge.svg)](https://github.com/tidymodels/workflowsets/actions)
-[![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+coverage](https://codecov.io/gh/tidymodels/workflowsets/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/workflowsets?branch=main)
+[![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 <!-- badges: end -->
 
 The goal of workflowsets is to allow users to create and easily fit a
@@ -166,7 +166,7 @@ splits <-
    )
 splits
 #> # Sliding period resampling 
-#> # A tibble: 9 x 2
+#> # A tibble: 9 × 2
 #>   splits          id    
 #>   <list>          <chr> 
 #> 1 <split [301/7]> Slice1
@@ -193,30 +193,30 @@ chi_models <-
    workflow_map("tune_grid", resamples = splits, grid = 10, 
                 metrics = metric_set(mae), verbose = TRUE)
 #> i 1 of 7 tuning:     simple_glmnet
-#> ✓ 1 of 7 tuning:     simple_glmnet (25.4s)
+#> ✓ 1 of 7 tuning:     simple_glmnet (16.2s)
 #> i 2 of 7 tuning:     simple_cart
-#> ✓ 2 of 7 tuning:     simple_cart (27s)
+#> ✓ 2 of 7 tuning:     simple_cart (17.8s)
 #> i 3 of 7 tuning:     simple_knn
-#> ✓ 3 of 7 tuning:     simple_knn (26.7s)
+#> ✓ 3 of 7 tuning:     simple_knn (17.5s)
 #> i 4 of 7 tuning:     filter_cart
-#> ✓ 4 of 7 tuning:     filter_cart (42.1s)
+#> ✓ 4 of 7 tuning:     filter_cart (27.7s)
 #> i 5 of 7 tuning:     filter_knn
-#> ✓ 5 of 7 tuning:     filter_knn (41.8s)
+#> ✓ 5 of 7 tuning:     filter_knn (25.7s)
 #> i 6 of 7 tuning:     pca_cart
-#> ✓ 6 of 7 tuning:     pca_cart (33s)
+#> ✓ 6 of 7 tuning:     pca_cart (21.9s)
 #> i 7 of 7 tuning:     pca_knn
-#> ✓ 7 of 7 tuning:     pca_knn (33s)
+#> ✓ 7 of 7 tuning:     pca_knn (21.6s)
 chi_models
-#> # A workflow set/tibble: 7 x 4
-#>   wflow_id      info                 option    result   
-#>   <chr>         <list>               <list>    <list>   
-#> 1 simple_glmnet <tibble[,4] [1 × 4]> <opts[3]> <tune[+]>
-#> 2 simple_cart   <tibble[,4] [1 × 4]> <opts[3]> <tune[+]>
-#> 3 simple_knn    <tibble[,4] [1 × 4]> <opts[3]> <tune[+]>
-#> 4 filter_cart   <tibble[,4] [1 × 4]> <opts[3]> <tune[+]>
-#> 5 filter_knn    <tibble[,4] [1 × 4]> <opts[3]> <tune[+]>
-#> 6 pca_cart      <tibble[,4] [1 × 4]> <opts[3]> <tune[+]>
-#> 7 pca_knn       <tibble[,4] [1 × 4]> <opts[3]> <tune[+]>
+#> # A workflow set/tibble: 7 × 4
+#>   wflow_id      info             option    result   
+#>   <chr>         <list>           <list>    <list>   
+#> 1 simple_glmnet <tibble [1 × 4]> <opts[3]> <tune[+]>
+#> 2 simple_cart   <tibble [1 × 4]> <opts[3]> <tune[+]>
+#> 3 simple_knn    <tibble [1 × 4]> <opts[3]> <tune[+]>
+#> 4 filter_cart   <tibble [1 × 4]> <opts[3]> <tune[+]>
+#> 5 filter_knn    <tibble [1 × 4]> <opts[3]> <tune[+]>
+#> 6 pca_cart      <tibble [1 × 4]> <opts[3]> <tune[+]>
+#> 7 pca_knn       <tibble [1 × 4]> <opts[3]> <tune[+]>
 ```
 
 The `results` column contains the results of each call to `tune_grid()`
@@ -244,7 +244,7 @@ results per workflow:
 ``` r
 rank_results(chi_models, rank_metric = "mae", select_best = TRUE) %>% 
    select(rank, mean, model, wflow_id, .config)
-#> # A tibble: 7 x 5
+#> # A tibble: 7 × 5
 #>    rank  mean model            wflow_id      .config              
 #>   <int> <dbl> <chr>            <chr>         <chr>                
 #> 1     1  1.85 linear_reg       simple_glmnet Preprocessor1_Model07
