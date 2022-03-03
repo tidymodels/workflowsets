@@ -33,19 +33,19 @@ Factor predictors are left as-is (i.e., no indicator variables are created).
 data(penguins, package = "modeldata")
 
 leave_var_out_formulas(
-   bill_length_mm ~ .,
-   data = penguins
+  bill_length_mm ~ .,
+  data = penguins
 )
 
 leave_var_out_formulas(
-   bill_length_mm ~ (island + sex)^2 + flipper_length_mm,
-   data = penguins
+  bill_length_mm ~ (island + sex)^2 + flipper_length_mm,
+  data = penguins
 )
 
 leave_var_out_formulas(
-   bill_length_mm ~ (island + sex)^2 + flipper_length_mm +
-                    I(flipper_length_mm^2),
-   data = penguins
+  bill_length_mm ~ (island + sex)^2 + flipper_length_mm +
+    I(flipper_length_mm^2),
+  data = penguins
 )
 }
 \seealso{

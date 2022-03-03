@@ -49,84 +49,84 @@
 #' extract_workflow(two_class_res, "none_cart")
 #' @export
 extract_workflow_set_result <- function(x, id, ...) {
-   y <- filter_id(x, id)
-   y$result[[1]]
+  y <- filter_id(x, id)
+  y$result[[1]]
 }
 
 #' @export
 #' @rdname extract_workflow_set_result
 extract_workflow.workflow_set <- function(x, id, ...) {
-   y <- filter_id(x, id)
-   y$info[[1]]$workflow[[1]]
+  y <- filter_id(x, id)
+  y$info[[1]]$workflow[[1]]
 }
 
 #' @export
 #' @rdname extract_workflow_set_result
 extract_spec_parsnip.workflow_set <- function(x, id, ...) {
-   y <- filter_id(x, id)
-   extract_spec_parsnip(y$info[[1]]$workflow[[1]])
+  y <- filter_id(x, id)
+  extract_spec_parsnip(y$info[[1]]$workflow[[1]])
 }
 
 
 #' @export
 #' @rdname extract_workflow_set_result
 extract_recipe.workflow_set <- function(x, id, ..., estimated = TRUE) {
-   check_empty_dots(...)
-   if (!rlang::is_bool(estimated)) {
-      rlang::abort("`estimated` must be a single `TRUE` or `FALSE`.")
-   }
-   y <- filter_id(x, id)
-   extract_recipe(y$info[[1]]$workflow[[1]], estimated = estimated)
+  check_empty_dots(...)
+  if (!rlang::is_bool(estimated)) {
+    rlang::abort("`estimated` must be a single `TRUE` or `FALSE`.")
+  }
+  y <- filter_id(x, id)
+  extract_recipe(y$info[[1]]$workflow[[1]], estimated = estimated)
 }
 check_empty_dots <- function(...) {
-   opts <- list(...)
-   if (any(names(opts) == "estimated")) {
-      rlang::abort("'estimated' should be a named argument.")
-   }
-   if (length(opts) > 0) {
-      rlang::abort("'...' are not used in this function.")
-   }
-   invisible(NULL)
+  opts <- list(...)
+  if (any(names(opts) == "estimated")) {
+    rlang::abort("'estimated' should be a named argument.")
+  }
+  if (length(opts) > 0) {
+    rlang::abort("'...' are not used in this function.")
+  }
+  invisible(NULL)
 }
 
 
 #' @export
 #' @rdname extract_workflow_set_result
 extract_fit_parsnip.workflow_set <- function(x, id, ...) {
-   y <- filter_id(x, id)
-   extract_fit_parsnip(y$info[[1]]$workflow[[1]])
+  y <- filter_id(x, id)
+  extract_fit_parsnip(y$info[[1]]$workflow[[1]])
 }
 
 #' @export
 #' @rdname extract_workflow_set_result
 extract_fit_engine.workflow_set <- function(x, id, ...) {
-   y <- filter_id(x, id)
-   extract_fit_engine(y$info[[1]]$workflow[[1]])
+  y <- filter_id(x, id)
+  extract_fit_engine(y$info[[1]]$workflow[[1]])
 }
 
 #' @export
 #' @rdname extract_workflow_set_result
 extract_mold.workflow_set <- function(x, id, ...) {
-   y <- filter_id(x, id)
-   extract_mold(y$info[[1]]$workflow[[1]])
+  y <- filter_id(x, id)
+  extract_mold(y$info[[1]]$workflow[[1]])
 }
 
 #' @export
 #' @rdname extract_workflow_set_result
 extract_preprocessor.workflow_set <- function(x, id, ...) {
-   y <- filter_id(x, id)
-   extract_preprocessor(y$info[[1]]$workflow[[1]])
+  y <- filter_id(x, id)
+  extract_preprocessor(y$info[[1]]$workflow[[1]])
 }
 
 # ------------------------------------------------------------------------------
 
 filter_id <- function(x, id) {
-   if (!rlang::is_string(id)) {
-      halt("`id` must be a single string.")
-   }
-   out <- dplyr::filter(x, wflow_id == id)
-   if (nrow(out) != 1L) {
-      halt("`id` must correspond to a single row in `x`.")
-   }
-   out
+  if (!rlang::is_string(id)) {
+    halt("`id` must be a single string.")
+  }
+  out <- dplyr::filter(x, wflow_id == id)
+  if (nrow(out) != 1L) {
+    halt("`id` must correspond to a single row in `x`.")
+  }
+  out
 }

@@ -38,7 +38,6 @@
 #' library(tidyr)
 #'
 #' # ------------------------------------------------------------------------------
-#'
 #' \donttest{
 #' collect_metrics(two_class_res)
 #'
@@ -53,98 +52,98 @@
 #' collect_metrics(two_class_res, summarize = FALSE)
 #' @export
 collect_metrics.workflow_set <- function(x, summarize = TRUE, ...) {
-   check_incompete(x, fail = TRUE)
-   x <-
-      dplyr::mutate(
-         x,
-         metrics = purrr::map(
-            result,
-            collect_metrics,
-            summarize = summarize
-         ),
-         metrics = purrr::map2(metrics, result, remove_parameters)
-      )
-   info <- dplyr::bind_rows(x$info) %>% dplyr::select(-workflow, -comment)
-   x <-
-      dplyr::select(x, wflow_id, metrics) %>%
-      dplyr::bind_cols(info) %>%
-      tidyr::unnest(cols = c(metrics)) %>%
-      reorder_cols()
-   check_consistent_metrics(x, fail = FALSE)
-   x
+  check_incompete(x, fail = TRUE)
+  x <-
+    dplyr::mutate(
+      x,
+      metrics = purrr::map(
+        result,
+        collect_metrics,
+        summarize = summarize
+      ),
+      metrics = purrr::map2(metrics, result, remove_parameters)
+    )
+  info <- dplyr::bind_rows(x$info) %>% dplyr::select(-workflow, -comment)
+  x <-
+    dplyr::select(x, wflow_id, metrics) %>%
+    dplyr::bind_cols(info) %>%
+    tidyr::unnest(cols = c(metrics)) %>%
+    reorder_cols()
+  check_consistent_metrics(x, fail = FALSE)
+  x
 }
 
 remove_parameters <- function(x, object) {
-   prm <- tune::.get_tune_parameter_names(object)
-   x <- dplyr::select(x,-dplyr::one_of(prm))
-   x
+  prm <- tune::.get_tune_parameter_names(object)
+  x <- dplyr::select(x, -dplyr::one_of(prm))
+  x
 }
 
 reorder_cols <- function(x) {
-   if (any(names(x) == ".iter")) {
-      cols <- c("wflow_id", ".config", ".iter", "preproc", "model")
-   } else {
-      cols <- c("wflow_id", ".config", "preproc", "model")
-   }
-   dplyr::relocate(x, !!!cols)
+  if (any(names(x) == ".iter")) {
+    cols <- c("wflow_id", ".config", ".iter", "preproc", "model")
+  } else {
+    cols <- c("wflow_id", ".config", "preproc", "model")
+  }
+  dplyr::relocate(x, !!!cols)
 }
 
 #' @export
 #' @rdname collect_metrics.workflow_set
 collect_predictions.workflow_set <-
-   function(x, summarize = TRUE, parameters = NULL, select_best = FALSE,
-            metric = NULL, ...) {
-      check_incompete(x, fail = TRUE)
-      if (select_best) {
-         x <-
-            dplyr::mutate(x,
-                          predictions = purrr::map(
-                             result,
-                             ~ select_bare_predictions(
-                                .x,
-                                summarize = summarize,
-                                metric = metric
-                             )
-                          )
-            )
-      } else {
-         x <-
-            dplyr::mutate(
-               x,
-               predictions = purrr::map(
-                  result,
-                  get_bare_predictions,
-                  summarize = summarize,
-                  parameters = parameters
-               )
-            )
-      }
-      info <- dplyr::bind_rows(x$info) %>% dplyr::select(-workflow, -comment)
+  function(x, summarize = TRUE, parameters = NULL, select_best = FALSE,
+           metric = NULL, ...) {
+    check_incompete(x, fail = TRUE)
+    if (select_best) {
       x <-
-         dplyr::select(x, wflow_id, predictions) %>%
-         dplyr::bind_cols(info) %>%
-         tidyr::unnest(cols = c(predictions)) %>%
-         reorder_cols()
-      x
-   }
+        dplyr::mutate(x,
+          predictions = purrr::map(
+            result,
+            ~ select_bare_predictions(
+              .x,
+              summarize = summarize,
+              metric = metric
+            )
+          )
+        )
+    } else {
+      x <-
+        dplyr::mutate(
+          x,
+          predictions = purrr::map(
+            result,
+            get_bare_predictions,
+            summarize = summarize,
+            parameters = parameters
+          )
+        )
+    }
+    info <- dplyr::bind_rows(x$info) %>% dplyr::select(-workflow, -comment)
+    x <-
+      dplyr::select(x, wflow_id, predictions) %>%
+      dplyr::bind_cols(info) %>%
+      tidyr::unnest(cols = c(predictions)) %>%
+      reorder_cols()
+    x
+  }
 
 select_bare_predictions <- function(x, metric, summarize) {
-   res <-
-      tune::collect_predictions(x,
-                                summarize = summarize,
-                                parameters = tune::select_best(x, metric = metric))
-   remove_parameters(res, x)
+  res <-
+    tune::collect_predictions(x,
+      summarize = summarize,
+      parameters = tune::select_best(x, metric = metric)
+    )
+  remove_parameters(res, x)
 }
 
 get_bare_predictions <- function(x, ...) {
-   res <- tune::collect_predictions(x, ...)
-   remove_parameters(res, x)
+  res <- tune::collect_predictions(x, ...)
+  remove_parameters(res, x)
 }
 
 collect_notes <- function(x, show = 1) {
-   y <- purrr::map_dfr(x$.notes, I)
-   show <- min(show, nrow(y))
-   y <- paste0(y$.notes[1:show])
-   gsub("[\r\n]", "", y)
+  y <- purrr::map_dfr(x$.notes, I)
+  show <- min(show, nrow(y))
+  y <- paste0(y$.notes[1:show])
+  gsub("[\r\n]", "", y)
 }
-

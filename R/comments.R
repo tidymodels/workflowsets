@@ -18,107 +18,109 @@
 #' two_class_set %>% comment_get("none_cart")
 #'
 #' new_set <-
-#'    two_class_set %>%
-#'    comment_add("none_cart", "What does 'cart' stand for\u2753") %>%
-#'    comment_add("none_cart", "Classification And Regression Trees.")
+#'   two_class_set %>%
+#'   comment_add("none_cart", "What does 'cart' stand for\u2753") %>%
+#'   comment_add("none_cart", "Classification And Regression Trees.")
 #'
 #' comment_print(new_set)
 #'
 #' new_set %>% comment_get("none_cart")
 #'
-#' new_set %>% comment_reset("none_cart") %>% comment_get("none_cart")
+#' new_set %>%
+#'   comment_reset("none_cart") %>%
+#'   comment_get("none_cart")
 comment_add <- function(x, id, ..., append = TRUE, collapse = "\n") {
-   dots <- list(...)
-   if (length(dots) == 0) {
-      return(x)
-   } else {
-      is_chr <- purrr::map_lgl(dots, is.character)
-      if (any(!is_chr)) {
-         rlang::abort("The comments should be character strings.")
-      }
-   }
+  dots <- list(...)
+  if (length(dots) == 0) {
+    return(x)
+  } else {
+    is_chr <- purrr::map_lgl(dots, is.character)
+    if (any(!is_chr)) {
+      rlang::abort("The comments should be character strings.")
+    }
+  }
 
-   if (length(id) > 1) {
-      rlang::abort("'id' should be a single character value.")
-   }
-   has_id <- id == x$wflow_id
-   if (!any(has_id)) {
-      rlang::abort("The 'id' value is not in wflow_id.")
-   }
-   id_index <- which(has_id)
-   current_val <- x$info[[id_index]]$comment
-   if (!is.na(current_val) && !append) {
-      rlang::abort("There is already a comment for this id and `append = FALSE`.")
-   }
-   new_value <- c(x$info[[id_index]]$comment, unlist(dots))
-   new_value <- new_value[!is.na(new_value) & nchar(new_value) > 0]
-   new_value <- paste0(new_value, collapse = "\n")
-   x$info[[id_index]]$comment <- new_value
-   x
+  if (length(id) > 1) {
+    rlang::abort("'id' should be a single character value.")
+  }
+  has_id <- id == x$wflow_id
+  if (!any(has_id)) {
+    rlang::abort("The 'id' value is not in wflow_id.")
+  }
+  id_index <- which(has_id)
+  current_val <- x$info[[id_index]]$comment
+  if (!is.na(current_val) && !append) {
+    rlang::abort("There is already a comment for this id and `append = FALSE`.")
+  }
+  new_value <- c(x$info[[id_index]]$comment, unlist(dots))
+  new_value <- new_value[!is.na(new_value) & nchar(new_value) > 0]
+  new_value <- paste0(new_value, collapse = "\n")
+  x$info[[id_index]]$comment <- new_value
+  x
 }
 
 #' @export
 #' @rdname comment_add
 comment_get <- function(x, id) {
-   if (length(id) > 1) {
-      rlang::abort("'id' should be a single character value.")
-   }
-   has_id <- id == x$wflow_id
-   if (!any(has_id)) {
-      rlang::abort("The 'id' value is not in wflow_id.")
-   }
-   id_index <- which(has_id)
-   x$info[[id_index]]$comment
+  if (length(id) > 1) {
+    rlang::abort("'id' should be a single character value.")
+  }
+  has_id <- id == x$wflow_id
+  if (!any(has_id)) {
+    rlang::abort("The 'id' value is not in wflow_id.")
+  }
+  id_index <- which(has_id)
+  x$info[[id_index]]$comment
 }
 
 
 #' @export
 #' @rdname comment_add
 comment_reset <- function(x, id) {
-   if (length(id) > 1) {
-      rlang::abort("'id' should be a single character value.")
-   }
-   has_id <- id == x$wflow_id
-   if (!any(has_id)) {
-      rlang::abort("The 'id' value is not in wflow_id.")
-   }
-   id_index <- which(has_id)
-   x$info[[id_index]]$comment <- character(1)
-   x
+  if (length(id) > 1) {
+    rlang::abort("'id' should be a single character value.")
+  }
+  has_id <- id == x$wflow_id
+  if (!any(has_id)) {
+    rlang::abort("The 'id' value is not in wflow_id.")
+  }
+  id_index <- which(has_id)
+  x$info[[id_index]]$comment <- character(1)
+  x
 }
 
 #' @export
 #' @rdname comment_add
 comment_print <- function(x, id = NULL, ...) {
-   if (is.null(id)) {
-      id <- x$wflow_id
-   }
+  if (is.null(id)) {
+    id <- x$wflow_id
+  }
 
-   x <- dplyr::filter(x, wflow_id %in% id)
-   chr_x <- purrr::map(x$wflow_id, ~ comment_get(x, id = .x))
-   has_comment <- purrr::map_lgl(chr_x, ~ nchar(.x) > 0)
-   chr_x <- chr_x[which(has_comment)]
-   id <- x$wflow_id[which(has_comment)]
+  x <- dplyr::filter(x, wflow_id %in% id)
+  chr_x <- purrr::map(x$wflow_id, ~ comment_get(x, id = .x))
+  has_comment <- purrr::map_lgl(chr_x, ~ nchar(.x) > 0)
+  chr_x <- chr_x[which(has_comment)]
+  id <- x$wflow_id[which(has_comment)]
 
-   for (i in seq_along(chr_x)) {
-      cat(cli::rule(id[i]), "\n\n")
-      tmp_chr <- comment_format(chr_x[[i]])
-      n_comments <- length(tmp_chr)
+  for (i in seq_along(chr_x)) {
+    cat(cli::rule(id[i]), "\n\n")
+    tmp_chr <- comment_format(chr_x[[i]])
+    n_comments <- length(tmp_chr)
 
-      for(j in 1:n_comments) {
-         cat(tmp_chr[j], "\n\n")
-      }
-   }
-   invisible(NULL)
+    for (j in 1:n_comments) {
+      cat(tmp_chr[j], "\n\n")
+    }
+  }
+  invisible(NULL)
 }
 
 comment_format <- function(x, id, ...) {
-   x <- strsplit(x, "\n")[[1]]
-   x <- purrr::map(x, ~ strwrap(.x))
-   x <- purrr::map(x, ~ add_returns(.x))
-   paste0(x, collapse = "\n\n")
+  x <- strsplit(x, "\n")[[1]]
+  x <- purrr::map(x, ~ strwrap(.x))
+  x <- purrr::map(x, ~ add_returns(.x))
+  paste0(x, collapse = "\n\n")
 }
 
 add_returns <- function(x) {
-   paste0(x, collapse = "\n")
+  paste0(x, collapse = "\n")
 }

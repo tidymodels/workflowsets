@@ -1,3 +1,10 @@
+#' @keywords internal
+"_PACKAGE"
+
+## usethis namespace: start
+## usethis namespace: end
+NULL
+
 #' @import ggplot2
 #' @import vctrs
 #' @importFrom stats qnorm as.formula model.frame
@@ -6,10 +13,12 @@
 #' @importFrom lifecycle deprecated
 
 utils::globalVariables(
-   c(".config", ".estimator", ".metric", "info", "metric", "mod_nm",
-     "model", "n", "pp_nm", "preprocessor", "preproc", "object",
-     "result", "std_err", "wflow_id", "func", "is_race", "num_rs", "option",
-     "metrics", "predictions", "hash", "id", "workflow", "comment")
+  c(
+    ".config", ".estimator", ".metric", "info", "metric", "mod_nm",
+    "model", "n", "pp_nm", "preprocessor", "preproc", "object",
+    "result", "std_err", "wflow_id", "func", "is_race", "num_rs", "option",
+    "metrics", "predictions", "hash", "id", "workflow", "comment"
+  )
 )
 
 # ------------------------------------------------------------------------------
@@ -57,5 +66,3 @@ hardhat::extract_preprocessor
 #' @importFrom hardhat extract_workflow
 #' @export
 hardhat::extract_workflow
-
-
