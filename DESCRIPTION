@@ -51,7 +51,7 @@ Suggests:
 VignetteBuilder: 
     knitr
 Config/Needs/website: 
-    discrim, 
+    tidymodels/discrim, 
     parsnip,
     tidymodels/tune,
     tidymodels, 
