@@ -23,7 +23,7 @@ Imports:
     dplyr (>= 1.0.0),
     generics,
     ggplot2,
-    hardhat (>= 0.1.6.9001),
+    hardhat (>= 0.2.0),
     lifecycle (>= 1.0.0),
     prettyunits,
     purrr,
@@ -38,12 +38,12 @@ Imports:
     workflows (>= 0.2.4.9002)
 Suggests: 
     covr,
-    dials (>= 0.0.10.9001),
+    dials (>= 0.1.0),
     kknn,
     knitr,
     modeldata,
-    parsnip (>= 0.1.7.9005),
-    recipes (>= 0.1.17.9001),
+    parsnip (>= 0.2.0),
+    recipes (>= 0.2.0),
     rmarkdown,
     spelling,
     testthat (>= 3.0.0),
@@ -51,8 +51,8 @@ Suggests:
 VignetteBuilder: 
     knitr
 Config/Needs/website: 
-    tidymodels/discrim, 
-    tidymodels/parsnip,
+    discrim, 
+    parsnip,
     tidymodels/tune,
     tidymodels, 
     discrim, 
@@ -70,6 +70,5 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Remotes: 
-    tidymodels/parsnip,
     tidymodels/tune,
     tidymodels/workflows
