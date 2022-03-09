@@ -21,17 +21,14 @@ car_set_1 <-
 # ------------------------------------------------------------------------------
 
 test_that("extracts", {
-  expect_error(
-    extract_fit_engine(car_set_1, id = "reg_lm"),
-    "The workflow does not have a model fit"
+  expect_snapshot(error = TRUE,
+    extract_fit_engine(car_set_1, id = "reg_lm")
   )
-  expect_error(
-    extract_fit_parsnip(car_set_1, id = "reg_lm"),
-    "The workflow does not have a model fit"
+   expect_snapshot(error = TRUE,
+    extract_fit_parsnip(car_set_1, id = "reg_lm")
   )
-  expect_error(
-    extract_mold(car_set_1, id = "reg_lm"),
-    "workflow does not have a mold"
+   expect_snapshot(error = TRUE,
+    extract_mold(car_set_1, id = "reg_lm")
   )
   expect_s3_class(
     extract_preprocessor(car_set_1, id = "reg_lm"),
@@ -45,9 +42,8 @@ test_that("extracts", {
     extract_workflow(car_set_1, id = "reg_lm"),
     "workflow"
   )
-  expect_error(
-    extract_recipe(car_set_1, id = "reg_lm"),
-    "workflow does not have a mold"
+  expect_snapshot(error = TRUE,
+    extract_recipe(car_set_1, id = "reg_lm")
   )
   expect_s3_class(
     extract_recipe(car_set_1, id = "reg_lm", estimated = FALSE),
@@ -64,13 +60,11 @@ test_that("extracts", {
     car_set_1$result[[1]]
   )
 
-  expect_error(
-    car_set_1 %>% extract_workflow_set_result("Gideon Nav"),
-    "`id` must correspond to a single row in `x`"
+  expect_snapshot(error = TRUE,
+    car_set_1 %>% extract_workflow_set_result("Gideon Nav")
   )
 
-  expect_error(
-    car_set_1 %>% extract_workflow("Coronabeth Tridentarius"),
-    "`id` must correspond to a single row in `x`"
+  expect_snapshot(error = TRUE,
+    car_set_1 %>% extract_workflow("Coronabeth Tridentarius")
   )
 })
