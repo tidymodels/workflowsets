@@ -30,7 +30,7 @@ converted into a workflow set.
 # Use the already worked example to show how to add tuned
 # objects to a workflow set
 
-results <-  two_class_res \%>\% purrr::pluck("result")
+results <- two_class_res \%>\% purrr::pluck("result")
 names(results) <- two_class_res$wflow_id
 
 # These are all objects that have been resampled or tuned:
@@ -48,15 +48,14 @@ library(workflows)
 lr_spec <- logistic_reg()
 
 main_effects <-
-   workflow() \%>\%
-   add_model(lr_spec) \%>\%
-   add_formula(Class ~ .)
+  workflow() \%>\%
+  add_model(lr_spec) \%>\%
+  add_formula(Class ~ .)
 
 interactions <-
-   workflow() \%>\%
-   add_model(lr_spec) \%>\%
-   add_formula(Class ~ (.)^2)
+  workflow() \%>\%
+  add_model(lr_spec) \%>\%
+  add_formula(Class ~ (.)^2)
 
 as_workflow_set(main = main_effects, int = interactions)
-
 }

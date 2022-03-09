@@ -62,7 +62,6 @@ library(purrr)
 library(tidyr)
 
 # ------------------------------------------------------------------------------
-
 \donttest{
 collect_metrics(two_class_res)
 

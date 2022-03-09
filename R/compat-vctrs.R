@@ -13,7 +13,7 @@
 
 #' @export
 vec_restore.workflow_set <- function(x, to, ...) {
-   workflow_set_maybe_reconstruct(x)
+  workflow_set_maybe_reconstruct(x)
 }
 
 # ------------------------------------------------------------------------------
@@ -31,24 +31,24 @@ vec_restore.workflow_set <- function(x, to, ...) {
 
 #' @export
 vec_ptype2.workflow_set.workflow_set <- function(x, y, ..., x_arg = "", y_arg = "") {
-   out <- vctrs::df_ptype2(x, y, ..., x_arg = x_arg, y_arg = y_arg)
-   workflow_set_maybe_reconstruct(out)
+  out <- vctrs::df_ptype2(x, y, ..., x_arg = x_arg, y_arg = y_arg)
+  workflow_set_maybe_reconstruct(out)
 }
 #' @export
 vec_ptype2.workflow_set.tbl_df <- function(x, y, ..., x_arg = "", y_arg = "") {
-   vctrs::tib_ptype2(x, y, ..., x_arg = x_arg, y_arg = y_arg)
+  vctrs::tib_ptype2(x, y, ..., x_arg = x_arg, y_arg = y_arg)
 }
 #' @export
 vec_ptype2.tbl_df.workflow_set <- function(x, y, ..., x_arg = "", y_arg = "") {
-   vctrs::tib_ptype2(x, y, ..., x_arg = x_arg, y_arg = y_arg)
+  vctrs::tib_ptype2(x, y, ..., x_arg = x_arg, y_arg = y_arg)
 }
 #' @export
 vec_ptype2.workflow_set.data.frame <- function(x, y, ..., x_arg = "", y_arg = "") {
-   vctrs::tib_ptype2(x, y, ..., x_arg = x_arg, y_arg = y_arg)
+  vctrs::tib_ptype2(x, y, ..., x_arg = x_arg, y_arg = y_arg)
 }
 #' @export
 vec_ptype2.data.frame.workflow_set <- function(x, y, ..., x_arg = "", y_arg = "") {
-   vctrs::tib_ptype2(x, y, ..., x_arg = x_arg, y_arg = y_arg)
+  vctrs::tib_ptype2(x, y, ..., x_arg = x_arg, y_arg = y_arg)
 }
 
 # ------------------------------------------------------------------------------
@@ -75,29 +75,29 @@ vec_ptype2.data.frame.workflow_set <- function(x, y, ..., x_arg = "", y_arg = ""
 
 #' @export
 vec_cast.workflow_set.workflow_set <- function(x, to, ..., x_arg = "", to_arg = "") {
-   out <- vctrs::df_cast(x, to, ..., x_arg = x_arg, to_arg = to_arg)
-   workflow_set_maybe_reconstruct(out)
+  out <- vctrs::df_cast(x, to, ..., x_arg = x_arg, to_arg = to_arg)
+  workflow_set_maybe_reconstruct(out)
 }
 #' @export
 vec_cast.workflow_set.tbl_df <- function(x, to, ..., x_arg = "", to_arg = "") {
-   stop_incompatible_cast_workflow_set(x, to, x_arg = x_arg, to_arg = to_arg)
+  stop_incompatible_cast_workflow_set(x, to, x_arg = x_arg, to_arg = to_arg)
 }
 #' @export
 vec_cast.tbl_df.workflow_set <- function(x, to, ..., x_arg = "", to_arg = "") {
-   vctrs::tib_cast(x, to, ..., x_arg = x_arg, to_arg = to_arg)
+  vctrs::tib_cast(x, to, ..., x_arg = x_arg, to_arg = to_arg)
 }
 #' @export
 vec_cast.workflow_set.data.frame <- function(x, to, ..., x_arg = "", to_arg = "") {
-   stop_incompatible_cast_workflow_set(x, to, x_arg = x_arg, to_arg = to_arg)
+  stop_incompatible_cast_workflow_set(x, to, x_arg = x_arg, to_arg = to_arg)
 }
 #' @export
 vec_cast.data.frame.workflow_set <- function(x, to, ..., x_arg = "", to_arg = "") {
-   vctrs::df_cast(x, to, ..., x_arg = x_arg, to_arg = to_arg)
+  vctrs::df_cast(x, to, ..., x_arg = x_arg, to_arg = to_arg)
 }
 
 # ------------------------------------------------------------------------------
 
 stop_incompatible_cast_workflow_set <- function(x, to, ..., x_arg, to_arg) {
-   details <- "Can't cast to a <workflow_set> because the resulting structure is likely invalid."
-   vctrs::stop_incompatible_cast(x, to, x_arg = x_arg, to_arg = to_arg, details = details)
+  details <- "Can't cast to a <workflow_set> because the resulting structure is likely invalid."
+  vctrs::stop_incompatible_cast(x, to, x_arg = x_arg, to_arg = to_arg, details = details)
 }
