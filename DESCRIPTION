@@ -4,7 +4,7 @@ Version: 0.1.0.9000
 Authors@R: c(
     person("Max", "Kuhn", , "max@rstudio.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-2402-136X")),
-    person("RStudio", role = "cph")
+    person("RStudio", role = c("cph", "fnd"))
   )
 Description: A workflow is a combination of a model and preprocessors
     (e.g, a formula, recipe, etc.) (Kuhn and Silge (2021)
@@ -15,8 +15,9 @@ Description: A workflow is a combination of a model and preprocessors
 License: MIT + file LICENSE
 URL: https://github.com/tidymodels/workflowsets,
     https://workflowsets.tidymodels.org
+BugReports: https://github.com/tidymodels/workflowsets/issues
 Depends: 
-    R (>= 2.10)
+    R (>= 3.4)
 Imports: 
     cli,
     dplyr (>= 1.0.0),
@@ -49,7 +50,13 @@ Suggests:
     yardstick
 VignetteBuilder: 
     knitr
-Config/Needs/website: tidymodels, discrim, rpart, mda, klaR, earth,
+Config/Needs/website: 
+    tidymodels, 
+    discrim, 
+    rpart, 
+    mda, 
+    klaR, 
+    earth,
     tidyverse/tidytemplate
 Config/testthat/edition: 3
 Encoding: UTF-8

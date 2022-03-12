@@ -2,23 +2,12 @@ url: https://workflowsets.tidymodels.org
 
 template:
   package: tidytemplate
-  params:
-    theme: tidymodels
-    part_of: <a href="https://tidymodels.org">tidymodels</a>
-    footer: workflowsets is a part of the <strong>tidymodels</strong> ecosystem, a collection of modeling packages designed with common APIs and a shared philosophy.
-
-# https://github.com/tidyverse/tidytemplate for css
-
+  bootstrap: 5
+  bslib:
+    danger: "#CA225E"
+    primary: "#CA225E"
+  includes:
+    in_header: |
+      <script defer data-domain="workflowsets.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script>
 development:
-  mode: release
-
-navbar:
-  left:
-  - text: Evaluating different predictors
-    href: articles/evaluating-different-predictor-sets.html
-  - text: Ranking models
-    href: articles/articles/tuning-and-comparing-models.html
-  - text: Reference
-    href: reference/index.html
-  - text: News
-    href: news/index.html
+  mode: auto

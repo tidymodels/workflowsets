@@ -71,28 +71,28 @@ val_set <- validation_split(cells)
 # ------------------------------------------------------------------------------
 
 basic_recipe <-
-   recipe(class ~ ., data = cells) \%>\%
-   step_YeoJohnson(all_predictors()) \%>\%
-   step_normalize(all_predictors())
+  recipe(class ~ ., data = cells) \%>\%
+  step_YeoJohnson(all_predictors()) \%>\%
+  step_normalize(all_predictors())
 
 pca_recipe <-
-   basic_recipe \%>\%
-   step_pca(all_predictors(), num_comp = tune())
+  basic_recipe \%>\%
+  step_pca(all_predictors(), num_comp = tune())
 
 ss_recipe <-
-   basic_recipe \%>\%
-   step_spatialsign(all_predictors())
+  basic_recipe \%>\%
+  step_spatialsign(all_predictors())
 
 # ------------------------------------------------------------------------------
 
 knn_mod <-
-   nearest_neighbor(neighbors = tune(), weight_func = tune()) \%>\%
-   set_engine("kknn") \%>\%
-   set_mode("classification")
+  nearest_neighbor(neighbors = tune(), weight_func = tune()) \%>\%
+  set_engine("kknn") \%>\%
+  set_mode("classification")
 
 lr_mod <-
-   logistic_reg() \%>\%
-   set_engine("glm")
+  logistic_reg() \%>\%
+  set_engine("glm")
 
 # ------------------------------------------------------------------------------
 

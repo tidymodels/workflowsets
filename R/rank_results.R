@@ -22,73 +22,72 @@
 #' rank_results(chi_features_res, rank_metric = "rsq")
 #' @export
 rank_results <- function(x, rank_metric = NULL, select_best = FALSE) {
-   metric_info <- pick_metric(x, rank_metric)
-   metric <- metric_info$metric
-   direction <- metric_info$direction
-   wflow_info <- dplyr::bind_cols(purrr::map_dfr(x$info, I), dplyr::select(x, wflow_id))
+  metric_info <- pick_metric(x, rank_metric)
+  metric <- metric_info$metric
+  direction <- metric_info$direction
+  wflow_info <- dplyr::bind_cols(purrr::map_dfr(x$info, I), dplyr::select(x, wflow_id))
 
-   results <- collect_metrics(x) %>%
-      dplyr::select(wflow_id, .config, .metric, mean, std_err, n) %>%
-      dplyr::full_join(wflow_info, by = "wflow_id") %>%
-      dplyr::select(-comment, -workflow)
+  results <- collect_metrics(x) %>%
+    dplyr::select(wflow_id, .config, .metric, mean, std_err, n) %>%
+    dplyr::full_join(wflow_info, by = "wflow_id") %>%
+    dplyr::select(-comment, -workflow)
 
-   types <- x %>%
-      dplyr::full_join(wflow_info, by = "wflow_id") %>%
-      dplyr::mutate(
-         is_race = purrr::map_lgl(result, ~ inherits(.x, "tune_race")),
-         num_rs = purrr::map_int(result, get_num_resamples)
-         ) %>%
-      dplyr::select(wflow_id, is_race, num_rs)
+  types <- x %>%
+    dplyr::full_join(wflow_info, by = "wflow_id") %>%
+    dplyr::mutate(
+      is_race = purrr::map_lgl(result, ~ inherits(.x, "tune_race")),
+      num_rs = purrr::map_int(result, get_num_resamples)
+    ) %>%
+    dplyr::select(wflow_id, is_race, num_rs)
 
-   ranked <-
-      dplyr::full_join(results, types, by = "wflow_id") %>%
-      dplyr::filter(.metric == metric)
+  ranked <-
+    dplyr::full_join(results, types, by = "wflow_id") %>%
+    dplyr::filter(.metric == metric)
 
-   if (any(ranked$is_race)) {
-      # remove any racing results with less resamples than the total number
-      rm_rows <-
-         ranked %>%
-         dplyr::filter(is_race & (num_rs > n)) %>%
-         dplyr::select(wflow_id, .config) %>%
-         dplyr::distinct()
-      if (nrow(rm_rows) > 0) {
-         ranked <- dplyr::anti_join(ranked, rm_rows, by = c("wflow_id", ".config"))
-         results <- dplyr::anti_join(results, rm_rows, by = c("wflow_id", ".config"))
-      }
-   }
+  if (any(ranked$is_race)) {
+    # remove any racing results with less resamples than the total number
+    rm_rows <-
+      ranked %>%
+      dplyr::filter(is_race & (num_rs > n)) %>%
+      dplyr::select(wflow_id, .config) %>%
+      dplyr::distinct()
+    if (nrow(rm_rows) > 0) {
+      ranked <- dplyr::anti_join(ranked, rm_rows, by = c("wflow_id", ".config"))
+      results <- dplyr::anti_join(results, rm_rows, by = c("wflow_id", ".config"))
+    }
+  }
 
-   if (direction == "maximize") {
-      ranked$mean <- -ranked$mean
-   }
+  if (direction == "maximize") {
+    ranked$mean <- -ranked$mean
+  }
 
-   if (select_best) {
-      best_by_wflow <-
-         dplyr::group_by(ranked, wflow_id) %>%
-         dplyr::slice_min(mean, with_ties = FALSE) %>%
-         dplyr::ungroup() %>%
-         dplyr::select(wflow_id, .config)
-      ranked <- dplyr::inner_join(ranked, best_by_wflow, by = c("wflow_id", ".config"))
-   }
+  if (select_best) {
+    best_by_wflow <-
+      dplyr::group_by(ranked, wflow_id) %>%
+      dplyr::slice_min(mean, with_ties = FALSE) %>%
+      dplyr::ungroup() %>%
+      dplyr::select(wflow_id, .config)
+    ranked <- dplyr::inner_join(ranked, best_by_wflow, by = c("wflow_id", ".config"))
+  }
 
-   # ensure reproducible rankings when there are ties
-   withr::with_seed(
-      1,
-      {
-         ranked <-
-            ranked %>%
-            dplyr::mutate(rank = rank(mean, ties.method = "random")) %>%
-            dplyr::select(wflow_id, .config, rank)
-      }
-   )
+  # ensure reproducible rankings when there are ties
+  withr::with_seed(
+    1,
+    {
+      ranked <-
+        ranked %>%
+        dplyr::mutate(rank = rank(mean, ties.method = "random")) %>%
+        dplyr::select(wflow_id, .config, rank)
+    }
+  )
 
-   dplyr::inner_join(results, ranked, by = c("wflow_id", ".config")) %>%
-      dplyr::arrange(rank) %>%
-      dplyr::rename(preprocessor = preproc)
-
+  dplyr::inner_join(results, ranked, by = c("wflow_id", ".config")) %>%
+    dplyr::arrange(rank) %>%
+    dplyr::rename(preprocessor = preproc)
 }
 
 get_num_resamples <- function(x) {
-   purrr::map_dfr(x$splits, ~ .x$id) %>%
-      dplyr::distinct() %>%
-      nrow()
+  purrr::map_dfr(x$splits, ~ .x$id) %>%
+    dplyr::distinct() %>%
+    nrow()
 }
