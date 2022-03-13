@@ -72,6 +72,18 @@ check_options <- function(model, id, global, action = "fail") {
   invisible(NULL)
 }
 
+check_tune_args <- function(x) {
+  arg_names <- c("resamples", "param_info", "grid", "metrics", "control",
+                 "iter", "objective", "initial")
+  bad_args <- setdiff(x, arg_names)
+  if (length(bad_args) > 0) {
+     msg <- paste0("'", bad_args, "'")
+     msg <- paste("The following options are not arguments for any of the",
+                  "`tune_*()` functions:", msg)
+     halt(msg)
+  }
+  invisible(NULL)
+}
 
 # in case there are no tuning parameters, we can avoid warnings
 

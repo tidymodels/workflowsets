@@ -53,9 +53,9 @@ main_effects <-
   add_formula(Class ~ .)
 
 interactions <-
-   workflow() \%>\%
-   add_model(lr_spec) \%>\%
-   add_formula(Class ~ (.)^2)
+  workflow() \%>\%
+  add_model(lr_spec) \%>\%
+  add_formula(Class ~ (.)^2)
 
 as_workflow_set(main = main_effects, int = interactions)
 }

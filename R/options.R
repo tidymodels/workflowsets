@@ -11,8 +11,9 @@
 #'
 #' @export
 #' @param x A workflow set.
-#' @param ... A list of named options. For `option_remove()` this can be a
-#' series of unquoted option names.
+#' @param ... A list of named options to pass to the `tune_*()` functions (e.g.
+#' [tune::tune_grid()]) or [tune::fit_resamples()]. For `option_remove()` this
+#' can be a series of unquoted option names.
 #' @param id A character string of one or more values from the `wflow_id`
 #' column that indicates which options to update. By default, all workflows
 #' are updated.
@@ -38,11 +39,11 @@
 #'
 #' @examples
 #' two_class_set %>%
-#'   option_add(a = 1)
+#'   option_add(grid = 10)
 #'
 #' two_class_set %>%
-#'   option_add(a = 1) %>%
-#'   option_add(b = 2, id = "none_cart")
+#'   option_add(grid = 10) %>%
+#'   option_add(grid = 50, id = "none_cart")
 #'
 #' library(tune)
 #' two_class_set %>%
@@ -58,6 +59,8 @@ option_add <- function(x, ..., id = NULL, strict = FALSE) {
   } else {
     act <- "warn"
   }
+
+  check_tune_args(names(dots))
 
   if (!is.null(id)) {
     for (i in id) {

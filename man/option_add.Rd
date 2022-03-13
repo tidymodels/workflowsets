@@ -15,8 +15,9 @@ option_add_parameters(x, id = NULL, strict = FALSE)
 \arguments{
 \item{x}{A workflow set.}
 
-\item{...}{A list of named options. For \code{option_remove()} this can be a
-series of unquoted option names.}
+\item{...}{A list of named options to pass to the \verb{tune_*()} functions (e.g.
+\code{\link[tune:tune_grid]{tune::tune_grid()}}) or \code{\link[tune:fit_resamples]{tune::fit_resamples()}}. For \code{option_remove()} this
+can be a series of unquoted option names.}
 
 \item{id}{A character string of one or more values from the \code{wflow_id}
 column that indicates which options to update. By default, all workflows
@@ -56,11 +57,11 @@ extra options. To alter these in a workflow set, use
 }
 \examples{
 two_class_set \%>\%
-  option_add(a = 1)
+  option_add(grid = 10)
 
 two_class_set \%>\%
-  option_add(a = 1) \%>\%
-  option_add(b = 2, id = "none_cart")
+  option_add(grid = 10) \%>\%
+  option_add(grid = 50, id = "none_cart")
 
 library(tune)
 two_class_set \%>\%

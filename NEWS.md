@@ -4,9 +4,9 @@
 
 * Updated tests related to changes in workflows 0.2.5 (#75).
 
-
 * `as_workflow_set()` can now take a mixture of workflows or `tune_results` objects. 
 
+* `option_add()` not checks the names of the options to see if they are valid names for the functions that recieve them (#66)
 
 # workflowsets 0.1.0
 
