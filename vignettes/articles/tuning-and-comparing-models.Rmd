@@ -54,6 +54,9 @@ ggplot(train_set, aes(x = X1, y = X2, col = class)) +
   coord_fixed(ratio = 1) + 
   scale_color_brewer(palette = "Dark2")
 ```
+
+## Defining the models
+
 We'll fit two types of discriminant analysis (DA) models (regularized DA and flexible DA using multivariate adaptive regression splines (MARS)) as well as a simple classification tree. Let's create those `parsnip` model objects: 
 
 ```{r models}
@@ -93,7 +96,25 @@ all_workflows <-
 all_workflows
 ```
 
-Since these models all have tuning parameters, we can apply the `workflow_map()` function to execute grid search for each of these models with a common set of arguments. The default function to apply across the workflows is `tune_grid()` but other `tune_*()` functions can be used by passing the function name as the first argument. 
+## Adding options to the models
+
+We can add any specific options that we think are important using the `option_add()` function. 
+
+For illustration, let's use the `extract` argument of the control function to save the fitted workflow. We can then pick which workflow should use this option with the `id` argument:
+
+```{r option}
+all_workflows <- 
+   all_workflows %>% 
+   option_add(id = "formula_cart", 
+              control = control_grid(extract = function(x) x))
+all_workflows
+```
+
+Keep in mind that this will save the fitted workflow for each resample and each tuning parameter combination that we evaluate. 
+
+## Tuning the models
+
+Since these models all have tuning parameters, we can apply the `workflow_map()` function to execute grid search for each of these models specific arguments. The default function to apply across the workflows is `tune_grid()` but other `tune_*()` functions can be used by passing the function name as the first argument. 
 
 Let's use the same grid size for each model. For the MARS model, there are only two possible tuning parameter values nut `tune_grid()` is forgiving about our request of 20 parameter values. 
 
@@ -102,6 +123,7 @@ The `verbose` option provides a concise listing for which workflow is being proc
 ```{r tuning}
 all_workflows <- 
   all_workflows %>% 
+  # Specifying arguments here adds to any previously set with `option_add()`:
   workflow_map(resamples = train_resamples, grid = 20, verbose = TRUE)
 all_workflows
 ```
@@ -116,6 +138,8 @@ rank_results(all_workflows, rank_metric = "roc_auc")
 # or a handy plot: 
 autoplot(all_workflows, metric = "roc_auc")
 ```
+
+## Examining specific model results
 
 It looks like the MARS model did well. We can plot its results and also pull out the tuning object too: 
 
@@ -173,3 +197,66 @@ ggplot(grid, aes(x = X1, y = X2)) +
 ```
 
 The workflow set allows us to screen many models to find one that does very well. This can be combined with parallel processing and, especially, racing methods from the [`finetune`](https://finetune.tidymodels.org/reference/tune_race_anova.html) package to optimize the efficiency. 
+
+## Extracting information from the results
+
+Recall that we added an option to the CART model to extract the model results. Let's pull out the CART tuning results and see what we have:
+
+```{r extraction-res}
+cart_res <- 
+   all_workflows %>% 
+   extract_workflow_set_result("formula_cart")
+cart_res
+```
+
+The `.extracts` has 20 rows for each resample (since there were 20 tuning parameter candidates). Each tibble in that column has a fitted workflow for each candidate and, since `cart_res` has `r nrow(cart_res)` rows, a value returned for each resample. That's  `r nrow(cart_res) * 20` fitted workflows. 
+
+Let's slim that down by keeping the ones that correspond to the best tuning parameters: 
+
+```{r extract-subset}
+# Get the best results
+best_cart <- select_best(cart_res, metric = "roc_auc")
+
+cart_wflows <- 
+   cart_res %>% 
+   select(id, .extracts) %>% 
+   unnest(cols = .extracts) %>% 
+   inner_join(best_cart)
+
+cart_wflows
+```
+
+What can we do with these? Let's write a function to return the number of terminal nodes in the tree. 
+
+```{r cart-nodes}
+num_nodes <- function(wflow) {
+   var_imps <- 
+      wflow %>% 
+      # Pull out the rpart model
+      extract_fit_engine() %>% 
+      # The 'frame' element is a matrix with a column that
+      # indicates which leaves are terminal
+      pluck("frame") %>% 
+      # Convert to a data frame
+      as_tibble() %>% 
+      # Save only the rows that are terminal nodes
+      filter(var == "<leaf>") %>% 
+      # Count them
+      nrow() 
+}
+
+cart_wflows$.extracts[[1]] %>% num_nodes()
+```
+
+Now let's create a column with the results for each resample:
+
+```{r num-nodes-counts}
+cart_wflows <- 
+   cart_wflows %>% 
+   mutate(num_nodes = map_int(.extracts, num_nodes))
+cart_wflows
+```
+
+The average number of terminal nodes for this model is `r round(mean(cart_wflows$num_nodes), 1)` nodes.
+
+
