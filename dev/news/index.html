@@ -24,7 +24,7 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/tuning-and-comparing-models.html">Tuning and Comparing Models</a>
+    <a class="dropdown-item" href="../articles/tuning-and-comparing-models.html">Tuning and comparing models</a>
     <a class="dropdown-item" href="../articles/evaluating-different-predictor-sets.html">Evaluating different predictor sets</a>
   </div>
 </li>
@@ -53,8 +53,10 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="workflowsets-development-version">workflowsets (development version)<a class="anchor" aria-label="anchor" href="#workflowsets-development-version"></a></h2>
-<ul><li>
-<code><a href="../reference/as_workflow_set.html">as_workflow_set()</a></code> can now take a mixture of workflows or <code>tune_results</code> objects.</li>
+<ul><li><p><code><a href="../reference/update_workflow_model.html">update_workflow_model()</a></code> and <code><a href="../reference/update_workflow_model.html">update_workflow_recipe()</a></code> were added. These are analogous to <code><a href="https://workflows.tidymodels.org//reference/add_model.html" class="external-link">workflows::add_model()</a></code> or <code><a href="https://workflows.tidymodels.org//reference/add_recipe.html" class="external-link">workflows::add_recipe()</a></code> (<a href="https://github.com/tidymodels/workflowsets/issues/64" class="external-link">#64</a>).</p></li>
+<li><p>Updated tests related to changes in workflows 0.2.5 (<a href="https://github.com/tidymodels/workflowsets/issues/75" class="external-link">#75</a>).</p></li>
+<li><p><code><a href="../reference/as_workflow_set.html">as_workflow_set()</a></code> can now take a mixture of workflows or <code>tune_results</code> objects.</p></li>
+<li><p><code><a href="../reference/option_add.html">option_add()</a></code> now checks the names of the options to see if they are valid names for the functions that receive them (<a href="https://github.com/tidymodels/workflowsets/issues/66" class="external-link">#66</a>)</p></li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="workflowsets-010">workflowsets 0.1.0<a class="anchor" aria-label="anchor" href="#workflowsets-010"></a></h2><p class="text-muted">CRAN release: 2021-07-22</p>

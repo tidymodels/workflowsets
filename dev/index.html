@@ -54,7 +54,7 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="articles/tuning-and-comparing-models.html">Tuning and Comparing Models</a>
+    <a class="dropdown-item" href="articles/tuning-and-comparing-models.html">Tuning and comparing models</a>
     <a class="dropdown-item" href="articles/evaluating-different-predictor-sets.html">Evaluating different predictor sets</a>
   </div>
 </li>
@@ -85,7 +85,7 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of workflowsets is to allow users to create and easily fit a large number of models. workflowsets can create a <em>workflow set</em> that holds multiple workflow objects. These objects can be created by crossing all combinations of preprocessors (e.g., formula, recipe, etc) and model specifications. This set can be easier tuned or resampled using a set of simple commands.</p>
+<p>The goal of workflowsets is to allow users to create and easily fit a large number of models. workflowsets can create a <em>workflow set</em> that holds multiple workflow objects. These objects can be created by crossing all combinations of preprocessors (e.g., formula, recipe, etc) and model specifications. This set can be tuned or resampled using a set of specific functions.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -100,7 +100,7 @@
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>It is often a good idea to try different types of models and preprocessing methods on a specific data set. tidymodels provides tools for this purpose: recipes for preprocessing/feature engineering and model specifications. workflowsets has functions for creating and evaluating combinations of modeling elements.</p>
+<p>Sometimes it is a good idea to try different types of models and preprocessing methods on a specific data set. The tidymodels framework provides tools for this purpose: <a href="https://recipes.tidymodels.org/" class="external-link">recipes</a> for preprocessing/feature engineering and <a href="https://parsnip.tidymodels.org/" class="external-link">parsnip model</a> specifications. The workflowsets package has functions for creating and evaluating combinations of these modeling elements.</p>
 <p>For example, the Chicago train ridership data has many numeric predictors that are highly correlated. There are a few approaches to compensating for this issue during modeling:</p>
 <ol style="list-style-type: decimal">
 <li><p>Use a feature filter to remove redundant predictors.</p></li>
@@ -217,19 +217,19 @@
    <span class="fu"><a href="reference/workflow_map.html">workflow_map</a></span><span class="op">(</span><span class="st">"tune_grid"</span>, resamples <span class="op">=</span> <span class="va">splits</span>, grid <span class="op">=</span> <span class="fl">10</span>, 
                 metrics <span class="op">=</span> <span class="fu">metric_set</span><span class="op">(</span><span class="va">mae</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; i 1 of 7 tuning:     simple_glmnet</span>
-<span class="co">#&gt; ✓ 1 of 7 tuning:     simple_glmnet (15.8s)</span>
+<span class="co">#&gt; ✓ 1 of 7 tuning:     simple_glmnet (7.8s)</span>
 <span class="co">#&gt; i 2 of 7 tuning:     simple_cart</span>
-<span class="co">#&gt; ✓ 2 of 7 tuning:     simple_cart (16.2s)</span>
+<span class="co">#&gt; ✓ 2 of 7 tuning:     simple_cart (8.7s)</span>
 <span class="co">#&gt; i 3 of 7 tuning:     simple_knn</span>
-<span class="co">#&gt; ✓ 3 of 7 tuning:     simple_knn (15.8s)</span>
+<span class="co">#&gt; ✓ 3 of 7 tuning:     simple_knn (8.1s)</span>
 <span class="co">#&gt; i 4 of 7 tuning:     filter_cart</span>
-<span class="co">#&gt; ✓ 4 of 7 tuning:     filter_cart (23.3s)</span>
+<span class="co">#&gt; ✓ 4 of 7 tuning:     filter_cart (16.4s)</span>
 <span class="co">#&gt; i 5 of 7 tuning:     filter_knn</span>
-<span class="co">#&gt; ✓ 5 of 7 tuning:     filter_knn (23.3s)</span>
+<span class="co">#&gt; ✓ 5 of 7 tuning:     filter_knn (15.8s)</span>
 <span class="co">#&gt; i 6 of 7 tuning:     pca_cart</span>
-<span class="co">#&gt; ✓ 6 of 7 tuning:     pca_cart (19.3s)</span>
+<span class="co">#&gt; ✓ 6 of 7 tuning:     pca_cart (11.8s)</span>
 <span class="co">#&gt; i 7 of 7 tuning:     pca_knn</span>
-<span class="co">#&gt; ✓ 7 of 7 tuning:     pca_knn (18.8s)</span>
+<span class="co">#&gt; ✓ 7 of 7 tuning:     pca_knn (11.4s)</span>
 <span class="va">chi_models</span>
 <span class="co">#&gt; # A workflow set/tibble: 7 × 4</span>
 <span class="co">#&gt;   wflow_id      info             option    result   </span>

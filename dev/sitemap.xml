@@ -70,6 +70,9 @@
     <loc>https://workflowsets.tidymodels.org/dev/reference/two_class_set.html</loc>
   </url>
   <url>
+    <loc>https://workflowsets.tidymodels.org/dev/reference/update_workflow_model.html</loc>
+  </url>
+  <url>
     <loc>https://workflowsets.tidymodels.org/dev/reference/workflow_map.html</loc>
   </url>
   <url>
