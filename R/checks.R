@@ -78,8 +78,8 @@ check_tune_args <- function(x) {
   bad_args <- setdiff(x, arg_names)
   if (length(bad_args) > 0) {
      msg <- paste0("'", bad_args, "'")
-     msg <- paste("The following options are not arguments for any of the",
-                  "`tune_*()` functions:", msg)
+     msg <- paste("The following options cannot be used as arguments for",
+                  "`fit_resamples()` or the `tune_*()` functions:", msg)
      halt(msg)
   }
   invisible(NULL)
