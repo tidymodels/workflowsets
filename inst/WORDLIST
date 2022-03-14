@@ -23,3 +23,5 @@ bayesian
 preprocess
 funder
 ORCID
+modeldata
+finetune
