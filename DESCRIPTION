@@ -35,14 +35,14 @@ Imports:
     tune (>= 0.1.3),
     vctrs,
     withr,
-    workflows (>= 0.2.3)
+    workflows (>= 0.2.4)
 Suggests: 
     covr,
     dials,
     kknn,
     knitr,
     modeldata,
-    parsnip,
+    parsnip (>= 0.2.0),
     recipes (>= 0.1.15),
     rmarkdown,
     spelling,

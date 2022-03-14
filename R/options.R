@@ -1,12 +1,19 @@
 #' Add and edit options saved in a workflow set
 #'
+#' @description
+#' The `option` column controls options for the functions that are used to
+#' _evaluate_ the workflow set, such as [tune::fit_resamples()] or
+#' [tune::tune_grid()]. Examples of common options to set for these functions
+#' include `param_info` and `grid`.
+#'
 #' These functions are helpful for manipulating the information in the `option`
 #' column.
 #'
 #' @export
-#' @param x A workflow set
-#' @param ... A list of named options. For `option_remove()` this can be a
-#' series of unquoted option names.
+#' @param x A workflow set.
+#' @param ... A list of named options to pass to the `tune_*()` functions (e.g.
+#' [tune::tune_grid()]) or [tune::fit_resamples()]. For `option_remove()` this
+#' can be a series of unquoted option names.
 #' @param id A character string of one or more values from the `wflow_id`
 #' column that indicates which options to update. By default, all workflows
 #' are updated.
@@ -23,13 +30,20 @@
 #'
 #' Note that executing a function on the workflow set, such as `tune_grid()`,
 #' will add any options given to that function to the `option` column.
+#'
+#' These functions do _not_ control options for the individual workflows, such as
+#' the recipe blueprint. When creating a workflow manually, use
+#' [workflows::add_model()] or [workflows::add_recipe()] to specify.
+#' extra options. To alter these in a workflow set, use
+#' [update_workflow_model()] or [update_workflow_recipe()].
+#'
 #' @examples
 #' two_class_set %>%
-#'   option_add(a = 1)
+#'   option_add(grid = 10)
 #'
 #' two_class_set %>%
-#'   option_add(a = 1) %>%
-#'   option_add(b = 2, id = "none_cart")
+#'   option_add(grid = 10) %>%
+#'   option_add(grid = 50, id = "none_cart")
 #'
 #' library(tune)
 #' two_class_set %>%
@@ -45,6 +59,8 @@ option_add <- function(x, ..., id = NULL, strict = FALSE) {
   } else {
     act <- "warn"
   }
+
+  check_tune_args(names(dots))
 
   if (!is.null(id)) {
     for (i in id) {
