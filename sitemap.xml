@@ -16,9 +16,6 @@
     <loc>https://workflowsets.tidymodels.org/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://workflowsets.tidymodels.org/SUPPORT.html</loc>
-  </url>
-  <url>
     <loc>https://workflowsets.tidymodels.org/articles/evaluating-different-predictor-sets.html</loc>
   </url>
   <url>
@@ -76,9 +73,15 @@
     <loc>https://workflowsets.tidymodels.org/reference/two_class_set.html</loc>
   </url>
   <url>
+    <loc>https://workflowsets.tidymodels.org/reference/update_workflow_model.html</loc>
+  </url>
+  <url>
     <loc>https://workflowsets.tidymodels.org/reference/workflow_map.html</loc>
   </url>
   <url>
     <loc>https://workflowsets.tidymodels.org/reference/workflow_set.html</loc>
+  </url>
+  <url>
+    <loc>https://workflowsets.tidymodels.org/reference/workflowsets-package.html</loc>
   </url>
 </urlset>
