@@ -1,3 +1,5 @@
+# workflowsets (development version)
+
 # workflowsets 0.2.1
 
 * `update_workflow_model()` and `update_workflow_recipe()` were added. These are analogous to `workflows::add_model()` or `workflows::add_recipe()` (#64).
