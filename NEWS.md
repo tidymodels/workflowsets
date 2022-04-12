@@ -1,5 +1,8 @@
 # workflowsets (development version)
 
+* New `extract_parameter_set_dials()` and `extract_parameter_dials()` methods to 
+  extract parameter sets and single parameters from `workflow_set` objects.
+
 # workflowsets 0.2.1
 
 * `update_workflow_model()` and `update_workflow_recipe()` were added. These are analogous to `workflows::add_model()` or `workflows::add_recipe()` (#64).

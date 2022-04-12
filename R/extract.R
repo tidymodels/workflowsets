@@ -23,7 +23,7 @@
 #' - `extract_recipe()` returns the recipe. The `estimated` argument specifies
 #'    whether the fitted or original recipe is returned.
 #'
-#'  - `extract_workflow_set_result()` returns the results of [workflow_map()]
+#' - `extract_workflow_set_result()` returns the results of [workflow_map()]
 #'    for a particular workflow.
 #'
 #' - `extract_workflow()` returns the workflow object. The workflow will not
@@ -31,6 +31,7 @@
 #'
 #' @param x A workflow set.
 #' @param id A single character string for a workflow ID.
+#' @param parameter A single string for the parameter ID.
 #' @param estimated A logical for whether the original (unfit) recipe or the
 #' fitted recipe should be returned.
 #' @param ... Other options (not currently used).
@@ -116,6 +117,20 @@ extract_mold.workflow_set <- function(x, id, ...) {
 extract_preprocessor.workflow_set <- function(x, id, ...) {
   y <- filter_id(x, id)
   extract_preprocessor(y$info[[1]]$workflow[[1]])
+}
+
+#' @export
+#' @rdname extract_workflow_set_result
+extract_parameter_set_dials.workflow_set <- function(x, id, ...) {
+   y <- filter_id(x, id)
+   extract_parameter_set_dials(y$info[[1]]$workflow[[1]])
+}
+
+#' @export
+#' @rdname extract_workflow_set_result
+extract_parameter_dials.workflow_set <- function(x, id, parameter, ...) {
+   y <- filter_id(x, id)
+   extract_parameter_dials(y$info[[1]]$workflow[[1]], parameter)
 }
 
 # ------------------------------------------------------------------------------

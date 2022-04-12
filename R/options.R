@@ -96,7 +96,7 @@ option_remove <- function(x, ...) {
 
 
 maybe_param <- function(x) {
-  prm <- dials::parameters(x)
+  prm <- hardhat::extract_parameter_set_dials(x)
   if (nrow(prm) == 0) {
     x <- list()
   } else {
