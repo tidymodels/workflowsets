@@ -3,24 +3,24 @@
 
 test_that("option management", {
   expect_error(
-    set_1 <- two_class_set %>% option_add(a = 1),
+    set_1 <- two_class_set %>% option_add(grid = 1),
     regex = NA
   )
   for (i in 1:nrow(set_1)) {
-    expect_equal(unclass(set_1$option[[i]]), list(a = 1))
+    expect_equal(unclass(set_1$option[[i]]), list(grid = 1))
   }
   expect_error(
-    set_2 <- two_class_set %>% option_remove(a),
+    set_2 <- two_class_set %>% option_remove(grid),
     regex = NA
   )
   for (i in 1:nrow(set_2)) {
     expect_equal(unclass(set_2$option[[i]]), list())
   }
   expect_error(
-    set_3 <- two_class_set %>% option_add(a = 1, id = "none_cart"),
+    set_3 <- two_class_set %>% option_add(grid = 1, id = "none_cart"),
     regex = NA
   )
-  expect_equal(unclass(set_3$option[[1]]), list(a = 1))
+  expect_equal(unclass(set_3$option[[1]]), list(grid = 1))
   for (i in 2:nrow(set_3)) {
     expect_equal(unclass(set_3$option[[i]]), list())
   }
@@ -58,3 +58,14 @@ test_that("option printing", {
     "opts[3]"
   )
 })
+
+
+test_that("check for bad options", {
+   expect_snapshot_error(
+      two_class_set %>% option_add(grid2 = 1)
+   )
+   expect_snapshot_error(
+      two_class_set %>% option_add(grid = 1, blueprint = 2)
+   )
+})
+

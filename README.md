@@ -15,8 +15,8 @@ The goal of workflowsets is to allow users to create and easily fit a
 large number of models. workflowsets can create a *workflow set* that
 holds multiple workflow objects. These objects can be created by
 crossing all combinations of preprocessors (e.g., formula, recipe, etc)
-and model specifications. This set can be easier tuned or resampled
-using a set of simple commands.
+and model specifications. This set can be tuned or resampled using a set
+of specific functions.
 
 ## Installation
 
@@ -36,11 +36,13 @@ pak::pak("tidymodels/workflowsets")
 
 ## Example
 
-It is often a good idea to try different types of models and
-preprocessing methods on a specific data set. tidymodels provides tools
-for this purpose: recipes for preprocessing/feature engineering and
-model specifications. workflowsets has functions for creating and
-evaluating combinations of modeling elements.
+Sometimes it is a good idea to try different types of models and
+preprocessing methods on a specific data set. The tidymodels framework
+provides tools for this purpose:
+[recipes](https://recipes.tidymodels.org/) for preprocessing/feature
+engineering and [parsnip model](https://parsnip.tidymodels.org/)
+specifications. The workflowsets package has functions for creating and
+evaluating combinations of these modeling elements.
 
 For example, the Chicago train ridership data has many numeric
 predictors that are highly correlated. There are a few approaches to
@@ -193,19 +195,19 @@ chi_models <-
    workflow_map("tune_grid", resamples = splits, grid = 10, 
                 metrics = metric_set(mae), verbose = TRUE)
 #> i 1 of 7 tuning:     simple_glmnet
-#> ✓ 1 of 7 tuning:     simple_glmnet (15.8s)
+#> ✓ 1 of 7 tuning:     simple_glmnet (15.2s)
 #> i 2 of 7 tuning:     simple_cart
-#> ✓ 2 of 7 tuning:     simple_cart (16.2s)
+#> ✓ 2 of 7 tuning:     simple_cart (16.8s)
 #> i 3 of 7 tuning:     simple_knn
-#> ✓ 3 of 7 tuning:     simple_knn (15.8s)
+#> ✓ 3 of 7 tuning:     simple_knn (16.1s)
 #> i 4 of 7 tuning:     filter_cart
-#> ✓ 4 of 7 tuning:     filter_cart (23.3s)
+#> ✓ 4 of 7 tuning:     filter_cart (32.5s)
 #> i 5 of 7 tuning:     filter_knn
-#> ✓ 5 of 7 tuning:     filter_knn (23.3s)
+#> ✓ 5 of 7 tuning:     filter_knn (32.3s)
 #> i 6 of 7 tuning:     pca_cart
-#> ✓ 6 of 7 tuning:     pca_cart (19.3s)
+#> ✓ 6 of 7 tuning:     pca_cart (21.7s)
 #> i 7 of 7 tuning:     pca_knn
-#> ✓ 7 of 7 tuning:     pca_knn (18.8s)
+#> ✓ 7 of 7 tuning:     pca_knn (21.9s)
 chi_models
 #> # A workflow set/tibble: 7 × 4
 #>   wflow_id      info             option    result   
