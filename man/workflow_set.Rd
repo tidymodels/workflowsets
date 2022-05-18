@@ -4,7 +4,7 @@
 \alias{workflow_set}
 \title{Generate a set of workflow objects from preprocessing and model objects}
 \usage{
-workflow_set(preproc, models, cross = TRUE)
+workflow_set(preproc, models, cross = TRUE, case_weights = NULL)
 }
 \arguments{
 \item{preproc}{A list (preferably named) with preprocessing objects:
@@ -15,6 +15,11 @@ formulas, recipes, or \code{\link[workflows:add_variables]{workflows::workflow_v
 \item{cross}{A logical: should all combinations of the preprocessors and
 models be used to create the workflows? If \code{FALSE}, the length of \code{preproc}
 and \code{models} should be equal.}
+
+\item{case_weights}{A single unquoted column name specifying the case
+weights for the model. This must be a classed case weights column, as
+determined by \code{\link[hardhat:is_case_weights]{hardhat::is_case_weights()}}. See \code{?parsnip::case_weights}
+to learn more.}
 }
 \value{
 A tibble with extra class 'workflow_set'. A new set includes four

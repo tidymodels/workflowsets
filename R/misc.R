@@ -1,5 +1,5 @@
 
-make_workflow <- function(x, y) {
+make_workflow <- function(x, y, weight) {
   exp_classes <- c("formula", "recipe", "workflow_variables")
   w <-
     workflows::workflow() %>%
@@ -17,6 +17,22 @@ make_workflow <- function(x, y) {
     )
   }
   w
+}
+
+# copied from parsnip
+case_weights_allowed <- function(spec) {
+   mod_type <- class(spec)[1]
+   mod_eng <- spec$engine
+   mod_mode <- spec$mode
+
+   model_info <-
+      get_from_env(paste0(mod_type, "_fit")) %>%
+      dplyr::filter(engine == mod_eng & mode == mod_mode)
+
+   # If weights are used, they are protected data arguments with the canonical
+   # name 'weights' (although this may not be the model function's argument name).
+   data_args <- model_info$value[[1]]$protect
+   any(data_args == "weights")
 }
 
 halt <- function(...) {
