@@ -53,11 +53,11 @@ Suggests:
     testthat (>= 3.0.0),
     yardstick (>= 0.0.9.9000)
 Remotes:
-    tidymodels/hardhat
-    tidymodels/parsnip@feature/case-weights
-    tidymodels/recipes@case-weights
-    tidymodels/tune
-    tidymodels/workflows
+    tidymodels/hardhat,
+    tidymodels/parsnip@feature/case-weights,
+    tidymodels/recipes@case-weights,
+    tidymodels/tune,
+    tidymodels/workflows,
     tidymodels/yardstick
 VignetteBuilder: 
     knitr
