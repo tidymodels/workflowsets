@@ -123,20 +123,19 @@ workflow_set <- function(preproc, models, cross = TRUE, case_weights = NULL) {
   } else {
     res <- fuse_objects(preproc, models)
   }
-  res <-
-    res %>%
-    dplyr::mutate(
-      workflow = purrr::map2(preproc, model, make_workflow)
-    )
+
 
   # call set_weights outside of mutate call so that dplyr
   # doesn't prepend possible warnings with "Problem while computing..."
-  res$workflow <- set_weights(res$workflow, case_weights)
+  wfs <-
+     purrr::map2(res$preproc, res$model, make_workflow) %>%
+     set_weights(case_weights) %>%
+     unname()
 
   res <-
      res %>%
      dplyr::mutate(
-      workflow = unname(workflow),
+      workflow = wfs,
       info = purrr::map(workflow, get_info),
       option = purrr::map(1:nrow(res), ~ new_workflow_set_options()),
       result = purrr::map(1:nrow(res), ~ list())
