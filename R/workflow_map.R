@@ -64,20 +64,13 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
     object <- rlang::exec("option_add", object, !!!dots)
   }
 
-  uses_case_weights <-
-     purrr::map(object$info, purrr::pluck, "workflow") %>%
-     purrr::flatten() %>%
-     purrr::map_lgl(has_case_weights) %>%
-     all()
+  uses_case_weights <- uses_case_weights(object)
 
   # check for a valid case weights column if it exists
   if (!is.null(dots$resamples) && uses_case_weights) {
      dat <- dots$resamples$splits[[1]]$data
 
-     weights_col <-
-        object$info[[1]]$workflow[[1]]$pre$actions$case_weights$col %>%
-        rlang::quo_get_expr() %>%
-        rlang::expr_name()
+     weights_col <- get_case_weights_name(object)
 
      if (is.null(dat[[weights_col]])) {
         rlang::abort(
@@ -138,9 +131,22 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
   on.exit(return(new_workflow_set(object)))
 }
 
-# copied from workflows
+# adapted from workflows
 has_case_weights <- function(x) {
    "case_weights" %in% names(x$pre$actions)
+}
+
+get_case_weights_name <- function(workflowset) {
+   workflowset$info[[1]]$workflow[[1]]$pre$actions$case_weights$col %>%
+      rlang::quo_get_expr() %>%
+      rlang::expr_name()
+}
+
+uses_case_weights <- function(workflowset) {
+   purrr::map(workflowset$info, purrr::pluck, "workflow") %>%
+      purrr::flatten() %>%
+      purrr::map_lgl(has_case_weights) %>%
+      all()
 }
 
 # nocov
