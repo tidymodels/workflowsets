@@ -1,3 +1,14 @@
+# workflow_set can handle case weights
+
+    Code
+      car_set_2 <- workflow_set(list(reg = mpg ~ ., nonlin = mpg ~ wt + 1 / sqrt(disp)),
+      list(lm = lr_spec), case_weights = non_wts) %>% workflow_map("fit_resamples",
+        resamples = vfold_cv(cars, v = 5))
+    Error <rlang_error>
+      The supplied `case_weights` argument 'non_wts' is not a case weights column. See `?workflow_set` for more information.
+    Message <simpleMessage>
+      Execution stopped; returning current results
+
 # pillar formatting
 
     # A workflow set/tibble: 3 x 4

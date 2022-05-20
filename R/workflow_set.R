@@ -124,7 +124,6 @@ workflow_set <- function(preproc, models, cross = TRUE, case_weights = NULL) {
     res <- fuse_objects(preproc, models)
   }
 
-
   # call set_weights outside of mutate call so that dplyr
   # doesn't prepend possible warnings with "Problem while computing..."
   wfs <-
@@ -209,18 +208,23 @@ set_weights <- function(workflows, case_weights) {
    }
 
    if (any(!allowed)) {
-      disallowed <- names(workflows)[!allowed]
+      disallowed <-
+         workflows[!allowed] %>%
+         purrr::map(extract_spec_parsnip) %>%
+         purrr::map(purrr::pluck, "engine") %>%
+         unlist() %>%
+         unique()
 
       rlang::warn(
          glue::glue(
             "Case weights are not enabled by the underlying model implementation ",
-            "for the following model specifications: ",
+            "for the following engine(s): ",
             "{glue::glue_collapse(disallowed, sep = ', ')}.\n\nThe `case_weights` ",
             "argument will be ignored."
          )
       )
    } else {
-      workflows <- purrr::map(workflows, workflows::add_case_weights, case_weights)
+      workflows <- purrr::map(workflows, workflows::add_case_weights, !!case_weights)
    }
 
    workflows
