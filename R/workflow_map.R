@@ -79,12 +79,22 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
         rlang::quo_get_expr() %>%
         rlang::expr_name()
 
+     if (is.null(dat[[weights_col]])) {
+        rlang::abort(
+           glue::glue(
+              "The supplied `case_weights` argument '{weights_col}' is ",
+              "not a column in the data passed via `resamples`. ",
+              "See `workflow_set` for more information."
+           )
+        )
+     }
+
      if (!hardhat::is_case_weights(dat[[weights_col]])) {
         rlang::abort(
            glue::glue(
               "The supplied `case_weights` argument '{weights_col}' is ",
-              "not a case weights column. See `?workflow_set` for more ",
-              "information."
+              "not a case weights column. ",
+              "See `?workflow_set` for more information."
            ),
            call = NULL
         )

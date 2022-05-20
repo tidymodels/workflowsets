@@ -173,7 +173,7 @@ test_that("workflow_set can handle case weights", {
       error = TRUE
    )
 
-   # specify an engine that allows case weights:
+   # specify an engine that does not allow case weights:
    expect_warning({
       car_set_3 <-
          workflow_set(
@@ -185,6 +185,21 @@ test_that("workflow_set can handle case weights", {
    )
 
    expect_false(has_case_weights(car_set_3$info[[1]]$workflow[[1]]))
+
+   # specify a case weight column that isn't in the resamples:
+   expect_snapshot({
+      car_set_4 <-
+         workflow_set(
+            list(reg = mpg ~ ., nonlin = mpg ~ wt + 1 / sqrt(disp)),
+            list(lm = lr_spec),
+            case_weights = boop
+         ) %>%
+         workflow_map(
+            "fit_resamples",
+            resamples = vfold_cv(cars, v = 5)
+         )},
+      error = TRUE
+   )
 })
 
 test_that("correct object type and resamples", {
