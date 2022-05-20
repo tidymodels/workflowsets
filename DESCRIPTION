@@ -55,7 +55,7 @@ Suggests:
 Remotes:
     tidymodels/hardhat,
     tidymodels/parsnip@feature/case-weights,
-    tidymodels/recipes@case-weights,
+    tidymodels/recipes,
     tidymodels/tune,
     tidymodels/workflows,
     tidymodels/yardstick
