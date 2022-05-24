@@ -64,7 +64,7 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
     object <- rlang::exec("option_add", object, !!!dots)
   }
 
-  uses_case_weights <- uses_case_weights(object)
+  uses_case_weights <- workflowset_uses_case_weights(object)
 
   # check for a valid case weights column if it exists
   if (!is.null(dots$resamples) && uses_case_weights) {
@@ -142,7 +142,7 @@ get_case_weights_name <- function(workflowset) {
       rlang::expr_name()
 }
 
-uses_case_weights <- function(workflowset) {
+workflowset_uses_case_weights <- function(workflowset) {
    purrr::map(workflowset$info, purrr::pluck, "workflow") %>%
       purrr::flatten() %>%
       purrr::map_lgl(has_case_weights) %>%
