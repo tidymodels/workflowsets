@@ -12,8 +12,8 @@ update_workflow_recipe(x, id, recipe, blueprint = NULL)
 \arguments{
 \item{x}{A workflow set.}
 
-\item{id}{A character string for values from the \code{wflow_id} column that
-indicates which workflow to update.}
+\item{id}{A single character string from the \code{wflow_id} column indicating
+which workflow to update.}
 
 \item{spec}{A parsnip model specification.}
 
