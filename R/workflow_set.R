@@ -231,7 +231,7 @@ set_weights <- function(workflows, case_weights) {
          workflows,
          allowed,
          add_case_weights_conditionally,
-         !!case_weights
+         case_weights
       )
 
    workflows
@@ -239,7 +239,7 @@ set_weights <- function(workflows, case_weights) {
 
 add_case_weights_conditionally <- function(workflow, allowed, case_weights) {
    if (allowed) {
-      res <- workflows::add_case_weights(workflow, case_weights)
+      res <- workflows::add_case_weights(workflow, !!case_weights)
    } else{
       res <- workflow
    }
