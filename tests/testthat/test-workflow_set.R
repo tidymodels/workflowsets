@@ -178,13 +178,14 @@ test_that("workflow_set can handle case weights", {
       car_set_3 <-
          workflow_set(
             list(reg = mpg ~ ., nonlin = mpg ~ wt + 1 / sqrt(disp)),
-            list(lm = knn_spec),
+            list(lm = lr_spec, knn = knn_spec),
             case_weights = wts
          )},
      regexp = "weights are not enabled.*kknn"
    )
 
-   expect_false(has_case_weights(car_set_3$info[[1]]$workflow[[1]]))
+   expect_true (has_case_weights(car_set_3$info[[1]]$workflow[[1]]))
+   expect_false(has_case_weights(car_set_3$info[[2]]$workflow[[1]]))
 
    # specify a case weight column that isn't in the resamples:
    expect_snapshot({

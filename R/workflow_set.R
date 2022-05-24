@@ -219,15 +219,32 @@ set_weights <- function(workflows, case_weights) {
          glue::glue(
             "Case weights are not enabled by the underlying model implementation ",
             "for the following engine(s): ",
-            "{glue::glue_collapse(disallowed, sep = ', ')}.\n\nThe `case_weights` ",
-            "argument will be ignored."
+            "{glue::glue_collapse(disallowed, sep = ', ')}.\n\n",
+            "The `case_weights` argument will be ignored for specifications ",
+            "using that engine."
          )
       )
-   } else {
-      workflows <- purrr::map(workflows, workflows::add_case_weights, !!case_weights)
    }
 
+   workflows <-
+      purrr::map2(
+         workflows,
+         allowed,
+         add_case_weights_conditionally,
+         !!case_weights
+      )
+
    workflows
+}
+
+add_case_weights_conditionally <- function(workflow, allowed, case_weights) {
+   if (allowed) {
+      res <- workflows::add_case_weights(workflow, case_weights)
+   } else{
+      res <- workflow
+   }
+
+   res
 }
 
 
