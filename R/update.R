@@ -10,8 +10,8 @@
 #' analogous to [workflows::add_model()] or [workflows::add_recipe()].
 #'
 #' @param x A workflow set.
-#' @param id A character string for values from the `wflow_id` column that
-#' indicates which workflow to update.
+#' @param id A single character string from the `wflow_id` column indicating
+#' which workflow to update.
 #' @inheritParams workflows::add_recipe
 #' @inheritParams workflows::add_model
 #' @examples
