@@ -16,8 +16,7 @@ Description: A workflow is a combination of a model and preprocessors
     and visualizing the results.
 License: MIT + file LICENSE
 URL: https://github.com/tidymodels/workflowsets,
-    https://workflowsets.tidymodels.org,
-    https://workflowsets.tidymodels.org/
+    https://workflowsets.tidymodels.org
 BugReports: https://github.com/tidymodels/workflowsets/issues
 Depends: 
     R (>= 3.4)
