@@ -17,9 +17,9 @@ models be used to create the workflows? If \code{FALSE}, the length of \code{pre
 and \code{models} should be equal.}
 
 \item{case_weights}{A single unquoted column name specifying the case
-weights for the model. This must be a classed case weights column, as
-determined by \code{\link[hardhat:is_case_weights]{hardhat::is_case_weights()}}. See \code{?parsnip::case_weights}
-to learn more.}
+weights for the models. This must be a classed case weights column, as
+determined by \code{\link[hardhat:is_case_weights]{hardhat::is_case_weights()}}. See the "Case weights" section
+below for more information.}
 }
 \value{
 A tibble with extra class 'workflow_set'. A new set includes four
@@ -54,6 +54,19 @@ more of:
 Since \code{preproc} is a named list column, any combination of these can be
 used in that argument (i.e., \code{preproc} can be mixed types).
 }
+\section{Case weights}{
+
+The \code{case_weights} argument can be passed as a single unquoted column name
+identifying the data column giving model case weights. For each workflow
+in the workflow set using an engine that supports case weights, the case
+weights will be added with \code{\link[workflows:add_case_weights]{workflows::add_case_weights()}}. \code{workflow_set}
+will warn if any of the workflows specify an engine that does not support
+case weights---and ignore the case weights argument for those workflows---but
+will not fail.
+
+Read more about case weights in the tidymodels at \code{?parsnip::case_weights}.
+}
+
 \examples{
 library(workflowsets)
 library(workflows)

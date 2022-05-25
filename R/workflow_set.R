@@ -7,9 +7,9 @@
 #'  models be used to create the workflows? If `FALSE`, the length of `preproc`
 #'  and `models` should be equal.
 #' @param case_weights A single unquoted column name specifying the case
-#' weights for the model. This must be a classed case weights column, as
-#' determined by [hardhat::is_case_weights()]. See `?parsnip::case_weights`
-#' to learn more.
+#' weights for the models. This must be a classed case weights column, as
+#' determined by [hardhat::is_case_weights()]. See the "Case weights" section
+#' below for more information.
 #' @seealso [workflow_map()], [comment_add()], [option_add()],
 #' [as_workflow_set()]
 #' @details
@@ -22,6 +22,17 @@
 #'
 #' Since `preproc` is a named list column, any combination of these can be
 #' used in that argument (i.e., `preproc` can be mixed types).
+#'
+#' @section Case weights:
+#' The `case_weights` argument can be passed as a single unquoted column name
+#' identifying the data column giving model case weights. For each workflow
+#' in the workflow set using an engine that supports case weights, the case
+#' weights will be added with [workflows::add_case_weights()]. `workflow_set`
+#' will warn if any of the workflows specify an engine that does not support
+#' case weights---and ignore the case weights argument for those workflows---but
+#' will not fail.
+#'
+#' Read more about case weights in the tidymodels at `?parsnip::case_weights`.
 #'
 #' @return A tibble with extra class 'workflow_set'. A new set includes four
 #' columns (but others can be added):
