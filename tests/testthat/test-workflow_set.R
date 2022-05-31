@@ -129,6 +129,120 @@ test_that("creating workflow sets", {
   expect_true(is.null(car_set_4$result[[2]]))
 })
 
+test_that("workflow_set can handle correctly passed case weights", {
+   lr_spec <- linear_reg() %>% set_engine("lm")
+
+   cars <-
+      mtcars %>%
+      dplyr::mutate(
+         wts = hardhat::importance_weights(1:nrow(.)),
+         non_wts = 1:nrow(.)
+      )
+
+   expect_silent({
+      car_set_1 <-
+         workflow_set(
+            list(reg = mpg ~ ., nonlin = mpg ~ wt + 1 / sqrt(disp)),
+            list(lm = lr_spec),
+            case_weights = wts
+         ) %>%
+         workflow_map(
+            "fit_resamples",
+            resamples = vfold_cv(cars, v = 5)
+         )
+   })
+
+   expect_true(has_case_weights(car_set_1$info[[1]]$workflow[[1]]))
+})
+
+test_that("specifying a column that is not case weights", {
+   lr_spec <- linear_reg() %>% set_engine("lm")
+
+   cars <-
+      mtcars %>%
+      dplyr::mutate(
+         wts = hardhat::importance_weights(1:nrow(.)),
+         non_wts = 1:nrow(.)
+      )
+
+   expect_snapshot({
+      car_set_2 <-
+         workflow_set(
+            list(reg = mpg ~ ., nonlin = mpg ~ wt + 1 / sqrt(disp)),
+            list(lm = lr_spec),
+            case_weights = non_wts
+         ) %>%
+         workflow_map(
+            "fit_resamples",
+            resamples = vfold_cv(cars, v = 5)
+         )
+   })
+
+   class_note <- extract_workflow_set_result(car_set_2, "reg_lm") %>%
+      tune::collect_notes() %>%
+      dplyr::select(note)
+
+   expect_snapshot(class_note$note[1])
+})
+
+test_that("specifying an engine that does not allow case weights", {
+   lr_spec <- linear_reg() %>% set_engine("lm")
+   knn_spec <- nearest_neighbor() %>%
+      set_engine("kknn") %>%
+      set_mode("regression")
+
+   cars <-
+      mtcars %>%
+      dplyr::mutate(
+         wts = hardhat::importance_weights(1:nrow(.)),
+         non_wts = 1:nrow(.)
+      )
+
+   expect_warning({
+      car_set_3 <-
+         workflow_set(
+            list(reg = mpg ~ ., nonlin = mpg ~ wt + 1 / sqrt(disp)),
+            list(lm = lr_spec, knn = knn_spec),
+            case_weights = wts
+         )},
+     regexp = "weights are not enabled.*kknn"
+   )
+
+   expect_true (has_case_weights(car_set_3$info[[1]]$workflow[[1]]))
+   expect_false(has_case_weights(car_set_3$info[[2]]$workflow[[1]]))
+
+})
+
+test_that("specifying a case weight column that isn't in the resamples", {
+   lr_spec <- linear_reg() %>% set_engine("lm")
+
+   cars <-
+      mtcars %>%
+      dplyr::mutate(
+         wts = hardhat::importance_weights(1:nrow(.)),
+         non_wts = 1:nrow(.)
+      )
+
+   expect_snapshot({
+      car_set_4 <-
+         workflow_set(
+            list(reg = mpg ~ ., nonlin = mpg ~ wt + 1 / sqrt(disp)),
+            list(lm = lr_spec),
+            case_weights = boop
+         ) %>%
+         workflow_map(
+            "fit_resamples",
+            resamples = vfold_cv(cars, v = 5)
+         )
+   })
+
+   class_note <- extract_workflow_set_result(car_set_4, "reg_lm") %>%
+      tune::collect_notes() %>%
+      dplyr::select(note)
+
+   expect_snapshot(class_note$note[1])
+})
+
 test_that("correct object type and resamples", {
   pp <- list(
     cyl = mpg ~ disp + hp + drat + wt + qsec + vs + am + gear + carb,

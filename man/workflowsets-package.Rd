@@ -6,7 +6,7 @@
 \alias{workflowsets-package}
 \title{workflowsets: Create a Collection of 'tidymodels' Workflows}
 \description{
-A workflow is a combination of a model and preprocessors (e.g, a formula, recipe, etc.) (Kuhn and Silge (2021) <https://www.tmwr.org/>). In order to try different combinations of these, an object can be created that contains many workflows. There are functions to create workflows en masse as well as training them and visualizing the results.
+A workflow is a combination of a model and preprocessors (e.g, a formula, recipe, etc.) (Kuhn and Silge (2021) \url{https://www.tmwr.org/}). In order to try different combinations of these, an object can be created that contains many workflows. There are functions to create workflows en masse as well as training them and visualizing the results.
 }
 \seealso{
 Useful links:
@@ -18,7 +18,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Max Kuhn \email{max@rstudio.com} (\href{https://orcid.org/0000-0003-2402-136X}{ORCID})
+\strong{Maintainer}: Simon Couch \email{simonpatrickcouch@gmail.com} (\href{https://orcid.org/0000-0001-5676-5107}{ORCID})
+
+Authors:
+\itemize{
+  \item Max Kuhn \email{max@rstudio.com} (\href{https://orcid.org/0000-0003-2402-136X}{ORCID})
+}
 
 Other contributors:
 \itemize{

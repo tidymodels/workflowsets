@@ -6,6 +6,10 @@
 #' @param cross A logical: should all combinations of the preprocessors and
 #'  models be used to create the workflows? If `FALSE`, the length of `preproc`
 #'  and `models` should be equal.
+#' @param case_weights A single unquoted column name specifying the case
+#' weights for the models. This must be a classed case weights column, as
+#' determined by [hardhat::is_case_weights()]. See the "Case weights" section
+#' below for more information.
 #' @seealso [workflow_map()], [comment_add()], [option_add()],
 #' [as_workflow_set()]
 #' @details
@@ -18,6 +22,17 @@
 #'
 #' Since `preproc` is a named list column, any combination of these can be
 #' used in that argument (i.e., `preproc` can be mixed types).
+#'
+#' @section Case weights:
+#' The `case_weights` argument can be passed as a single unquoted column name
+#' identifying the data column giving model case weights. For each workflow
+#' in the workflow set using an engine that supports case weights, the case
+#' weights will be added with [workflows::add_case_weights()]. `workflow_set()`
+#' will warn if any of the workflows specify an engine that does not support
+#' case weights---and ignore the case weights argument for those workflows---but
+#' will not fail.
+#'
+#' Read more about case weights in the tidymodels at `?parsnip::case_weights`.
 #'
 #' @return A tibble with extra class 'workflow_set'. A new set includes four
 #' columns (but others can be added):
@@ -100,7 +115,7 @@
 #' cell_set_by_group <- workflow_set(preproc, models["logistic"])
 #' cell_set_by_group
 #' @export
-workflow_set <- function(preproc, models, cross = TRUE) {
+workflow_set <- function(preproc, models, cross = TRUE, case_weights = NULL) {
   if (length(preproc) != length(models) &
     (length(preproc) != 1 & length(models) != 1 &
       !cross)
@@ -112,22 +127,31 @@ workflow_set <- function(preproc, models, cross = TRUE) {
 
   preproc <- fix_list_names(preproc)
   models <- fix_list_names(models)
+  case_weights <- enquo(case_weights)
 
   if (cross) {
     res <- cross_objects(preproc, models)
   } else {
     res <- fuse_objects(preproc, models)
   }
+
+  # call set_weights outside of mutate call so that dplyr
+  # doesn't prepend possible warnings with "Problem while computing..."
+  wfs <-
+     purrr::map2(res$preproc, res$model, make_workflow) %>%
+     set_weights(case_weights) %>%
+     unname()
+
   res <-
-    res %>%
-    dplyr::mutate(
-      workflow = purrr::map2(preproc, model, make_workflow),
-      workflow = unname(workflow),
+     res %>%
+     dplyr::mutate(
+      workflow = wfs,
       info = purrr::map(workflow, get_info),
       option = purrr::map(1:nrow(res), ~ new_workflow_set_options()),
       result = purrr::map(1:nrow(res), ~ list())
     ) %>%
     dplyr::select(wflow_id, info, option, result)
+
   new_workflow_set(res)
 }
 
@@ -164,7 +188,6 @@ fix_list_names <- function(x) {
   x
 }
 
-
 cross_objects <- function(preproc, models) {
   tidyr::crossing(preproc, models) %>%
     dplyr::mutate(pp_nm = names(preproc), mod_nm = names(models)) %>%
@@ -181,6 +204,79 @@ fuse_objects <- function(preproc, models) {
 
   tibble::tibble(preproc = preproc, model = models) %>%
     dplyr::bind_cols(nms)
+}
+
+# takes in a _list_ of workflows so that we can check whether case weights
+# are allowed in batch and only prompt once if so.
+set_weights <- function(workflows, case_weights) {
+   if (rlang::quo_is_null(case_weights)) {
+      return(workflows)
+   }
+
+   allowed <-
+      workflows %>%
+      purrr::map(extract_spec_parsnip) %>%
+      purrr::map_lgl(case_weights_allowed)
+
+   if (any(!allowed)) {
+      disallowed <-
+         workflows[!allowed] %>%
+         purrr::map(extract_spec_parsnip) %>%
+         purrr::map(purrr::pluck, "engine") %>%
+         unlist() %>%
+         unique()
+
+      rlang::warn(
+         glue::glue(
+            "Case weights are not enabled by the underlying model implementation ",
+            "for the following engine(s): ",
+            "{glue::glue_collapse(disallowed, sep = ', ')}.\n\n",
+            "The `case_weights` argument will be ignored for specifications ",
+            "using that engine."
+         )
+      )
+   }
+
+   workflows <-
+      purrr::map2(
+         workflows,
+         allowed,
+         add_case_weights_conditionally,
+         case_weights
+      )
+
+   workflows
+}
+
+# copied from parsnip
+case_weights_allowed <- function(spec) {
+   mod_type <- class(spec)[1]
+   mod_eng <- spec$engine
+   mod_mode <- spec$mode
+
+   model_info <-
+      get_from_env(paste0(mod_type, "_fit")) %>%
+      dplyr::filter(engine == mod_eng & mode == mod_mode)
+
+   # If weights are used, they are protected data arguments with the canonical
+   # name 'weights' (although this may not be the model function's argument name).
+   data_args <- model_info$value[[1]]$protect
+   any(data_args == "weights")
+}
+
+add_case_weights_conditionally <- function(workflow, allowed, case_weights) {
+   if (allowed) {
+      res <- workflows::add_case_weights(workflow, !!case_weights)
+   } else{
+      res <- workflow
+   }
+
+   res
+}
+
+# adapted from workflows
+has_case_weights <- function(x) {
+   "case_weights" %in% names(x$pre$actions)
 }
 
 
@@ -280,3 +376,5 @@ new_tibble0 <- function(x, ..., class = NULL) {
   x <- vctrs::new_data_frame(x)
   tibble::new_tibble(x, nrow = nrow(x), class = class)
 }
+
+

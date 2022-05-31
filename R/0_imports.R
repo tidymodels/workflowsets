@@ -15,9 +15,9 @@ NULL
 utils::globalVariables(
   c(
     ".config", ".estimator", ".metric", "info", "metric", "mod_nm",
-    "model", "n", "pp_nm", "preprocessor", "preproc", "object",
+    "model", "n", "pp_nm", "preprocessor", "preproc", "object", "engine",
     "result", "std_err", "wflow_id", "func", "is_race", "num_rs", "option",
-    "metrics", "predictions", "hash", "id", "workflow", "comment"
+    "metrics", "predictions", "hash", "id", "workflow", "comment", "get_from_env"
   )
 )
 
