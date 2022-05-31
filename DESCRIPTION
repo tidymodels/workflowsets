@@ -25,6 +25,7 @@ Imports:
     dplyr (>= 1.0.0),
     generics (>= 0.1.2),
     ggplot2,
+    glue,
     hardhat (>= 0.2.0.9000),
     lifecycle (>= 1.0.0),
     prettyunits,
@@ -37,8 +38,7 @@ Imports:
     tune (>= 0.2.0.9001),
     vctrs,
     withr,
-    workflows (>= 0.2.6.9001),
-    glue
+    workflows (>= 0.2.6.9001)
 Suggests: 
     covr,
     dials (>= 0.1.0),

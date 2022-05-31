@@ -3,7 +3,7 @@
 * New `extract_parameter_set_dials()` and `extract_parameter_dials()` methods to 
   extract parameter sets and single parameters from `workflow_set` objects.
   
-* Added support for case weights via the `case_weights` argument
+* Added support for case weights via a new `case_weights` argument
   to `workflow_set()` (#82).
 
 # workflowsets 0.2.1
