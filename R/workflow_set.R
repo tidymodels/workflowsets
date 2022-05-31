@@ -27,7 +27,7 @@
 #' The `case_weights` argument can be passed as a single unquoted column name
 #' identifying the data column giving model case weights. For each workflow
 #' in the workflow set using an engine that supports case weights, the case
-#' weights will be added with [workflows::add_case_weights()]. `workflow_set`
+#' weights will be added with [workflows::add_case_weights()]. `workflow_set()`
 #' will warn if any of the workflows specify an engine that does not support
 #' case weights---and ignore the case weights argument for those workflows---but
 #' will not fail.
@@ -209,14 +209,14 @@ fuse_objects <- function(preproc, models) {
 # takes in a _list_ of workflows so that we can check whether case weights
 # are allowed in batch and only prompt once if so.
 set_weights <- function(workflows, case_weights) {
-   if (is.null(rlang::quo_get_expr(case_weights))) {
+   if (rlang::quo_is_null(case_weights)) {
       return(workflows)
-   } else {
-      allowed <-
-         workflows %>%
-         purrr::map(extract_spec_parsnip) %>%
-         purrr::map_lgl(case_weights_allowed)
    }
+
+   allowed <-
+      workflows %>%
+      purrr::map(extract_spec_parsnip) %>%
+      purrr::map_lgl(case_weights_allowed)
 
    if (any(!allowed)) {
       disallowed <-
@@ -248,6 +248,22 @@ set_weights <- function(workflows, case_weights) {
    workflows
 }
 
+# copied from parsnip
+case_weights_allowed <- function(spec) {
+   mod_type <- class(spec)[1]
+   mod_eng <- spec$engine
+   mod_mode <- spec$mode
+
+   model_info <-
+      get_from_env(paste0(mod_type, "_fit")) %>%
+      dplyr::filter(engine == mod_eng & mode == mod_mode)
+
+   # If weights are used, they are protected data arguments with the canonical
+   # name 'weights' (although this may not be the model function's argument name).
+   data_args <- model_info$value[[1]]$protect
+   any(data_args == "weights")
+}
+
 add_case_weights_conditionally <- function(workflow, allowed, case_weights) {
    if (allowed) {
       res <- workflows::add_case_weights(workflow, !!case_weights)
@@ -256,6 +272,11 @@ add_case_weights_conditionally <- function(workflow, allowed, case_weights) {
    }
 
    res
+}
+
+# adapted from workflows
+has_case_weights <- function(x) {
+   "case_weights" %in% names(x$pre$actions)
 }
 
 

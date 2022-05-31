@@ -1,24 +1,68 @@
-# workflow_set can handle case weights
+# specifying a column that is not case weights
 
     Code
       car_set_2 <- workflow_set(list(reg = mpg ~ ., nonlin = mpg ~ wt + 1 / sqrt(disp)),
       list(lm = lr_spec), case_weights = non_wts) %>% workflow_map("fit_resamples",
         resamples = vfold_cv(cars, v = 5))
-    Error <rlang_error>
-      The supplied `case_weights` argument 'non_wts' is not a case weights column. See `?workflow_set` for more information.
     Message <simpleMessage>
-      Execution stopped; returning current results
+      x Fold1: preprocessor 1/1: Error in `fit()`:
+      ! `col` must select a classed case w...
+      x Fold2: preprocessor 1/1: Error in `fit()`:
+      ! `col` must select a classed case w...
+      x Fold3: preprocessor 1/1: Error in `fit()`:
+      ! `col` must select a classed case w...
+      x Fold4: preprocessor 1/1: Error in `fit()`:
+      ! `col` must select a classed case w...
+      x Fold5: preprocessor 1/1: Error in `fit()`:
+      ! `col` must select a classed case w...
+    Warning <rlang_warning>
+      All models failed. See the `.notes` column.
+    Message <simpleMessage>
+      x Fold1: preprocessor 1/1: Error in `fit()`:
+      ! `col` must select a classed case w...
+      x Fold2: preprocessor 1/1: Error in `fit()`:
+      ! `col` must select a classed case w...
+      x Fold3: preprocessor 1/1: Error in `fit()`:
+      ! `col` must select a classed case w...
+      x Fold4: preprocessor 1/1: Error in `fit()`:
+      ! `col` must select a classed case w...
+      x Fold5: preprocessor 1/1: Error in `fit()`:
+      ! `col` must select a classed case w...
+    Warning <rlang_warning>
+      All models failed. See the `.notes` column.
 
----
+# specifying a case weight column that isn't in the resamples
 
     Code
       car_set_4 <- workflow_set(list(reg = mpg ~ ., nonlin = mpg ~ wt + 1 / sqrt(disp)),
       list(lm = lr_spec), case_weights = boop) %>% workflow_map("fit_resamples",
         resamples = vfold_cv(cars, v = 5))
-    Error <rlang_error>
-      The supplied `case_weights` argument 'boop' is not a column in the data passed via `resamples`. See `workflow_set` for more information.
     Message <simpleMessage>
-      Execution stopped; returning current results
+      x Fold1: preprocessor 1/1: Error in `chr_as_locations()`:
+      ! Can't subset columns ...
+      x Fold2: preprocessor 1/1: Error in `chr_as_locations()`:
+      ! Can't subset columns ...
+      x Fold3: preprocessor 1/1: Error in `chr_as_locations()`:
+      ! Can't subset columns ...
+      x Fold4: preprocessor 1/1: Error in `chr_as_locations()`:
+      ! Can't subset columns ...
+      x Fold5: preprocessor 1/1: Error in `chr_as_locations()`:
+      ! Can't subset columns ...
+    Warning <rlang_warning>
+      All models failed. See the `.notes` column.
+    Message <simpleMessage>
+      x Fold1: preprocessor 1/1: Error in `chr_as_locations()`:
+      ! Can't subset columns ...
+      x Fold2: preprocessor 1/1: Error in `chr_as_locations()`:
+      ! Can't subset columns ...
+      x Fold3: preprocessor 1/1: Error in `chr_as_locations()`:
+      ! Can't subset columns ...
+      x Fold4: preprocessor 1/1: Error in `chr_as_locations()`:
+      ! Can't subset columns ...
+      x Fold5: preprocessor 1/1: Error in `chr_as_locations()`:
+      ! Can't subset columns ...
+    Warning <rlang_warning>
+      All models failed. See the `.notes` column.
 
 # pillar formatting
 

@@ -59,7 +59,7 @@ used in that argument (i.e., \code{preproc} can be mixed types).
 The \code{case_weights} argument can be passed as a single unquoted column name
 identifying the data column giving model case weights. For each workflow
 in the workflow set using an engine that supports case weights, the case
-weights will be added with \code{\link[workflows:add_case_weights]{workflows::add_case_weights()}}. \code{workflow_set}
+weights will be added with \code{\link[workflows:add_case_weights]{workflows::add_case_weights()}}. \code{workflow_set()}
 will warn if any of the workflows specify an engine that does not support
 case weights---and ignore the case weights argument for those workflows---but
 will not fail.
