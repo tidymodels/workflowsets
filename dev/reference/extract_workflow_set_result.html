@@ -94,22 +94,22 @@ have been estimated.
 
     <div class="ref-description section level2">
     <p>These functions extract various elements from a workflow set object. If they
-do not exist yet, an error is thrown.</p><ul><li><p><code><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_preprocessor()</a></code> returns the formula, recipe, or variable
+do not exist yet, an error is thrown.</p><ul><li><p><code><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_preprocessor()</a></code> returns the formula, recipe, or variable
 expressions used for preprocessing.</p></li>
-<li><p><code><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_spec_parsnip()</a></code> returns the parsnip model specification.</p></li>
-<li><p><code><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_fit_parsnip()</a></code> returns the parsnip model fit object.</p></li>
-<li><p><code><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_fit_engine()</a></code> returns the engine specific fit embedded within
+<li><p><code><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_spec_parsnip()</a></code> returns the parsnip model specification.</p></li>
+<li><p><code><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_fit_parsnip()</a></code> returns the parsnip model fit object.</p></li>
+<li><p><code><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_fit_engine()</a></code> returns the engine specific fit embedded within
 a parsnip model fit. For example, when using <code><a href="https://parsnip.tidymodels.org/reference/linear_reg.html" class="external-link">parsnip::linear_reg()</a></code>
 with the <code>"lm"</code> engine, this returns the underlying <code>lm</code> object.</p></li>
-<li><p><code><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_mold()</a></code> returns the preprocessed "mold" object returned
-from <code><a href="https://rdrr.io/pkg/hardhat/man/mold.html" class="external-link">hardhat::mold()</a></code>. It contains information about the preprocessing,
+<li><p><code><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_mold()</a></code> returns the preprocessed "mold" object returned
+from <code><a href="https://hardhat.tidymodels.org/reference/mold.html" class="external-link">hardhat::mold()</a></code>. It contains information about the preprocessing,
 including either the prepped recipe, the formula terms object, or
 variable selectors.</p></li>
-<li><p><code><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_recipe()</a></code> returns the recipe. The <code>estimated</code> argument specifies
+<li><p><code><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_recipe()</a></code> returns the recipe. The <code>estimated</code> argument specifies
 whether the fitted or original recipe is returned.</p></li>
 <li><p><code>extract_workflow_set_result()</code> returns the results of <code><a href="workflow_map.html">workflow_map()</a></code>
 for a particular workflow.</p></li>
-<li><p><code><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_workflow()</a></code> returns the workflow object. The workflow will not
+<li><p><code><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_workflow()</a></code> returns the workflow object. The workflow will not
 have been estimated.</p></li>
 </ul></div>
 
@@ -118,31 +118,31 @@ have been estimated.</p></li>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">extract_workflow_set_result</span><span class="op">(</span><span class="va">x</span>, <span class="va">id</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for workflow_set</span>
-<span class="fu"><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_workflow</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">id</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_workflow</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">id</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for workflow_set</span>
-<span class="fu"><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_spec_parsnip</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">id</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_spec_parsnip</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">id</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for workflow_set</span>
-<span class="fu"><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_recipe</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">id</span>, <span class="va">...</span>, estimated <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_recipe</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">id</span>, <span class="va">...</span>, estimated <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co"># S3 method for workflow_set</span>
-<span class="fu"><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_fit_parsnip</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">id</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_fit_parsnip</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">id</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for workflow_set</span>
-<span class="fu"><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_fit_engine</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">id</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_fit_engine</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">id</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for workflow_set</span>
-<span class="fu"><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_mold</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">id</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_mold</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">id</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for workflow_set</span>
-<span class="fu"><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_preprocessor</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">id</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_preprocessor</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">id</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for workflow_set</span>
-<span class="fu"><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_parameter_set_dials</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">id</span>, <span class="va">...</span><span class="op">)</span>
+<span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_parameter_set_dials</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">id</span>, <span class="va">...</span><span class="op">)</span>
 
 <span class="co"># S3 method for workflow_set</span>
-<span class="fu"><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_parameter_dials</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">id</span>, <span class="va">parameter</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_parameter_dials</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">id</span>, <span class="va">parameter</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -186,7 +186,7 @@ description section.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> <span style="color: #949494;">&lt;split [633/158]&gt;</span> Fold4 <span style="color: #949494;">&lt;tibble [20 × 6]&gt;</span> <span style="color: #949494;">&lt;tibble [0 × 1]&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> <span style="color: #949494;">&lt;split [633/158]&gt;</span> Fold5 <span style="color: #949494;">&lt;tibble [20 × 6]&gt;</span> <span style="color: #949494;">&lt;tibble [0 × 1]&gt;</span></span>
 <span class="r-in"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/pkg/hardhat/man/hardhat-extract.html" class="external-link">extract_workflow</a></span><span class="op">(</span><span class="va">two_class_res</span>, <span class="st">"none_cart"</span><span class="op">)</span></span>
+<span class="r-in"><span class="fu"><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_workflow</a></span><span class="op">(</span><span class="va">two_class_res</span>, <span class="st">"none_cart"</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ══ Workflow ══════════════════════════════════════════════════════════════</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Preprocessor:</span> Formula</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="font-style: italic;">Model:</span> decision_tree()</span>
