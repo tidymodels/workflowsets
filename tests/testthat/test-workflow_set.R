@@ -182,7 +182,7 @@ test_that("specifying a column that is not case weights", {
       tune::collect_notes() %>%
       dplyr::select(note)
 
-   expect_match(class_note$note[1], "classed case weights column")
+   expect_snapshot(class_note$note[1])
 })
 
 test_that("specifying an engine that does not allow case weights", {
@@ -240,7 +240,7 @@ test_that("specifying a case weight column that isn't in the resamples", {
       tune::collect_notes() %>%
       dplyr::select(note)
 
-   expect_match(class_note$note[1], "Column `boop` does")
+   expect_snapshot(class_note$note[1])
 })
 
 test_that("correct object type and resamples", {

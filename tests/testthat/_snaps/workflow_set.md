@@ -31,6 +31,13 @@
     Warning <rlang_warning>
       All models failed. See the `.notes` column.
 
+---
+
+    Code
+      class_note$note[1]
+    Output
+      [1] "Error in `fit()`:\n! `col` must select a classed case weights column, as determined by `hardhat::is_case_weights()`. For example, it could be a column created by `hardhat::frequency_weights()` or `hardhat::importance_weights()`."
+
 # specifying a case weight column that isn't in the resamples
 
     Code
@@ -63,6 +70,13 @@
       ! Can't subset columns ...
     Warning <rlang_warning>
       All models failed. See the `.notes` column.
+
+---
+
+    Code
+      class_note$note[1]
+    Output
+      [1] "Error in `chr_as_locations()`:\n! Can't subset columns that don't exist.\nx Column `boop` doesn't exist."
 
 # pillar formatting
 
