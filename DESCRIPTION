@@ -53,7 +53,7 @@ Suggests:
     yardstick (>= 0.0.9.9000)
 Remotes:
     tidymodels/hardhat,
-    tidymodels/parsnip@feature/case-weights,
+    tidymodels/parsnip,
     tidymodels/recipes,
     tidymodels/tune,
     tidymodels/workflows,
