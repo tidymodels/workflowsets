@@ -54,7 +54,7 @@ test_that("option printing", {
     "a list of options with names:  'resamples', 'grid'"
   )
   expect_equal(
-    tibble::type_sum(two_class_res$option[[1]]),
+    pillar::type_sum(two_class_res$option[[1]]),
     "opts[3]"
   )
 })
