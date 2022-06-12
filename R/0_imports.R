@@ -8,7 +8,7 @@ NULL
 #' @import ggplot2
 #' @import vctrs
 #' @importFrom stats qnorm as.formula model.frame
-#' @importFrom tibble obj_sum type_sum tbl_sum size_sum
+#' @importFrom pillar obj_sum type_sum tbl_sum size_sum
 #' @importFrom dplyr dplyr_reconstruct
 #' @importFrom lifecycle deprecated
 

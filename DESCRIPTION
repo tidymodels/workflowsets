@@ -28,6 +28,7 @@ Imports:
     glue,
     hardhat (>= 0.2.0.9000),
     lifecycle (>= 1.0.0),
+    pillar (>= 1.7.0),
     prettyunits,
     purrr,
     rlang,
