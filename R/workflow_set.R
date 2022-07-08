@@ -255,7 +255,7 @@ case_weights_allowed <- function(spec) {
    mod_mode <- spec$mode
 
    model_info <-
-      get_from_env(paste0(mod_type, "_fit")) %>%
+      parsnip::get_from_env(paste0(mod_type, "_fit")) %>%
       dplyr::filter(engine == mod_eng & mode == mod_mode)
 
    # If weights are used, they are protected data arguments with the canonical
