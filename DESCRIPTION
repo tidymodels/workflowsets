@@ -26,7 +26,7 @@ Imports:
     generics (>= 0.1.2),
     ggplot2,
     glue,
-    hardhat (>= 0.2.0.9000),
+    hardhat (>= 1.2.0),
     lifecycle (>= 1.0.0),
     pillar (>= 1.7.0),
     prettyunits,
@@ -36,29 +36,22 @@ Imports:
     stats,
     tibble (>= 3.1.0),
     tidyr,
-    tune (>= 0.2.0.9001),
+    tune (>= 1.0.0),
     vctrs,
     withr,
-    workflows (>= 0.2.6.9001)
+    workflows (>= 1.0.0)
 Suggests: 
     covr,
     dials (>= 0.1.0),
     kknn,
     knitr,
     modeldata,
-    parsnip (>= 0.2.1.9002),
-    recipes (>= 0.2.0.9001),
+    parsnip (>= 1.0.0),
+    recipes (>= 1.0.0),
     rmarkdown,
     spelling,
     testthat (>= 3.0.0),
-    yardstick (>= 0.0.9.9000)
-Remotes:
-    tidymodels/hardhat,
-    tidymodels/parsnip,
-    tidymodels/recipes,
-    tidymodels/tune,
-    tidymodels/workflows,
-    tidymodels/yardstick
+    yardstick (>= 1.0.0)
 VignetteBuilder: 
     knitr
 Config/Needs/website: 
