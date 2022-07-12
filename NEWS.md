@@ -1,3 +1,7 @@
+# workflowsets (developmental version)
+
+To be released as workflowsets 1.0.1.
+
 # workflowsets 1.0.0
 
 * New `extract_parameter_set_dials()` and `extract_parameter_dials()` methods to 
