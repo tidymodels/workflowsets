@@ -64,33 +64,44 @@ set. The various <code>tune_*()</code> functions can be used as well as
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">workflow_map</span><span class="op">(</span>
-  <span class="va">object</span>,
-  fn <span class="op">=</span> <span class="st">"tune_grid"</span>,
-  verbose <span class="op">=</span> <span class="cn">FALSE</span>,
-  seed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample.int</a></span><span class="op">(</span><span class="fl">10</span><span class="op">^</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">workflow_map</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  fn <span class="op">=</span> <span class="st">"tune_grid"</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  seed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample.int</a></span><span class="op">(</span><span class="fl">10</span><span class="op">^</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>object</dt>
 <dd><p>A workflow set.</p></dd>
+
+
 <dt>fn</dt>
 <dd><p>The function to run. Acceptable values are: <code><a href="https://tune.tidymodels.org/reference/tune_grid.html" class="external-link">tune::tune_grid()</a></code>,
 <code><a href="https://tune.tidymodels.org/reference/tune_bayes.html" class="external-link">tune::tune_bayes()</a></code>, <code><a href="https://tune.tidymodels.org/reference/fit_resamples.html" class="external-link">tune::fit_resamples()</a></code>, <code>finetune::tune_race_anova()</code>,
 <code>finetune::tune_race_win_loss()</code>, or <code>finetune::tune_sim_anneal()</code>.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>A logical for logging progress.</p></dd>
+
+
 <dt>seed</dt>
 <dd><p>A single integer that is set prior to each function execution.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Options to pass to the modeling function. See details below.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An updated workflow set. The <code>option</code> column will be updated with
+    
+
+<p>An updated workflow set. The <code>option</code> column will be updated with
 any options for the <code>tune</code> package functions given to <code>workflow_map()</code>. Also,
 the results will be added to the <code>result</code> column. If the computations for a
 workflow fail, an <code>try-catch</code> object will be saved in place of the results
@@ -116,19 +127,19 @@ and <code>workflow_map()</code> continues with the next workflow (if any).</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># An example of processed results</span></span>
-<span class="r-in"><span class="va">chi_features_res</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># An example of processed results</span></span></span>
+<span class="r-in"><span><span class="va">chi_features_res</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A workflow set/tibble: 3 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   wflow_id         info             option    result   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> date_lm          <span style="color: #949494;">&lt;tibble [1 × 4]&gt;</span> <span style="color: #949494;">&lt;opts[2]&gt;</span> <span style="color: #949494;">&lt;rsmp[+]&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> plus_holidays_lm <span style="color: #949494;">&lt;tibble [1 × 4]&gt;</span> <span style="color: #949494;">&lt;opts[2]&gt;</span> <span style="color: #949494;">&lt;rsmp[+]&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> plus_pca_lm      <span style="color: #949494;">&lt;tibble [1 × 4]&gt;</span> <span style="color: #949494;">&lt;opts[3]&gt;</span> <span style="color: #949494;">&lt;tune[+]&gt;</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Code examples at</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"example-data"</span>, package <span class="op">=</span> <span class="st">"workflowsets"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Code examples at</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"example-data"</span>, package <span class="op">=</span> <span class="st">"workflowsets"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -142,7 +153,7 @@ and <code>workflow_map()</code> continues with the next workflow (if any).</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
   </div></footer></body></html>
