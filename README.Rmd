@@ -57,7 +57,6 @@ The first two methods can be used with any model while the last option is only a
 
 ```{r sshhh, include = FALSE}
 library(tidymodels)
-library(workflowsets)
 library(glmnet)
 library(rpart)
 library(vctrs)
@@ -67,7 +66,6 @@ theme_set(theme_bw())
 ```
 ```{r recs}
 library(tidymodels)
-library(workflowsets)
 data(Chicago)
 # Use a small sample to keep file sizes down:
 Chicago <- Chicago %>% slice(1:365)
