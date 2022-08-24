@@ -61,7 +61,6 @@ we will build on:
 
 ``` r
 library(tidymodels)
-library(workflowsets)
 data(Chicago)
 # Use a small sample to keep file sizes down:
 Chicago <- Chicago %>% slice(1:365)

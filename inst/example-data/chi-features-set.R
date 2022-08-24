@@ -1,5 +1,4 @@
 library(tidymodels)
-library(workflowsets)
 
 # ------------------------------------------------------------------------------
 # Slightly smaller data size
