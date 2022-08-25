@@ -68,6 +68,7 @@ Read more about case weights in the tidymodels at \code{?parsnip::case_weights}.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed(c("kknn", "modeldata", "recipes", "yardstick"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(workflowsets)
 library(workflows)
 library(modeldata)
@@ -132,6 +133,7 @@ preproc
 
 cell_set_by_group <- workflow_set(preproc, models["logistic"])
 cell_set_by_group
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=workflow_map]{workflow_map()}}, \code{\link[=comment_add]{comment_add()}}, \code{\link[=option_add]{option_add()}},

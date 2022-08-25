@@ -15,6 +15,8 @@
 #' invisibly.
 #' @export
 #' @examples
+#' two_class_set
+#'
 #' two_class_set %>% comment_get("none_cart")
 #'
 #' new_set <-

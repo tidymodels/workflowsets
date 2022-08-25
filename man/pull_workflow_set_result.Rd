@@ -33,6 +33,8 @@ be used instead of these functions.
 \examples{
 library(tune)
 
+two_class_res
+
 pull_workflow_set_result(two_class_res, "none_cart")
 
 pull_workflow(two_class_res, "none_cart")

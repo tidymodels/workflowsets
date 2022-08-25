@@ -56,6 +56,10 @@ extra options. To alter these in a workflow set, use
 \code{\link[=update_workflow_model]{update_workflow_model()}} or \code{\link[=update_workflow_recipe]{update_workflow_recipe()}}.
 }
 \examples{
+library(tune)
+
+two_class_set
+
 two_class_set \%>\%
   option_add(grid = 10)
 
@@ -63,7 +67,6 @@ two_class_set \%>\%
   option_add(grid = 10) \%>\%
   option_add(grid = 50, id = "none_cart")
 
-library(tune)
 two_class_set \%>\%
   option_add_parameters()
 }

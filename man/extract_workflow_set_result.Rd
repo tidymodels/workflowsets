@@ -79,6 +79,8 @@ These functions supersede the \verb{pull_*()} functions (e.g.,
 \examples{
 library(tune)
 
+two_class_res
+
 extract_workflow_set_result(two_class_res, "none_cart")
 
 extract_workflow(two_class_res, "none_cart")

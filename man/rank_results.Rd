@@ -31,6 +31,8 @@ be different (or not exist) for some models. The \code{wflow_id} and \code{.conf
 columns can be used to determine the corresponding parameter values.
 }
 \examples{
+chi_features_res
+
 rank_results(chi_features_res)
 rank_results(chi_features_res, select_best = TRUE)
 rank_results(chi_features_res, rank_metric = "rsq")

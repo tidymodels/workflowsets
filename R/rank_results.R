@@ -17,6 +17,8 @@
 #' @return A tibble with columns: `wflow_id`, `.config`, `.metric`, `mean`,
 #' `std_err`, `n`, `preprocessor`, `model`, and `rank`.
 #' @examples
+#' chi_features_res
+#'
 #' rank_results(chi_features_res)
 #' rank_results(chi_features_res, select_best = TRUE)
 #' rank_results(chi_features_res, rank_metric = "rsq")
