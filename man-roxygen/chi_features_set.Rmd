@@ -101,7 +101,7 @@ chi_features_set <-
 
 chi_features_res <-
    chi_features_set %>%
-   options_add(param_info = pca_param, id = "plus_pca_lm") %>%
+   option_add(param_info = pca_param, id = "plus_pca_lm") %>%
    workflow_map(resamples = time_val_split, grid = 21, seed = 1, verbose = TRUE)
 ```
 
