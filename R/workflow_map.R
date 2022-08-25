@@ -32,6 +32,8 @@
 #' If a workflow required packages that are not installed, a message is printed
 #' and `workflow_map()` continues with the next workflow (if any).
 #'
+#' @includeRmd man-roxygen/example_data.Rmd note
+#'
 #' @examplesIf rlang::is_installed(c("kknn", "modeldata", "recipes", "yardstick")) && identical(Sys.getenv("NOT_CRAN"), "true")
 #' library(workflowsets)
 #' library(workflows)

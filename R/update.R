@@ -14,14 +14,19 @@
 #' which workflow to update.
 #' @inheritParams workflows::add_recipe
 #' @inheritParams workflows::add_model
+#'
+#' @includeRmd man-roxygen/example_data.Rmd note
+#'
 #' @examples
 #' library(parsnip)
+#'
 #' new_mod <-
 #'   decision_tree() %>%
 #'   set_engine("rpart", method = "anova") %>%
 #'   set_mode("classification")
 #'
 #' new_set <- update_workflow_model(two_class_res, "none_cart", spec = new_mod)
+#'
 #' new_set
 #'
 #' extract_workflow(new_set, id = "none_cart")

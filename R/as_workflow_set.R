@@ -10,6 +10,9 @@
 #' (accomplished using the `save_workflow` option in the control function).
 #' @return A workflow set. Note that the `option` column will not reflect the
 #' options that were used to create each object.
+#'
+#' @includeRmd man-roxygen/example_data.Rmd note
+#'
 #' @examples
 #'
 #' # ------------------------------------------------------------------------------
@@ -17,6 +20,7 @@
 #'
 #' # Use the already worked example to show how to add tuned
 #' # objects to a workflow set
+#' two_class_res
 #'
 #' results <- two_class_res %>% purrr::pluck("result")
 #' names(results) <- two_class_res$wflow_id

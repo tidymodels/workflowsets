@@ -32,6 +32,9 @@
 #' If multiple resamples are used, confidence bounds are shown for each result
 #' (90% confidence, by default).
 #' @return A ggplot object.
+#'
+#' @includeRmd man-roxygen/example_data.Rmd note
+#'
 #' @examples
 #' autoplot(two_class_res)
 #' autoplot(two_class_res, select_best = TRUE)

@@ -42,6 +42,9 @@
 #' @return
 #' The extracted value from the object, `x`, as described in the
 #' description section.
+#'
+#' @includeRmd man-roxygen/example_data.Rmd note
+#'
 #' @examples
 #' library(tune)
 #'
