@@ -34,7 +34,7 @@
 #'
 #' @includeRmd man-roxygen/example_data.Rmd note
 #'
-#' @examplesIf rlang::is_installed(c("kknn", "modeldata", "recipes", "yardstick")) && identical(Sys.getenv("NOT_CRAN"), "true")
+#' @examplesIf rlang::is_installed(c("kknn", "modeldata", "recipes", "yardstick", "dials")) && identical(Sys.getenv("NOT_CRAN"), "true")
 #' library(workflowsets)
 #' library(workflows)
 #' library(modeldata)
@@ -44,6 +44,7 @@
 #' library(rsample)
 #' library(tune)
 #' library(yardstick)
+#' library(dials)
 #'
 #' # An example of processed results
 #' chi_features_res
