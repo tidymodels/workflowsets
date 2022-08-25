@@ -37,6 +37,7 @@ library(dplyr)
 library(rsample)
 library(tune)
 library(yardstick)
+library(dials)
 
 # ------------------------------------------------------------------------------
 # Slightly smaller data size
