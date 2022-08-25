@@ -49,7 +49,10 @@
 #'     [workflow_map()].
 #'  * `result` is a list column that will contain any objects produced when
 #'     [workflow_map()] is used.
-#' @examples
+#'
+#' @includeRmd man-roxygen/example_data.Rmd note
+#'
+#' @examplesIf rlang::is_installed(c("kknn", "modeldata", "recipes", "yardstick"))
 #' library(workflowsets)
 #' library(workflows)
 #' library(modeldata)

@@ -42,8 +42,13 @@
 #' @return
 #' The extracted value from the object, `x`, as described in the
 #' description section.
+#'
+#' @includeRmd man-roxygen/example_data.Rmd note
+#'
 #' @examples
 #' library(tune)
+#'
+#' two_class_res
 #'
 #' extract_workflow_set_result(two_class_res, "none_cart")
 #'

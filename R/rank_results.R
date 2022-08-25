@@ -16,7 +16,12 @@
 #' columns can be used to determine the corresponding parameter values.
 #' @return A tibble with columns: `wflow_id`, `.config`, `.metric`, `mean`,
 #' `std_err`, `n`, `preprocessor`, `model`, and `rank`.
+#'
+#' @includeRmd man-roxygen/example_data.Rmd note
+#'
 #' @examples
+#' chi_features_res
+#'
 #' rank_results(chi_features_res)
 #' rank_results(chi_features_res, select_best = TRUE)
 #' rank_results(chi_features_res, rank_metric = "rsq")

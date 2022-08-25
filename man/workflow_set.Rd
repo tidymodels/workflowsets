@@ -54,6 +54,25 @@ more of:
 Since \code{preproc} is a named list column, any combination of these can be
 used in that argument (i.e., \code{preproc} can be mixed types).
 }
+\note{
+The package supplies two pre-generated workflow sets, \code{two_class_set}
+and \code{chi_features_set}, and associated sets of model fits
+\code{two_class_res} and \code{chi_features_res}.
+
+The \verb{two_class_*} objects are based on a binary classification problem
+using the \code{two_class_dat} data from the modeldata package. The six
+models utilize either a bare formula or a basic recipe utilizing
+\code{recipes::step_YeoJohnson()} as a preprocessor, and a decision tree,
+logistic regression, or MARS model specification. See \code{?two_class_set}
+for source code.
+
+The \verb{chi_features_*} objects are based on a regression problem using the
+\code{Chicago} data from the modeldata package. Each of the three models
+utilize a linear regression model specification, with three different
+recipes of varying complexity. The objects are meant to approximate the
+sequence of models built in Section 1.3 of Kuhn and Johnson (2019). See
+\code{?chi_features_set} for source code.
+}
 \section{Case weights}{
 
 The \code{case_weights} argument can be passed as a single unquoted column name
@@ -68,6 +87,7 @@ Read more about case weights in the tidymodels at \code{?parsnip::case_weights}.
 }
 
 \examples{
+\dontshow{if (rlang::is_installed(c("kknn", "modeldata", "recipes", "yardstick"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(workflowsets)
 library(workflows)
 library(modeldata)
@@ -132,6 +152,7 @@ preproc
 
 cell_set_by_group <- workflow_set(preproc, models["logistic"])
 cell_set_by_group
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=workflow_map]{workflow_map()}}, \code{\link[=comment_add]{comment_add()}}, \code{\link[=option_add]{option_add()}},

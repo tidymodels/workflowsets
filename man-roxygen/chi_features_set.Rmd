@@ -1,4 +1,16 @@
-library(tidymodels)
+See below for the source code to generate the Chicago Features example workflow sets:
+
+```{r, eval = FALSE}
+library(workflowsets)
+library(workflows)
+library(modeldata)
+library(recipes)
+library(parsnip)
+library(dplyr)
+library(rsample)
+library(tune)
+library(yardstick)
+library(dials)
 
 # ------------------------------------------------------------------------------
 # Slightly smaller data size
@@ -89,11 +101,12 @@ chi_features_set <-
 
 chi_features_res <-
    chi_features_set %>%
-   options_add(param_info = pca_param, id = "plus_pca_lm") %>%
+   option_add(param_info = pca_param, id = "plus_pca_lm") %>%
    workflow_map(resamples = time_val_split, grid = 21, seed = 1, verbose = TRUE)
+```
 
-# ------------------------------------------------------------------------------
-
+```{r, eval = FALSE, include = FALSE}
 save(chi_features_set, chi_features_res,
      file = "data/chi_features_set.rda",
      version = 2, compress = "xz")
+```

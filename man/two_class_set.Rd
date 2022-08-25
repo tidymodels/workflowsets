@@ -4,31 +4,94 @@
 \name{two_class_set}
 \alias{two_class_set}
 \alias{two_class_res}
-\alias{chi_features_set}
-\alias{chi_features_res}
-\title{Example Data Sets}
-\value{
-Workflow sets.
-}
+\title{Two Class Example Data}
 \description{
-Example Data Sets
+The package supplies two pre-generated workflow sets, \code{two_class_set}
+and \code{chi_features_set}, and associated sets of model fits
+\code{two_class_res} and \code{chi_features_res}.
+
+The \verb{two_class_*} objects are based on a binary classification problem
+using the \code{two_class_dat} data from the modeldata package. The six
+models utilize either a bare formula or a basic recipe utilizing
+\code{recipes::step_YeoJohnson()} as a preprocessor, and a decision tree,
+logistic regression, or MARS model specification. See \code{?two_class_set}
+for source code.
+
+The \verb{chi_features_*} objects are based on a regression problem using the
+\code{Chicago} data from the modeldata package. Each of the three models
+utilize a linear regression model specification, with three different
+recipes of varying complexity. The objects are meant to approximate the
+sequence of models built in Section 1.3 of Kuhn and Johnson (2019). See
+\code{?chi_features_set} for source code.
 }
 \details{
-Example workflow sets and associated model fits.
+See below for the source code to generate the Two Class example workflow
+sets:
 
-\code{two_class_set} and \code{two_class_res} were generated using the data in the
-package file \code{example-data/two-class-set.R}
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(workflowsets)
+library(workflows)
+library(modeldata)
+library(recipes)
+library(parsnip)
+library(dplyr)
+library(rsample)
+library(tune)
+library(yardstick)
 
-\code{chi_features_set} and \code{chi_features_res} were generated using the data in the
-package file \code{example-data/chi-features-res.R}. It is meant to approximate
-the sequence of models built in Section 1.3 of Kuhn and Johnson (2019).
+# ------------------------------------------------------------------------------
+
+data(two_class_dat, package = "modeldata")
+
+set.seed(1)
+folds <- vfold_cv(two_class_dat, v = 5)
+
+# ------------------------------------------------------------------------------
+
+decision_tree_rpart_spec <-
+  decision_tree(min_n = tune(), cost_complexity = tune()) \%>\%
+  set_engine('rpart') \%>\%
+  set_mode('classification')
+
+logistic_reg_glm_spec <-
+  logistic_reg() \%>\%
+  set_engine('glm')
+
+mars_earth_spec <-
+  mars(prod_degree = tune()) \%>\%
+  set_engine('earth') \%>\%
+  set_mode('classification')
+
+# ------------------------------------------------------------------------------
+
+yj_recipe <-
+   recipe(Class ~ ., data = two_class_dat) \%>\%
+   step_YeoJohnson(A, B)
+
+# ------------------------------------------------------------------------------
+
+two_class_set <-
+   workflow_set(
+      preproc = list(none = Class ~ A + B, yj_trans = yj_recipe),
+      models = list(cart = decision_tree_rpart_spec, glm = logistic_reg_glm_spec,
+                    mars = mars_earth_spec)
+   )
+
+# ------------------------------------------------------------------------------
+
+two_class_res <-
+  two_class_set \%>\%
+  workflow_map(
+    resamples = folds,
+    grid = 10,
+    seed = 2,
+    verbose = TRUE,
+    control = control_grid(save_workflow = TRUE)
+  )
+}\if{html}{\out{</div>}}
 }
 \examples{
 data(two_class_set)
+
 two_class_set
-}
-\references{
-Max Kuhn and Kjell Johnson (2019) \emph{Feature Engineering and
-Selection}, \url{https://bookdown.org/max/FES/a-more-complex-example.html}
 }
 \keyword{datasets}

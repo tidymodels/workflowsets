@@ -43,14 +43,35 @@ is no way to specify these extra components.
 these values \emph{after} the workflow set is initially created. They are
 analogous to \code{\link[workflows:add_model]{workflows::add_model()}} or \code{\link[workflows:add_recipe]{workflows::add_recipe()}}.
 }
+\note{
+The package supplies two pre-generated workflow sets, \code{two_class_set}
+and \code{chi_features_set}, and associated sets of model fits
+\code{two_class_res} and \code{chi_features_res}.
+
+The \verb{two_class_*} objects are based on a binary classification problem
+using the \code{two_class_dat} data from the modeldata package. The six
+models utilize either a bare formula or a basic recipe utilizing
+\code{recipes::step_YeoJohnson()} as a preprocessor, and a decision tree,
+logistic regression, or MARS model specification. See \code{?two_class_set}
+for source code.
+
+The \verb{chi_features_*} objects are based on a regression problem using the
+\code{Chicago} data from the modeldata package. Each of the three models
+utilize a linear regression model specification, with three different
+recipes of varying complexity. The objects are meant to approximate the
+sequence of models built in Section 1.3 of Kuhn and Johnson (2019). See
+\code{?chi_features_set} for source code.
+}
 \examples{
 library(parsnip)
+
 new_mod <-
   decision_tree() \%>\%
   set_engine("rpart", method = "anova") \%>\%
   set_mode("classification")
 
 new_set <- update_workflow_model(two_class_res, "none_cart", spec = new_mod)
+
 new_set
 
 extract_workflow(new_set, id = "none_cart")

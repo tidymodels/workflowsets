@@ -32,10 +32,15 @@
 #' original objects (see the example below).
 #'
 #' @seealso [tune::collect_metrics()], [rank_results()]
+#'
+#' @includeRmd man-roxygen/example_data.Rmd note
+#'
 #' @examples
 #' library(dplyr)
 #' library(purrr)
 #' library(tidyr)
+#'
+#' two_class_res
 #'
 #' # ------------------------------------------------------------------------------
 #' \donttest{

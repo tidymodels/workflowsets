@@ -39,6 +39,8 @@ invisibly.
 its results as you work. Comments can be appended or removed.
 }
 \examples{
+two_class_set
+
 two_class_set \%>\% comment_get("none_cart")
 
 new_set <-

@@ -32,14 +32,117 @@
 #' If a workflow required packages that are not installed, a message is printed
 #' and `workflow_map()` continues with the next workflow (if any).
 #'
-#' @examples
+#' @includeRmd man-roxygen/example_data.Rmd note
+#'
+#' @examplesIf rlang::is_installed(c("kknn", "modeldata", "recipes", "yardstick", "dials")) && identical(Sys.getenv("NOT_CRAN"), "true")
+#' library(workflowsets)
+#' library(workflows)
+#' library(modeldata)
+#' library(recipes)
+#' library(parsnip)
+#' library(dplyr)
+#' library(rsample)
+#' library(tune)
+#' library(yardstick)
+#' library(dials)
+#'
 #' # An example of processed results
 #' chi_features_res
 #'
-#' # Code examples at
-#' if (interactive()) {
-#'   system.file("example-data", package = "workflowsets")
-#' }
+#' # Recreating them:
+#'
+#' # ---------------------------------------------------------------------------
+#' data(Chicago)
+#' Chicago <- Chicago[1:1195,]
+#'
+#' time_val_split <-
+#'    sliding_period(
+#'       Chicago,
+#'       date,
+#'       "month",
+#'       lookback = 38,
+#'       assess_stop = 1
+#'    )
+#'
+#' # ---------------------------------------------------------------------------
+#'
+#' base_recipe <-
+#'    recipe(ridership ~ ., data = Chicago) %>%
+#'    # create date features
+#'    step_date(date) %>%
+#'    step_holiday(date) %>%
+#'    # remove date from the list of predictors
+#'    update_role(date, new_role = "id") %>%
+#'    # create dummy variables from factor columns
+#'    step_dummy(all_nominal()) %>%
+#'    # remove any columns with a single unique value
+#'    step_zv(all_predictors()) %>%
+#'    step_normalize(all_predictors())
+#'
+#' date_only <-
+#'    recipe(ridership ~ ., data = Chicago) %>%
+#'    # create date features
+#'    step_date(date) %>%
+#'    update_role(date, new_role = "id") %>%
+#'    # create dummy variables from factor columns
+#'    step_dummy(all_nominal()) %>%
+#'    # remove any columns with a single unique value
+#'    step_zv(all_predictors())
+#'
+#' date_and_holidays <-
+#'    recipe(ridership ~ ., data = Chicago) %>%
+#'    # create date features
+#'    step_date(date) %>%
+#'    step_holiday(date) %>%
+#'    # remove date from the list of predictors
+#'    update_role(date, new_role = "id") %>%
+#'    # create dummy variables from factor columns
+#'    step_dummy(all_nominal()) %>%
+#'    # remove any columns with a single unique value
+#'    step_zv(all_predictors())
+#'
+#' date_and_holidays_and_pca <-
+#'    recipe(ridership ~ ., data = Chicago) %>%
+#'    # create date features
+#'    step_date(date) %>%
+#'    step_holiday(date) %>%
+#'    # remove date from the list of predictors
+#'    update_role(date, new_role = "id") %>%
+#'    # create dummy variables from factor columns
+#'    step_dummy(all_nominal()) %>%
+#'    # remove any columns with a single unique value
+#'    step_zv(all_predictors()) %>%
+#'    step_pca(!!stations, num_comp = tune())
+#'
+#' # ---------------------------------------------------------------------------
+#'
+#' lm_spec <- linear_reg() %>% set_engine("lm")
+#'
+#' # ---------------------------------------------------------------------------
+#'
+#' pca_param <-
+#'    parameters(num_comp()) %>%
+#'    update(num_comp = num_comp(c(0, 20)))
+#'
+#' # ---------------------------------------------------------------------------
+#'
+#' chi_features_set <-
+#'    workflow_set(
+#'       preproc = list(date = date_only,
+#'                      plus_holidays = date_and_holidays,
+#'                      plus_pca = date_and_holidays_and_pca),
+#'       models = list(lm = lm_spec),
+#'       cross = TRUE
+#'    )
+#'
+#' # ---------------------------------------------------------------------------
+#'
+#' chi_features_res_new <-
+#'    chi_features_set %>%
+#'    option_add(param_info = pca_param, id = "plus_pca_lm") %>%
+#'    workflow_map(resamples = time_val_split, grid = 21, seed = 1, verbose = TRUE)
+#'
+#' chi_features_res_new
 #' @export
 workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
                          seed = sample.int(10^4, 1), ...) {

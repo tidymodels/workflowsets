@@ -1,0 +1,5 @@
+The package supplies two pre-generated workflow sets, `two_class_set` and `chi_features_set`, and associated sets of model fits `two_class_res` and  `chi_features_res`.
+
+The `two_class_*` objects are based on a binary classification problem using the `two_class_dat` data from the modeldata package. The six models utilize either a bare formula or a basic recipe utilizing `recipes::step_YeoJohnson()` as a preprocessor, and a decision tree, logistic regression, or MARS model specification. See `?two_class_set` for source code.
+
+The `chi_features_*` objects are based on a regression problem using the `Chicago` data from the modeldata package. Each of the three models utilize a linear regression model specification, with three different recipes of varying complexity. The objects are meant to approximate the sequence of models built in Section 1.3 of Kuhn and Johnson (2019). See `?chi_features_set` for source code.
