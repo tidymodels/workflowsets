@@ -92,10 +92,36 @@ that all ranks are integers.</p>
 be different (or not exist) for some models. The <code>wflow_id</code> and <code>.config</code>
 columns can be used to determine the corresponding parameter values.</p>
     </div>
+    <div class="section level2">
+    <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
+    <p>The package supplies two pre-generated workflow sets, <code>two_class_set</code>
+and <code>chi_features_set</code>, and associated sets of model fits
+<code>two_class_res</code> and <code>chi_features_res</code>.</p>
+<p>The <code>two_class_*</code> objects are based on a binary classification problem
+using the <code>two_class_dat</code> data from the modeldata package. The six
+models utilize either a bare formula or a basic recipe utilizing
+<code><a href="https://recipes.tidymodels.org/reference/step_YeoJohnson.html" class="external-link">recipes::step_YeoJohnson()</a></code> as a preprocessor, and a decision tree,
+logistic regression, or MARS model specification. See <code><a href="two_class_set.html">?two_class_set</a></code>
+for source code.</p>
+<p>The <code>chi_features_*</code> objects are based on a regression problem using the
+<code>Chicago</code> data from the modeldata package. Each of the three models
+utilize a linear regression model specification, with three different
+recipes of varying complexity. The objects are meant to approximate the
+sequence of models built in Section 1.3 of Kuhn and Johnson (2019). See
+<code><a href="chi_features_set.html">?chi_features_set</a></code> for source code.</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">rank_results</span><span class="op">(</span><span class="va">chi_features_res</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">chi_features_res</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A workflow set/tibble: 3 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   wflow_id         info             option    result   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> date_lm          <span style="color: #949494;">&lt;tibble [1 × 4]&gt;</span> <span style="color: #949494;">&lt;opts[2]&gt;</span> <span style="color: #949494;">&lt;rsmp[+]&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> plus_holidays_lm <span style="color: #949494;">&lt;tibble [1 × 4]&gt;</span> <span style="color: #949494;">&lt;opts[2]&gt;</span> <span style="color: #949494;">&lt;rsmp[+]&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> plus_pca_lm      <span style="color: #949494;">&lt;tibble [1 × 4]&gt;</span> <span style="color: #949494;">&lt;opts[3]&gt;</span> <span style="color: #949494;">&lt;tune[+]&gt;</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">rank_results</span><span class="op">(</span><span class="va">chi_features_res</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 40 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    wflow_id    .config     .metric  mean std_err     n prepr…¹ model  rank</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
@@ -110,7 +136,6 @@ columns can be used to determine the corresponding parameter values.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> plus_pca_lm Preprocess… rmse    0.594      <span style="color: #BB0000;">NA</span>     1 recipe  line…     5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> plus_pca_lm Preprocess… rsq     0.989      <span style="color: #BB0000;">NA</span>     1 recipe  line…     5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 30 more rows, and abbreviated variable name ¹​preprocessor</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows</span></span>
 <span class="r-in"><span><span class="fu">rank_results</span><span class="op">(</span><span class="va">chi_features_res</span>, select_best <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   wflow_id         .config .metric  mean std_err     n prepr…¹ model  rank</span>
@@ -137,7 +162,6 @@ columns can be used to determine the corresponding parameter values.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> plus_pca_lm Preprocess… rmse    0.590      <span style="color: #BB0000;">NA</span>     1 recipe  line…     5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> plus_pca_lm Preprocess… rsq     0.988      <span style="color: #BB0000;">NA</span>     1 recipe  line…     5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 30 more rows, and abbreviated variable name ¹​preprocessor</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
