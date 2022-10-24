@@ -56,46 +56,46 @@
         resamples = vfold_cv(cars, v = 5))
     Message <simpleMessage>
       x Fold1: preprocessor 1/1:
-        Error in `chr_as_locations()`:
+        Error in `fit()`:
         ! Can't subset columns that don't exist.
         x Column `boop` doesn't exist.
       x Fold2: preprocessor 1/1:
-        Error in `chr_as_locations()`:
+        Error in `fit()`:
         ! Can't subset columns that don't exist.
         x Column `boop` doesn't exist.
       x Fold3: preprocessor 1/1:
-        Error in `chr_as_locations()`:
+        Error in `fit()`:
         ! Can't subset columns that don't exist.
         x Column `boop` doesn't exist.
       x Fold4: preprocessor 1/1:
-        Error in `chr_as_locations()`:
+        Error in `fit()`:
         ! Can't subset columns that don't exist.
         x Column `boop` doesn't exist.
       x Fold5: preprocessor 1/1:
-        Error in `chr_as_locations()`:
+        Error in `fit()`:
         ! Can't subset columns that don't exist.
         x Column `boop` doesn't exist.
     Warning <rlang_warning>
       All models failed. Run `show_notes(.Last.tune.result)` for more information.
     Message <simpleMessage>
       x Fold1: preprocessor 1/1:
-        Error in `chr_as_locations()`:
+        Error in `fit()`:
         ! Can't subset columns that don't exist.
         x Column `boop` doesn't exist.
       x Fold2: preprocessor 1/1:
-        Error in `chr_as_locations()`:
+        Error in `fit()`:
         ! Can't subset columns that don't exist.
         x Column `boop` doesn't exist.
       x Fold3: preprocessor 1/1:
-        Error in `chr_as_locations()`:
+        Error in `fit()`:
         ! Can't subset columns that don't exist.
         x Column `boop` doesn't exist.
       x Fold4: preprocessor 1/1:
-        Error in `chr_as_locations()`:
+        Error in `fit()`:
         ! Can't subset columns that don't exist.
         x Column `boop` doesn't exist.
       x Fold5: preprocessor 1/1:
-        Error in `chr_as_locations()`:
+        Error in `fit()`:
         ! Can't subset columns that don't exist.
         x Column `boop` doesn't exist.
     Warning <rlang_warning>
@@ -106,7 +106,7 @@
     Code
       class_note$note[1]
     Output
-      [1] "Error in `chr_as_locations()`:\n! Can't subset columns that don't exist.\nx Column `boop` doesn't exist."
+      [1] "Error in `fit()`:\n! Can't subset columns that don't exist.\nx Column `boop` doesn't exist."
 
 # pillar formatting
 
