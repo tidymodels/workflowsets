@@ -1,6 +1,6 @@
 #' Plot the results of a workflow set
 #'
-#' This `autoplot()` method can performance metrics that have been ranked using
+#' This `autoplot()` method plots performance metrics that have been ranked using
 #' a metric. It can also run `autoplot()` on the individual results (per
 #' `wflow_id`).
 #'

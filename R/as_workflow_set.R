@@ -1,7 +1,7 @@
 #' Convert existing objects to a workflow set
 #'
 #' Use existing objects to create a workflow set. A list of objects that are
-#' either simple workflows or objects that have class `"tune_results` is
+#' either simple workflows or objects that have class `"tune_results"` can be
 #' converted into a workflow set.
 #' @param ... One or more named objects. Names should be unique and the
 #' objects should have at least one of the following classes: `workflow`,

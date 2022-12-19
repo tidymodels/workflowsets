@@ -41,7 +41,7 @@ exists).}
 A ggplot object.
 }
 \description{
-This \code{autoplot()} method can performance metrics that have been ranked using
+This \code{autoplot()} method plots performance metrics that have been ranked using
 a metric. It can also run \code{autoplot()} on the individual results (per
 \code{wflow_id}).
 }

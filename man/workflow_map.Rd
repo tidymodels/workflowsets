@@ -29,7 +29,7 @@ workflow_map(
 An updated workflow set. The \code{option} column will be updated with
 any options for the \code{tune} package functions given to \code{workflow_map()}. Also,
 the results will be added to the \code{result} column. If the computations for a
-workflow fail, an \code{try-catch} object will be saved in place of the results
+workflow fail, a \code{try-catch} object will be saved in place of the results
 (without stopping execution).
 }
 \description{
@@ -49,7 +49,7 @@ In cases where a model has no tuning parameters is mapped to one of the
 tuning functions, \code{\link[tune:fit_resamples]{tune::fit_resamples()}} will be used instead and a
 warning is issued if \code{verbose = TRUE}.
 
-If a workflow required packages that are not installed, a message is printed
+If a workflow requires packages that are not installed, a message is printed
 and \code{workflow_map()} continues with the next workflow (if any).
 }
 \note{

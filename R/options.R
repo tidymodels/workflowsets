@@ -17,7 +17,7 @@
 #' @param id A character string of one or more values from the `wflow_id`
 #' column that indicates which options to update. By default, all workflows
 #' are updated.
-#' @param strict A logical; show execution stop if existing options are being
+#' @param strict A logical; should execution stop if existing options are being
 #' replaced?
 #' @return An updated workflow set.
 #' @details
@@ -33,7 +33,7 @@
 #'
 #' These functions do _not_ control options for the individual workflows, such as
 #' the recipe blueprint. When creating a workflow manually, use
-#' [workflows::add_model()] or [workflows::add_recipe()] to specify.
+#' [workflows::add_model()] or [workflows::add_recipe()] to specify
 #' extra options. To alter these in a workflow set, use
 #' [update_workflow_model()] or [update_workflow_recipe()].
 #'

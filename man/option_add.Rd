@@ -23,7 +23,7 @@ can be a series of unquoted option names.}
 column that indicates which options to update. By default, all workflows
 are updated.}
 
-\item{strict}{A logical; show execution stop if existing options are being
+\item{strict}{A logical; should execution stop if existing options are being
 replaced?}
 }
 \value{
@@ -51,7 +51,7 @@ will add any options given to that function to the \code{option} column.
 
 These functions do \emph{not} control options for the individual workflows, such as
 the recipe blueprint. When creating a workflow manually, use
-\code{\link[workflows:add_model]{workflows::add_model()}} or \code{\link[workflows:add_recipe]{workflows::add_recipe()}} to specify.
+\code{\link[workflows:add_model]{workflows::add_model()}} or \code{\link[workflows:add_recipe]{workflows::add_recipe()}} to specify
 extra options. To alter these in a workflow set, use
 \code{\link[=update_workflow_model]{update_workflow_model()}} or \code{\link[=update_workflow_recipe]{update_workflow_recipe()}}.
 }
