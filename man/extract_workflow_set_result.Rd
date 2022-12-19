@@ -70,6 +70,18 @@ whether the fitted or original recipe is returned.
 for a particular workflow.
 \item \code{extract_workflow()} returns the workflow object. The workflow will not
 have been estimated.
+\item \code{extract_parameter_set_dials()} returns the parameter set
+\emph{that will be used to fit} the supplied row \code{id} of the workflow set.
+Note that workflow sets reference a parameter set associated with the
+\code{workflow} contained in the \code{info} column by default, but can be
+fitted with a modified parameter set via the \code{\link[=option_add]{option_add()}} interface.
+This extractor returns the latter, if it exists, and returns the former
+if not, mirroring the process that \code{\link[=workflow_map]{workflow_map()}} follows to provide
+tuning functions a parameter set.
+\item \code{extract_parameter_dials()} returns the \code{parameters} object
+\emph{that will be used to fit} the supplied tuning \code{parameter} in the supplied
+row \code{id} of the workflow set. See the above notes in
+\code{extract_parameter_set_dials()} on precedence.
 }
 }
 \details{
