@@ -15,9 +15,15 @@ workflow_map(
 \arguments{
 \item{object}{A workflow set.}
 
-\item{fn}{The function to run. Acceptable values are: \code{\link[tune:tune_grid]{tune::tune_grid()}},
-\code{\link[tune:tune_bayes]{tune::tune_bayes()}}, \code{\link[tune:fit_resamples]{tune::fit_resamples()}}, \code{finetune::tune_race_anova()},
-\code{finetune::tune_race_win_loss()}, or \code{finetune::tune_sim_anneal()}.}
+\item{fn}{The function to run, as a character. Acceptable values are:
+\link[tune:tune_grid]{"tune_grid"},
+\link[tune:tune_bayes]{"tune_bayes"},
+\link[tune:fit_resamples]{"fit_resamples"},
+\link[finetune:tune_race_anova]{"tune_race_anova"},
+\link[finetune:tune_race_win_loss]{"tune_race_win_loss"}, or
+\link[finetune:tune_sim_anneal]{"tune_sim_anneal"}. Note that users need not
+provide the namespace or parentheses in this argument,
+e.g. provide \code{"tune_grid"} rather than \code{"tune::tune_grid"} or \code{"tune_grid()"}.}
 
 \item{verbose}{A logical for logging progress.}
 

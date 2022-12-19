@@ -4,9 +4,15 @@
 #' set. The various `tune_*()` functions can be used as well as
 #' [tune::fit_resamples()].
 #' @param object A workflow set.
-#' @param fn The function to run. Acceptable values are: [tune::tune_grid()],
-#' [tune::tune_bayes()], [tune::fit_resamples()], `finetune::tune_race_anova()`,
-#' `finetune::tune_race_win_loss()`, or `finetune::tune_sim_anneal()`.
+#' @param fn The function to run, as a character. Acceptable values are:
+#' ["tune_grid"][tune::tune_grid()],
+#' ["tune_bayes"][tune::tune_bayes()],
+#' ["fit_resamples"][tune::fit_resamples()],
+#' ["tune_race_anova"][finetune::tune_race_anova()],
+#' ["tune_race_win_loss"][finetune::tune_race_win_loss()], or
+#' ["tune_sim_anneal"][finetune::tune_sim_anneal()]. Note that users need not
+#' provide the namespace or parentheses in this argument,
+#' e.g. provide `"tune_grid"` rather than `"tune::tune_grid"` or `"tune_grid()"`.
 #' @param verbose A logical for logging progress.
 #' @param seed A single integer that is set prior to each function execution.
 #' @param ... Options to pass to the modeling function. See details below.
@@ -146,14 +152,7 @@
 #' @export
 workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
                          seed = sample.int(10^4, 1), ...) {
-  fn_info <- dplyr::filter(allowed_fn, func == fn)
-  if (nrow(fn_info) == 0) {
-    msg <- paste0(
-      "Function '", fn, "' can't be used. Allowable values ",
-      "are: ", allowed_fn_list
-    )
-    halt(msg)
-  }
+  rlang::arg_match(fn, allowed_fn$func)
 
   on.exit({
     cols <- tune::get_tune_colors()
