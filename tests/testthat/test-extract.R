@@ -117,9 +117,9 @@ test_that("extract parameter set from workflow set with tunable workflow", {
    c5_new_info <-
       c5_info %>%
       update(
-         rules = new_qual_param("logical",
-                                values = c(TRUE, FALSE),
-                                label = c(rules = "Rules"))
+         rules = dials::new_qual_param("logical",
+                                       values = c(TRUE, FALSE),
+                                       label = c(rules = "Rules"))
       )
 
    wf_set_2 <-
