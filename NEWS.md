@@ -2,6 +2,15 @@
 
 To be released as workflowsets 1.0.1.
 
+* The `extract_parameter_dials()` and `extract_parameter_set_dials()` extractors
+  will now return the parameter or parameter set 
+  _that will be used by the tuning function utilized in `workflow_map()`_. 
+  The extractors previously always returned the parameter or parameter set
+  associated with the workflow contained in the `info` column, which can be
+  overridden by passing a `param_info` argument to `option_add()`. The 
+  extractors will now first look to the added options before extracting from
+  workflows.
+
 # workflowsets 1.0.0
 
 * New `extract_parameter_set_dials()` and `extract_parameter_dials()` methods to 

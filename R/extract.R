@@ -29,6 +29,20 @@
 #' - `extract_workflow()` returns the workflow object. The workflow will not
 #'    have been estimated.
 #'
+#' - `extract_parameter_set_dials()` returns the parameter set
+#'   _that will be used to fit_ the supplied row `id` of the workflow set.
+#'   Note that workflow sets reference a parameter set associated with the
+#'   `workflow` contained in the `info` column by default, but can be
+#'   fitted with a modified parameter set via the [option_add()] interface.
+#'   This extractor returns the latter, if it exists, and returns the former
+#'   if not, mirroring the process that [workflow_map()] follows to provide
+#'   tuning functions a parameter set.
+#'
+#' - `extract_parameter_dials()` returns the `parameters` object
+#'    _that will be used to fit_ the supplied tuning `parameter` in the supplied
+#'   row `id` of the workflow set. See the above notes in
+#'   `extract_parameter_set_dials()` on precedence.
+#'
 #' @param x A workflow set.
 #' @param id A single character string for a workflow ID.
 #' @param parameter A single string for the parameter ID.
@@ -128,6 +142,11 @@ extract_preprocessor.workflow_set <- function(x, id, ...) {
 #' @rdname extract_workflow_set_result
 extract_parameter_set_dials.workflow_set <- function(x, id, ...) {
    y <- filter_id(x, id)
+
+   if ("param_info" %in% names(y$option[[1]])) {
+      return(y$option[[1]][["param_info"]])
+   }
+
    extract_parameter_set_dials(y$info[[1]]$workflow[[1]])
 }
 
@@ -135,6 +154,11 @@ extract_parameter_set_dials.workflow_set <- function(x, id, ...) {
 #' @rdname extract_workflow_set_result
 extract_parameter_dials.workflow_set <- function(x, id, parameter, ...) {
    y <- filter_id(x, id)
+
+   if ("param_info" %in% names(y$option[[1]])) {
+      return(extract_parameter_dials(y$option[[1]][["param_info"]], parameter))
+   }
+
    extract_parameter_dials(y$info[[1]]$workflow[[1]], parameter)
 }
 
