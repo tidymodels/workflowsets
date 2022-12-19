@@ -83,7 +83,7 @@ test_that("map logging", {
 
 
 test_that("missing packages", {
-  skip_if(rlang::is_installed("rlang"))
+  skip_if(rlang::is_installed("glmnet"))
   car_set_2 <-
     workflow_set(
       list(reg = mpg ~ .),
