@@ -19,7 +19,7 @@ options that were used to create each object.
 }
 \description{
 Use existing objects to create a workflow set. A list of objects that are
-either simple workflows or objects that have class \verb{"tune_results} is
+either simple workflows or objects that have class \code{"tune_results"} can be
 converted into a workflow set.
 }
 \note{

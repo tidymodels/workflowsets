@@ -13,7 +13,7 @@
 #' @return An updated workflow set. The `option` column will be updated with
 #' any options for the `tune` package functions given to `workflow_map()`. Also,
 #' the results will be added to the `result` column. If the computations for a
-#' workflow fail, an `try-catch` object will be saved in place of the results
+#' workflow fail, a `try-catch` object will be saved in place of the results
 #' (without stopping execution).
 #' @seealso [workflow_set()], [as_workflow_set()], [extract_workflow_set_result()]
 #' @details
@@ -29,7 +29,7 @@
 #' tuning functions, [tune::fit_resamples()] will be used instead and a
 #' warning is issued if `verbose = TRUE`.
 #'
-#' If a workflow required packages that are not installed, a message is printed
+#' If a workflow requires packages that are not installed, a message is printed
 #' and `workflow_map()` continues with the next workflow (if any).
 #'
 #' @includeRmd man-roxygen/example_data.Rmd note

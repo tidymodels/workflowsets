@@ -4,8 +4,8 @@
 #'
 #' @param x A workflow set that has all results.
 #' @param rank_metric A character string for a metric.
-#' @param select_best A logical; should the results only contain the numerically
-#' best submodel per workflow.
+#' @param select_best A logical giving whether the results should only contain
+#' the numerically best submodel per workflow.
 #' @details
 #' If some models have the exact same performance,
 #' `rank(value, ties.method = "random")` is used (with a reproducible seed) so

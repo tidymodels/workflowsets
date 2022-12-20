@@ -11,8 +11,8 @@ rank_results(x, rank_metric = NULL, select_best = FALSE)
 
 \item{rank_metric}{A character string for a metric.}
 
-\item{select_best}{A logical; should the results only contain the numerically
-best submodel per workflow.}
+\item{select_best}{A logical giving whether the results should only contain
+the numerically best submodel per workflow.}
 }
 \value{
 A tibble with columns: \code{wflow_id}, \code{.config}, \code{.metric}, \code{mean},
