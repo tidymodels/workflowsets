@@ -1,3 +1,25 @@
+# basic mapping
+
+    Code
+      two_class_set %>% workflow_map("foo", seed = 1, resamples = folds, grid = 2)
+    Error <rlang_error>
+      `fn` must be one of "tune_grid", "tune_bayes", "fit_resamples", "tune_race_anova", "tune_race_win_loss", or "tune_sim_anneal", not "foo".
+
+---
+
+    Code
+      two_class_set %>% workflow_map(fn = 1L, seed = 1, resamples = folds, grid = 2)
+    Error <rlang_error>
+      `fn` must be a character vector, not an integer.
+
+---
+
+    Code
+      two_class_set %>% workflow_map(fn = tune::tune_grid, seed = 1, resamples = folds,
+      grid = 2)
+    Error <rlang_error>
+      `fn` must be a character vector, not a function.
+
 # map logging
 
     Code

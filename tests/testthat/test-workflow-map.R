@@ -49,12 +49,22 @@ test_that("basic mapping", {
 
   # ---------------------------------------------------------------------------
 
-  expect_error(
-    {
-      two_class_set %>%
+  expect_snapshot(
+     error = TRUE,
+     two_class_set %>%
         workflow_map("foo", seed = 1, resamples = folds, grid = 2)
-    },
-    regexp = "Allowable values are"
+  )
+
+  expect_snapshot(
+     error = TRUE,
+     two_class_set %>%
+        workflow_map(fn = 1L, seed = 1, resamples = folds, grid = 2)
+  )
+
+  expect_snapshot(
+     error = TRUE,
+     two_class_set %>%
+        workflow_map(fn = tune::tune_grid, seed = 1, resamples = folds, grid = 2)
   )
 })
 
