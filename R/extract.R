@@ -153,13 +153,10 @@ extract_parameter_set_dials.workflow_set <- function(x, id, ...) {
 #' @export
 #' @rdname extract_workflow_set_result
 extract_parameter_dials.workflow_set <- function(x, id, parameter, ...) {
-   y <- filter_id(x, id)
+   res <- extract_parameter_set_dials(x, id)
+   res <- extract_parameter_dials(res, parameter)
 
-   if ("param_info" %in% names(y$option[[1]])) {
-      return(extract_parameter_dials(y$option[[1]][["param_info"]], parameter))
-   }
-
-   extract_parameter_dials(y$info[[1]]$workflow[[1]], parameter)
+   res
 }
 
 # ------------------------------------------------------------------------------
