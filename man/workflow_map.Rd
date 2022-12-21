@@ -15,7 +15,7 @@ workflow_map(
 \arguments{
 \item{object}{A workflow set.}
 
-\item{fn}{The function to run, as a character. Acceptable values are:
+\item{fn}{The name of the function to run, as a character. Acceptable values are:
 \link[tune:tune_grid]{"tune_grid"},
 \link[tune:tune_bayes]{"tune_bayes"},
 \link[tune:fit_resamples]{"fit_resamples"},

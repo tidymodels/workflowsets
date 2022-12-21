@@ -4,7 +4,7 @@
 #' set. The various `tune_*()` functions can be used as well as
 #' [tune::fit_resamples()].
 #' @param object A workflow set.
-#' @param fn The function to run, as a character. Acceptable values are:
+#' @param fn The name of the function to run, as a character. Acceptable values are:
 #' ["tune_grid"][tune::tune_grid()],
 #' ["tune_bayes"][tune::tune_bayes()],
 #' ["fit_resamples"][tune::fit_resamples()],
