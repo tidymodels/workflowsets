@@ -97,6 +97,10 @@ test_that("extract parameter set from workflow set with tunable workflow", {
    )
 
    c5_info <- extract_parameter_set_dials(wf_set, id = "reg_bst")
+   expect_equal(
+      c5_info,
+      extract_parameter_set_dials(bst_model)
+   )
    check_parameter_set_tibble(c5_info)
    expect_equal(nrow(c5_info), 2)
    expect_true(all(c5_info$source == "model_spec"))
@@ -109,6 +113,25 @@ test_that("extract parameter set from workflow set with tunable workflow", {
 
    expect_equal(c5_info$object[[1]], dials::trees(c(1, 100)))
    expect_equal(c5_info$object[[2]], NA)
+
+   c5_new_info <-
+      c5_info %>%
+      update(
+         rules = dials::new_qual_param("logical",
+                                       values = c(TRUE, FALSE),
+                                       label = c(rules = "Rules"))
+      )
+
+   wf_set_2 <-
+      wf_set %>%
+      option_add(id = "reg_bst", param_info = c5_new_info)
+
+   check_parameter_set_tibble(c5_new_info)
+   expect_s3_class(c5_new_info$object[[2]], "qual_param")
+   expect_equal(
+      c5_new_info,
+      extract_parameter_set_dials(wf_set_2, "reg_bst")
+   )
 })
 
 
