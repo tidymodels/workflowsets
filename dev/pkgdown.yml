@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   tuning-and-comparing-models: tuning-and-comparing-models.html
   evaluating-different-predictor-sets: evaluating-different-predictor-sets.html
-last_built: 2023-01-19T14:14Z
+last_built: 2023-03-08T13:09Z
 urls:
   reference: https://workflowsets.tidymodels.org/reference
   article: https://workflowsets.tidymodels.org/articles
