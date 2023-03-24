@@ -10,7 +10,7 @@
 #' column.
 #'
 #' @export
-#' @param x A workflow set.
+#' @inheritParams comment_add
 #' @param ... A list of named options to pass to the `tune_*()` functions (e.g.
 #' [tune::tune_grid()]) or [tune::fit_resamples()]. For `option_remove()` this
 #' can be a series of unquoted option names.

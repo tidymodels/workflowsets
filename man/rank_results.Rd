@@ -7,7 +7,8 @@
 rank_results(x, rank_metric = NULL, select_best = FALSE)
 }
 \arguments{
-\item{x}{A workflow set that has all results.}
+\item{x}{A \code{\link[=workflow_set]{workflow_set}} object that has been evaluated
+with \code{\link[=workflow_map]{workflow_map()}}.}
 
 \item{rank_metric}{A character string for a metric.}
 
