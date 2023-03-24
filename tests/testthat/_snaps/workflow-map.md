@@ -10,7 +10,7 @@
     Code
       two_class_set %>% workflow_map(fn = 1L, seed = 1, resamples = folds, grid = 2)
     Error <rlang_error>
-      `fn` must be a character vector, not an integer.
+      `fn` must be a character vector, not the number 1.
 
 ---
 
