@@ -1,5 +1,12 @@
 #' Generate a set of workflow objects from preprocessing and model objects
 #'
+#' Often a data practitioner needs to consider a large number of possible
+#' modeling approaches for a task at hand, especially for new data sets
+#' and/or when there is little knowledge about what modeling strategy
+#' will work best. Workflow sets provide an expressive interface for
+#' investigating multiple models or feature engineering strategies in such
+#' a situation.
+#'
 #' @param preproc A list (preferably named) with preprocessing objects:
 #'  formulas, recipes, or [workflows::workflow_variables()].
 #' @param models A list (preferably named) of `parsnip` model specifications.
