@@ -3,7 +3,7 @@
     Code
       two_class_set %>% workflow_map("foo", seed = 1, resamples = folds, grid = 2)
     Error <rlang_error>
-      `fn` must be one of "tune_grid", "tune_bayes", "fit_resamples", "tune_race_anova", "tune_race_win_loss", or "tune_sim_anneal", not "foo".
+      `fn` must be one of "tune_grid", "tune_bayes", "fit_resamples", "tune_race_anova", "tune_race_win_loss", "tune_sim_anneal", or "tune_cluster", not "foo".
 
 ---
 
@@ -30,4 +30,34 @@
       i 2 of 3 tuning:     reg_knn
       i	No tuning parameters. `fit_resamples()` will be attempted
       i 3 of 3 resampling: nonlin_lm
+
+# fail informatively on mismatched spec/tuning function
+
+    Code
+      workflow_map(wf_set_1, resamples = folds)
+    Error <rlang_error>
+      To tune with `tune_grid()`, each workflow's model specification must inherit from <model_spec>, but `reg_km` does not.
+      i The workflow `reg_km` is a cluster specification. Did you intend to set `fn = 'tune_cluster'`?
+
+---
+
+    Code
+      workflow_map(wf_set_2, resamples = folds)
+    Error <rlang_error>
+      To tune with `tune_grid()`, each workflow's model specification must inherit from <model_spec>, but `reg_km` and `reg_hc` do not.
+      i The workflows `reg_km` and `reg_hc` are cluster specifications. Did you intend to set `fn = 'tune_cluster'`?
+
+---
+
+    Code
+      workflow_map(wf_set_1, resamples = folds, fn = "tune_cluster")
+    Error <rlang_error>
+      To tune with `tune_cluster()`, each workflow's model specification must inherit from <cluster_spec>, but `reg_dt` does not.
+
+---
+
+    Code
+      workflow_map(wf_set_3, resamples = folds, fn = "tune_cluster")
+    Error <rlang_error>
+      To tune with `tune_cluster()`, each workflow's model specification must inherit from <cluster_spec>, but `reg_dt` and `reg_nn` do not.
 

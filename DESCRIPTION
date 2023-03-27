@@ -52,6 +52,7 @@ Suggests:
     rmarkdown,
     spelling,
     testthat (>= 3.0.0),
+    tidyclust,
     yardstick (>= 1.0.0)
 VignetteBuilder: 
     knitr

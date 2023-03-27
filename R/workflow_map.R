@@ -153,6 +153,7 @@
 workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
                          seed = sample.int(10^4, 1), ...) {
   rlang::arg_match(fn, allowed_fn$func)
+  check_object_fn(object, fn)
 
   on.exit({
     cols <- tune::get_tune_colors()
@@ -208,12 +209,51 @@ allowed_fn <-
   tibble::tibble(
     func = c(
       "tune_grid", "tune_bayes", "fit_resamples", "tune_race_anova",
-      "tune_race_win_loss", "tune_sim_anneal"
+      "tune_race_win_loss", "tune_sim_anneal", "tune_cluster"
     ),
-    pkg = c(rep("tune", 3), rep("finetune", 3))
+    pkg = c(rep("tune", 3), rep("finetune", 3), "tidyclust")
   )
 allowed_fn_list <- paste0("'", allowed_fn$func, "'", collapse = ", ")
 # nocov end
+
+# ---------------------------------------------
+check_object_fn <- function(object, fn, call = rlang::caller_env()) {
+   wf_specs <- purrr::map(object$wflow_id, ~extract_spec_parsnip(object, id = .x))
+   is_cluster_spec <- purrr::map_lgl(wf_specs, inherits, "cluster_spec")
+
+   if (identical(fn, "tune_cluster")) {
+      if (!all(is_cluster_spec)) {
+         cli::cli_abort(
+            "To tune with {.fn tune_cluster}, each workflow's model \\
+            specification must inherit from {.cls cluster_spec}, but \\
+            {.var {object$wflow_id[!is_cluster_spec]}} {?does/do} not.",
+            call = call
+         )
+      }
+      return(invisible())
+   }
+
+   is_model_spec <- purrr::map_lgl(wf_specs, inherits, "model_spec")
+
+   msg <-
+    "To tune with {.fn {fn}}, each workflow's model \\
+     specification must inherit from {.cls model_spec}, but \\
+     {.var {object$wflow_id[!is_model_spec]}} {?does/do} not."
+
+   if (any(is_cluster_spec)) {
+      msg <- c(
+         msg,
+         "i" = "{cli::qty(object$wflow_id[is_cluster_spec])} The workflow{?/s} \\
+                {.var {object$wflow_id[is_cluster_spec]}} {?is a /are} cluster
+                specification{?/s}. Did you intend to set `fn = 'tune_cluster'`?"
+      )
+   }
+   if (!all(is_model_spec)) {
+      cli::cli_abort(msg, call = call)
+   }
+
+   return(invisible())
+}
 
 # ------------------------------------------------------------------------------
 

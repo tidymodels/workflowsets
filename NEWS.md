@@ -10,6 +10,9 @@ To be released as workflowsets 1.0.1.
   overridden by passing a `param_info` argument to `option_add()`. The 
   extractors will now first look to the added options before extracting from
   workflows.
+* Introduces support for clustering model specifications via the tidyclust 
+  package. Supplying clustering models to `workflow_set()` and set
+  `fn = "tune_cluster"` in `workflow_map()` to use this feature!
 
 # workflowsets 1.0.0
 
