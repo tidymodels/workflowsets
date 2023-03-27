@@ -11,3 +11,23 @@ template:
       <script defer data-domain="workflowsets.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script>
 development:
   mode: auto
+
+reference:
+  - title: Core functions
+    contents:
+    - workflow_set
+    - workflow_map
+  - title: Interface with workflow sets
+    contents:
+    - starts_with("option")
+    - starts_with("extract")
+    - starts_with("comment")
+    - starts_with("update")
+  - title: Process workflow set results
+    contents:
+    - rank_results
+    - autoplot.workflow_set
+    - starts_with("collect")
+  - title: Miscellanous
+    contents:
+    - everything()
