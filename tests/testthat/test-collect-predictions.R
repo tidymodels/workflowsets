@@ -70,7 +70,7 @@ check_prediction_results <- function(ind, x, summarize = FALSE, ...) {
     collect_predictions(x, summarize = summarize, ...) %>%
     dplyr::filter(wflow_id == id_val) %>%
     dplyr::select(dplyr::all_of(cols))
-  dplyr::all_equal(orig, everythng)
+  all.equal(orig, everythng)
 }
 
 # ------------------------------------------------------------------------------
