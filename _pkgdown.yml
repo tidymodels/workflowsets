@@ -30,4 +30,4 @@ reference:
     - starts_with("collect")
   - title: Miscellanous
     contents:
-    - everything()
+    - matches(".")
