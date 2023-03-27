@@ -7,7 +7,7 @@
 #' from the `info` column.
 #'
 #'
-#' @param x A workflow set.
+#' @inheritParams comment_add
 #' @param id A single character string for a workflow ID.
 #' @details
 #' The [extract_workflow_set_result()] and [extract_workflow()] functions should

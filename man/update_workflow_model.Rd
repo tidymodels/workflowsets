@@ -10,7 +10,7 @@ update_workflow_model(x, id, spec, formula = NULL)
 update_workflow_recipe(x, id, recipe, blueprint = NULL)
 }
 \arguments{
-\item{x}{A workflow set.}
+\item{x}{A workflow set outputted by \code{\link[=workflow_set]{workflow_set()}} or \code{\link[=workflow_map]{workflow_map()}}.}
 
 \item{id}{A single character string from the \code{wflow_id} column indicating
 which workflow to update.}

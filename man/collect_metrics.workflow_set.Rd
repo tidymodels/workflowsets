@@ -17,7 +17,8 @@
 )
 }
 \arguments{
-\item{x}{A \code{workflow_set} object where all workflows have been evaluated.}
+\item{x}{A \code{\link[=workflow_set]{workflow_set}} object that has been evaluated
+with \code{\link[=workflow_map]{workflow_map()}}.}
 
 \item{summarize}{A logical for whether the performance estimates should be
 summarized via the mean (over resamples) or the raw performance values (per

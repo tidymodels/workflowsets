@@ -2,7 +2,7 @@
 #'
 #' This function sorts the results by a specific performance metric.
 #'
-#' @param x A workflow set that has all results.
+#' @inheritParams collect_metrics.workflow_set
 #' @param rank_metric A character string for a metric.
 #' @param select_best A logical giving whether the results should only contain
 #' the numerically best submodel per workflow.

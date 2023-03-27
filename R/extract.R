@@ -43,7 +43,7 @@
 #'   row `id` of the workflow set. See the above notes in
 #'   `extract_parameter_set_dials()` on precedence.
 #'
-#' @param x A workflow set.
+#' @inheritParams comment_add
 #' @param id A single character string for a workflow ID.
 #' @param parameter A single string for the parameter ID.
 #' @param estimated A logical for whether the original (unfit) recipe or the

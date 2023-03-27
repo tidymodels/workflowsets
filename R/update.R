@@ -9,7 +9,7 @@
 #' these values _after_ the workflow set is initially created. They are
 #' analogous to [workflows::add_model()] or [workflows::add_recipe()].
 #'
-#' @param x A workflow set.
+#' @inheritParams comment_add
 #' @param id A single character string from the `wflow_id` column indicating
 #' which workflow to update.
 #' @inheritParams workflows::add_recipe

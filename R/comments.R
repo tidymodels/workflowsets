@@ -2,7 +2,7 @@
 #'
 #' `comment_add()` can be used to log important information about the workflow or
 #' its results as you work. Comments can be appended or removed.
-#' @param x A workflow set
+#' @param x A workflow set outputted by [workflow_set()] or [workflow_map()].
 #' @param id A single character string for a value in the `wflow_id` column. For
 #' `comment_print()`, `id` can be a vector or `NULL` (and this indicates that
 #' all comments are printed).
