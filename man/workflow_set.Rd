@@ -40,7 +40,12 @@ manually via \code{\link[=option_add]{option_add()}} or automatically when optio
 }
 }
 \description{
-Generate a set of workflow objects from preprocessing and model objects
+Often a data practitioner needs to consider a large number of possible
+modeling approaches for a task at hand, especially for new data sets
+and/or when there is little knowledge about what modeling strategy
+will work best. Workflow sets provide an expressive interface for
+investigating multiple models or feature engineering strategies in such
+a situation.
 }
 \details{
 The preprocessors that can be combined with the model objects can be one or
