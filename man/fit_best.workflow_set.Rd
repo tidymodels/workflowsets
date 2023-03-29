@@ -53,26 +53,42 @@ sequence of models built in Section 1.3 of Kuhn and Johnson (2019). See
 \code{?chi_features_set} for source code.
 }
 \examples{
+library(tune)
+library(modeldata)
+library(rsample)
+
+data(Chicago)
+Chicago <- Chicago[1:1195,]
+
+time_val_split <-
+   sliding_period(
+      Chicago,
+      date,
+      "month",
+      lookback = 38,
+      assess_stop = 1
+   )
+
 chi_features_set
 
-chi_features_res <-
+chi_features_res_new <-
    chi_features_set \%>\%
    # note: must set `save_workflow = TRUE` to use `fit_best()`
    option_add(control = control_grid(save_workflow = TRUE)) \%>\%
    # evaluate with resamples
    workflow_map(resamples = time_val_split, grid = 21, seed = 1, verbose = TRUE)
 
-chi_features_res
+chi_features_res_new
 
 # sort models by performance metrics
-rank_results(chi_features_res)
+rank_results(chi_features_res_new)
 
 # fit the numerically optimal configuration to the training set
-chi_features_wf <- fit_best(chi_features_res)
+chi_features_wf <- fit_best(chi_features_res_new)
 
 chi_features_wf
 
 # to select optimal value based on a specific metric:
-fit_best(chi_features_res, metric = "rmse")
+fit_best(chi_features_res_new, metric = "rmse")
 
 }
