@@ -27,6 +27,7 @@ reference:
     contents:
     - rank_results
     - autoplot.workflow_set
+    - fit_best.workflow_set
     - starts_with("collect")
   - title: Miscellanous
     contents:
