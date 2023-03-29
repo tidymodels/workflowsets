@@ -90,5 +90,4 @@ chi_features_wf
 
 # to select optimal value based on a specific metric:
 fit_best(chi_features_res_new, metric = "rmse")
-
 }

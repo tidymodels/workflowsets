@@ -68,7 +68,6 @@ tune::fit_best
 #'
 #' # to select optimal value based on a specific metric:
 #' fit_best(chi_features_res_new, metric = "rmse")
-#'
 #' @name fit_best.workflow_set
 #' @export
 fit_best.workflow_set <- function(x, metric = NULL,  ...) {
