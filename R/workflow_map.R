@@ -218,7 +218,9 @@ allowed_fn_list <- paste0("'", allowed_fn$func, "'", collapse = ", ")
 
 # ---------------------------------------------
 check_object_fn <- function(object, fn, call = rlang::caller_env()) {
-   wf_specs <- purrr::map(object$wflow_id, ~extract_spec_parsnip(object, id = .x))
+   wf_specs <- purrr::map(
+     object$wflow_id, ~extract_spec_parsnip(object, id = .x)
+   )
    is_cluster_spec <- purrr::map_lgl(wf_specs, inherits, "cluster_spec")
 
    if (identical(fn, "tune_cluster")) {
@@ -243,9 +245,10 @@ check_object_fn <- function(object, fn, call = rlang::caller_env()) {
    if (any(is_cluster_spec)) {
       msg <- c(
          msg,
-         "i" = "{cli::qty(object$wflow_id[is_cluster_spec])} The workflow{?/s} \\
-                {.var {object$wflow_id[is_cluster_spec]}} {?is a /are} cluster
-                specification{?/s}. Did you intend to set `fn = 'tune_cluster'`?"
+         "i" = "{cli::qty(object$wflow_id[is_cluster_spec])} \\
+                The workflow{?/s} {.var {object$wflow_id[is_cluster_spec]}} \\
+                {?is a /are} cluster specification{?/s}. Did you intend to \\
+                set `fn = 'tune_cluster'`?"
       )
    }
    if (!all(is_model_spec)) {
