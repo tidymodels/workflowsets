@@ -152,9 +152,10 @@ test_that("workflow_map can handle cluster specifications", {
    skip_on_cran()
    skip_if_not_installed("tidyclust")
    library(tidyclust)
+   library(recipes)
 
    set.seed(1)
-   mtcars_tbl <- mtcars %>% select(where(is.numeric))
+   mtcars_tbl <- mtcars %>% dplyr::select(where(is.numeric))
    folds <- vfold_cv(mtcars_tbl, v = 3)
 
    wf_set_spec <-
@@ -175,7 +176,7 @@ test_that("fail informatively on mismatched spec/tuning function", {
    library(tidyclust)
 
    set.seed(1)
-   mtcars_tbl <- mtcars %>% select(where(is.numeric))
+   mtcars_tbl <- mtcars %>% dplyr::select(where(is.numeric))
    folds <- vfold_cv(mtcars_tbl, v = 3)
 
    wf_set_1 <-
