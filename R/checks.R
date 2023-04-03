@@ -102,7 +102,7 @@ recheck_options <- function(opts, .fn) {
 
 check_fn <- function(fn, x, verbose) {
   has_tune <- nrow(tune::tune_args(x)) > 0
-  if (!has_tune & fn != "fit_resamples") {
+  if (!has_tune & !fn %in% c("fit_resamples", "tune_cluster")) {
     fn <- "fit_resamples"
     if (verbose) {
       cols <- tune::get_tune_colors()
