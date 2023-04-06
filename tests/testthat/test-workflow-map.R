@@ -147,3 +147,77 @@ test_that("failers", {
   expect_true(inherits(res_loud, "workflow_set"))
   expect_true(inherits(res_loud$result[[1]], "try-error"))
 })
+
+test_that("workflow_map can handle cluster specifications", {
+   skip_on_cran()
+   skip_if_not_installed("tidyclust")
+   library(tidyclust)
+   library(recipes)
+
+   set.seed(1)
+   mtcars_tbl <- mtcars %>% dplyr::select(where(is.numeric))
+   folds <- vfold_cv(mtcars_tbl, v = 3)
+
+   wf_set_spec <-
+      workflow_set(
+         list(all = recipe(mtcars_tbl, ~ .), some = ~ mpg + hp),
+         list(km = k_means(num_clusters = tune()))
+      )
+
+   wf_set_fit <-
+      workflow_map(wf_set_spec, fn = "tune_cluster", resamples = folds)
+
+   wf_set_fit
+})
+
+test_that("fail informatively on mismatched spec/tuning function", {
+   skip_on_cran()
+   skip_if_not_installed("tidyclust")
+   library(tidyclust)
+
+   set.seed(1)
+   mtcars_tbl <- mtcars %>% dplyr::select(where(is.numeric))
+   folds <- vfold_cv(mtcars_tbl, v = 3)
+
+   wf_set_1 <-
+      workflow_set(
+         list(reg = mpg ~ .),
+         list(dt = decision_tree("regression", min_n = tune()),
+              km = k_means(num_clusters = tune()))
+      )
+
+   wf_set_2 <-
+      workflow_set(
+         list(reg = mpg ~ .),
+         list(dt = decision_tree("regression", min_n = tune()),
+              km = k_means(num_clusters = tune()),
+              hc = hier_clust())
+      )
+
+   wf_set_3 <-
+      workflow_set(
+         list(reg = mpg ~ .),
+         list(dt = decision_tree("regression", min_n = tune()),
+              nn = nearest_neighbor("regression", neighbors = tune()),
+              km = k_means(num_clusters = tune()))
+      )
+
+   # pass a cluster spec to `tune_grid()`
+   expect_snapshot(error = TRUE,
+     workflow_map(wf_set_1, resamples = folds)
+   )
+
+   expect_snapshot(error = TRUE,
+     workflow_map(wf_set_2, resamples = folds)
+   )
+
+   # pass a model spec to `tune_cluster()`
+   expect_snapshot(error = TRUE,
+     workflow_map(wf_set_1, resamples = folds, fn = "tune_cluster")
+   )
+
+   expect_snapshot(error = TRUE,
+     workflow_map(wf_set_3, resamples = folds, fn = "tune_cluster")
+   )
+})
+
