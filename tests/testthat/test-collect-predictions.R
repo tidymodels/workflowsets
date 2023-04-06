@@ -123,6 +123,7 @@ test_that("collect predictions", {
   }
 })
 
+skip_if(packageVersion("tune") <= "1.1.0")
 
 test_that("dropping tuning parameter columns", {
   expect_equal(
