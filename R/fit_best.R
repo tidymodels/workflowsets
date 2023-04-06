@@ -31,7 +31,7 @@ tune::fit_best
 #'
 #' @includeRmd man-roxygen/example_data.Rmd note
 #'
-#' @examples
+#' @examplesIf rlang::is_installed(c("kknn", "modeldata", "recipes", "yardstick", "dials")) && identical(Sys.getenv("NOT_CRAN"), "true")
 #' library(tune)
 #' library(modeldata)
 #' library(rsample)
