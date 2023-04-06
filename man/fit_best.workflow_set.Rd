@@ -13,11 +13,12 @@ the \link[=option_add]{control option} \code{save_workflow = TRUE}.}
 
 \item{metric}{A character string giving the metric to rank results by.}
 
-\item{...}{Additional options to pass to \link[tune:fit_best]{tune::fit_best}.}
+\item{...}{Additional options to pass to
+\link[tune:fit_best]{tune::fit_best}.}
 }
 \description{
-\code{fit_best()} takes results from tuning many models and fits the
-workflow associated with the best performance to the training set.
+\code{fit_best()} takes results from tuning many models and fits the workflow
+configuration associated with the best performance to the training set.
 }
 \details{
 This function is a shortcut for the steps needed to fit the

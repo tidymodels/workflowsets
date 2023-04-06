@@ -4,14 +4,15 @@ tune::fit_best
 
 #' Fit a model to the numerically optimal configuration
 #'
-#' `fit_best()` takes results from tuning many models and fits the
-#' workflow associated with the best performance to the training set.
+#' `fit_best()` takes results from tuning many models and fits the workflow
+#' configuration associated with the best performance to the training set.
 #'
 #' @param x A [`workflow_set`][workflow_set()] object that has been evaluated
 #' with [workflow_map()]. Note that the workflow set must have been fitted with
 #' the [control option][option_add] `save_workflow = TRUE`.
 #' @param metric A character string giving the metric to rank results by.
-#' @param ... Additional options to pass to [tune::fit_best].
+#' @param ... Additional options to pass to
+#' [tune::fit_best][tune::fit_best.tune_results].
 #'
 #' @details
 #' This function is a shortcut for the steps needed to fit the
