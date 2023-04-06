@@ -17,7 +17,8 @@ utils::globalVariables(
     ".config", ".estimator", ".metric", "info", "metric", "mod_nm",
     "model", "n", "pp_nm", "preprocessor", "preproc", "object", "engine",
     "result", "std_err", "wflow_id", "func", "is_race", "num_rs", "option",
-    "metrics", "predictions", "hash", "id", "workflow", "comment", "get_from_env"
+    "metrics", "predictions", "hash", "id", "workflow", "comment", "get_from_env",
+    ".get_tune_metric_names", "select_best"
   )
 )
 
