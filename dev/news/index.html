@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">workflowsets</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.0.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.1.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,6 +51,17 @@
       <small>Source: <a href="https://github.com/tidymodels/workflowsets/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="development version" id="workflowsets-development-version">workflowsets (development version)<a class="anchor" aria-label="anchor" href="#workflowsets-development-version"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.0.1" id="workflowsets-101">workflowsets 1.0.1<a class="anchor" aria-label="anchor" href="#workflowsets-101"></a></h2><p class="text-muted">CRAN release: 2023-04-06</p>
+<ul><li>The <code><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_parameter_dials()</a></code> and <code><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_parameter_set_dials()</a></code> extractors will now return the parameter or parameter set <em>that will be used by the tuning function utilized in <code><a href="../reference/workflow_map.html">workflow_map()</a></code></em>. The extractors previously always returned the parameter or parameter set associated with the workflow contained in the <code>info</code> column, which can be overridden by passing a <code>param_info</code> argument to <code><a href="../reference/option_add.html">option_add()</a></code>. The extractors will now first look to the added options before extracting from workflows (<a href="https://github.com/tidymodels/workflowsets/issues/106" class="external-link">#106</a>).</li>
+<li>Introduces support for clustering model specifications via the tidyclust package. Supplying clustering models to <code><a href="../reference/workflow_set.html">workflow_set()</a></code> and set <code>fn = "tune_cluster"</code> in <code><a href="../reference/workflow_map.html">workflow_map()</a></code> to use this feature (<a href="https://github.com/tidymodels/workflowsets/issues/125" class="external-link">#125</a>)!</li>
+<li>Introduces a <code><a href="https://tune.tidymodels.org/reference/fit_best.html" class="external-link">fit_best()</a></code> method for workflowsets that takes in a workflow set evaluated with <code><a href="../reference/workflow_map.html">workflow_map()</a></code> and returns a workflow fitted with the model configuration associated with the best performance (<a href="https://github.com/tidymodels/workflowsets/issues/126" class="external-link">#126</a>).</li>
+<li>Transitions deprecations of <code>pull_*()</code> functions to now warn on every usage (<a href="https://github.com/tidymodels/workflowsets/issues/123" class="external-link">#123</a>).</li>
+<li>Various bug fixes and improvements to documentation.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.0" id="workflowsets-100">workflowsets 1.0.0<a class="anchor" aria-label="anchor" href="#workflowsets-100"></a></h2><p class="text-muted">CRAN release: 2022-07-12</p>
 <ul><li><p>New <code><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_parameter_set_dials()</a></code> and <code><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_parameter_dials()</a></code> methods to extract parameter sets and single parameters from <code>workflow_set</code> objects.</p></li>
