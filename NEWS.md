@@ -1,6 +1,4 @@
-# workflowsets (developmental version)
-
-To be released as workflowsets 1.0.1.
+# workflowsets 1.0.1
 
 * The `extract_parameter_dials()` and `extract_parameter_set_dials()` extractors
   will now return the parameter or parameter set 
@@ -9,10 +7,16 @@ To be released as workflowsets 1.0.1.
   associated with the workflow contained in the `info` column, which can be
   overridden by passing a `param_info` argument to `option_add()`. The 
   extractors will now first look to the added options before extracting from
-  workflows.
+  workflows (#106).
 * Introduces support for clustering model specifications via the tidyclust 
   package. Supplying clustering models to `workflow_set()` and set
-  `fn = "tune_cluster"` in `workflow_map()` to use this feature!
+  `fn = "tune_cluster"` in `workflow_map()` to use this feature (#125)!
+* Introduces a `fit_best()` method for workflowsets that takes in a workflow set
+  evaluated with `workflow_map()` and returns a workflow fitted with the model
+  configuration associated with the best performance (#126).
+* Transitions deprecations of `pull_*()` functions to now warn on every usage 
+  (#123).
+* Various bug fixes and improvements to documentation.
 
 # workflowsets 1.0.0
 

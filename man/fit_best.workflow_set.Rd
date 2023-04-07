@@ -54,6 +54,7 @@ sequence of models built in Section 1.3 of Kuhn and Johnson (2019). See
 \code{?chi_features_set} for source code.
 }
 \examples{
+\dontshow{if (rlang::is_installed(c("kknn", "modeldata", "recipes", "yardstick", "dials")) && identical(Sys.getenv("NOT_CRAN"), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 library(tune)
 library(modeldata)
 library(rsample)
@@ -91,4 +92,5 @@ chi_features_wf
 
 # to select optimal value based on a specific metric:
 fit_best(chi_features_res_new, metric = "rmse")
+\dontshow{\}) # examplesIf}
 }
