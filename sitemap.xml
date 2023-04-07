@@ -40,6 +40,9 @@
     <loc>https://workflowsets.tidymodels.org/reference/autoplot.workflow_set.html</loc>
   </url>
   <url>
+    <loc>https://workflowsets.tidymodels.org/reference/chi_features_set.html</loc>
+  </url>
+  <url>
     <loc>https://workflowsets.tidymodels.org/reference/collect_metrics.workflow_set.html</loc>
   </url>
   <url>
@@ -47,6 +50,9 @@
   </url>
   <url>
     <loc>https://workflowsets.tidymodels.org/reference/extract_workflow_set_result.html</loc>
+  </url>
+  <url>
+    <loc>https://workflowsets.tidymodels.org/reference/fit_best.workflow_set.html</loc>
   </url>
   <url>
     <loc>https://workflowsets.tidymodels.org/reference/index.html</loc>
