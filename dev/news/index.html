@@ -53,7 +53,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="workflowsets-development-version">workflowsets (development version)<a class="anchor" aria-label="anchor" href="#workflowsets-development-version"></a></h2>
-</div>
+<ul><li>Added methods to improve error messages when workflow sets are mistakenly passed to unsupported functions like <code><a href="https://generics.r-lib.org/reference/fit.html" class="external-link">fit()</a></code> and <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code>.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.1" id="workflowsets-101">workflowsets 1.0.1<a class="anchor" aria-label="anchor" href="#workflowsets-101"></a></h2><p class="text-muted">CRAN release: 2023-04-06</p>
 <ul><li>The <code><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_parameter_dials()</a></code> and <code><a href="https://hardhat.tidymodels.org/reference/hardhat-extract.html" class="external-link">extract_parameter_set_dials()</a></code> extractors will now return the parameter or parameter set <em>that will be used by the tuning function utilized in <code><a href="../reference/workflow_map.html">workflow_map()</a></code></em>. The extractors previously always returned the parameter or parameter set associated with the workflow contained in the <code>info</code> column, which can be overridden by passing a <code>param_info</code> argument to <code><a href="../reference/option_add.html">option_add()</a></code>. The extractors will now first look to the added options before extracting from workflows (<a href="https://github.com/tidymodels/workflowsets/issues/106" class="external-link">#106</a>).</li>
