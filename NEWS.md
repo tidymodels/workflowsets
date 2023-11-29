@@ -2,6 +2,10 @@
 
 * Added methods to improve error messages when workflow sets are mistakenly
   passed to unsupported functions like `fit()` and `predict()`.
+* Added a new argument, `type`, to the `workflow_set` `autoplot()` method. The
+  default, `"class"`, retains the existing behavior of mapping model type to 
+  color and preprocessor type to shape, while the new `"wflow_id"`
+  type maps the workflow IDs to color.
 
 # workflowsets 1.0.1
 

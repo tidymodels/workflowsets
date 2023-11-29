@@ -1,4 +1,4 @@
-test_that("autoplot with error bars", {
+test_that("autoplot with error bars (class)", {
   p_1 <- autoplot(two_class_res, metric = "roc_auc")
   expect_s3_class(p_1, "ggplot")
   expect_equal(
@@ -23,6 +23,39 @@ test_that("autoplot with error bars", {
   expect_equal(as.character(p_1$labels$y), "roc_auc")
   expect_equal(as.character(p_1$labels$x), "Workflow Rank")
 })
+
+test_that("autoplot with error bars (wflow_id)", {
+   p_1 <- autoplot(two_class_res, metric = "roc_auc", type = "wflow_id")
+   expect_s3_class(p_1, "ggplot")
+   expect_equal(
+      names(p_1$data),
+      c(
+         "wflow_id", ".config", ".metric", "mean", "std_err", "n",
+         "preprocessor", "model", "rank"
+      )
+   )
+   expect_equal(rlang::get_expr(p_1$mapping$x), expr(rank))
+   expect_equal(rlang::get_expr(p_1$mapping$y), expr(mean))
+   expect_equal(rlang::get_expr(p_1$mapping$colour), expr(wflow_id))
+   expect_equal(
+      rlang::get_expr(as.list(p_1$layers[[2]])$mapping$ymin),
+      expr(mean - std_errs * std_err)
+   )
+   expect_equal(
+      rlang::get_expr(as.list(p_1$layers[[2]])$mapping$ymax),
+      expr(mean + std_errs * std_err)
+   )
+   expect_equal(as.character(p_1$labels$y), "roc_auc")
+   expect_equal(as.character(p_1$labels$x), "Workflow Rank")
+})
+
+test_that("autoplot with bad type input", {
+  expect_snapshot(
+    error = TRUE,
+    autoplot(two_class_res, metric = "roc_auc", type = "banana")
+  )
+})
+
 
 test_that("autoplot with without error bars", {
   p_2 <- autoplot(chi_features_res)
