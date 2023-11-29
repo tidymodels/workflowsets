@@ -2,20 +2,23 @@
 
     Code
       fit_best(chi_features_res)
-    Error <rlang_error>
+    Condition
+      Error in `fit_best()`:
       x The control option `save_workflow = TRUE` should be used when tuning.
 
 ---
 
     Code
       fit_best(chi_features_map, metric = "boop")
-    Error <rlang_error>
-      Metric 'boop' was not in the results.
+    Condition
+      Error in `halt()`:
+      ! Metric 'boop' was not in the results.
 
 ---
 
     Code
       fit_best(chi_features_map, boop = "bop")
-    Error <rlang_error>
+    Condition
+      Error in `fit_best()`:
       x The `...` are not used by this function.
 
