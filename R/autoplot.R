@@ -18,6 +18,10 @@
 #' to be included in the visualization.
 #' @param std_errs The number of standard errors to plot (if the standard error
 #' exists).
+#' @param type The aesthetics with which to differentiate workflows. The
+#' default `"class"` maps color to the model type and shape to the preprocessor
+#' type. The `"workflow"` option maps a color to each `"wflow_id"`. This
+#' argument is ignored for values of `id` other than `"workflow_set"`.
 #' @param ... Other options to pass to `autoplot()`.
 #' @details
 #' This function is intended to produce a default plot to visualize helpful
@@ -43,11 +47,14 @@
 autoplot.workflow_set <- function(object, rank_metric = NULL, metric = NULL,
                                   id = "workflow_set",
                                   select_best = FALSE,
-                                  std_errs = qnorm(0.95), ...) {
+                                  std_errs = qnorm(0.95),
+                                  type = "class",
+                                  ...) {
+  rlang::arg_match(type, c("class", "wflow_id"))
   if (id == "workflow_set") {
     p <- rank_plot(object,
       rank_metric = rank_metric, metric = metric,
-      select_best = select_best, std_errs = std_errs
+      select_best = select_best, std_errs = std_errs, type = type
     )
   } else {
     p <- autoplot(object$result[[which(object$wflow_id == id)]], metric = metric, ...)
@@ -56,7 +63,7 @@ autoplot.workflow_set <- function(object, rank_metric = NULL, metric = NULL,
 }
 
 rank_plot <- function(object, rank_metric = NULL, metric = NULL,
-                      select_best = FALSE, std_errs = 1, ...) {
+                      select_best = FALSE, std_errs = 1, type = "class", ...) {
   metric_info <- pick_metric(object, rank_metric, metric)
   metrics <- collate_metrics(object)
   res <- rank_results(object, rank_metric = metric_info$metric, select_best = select_best)
@@ -70,8 +77,15 @@ rank_plot <- function(object, rank_metric = NULL, metric = NULL,
   has_std_error <- !all(is.na(res$std_err))
 
   p <-
-    ggplot(res, aes(x = rank, y = mean, col = model)) +
-    geom_point(aes(shape = preprocessor))
+     switch(
+        type,
+        class =
+           ggplot(res, aes(x = rank, y = mean, col = model)) +
+           geom_point(aes(shape = preprocessor)),
+        wflow_id =
+           ggplot(res, aes(x = rank, y = mean, col = wflow_id)) +
+           geom_point()
+      )
 
   if (num_metrics > 1) {
     res$.metric <- factor(as.character(res$.metric), levels = metrics$metric)

@@ -11,6 +11,7 @@
   id = "workflow_set",
   select_best = FALSE,
   std_errs = qnorm(0.95),
+  type = "class",
   ...
 )
 }
@@ -34,6 +35,11 @@ best submodel per workflow?}
 
 \item{std_errs}{The number of standard errors to plot (if the standard error
 exists).}
+
+\item{type}{The aesthetics with which to differentiate workflows. The
+default \code{"class"} maps color to the model type and shape to the preprocessor
+type. The \code{"workflow"} option maps a color to each \code{"wflow_id"}. This
+argument is ignored for values of \code{id} other than \code{"workflow_set"}.}
 
 \item{...}{Other options to pass to \code{autoplot()}.}
 }
