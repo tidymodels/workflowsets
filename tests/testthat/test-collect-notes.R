@@ -2,7 +2,7 @@ skip_on_cran()
 
 test_that("collect_notes works", {
    set.seed(1)
-   folds <- vfold_cv(mtcars, v = 3)
+   folds <- rsample::vfold_cv(mtcars, v = 3)
 
    wflow_set <-
      workflow_set(
@@ -14,7 +14,7 @@ test_that("collect_notes works", {
      wflow_set %>%
      workflow_map("fit_resamples",
        resamples = folds,
-       control = control_resamples(extract = function(x) {warn("hey!")})
+       control = tune::control_resamples(extract = function(x) {warn("hey!")})
      )
 
    expect_snapshot(error = TRUE, collect_notes(wflow_set))
