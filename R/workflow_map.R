@@ -290,7 +290,7 @@ log_progress <- function(verbose, id, res, iter, n, .fn, elapsed) {
     all_null <- isTRUE(all(is.null(unlist(res$.metrics))))
     if (inherits(res, "try-error") || all_null) {
       if (all_null) {
-        res <- collect_notes(res)
+        res <- collect_res_notes(res)
       }
       errors_msg <- gsub("\n", "", as.character(res))
       errors_msg <- gsub("Error : ", "", errors_msg, fixed = TRUE)
@@ -311,4 +311,11 @@ log_progress <- function(verbose, id, res, iter, n, .fn, elapsed) {
   }
 
   invisible(NULL)
+}
+
+collect_res_notes <- function(x, show = 1) {
+   y <- purrr::map_dfr(x$.notes, I)
+   show <- min(show, nrow(y))
+   y <- paste0(y$.notes[1:show])
+   gsub("[\r\n]", "", y)
 }

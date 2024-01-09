@@ -3,6 +3,7 @@
 \name{collect_metrics.workflow_set}
 \alias{collect_metrics.workflow_set}
 \alias{collect_predictions.workflow_set}
+\alias{collect_notes.workflow_set}
 \title{Obtain and format results produced by tuning functions for workflow sets}
 \usage{
 \method{collect_metrics}{workflow_set}(x, summarize = TRUE, ...)
@@ -15,6 +16,8 @@
   metric = NULL,
   ...
 )
+
+\method{collect_notes}{workflow_set}(x, ...)
 }
 \arguments{
 \item{x}{A \code{\link[=workflow_set]{workflow_set}} object that has been evaluated

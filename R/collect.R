@@ -147,9 +147,16 @@ get_bare_predictions <- function(x, ...) {
   remove_parameters(res, x)
 }
 
-collect_notes <- function(x, show = 1) {
-  y <- purrr::map_dfr(x$.notes, I)
-  show <- min(show, nrow(y))
-  y <- paste0(y$.notes[1:show])
-  gsub("[\r\n]", "", y)
+#' @export
+#' @rdname collect_metrics.workflow_set
+collect_notes.workflow_set <- function(x, ...) {
+  check_incompete(x)
+
+  res <- dplyr::rowwise(x)
+  res <- dplyr::mutate(res, notes = list(collect_notes(result)))
+  res <- dplyr::ungroup(res)
+  res <- dplyr::select(res, wflow_id, notes)
+  res <- tidyr::unnest(res, cols = notes)
+
+  res
 }
