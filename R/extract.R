@@ -69,6 +69,7 @@
 #' extract_workflow(two_class_res, "none_cart")
 #' @export
 extract_workflow_set_result <- function(x, id, ...) {
+  check_wf_set(x)
   y <- filter_id(x, id)
   y$result[[1]]
 }

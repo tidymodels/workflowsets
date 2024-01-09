@@ -52,6 +52,7 @@
 #' two_class_set %>%
 #'   option_add_parameters()
 option_add <- function(x, ..., id = NULL, strict = FALSE) {
+  check_wf_set(x)
   dots <- list(...)
   if (length(dots) == 0) {
     return(x)

@@ -1,3 +1,13 @@
+check_wf_set <- function(x, arg = caller_arg(x), call = caller_env()) {
+  if (!inherits(x, "workflow_set")) {
+    cli::cli_abort(
+       "{arg} must be a workflow set, not {obj_type_friendly(x)}.",
+       call = call
+    )
+  }
+
+  invisible(TRUE)
+}
 
 check_consistent_metrics <- function(x, fail = TRUE) {
   metric_info <-

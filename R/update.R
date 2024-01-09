@@ -32,6 +32,7 @@
 #' extract_workflow(new_set, id = "none_cart")
 #' @export
 update_workflow_model <- function(x, id, spec, formula = NULL) {
+   check_wf_set(x)
    check_string(id)
    check_formula(formula, allow_null = TRUE)
 
@@ -50,6 +51,7 @@ update_workflow_model <- function(x, id, spec, formula = NULL) {
 #' @rdname update_workflow_model
 #' @export
 update_workflow_recipe <- function(x, id, recipe, blueprint = NULL) {
+   check_wf_set(x)
    check_string(id)
 
    wflow <- extract_workflow(x, id = id)
