@@ -59,6 +59,7 @@
 #' @export
 collect_metrics.workflow_set <- function(x, summarize = TRUE, ...) {
   check_incompete(x, fail = TRUE)
+  check_bool(summarize)
   x <-
     dplyr::mutate(
       x,
@@ -100,6 +101,9 @@ collect_predictions.workflow_set <-
   function(x, summarize = TRUE, parameters = NULL, select_best = FALSE,
            metric = NULL, ...) {
     check_incompete(x, fail = TRUE)
+    check_bool(summarize)
+    check_bool(select_best)
+    check_string(metric, allow_null = TRUE)
     if (select_best) {
       x <-
         dplyr::mutate(x,

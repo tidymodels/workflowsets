@@ -41,12 +41,10 @@ test_that("test comments", {
     "The 'id' value is not in wflow_id."
   )
   expect_error(
-    two_class_set %>% comment_add(letters, "foot"),
-    "'id' should be a single character value."
+    two_class_set %>% comment_add(letters, "foot")
   )
   expect_error(
-    two_class_set %>% comment_add(1:2, "foot"),
-    "'id' should be a single character value."
+    two_class_set %>% comment_add(1:2, "foot")
   )
   expect_error(
     two_class_set %>% comment_add("none_cart", 1:2),

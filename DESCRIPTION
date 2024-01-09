@@ -32,7 +32,7 @@ Imports:
     pillar (>= 1.7.0),
     prettyunits,
     purrr,
-    rlang,
+    rlang (>= 1.1.0),
     rsample (>= 0.0.9),
     stats,
     tibble (>= 3.1.0),

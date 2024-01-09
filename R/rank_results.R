@@ -27,6 +27,10 @@
 #' rank_results(chi_features_res, rank_metric = "rsq")
 #' @export
 rank_results <- function(x, rank_metric = NULL, select_best = FALSE) {
+  check_wf_set(x)
+  check_string(rank_metric, allow_null = TRUE)
+  check_bool(select_best)
+
   metric_info <- pick_metric(x, rank_metric)
   metric <- metric_info$metric
   direction <- metric_info$direction

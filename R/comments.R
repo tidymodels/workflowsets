@@ -32,6 +32,9 @@
 #'   comment_reset("none_cart") %>%
 #'   comment_get("none_cart")
 comment_add <- function(x, id, ..., append = TRUE, collapse = "\n") {
+  check_wf_set(x)
+  check_bool(append)
+  check_string(collapse)
   dots <- list(...)
   if (length(dots) == 0) {
     return(x)
@@ -42,9 +45,7 @@ comment_add <- function(x, id, ..., append = TRUE, collapse = "\n") {
     }
   }
 
-  if (length(id) > 1) {
-    rlang::abort("'id' should be a single character value.")
-  }
+  check_string(id)
   has_id <- id == x$wflow_id
   if (!any(has_id)) {
     rlang::abort("The 'id' value is not in wflow_id.")
@@ -64,6 +65,7 @@ comment_add <- function(x, id, ..., append = TRUE, collapse = "\n") {
 #' @export
 #' @rdname comment_add
 comment_get <- function(x, id) {
+  check_wf_set(x)
   if (length(id) > 1) {
     rlang::abort("'id' should be a single character value.")
   }
@@ -79,6 +81,7 @@ comment_get <- function(x, id) {
 #' @export
 #' @rdname comment_add
 comment_reset <- function(x, id) {
+  check_wf_set(x)
   if (length(id) > 1) {
     rlang::abort("'id' should be a single character value.")
   }
@@ -94,7 +97,8 @@ comment_reset <- function(x, id) {
 #' @export
 #' @rdname comment_add
 comment_print <- function(x, id = NULL, ...) {
-  if (is.null(id)) {
+   check_wf_set(x)
+   if (is.null(id)) {
     id <- x$wflow_id
   }
 

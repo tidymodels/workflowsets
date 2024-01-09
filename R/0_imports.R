@@ -7,6 +7,7 @@ NULL
 
 #' @import ggplot2
 #' @import vctrs
+#' @import rlang
 #' @importFrom stats qnorm as.formula model.frame
 #' @importFrom pillar obj_sum type_sum tbl_sum size_sum
 #' @importFrom dplyr dplyr_reconstruct

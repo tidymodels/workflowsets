@@ -34,6 +34,9 @@
 #' )
 #' @export
 leave_var_out_formulas <- function(formula, data, full_model = TRUE, ...) {
+  check_formula(formula)
+  check_bool(full_model)
+
   trms <- attr(model.frame(formula, data, ...), "terms")
   x_vars <- attr(trms, "term.labels")
   if (length(x_vars) < 2) {

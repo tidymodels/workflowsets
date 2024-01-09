@@ -126,6 +126,8 @@
 #' cell_set_by_group
 #' @export
 workflow_set <- function(preproc, models, cross = TRUE, case_weights = NULL) {
+  check_bool(cross)
+
   if (length(preproc) != length(models) &
     (length(preproc) != 1 & length(models) != 1 &
       !cross)
