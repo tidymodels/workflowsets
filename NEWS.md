@@ -6,6 +6,7 @@
   default, `"class"`, retains the existing behavior of mapping model type to 
   color and preprocessor type to shape, while the new `"wflow_id"`
   type maps the workflow IDs to color.
+* Added type checking for inputted arguments (#136, #131).
 
 # workflowsets 1.0.1
 
