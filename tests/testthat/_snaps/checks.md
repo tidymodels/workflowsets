@@ -9,10 +9,10 @@
 ---
 
     Code
-      check_wf_set(tibble())
+      check_wf_set(data.frame())
     Condition
       Error:
-      ! tibble() must be a workflow set, not a <tbl_df> object.
+      ! data.frame() must be a workflow set, not a <data.frame> object.
 
 ---
 
