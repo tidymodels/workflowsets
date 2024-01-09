@@ -162,9 +162,7 @@ extract_parameter_dials.workflow_set <- function(x, id, parameter, ...) {
 # ------------------------------------------------------------------------------
 
 filter_id <- function(x, id) {
-  if (!rlang::is_string(id)) {
-    halt("`id` must be a single string.")
-  }
+  check_string(id)
   out <- dplyr::filter(x, wflow_id == id)
   if (nrow(out) != 1L) {
     halt("`id` must correspond to a single row in `x`.")

@@ -65,6 +65,9 @@ option_add <- function(x, ..., id = NULL, strict = FALSE) {
 
   check_tune_args(names(dots))
 
+  check_string(id, allow_null = TRUE)
+  check_bool(strict)
+
   if (!is.null(id)) {
     for (i in id) {
       ind <- which(x$wflow_id == i)

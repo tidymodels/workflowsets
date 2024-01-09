@@ -26,13 +26,16 @@ car_set_1 <-
   )
 
 set.seed(1)
+resamples <- vfold_cv(mtcars, v = 3, repeats = 2)
+
+set.seed(1)
 car_set_2 <-
   workflow_set(
     list(reg = mpg ~ ., nonlin = mpg ~ wt + 1 / sqrt(disp)),
     list(lm = lr_spec)
   ) %>%
   workflow_map("fit_resamples",
-    resamples = vfold_cv(mtcars, v = 3, repeats = 2),
+    resamples = resamples,
     control = tune::control_resamples(save_pred = TRUE)
   )
 
@@ -43,7 +46,7 @@ car_set_3 <-
     list(knn = knn_spec)
   ) %>%
   workflow_map("tune_bayes",
-    resamples = vfold_cv(mtcars, v = 3, repeats = 2),
+    resamples = resamples,
     control = tune::control_bayes(save_pred = TRUE),
     seed = 1, iter = 2, initial = 3
   )

@@ -154,6 +154,8 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
                          seed = sample.int(10^4, 1), ...) {
   rlang::arg_match(fn, allowed_fn$func)
   check_object_fn(object, fn)
+  check_bool(verbose)
+  check_number_whole(seed)
 
   on.exit({
     cols <- tune::get_tune_colors()

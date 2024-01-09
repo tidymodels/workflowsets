@@ -72,6 +72,7 @@ tune::fit_best
 #' @name fit_best.workflow_set
 #' @export
 fit_best.workflow_set <- function(x, metric = NULL,  ...) {
+   check_string(metric, allow_null = TRUE)
    if (is.null(metric)) {
       result_1 <- extract_workflow_set_result(x, id = x$wflow_id[[1]])
       metric <- .get_tune_metric_names(result_1)[1]

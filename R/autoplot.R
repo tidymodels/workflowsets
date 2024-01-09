@@ -51,6 +51,11 @@ autoplot.workflow_set <- function(object, rank_metric = NULL, metric = NULL,
                                   type = "class",
                                   ...) {
   rlang::arg_match(type, c("class", "wflow_id"))
+  check_string(rank_metric, allow_null = TRUE)
+  check_character(metric, allow_null = TRUE)
+  check_number_decimal(std_errs)
+  check_bool(select_best)
+
   if (id == "workflow_set") {
     p <- rank_plot(object,
       rank_metric = rank_metric, metric = metric,
