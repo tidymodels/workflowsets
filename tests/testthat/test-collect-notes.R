@@ -7,7 +7,7 @@ test_that("collect_notes works", {
    wflow_set <-
      workflow_set(
        list(reg = mpg ~ ., nonlin = mpg ~ wt + 1 / sqrt(disp)),
-       list(lm = lr_spec)
+       list(lm = parsnip::linear_reg())
      )
 
    wflow_set_trained <-
