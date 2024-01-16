@@ -1,5 +1,6 @@
 # workflowsets (development version)
 
+* Added a `collect_notes()` method for workflow sets (#135).
 * Added methods to improve error messages when workflow sets are mistakenly
   passed to unsupported functions like `fit()` and `predict()`.
 * Added a new argument, `type`, to the `workflow_set` `autoplot()` method. The
