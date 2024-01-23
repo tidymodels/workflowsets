@@ -12,7 +12,7 @@ configuration associated with the best performance to the training set."><meta n
     
     <a class="navbar-brand me-2" href="../index.html">workflowsets</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.1.9000</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.1.9001</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -151,17 +151,15 @@ sequence of models built in Section 1.3 of Kuhn and Johnson (2019). See
 <span class="r-msg co"><span class="r-pr">#&gt;</span> There were issues with some computations   <span style="color: #BBBB00; font-weight: bold;">A</span>: x1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> There were issues with some computations   <span style="color: #BBBB00; font-weight: bold;">A</span>: x1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #000000;">1 of 3 resampling: date_lm (283ms)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #000000;">1 of 3 resampling: date_lm (249ms)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">i</span>	<span style="color: #000000;">No tuning parameters. `fit_resamples()` will be attempted</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">i</span> <span style="color: #000000;">2 of 3 resampling: plus_holidays_lm</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → <span style="color: #BBBB00; font-weight: bold;">A</span> | <span style="color: #BBBB00;">warning</span>: prediction from rank-deficient fit; consider predict(., rankdeficient="NA")</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> There were issues with some computations   <span style="color: #BBBB00; font-weight: bold;">A</span>: x1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> There were issues with some computations   <span style="color: #BBBB00; font-weight: bold;">A</span>: x1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #000000;">2 of 3 resampling: plus_holidays_lm (244ms)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #000000;">2 of 3 resampling: plus_holidays_lm (212ms)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">i</span> <span style="color: #000000;">3 of 3 tuning:     plus_pca_lm</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → <span style="color: #BBBB00; font-weight: bold;">A</span> | <span style="color: #BBBB00;">warning</span>: prediction from rank-deficient fit; consider predict(., rankdeficient="NA")</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #000000;">3 of 3 tuning:     plus_pca_lm (1.1s)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> → <span style="color: #BB0000; font-weight: bold;">B</span> | <span style="color: #BB0000;">error</span>:   Cannot find current progress bar for `&lt;environment: 0x5640784cd7f8&gt;`</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #000000;">3 of 3 tuning:     plus_pca_lm (949ms)</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">chi_features_res_new</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A workflow set/tibble: 3 × 4</span></span>
@@ -173,21 +171,15 @@ sequence of models built in Section 1.3 of Kuhn and Johnson (2019). See
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># sort models by performance metrics</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="rank_results.html">rank_results</a></span><span class="op">(</span><span class="va">chi_features_res_new</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 12 × 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    wflow_id   .config .metric  mean std_err     n preprocessor model  rank</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> plus_pca_… Prepro… rmse    0.586      <span style="color: #BB0000;">NA</span>     1 recipe       line…     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> plus_pca_… Prepro… rsq     0.989      <span style="color: #BB0000;">NA</span>     1 recipe       line…     1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> plus_pca_… Prepro… rmse    0.590      <span style="color: #BB0000;">NA</span>     1 recipe       line…     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> plus_pca_… Prepro… rsq     0.988      <span style="color: #BB0000;">NA</span>     1 recipe       line…     2</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> plus_pca_… Prepro… rmse    0.591      <span style="color: #BB0000;">NA</span>     1 recipe       line…     3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> plus_pca_… Prepro… rsq     0.988      <span style="color: #BB0000;">NA</span>     1 recipe       line…     3</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> plus_pca_… Prepro… rmse    0.594      <span style="color: #BB0000;">NA</span>     1 recipe       line…     4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> plus_pca_… Prepro… rsq     0.989      <span style="color: #BB0000;">NA</span>     1 recipe       line…     4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> plus_holi… Prepro… rmse    0.646      <span style="color: #BB0000;">NA</span>     1 recipe       line…     5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> plus_holi… Prepro… rsq     0.986      <span style="color: #BB0000;">NA</span>     1 recipe       line…     5</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> date_lm    Prepro… rmse    0.733      <span style="color: #BB0000;">NA</span>     1 recipe       line…     6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> date_lm    Prepro… rsq     0.982      <span style="color: #BB0000;">NA</span>     1 recipe       line…     6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 6 × 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   wflow_id    .config .metric  mean std_err     n preprocessor model  rank</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> plus_pca_lm Prepro… rmse    0.586      <span style="color: #BB0000;">NA</span>     1 recipe       line…     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> plus_pca_lm Prepro… rsq     0.989      <span style="color: #BB0000;">NA</span>     1 recipe       line…     1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> plus_holid… Prepro… rmse    0.646      <span style="color: #BB0000;">NA</span>     1 recipe       line…     2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> plus_holid… Prepro… rsq     0.986      <span style="color: #BB0000;">NA</span>     1 recipe       line…     2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> date_lm     Prepro… rmse    0.733      <span style="color: #BB0000;">NA</span>     1 recipe       line…     3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> date_lm     Prepro… rsq     0.982      <span style="color: #BB0000;">NA</span>     1 recipe       line…     3</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># fit the numerically optimal configuration to the training set</span></span></span>
 <span class="r-in"><span><span class="va">chi_features_wf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tune.tidymodels.org/reference/fit_best.html" class="external-link">fit_best</a></span><span class="op">(</span><span class="va">chi_features_res_new</span><span class="op">)</span></span></span>
