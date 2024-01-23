@@ -1,5 +1,6 @@
 # workflowsets (development version)
 
+* Enabled evaluating censored regression models (#139).
 * Added a `collect_notes()` method for workflow sets (#135).
 * Added methods to improve error messages when workflow sets are mistakenly
   passed to unsupported functions like `fit()` and `predict()`.
