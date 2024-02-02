@@ -68,7 +68,7 @@ autoplot.workflow_set <- function(object, rank_metric = NULL, metric = NULL,
 }
 
 rank_plot <- function(object, rank_metric = NULL, metric = NULL,
-                      select_best = FALSE, std_errs = 1, type = "class", ...) {
+                      select_best = FALSE, std_errs = 1, type = "class") {
   metric_info <- pick_metric(object, rank_metric, metric)
   metrics <- collate_metrics(object)
   res <- rank_results(object, rank_metric = metric_info$metric, select_best = select_best)
