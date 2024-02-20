@@ -25,7 +25,9 @@ of the model. In those cases, a formula specifying the model structure
 must be passed unchanged into the model call itself. This argument is
 used for those purposes.}
 
-\item{recipe}{A recipe created using \code{\link[recipes:recipe]{recipes::recipe()}}}
+\item{recipe}{A recipe created using \code{\link[recipes:recipe]{recipes::recipe()}}. The recipe
+should not have been trained already with \code{\link[recipes:prep]{recipes::prep()}}; workflows
+will handle training internally.}
 
 \item{blueprint}{A hardhat blueprint used for fine tuning the preprocessing.
 
