@@ -1,5 +1,5 @@
 #' @importFrom tune fit_best
-#' @rdname reexports
+#' @export
 tune::fit_best
 
 #' Fit a model to the numerically optimal configuration

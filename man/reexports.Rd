@@ -19,9 +19,6 @@
 \alias{extract_parameter_dials}
 \alias{fit_best}
 \title{Objects exported from other packages}
-\usage{
-fit_best(x, ...)
-}
 \keyword{internal}
 \description{
 These objects are imported from other packages. Follow the links
@@ -34,6 +31,6 @@ below to see their documentation.
 
   \item{hardhat}{\code{\link[hardhat:hardhat-extract]{extract_fit_engine}}, \code{\link[hardhat:hardhat-extract]{extract_fit_parsnip}}, \code{\link[hardhat:hardhat-extract]{extract_mold}}, \code{\link[hardhat:hardhat-extract]{extract_parameter_dials}}, \code{\link[hardhat:hardhat-extract]{extract_parameter_set_dials}}, \code{\link[hardhat:hardhat-extract]{extract_preprocessor}}, \code{\link[hardhat:hardhat-extract]{extract_recipe}}, \code{\link[hardhat:hardhat-extract]{extract_spec_parsnip}}, \code{\link[hardhat:hardhat-extract]{extract_workflow}}}
 
-  \item{tune}{\code{\link[tune:collect_predictions]{collect_metrics}}, \code{\link[tune:collect_predictions]{collect_notes}}, \code{\link[tune]{collect_predictions}}}
+  \item{tune}{\code{\link[tune:collect_predictions]{collect_metrics}}, \code{\link[tune:collect_predictions]{collect_notes}}, \code{\link[tune]{collect_predictions}}, \code{\link[tune]{fit_best}}}
 }}
 
