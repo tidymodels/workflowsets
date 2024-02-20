@@ -3,11 +3,11 @@
 * Enabled evaluating censored regression models (#139).
 * Added a `collect_notes()` method for workflow sets (#135).
 * Added methods to improve error messages when workflow sets are mistakenly
-  passed to unsupported functions like `fit()` and `predict()`.
+  passed to unsupported functions like `fit()` and `predict()` (#137).
 * Added a new argument, `type`, to the `workflow_set` `autoplot()` method. The
   default, `"class"`, retains the existing behavior of mapping model type to 
   color and preprocessor type to shape, while the new `"wflow_id"`
-  type maps the workflow IDs to color.
+  type maps the workflow IDs to color (#134).
 * Added type checking for inputted arguments (#136, #131).
 
 # workflowsets 1.0.1
