@@ -26,10 +26,16 @@
 #' rank_results(chi_features_res, select_best = TRUE)
 #' rank_results(chi_features_res, rank_metric = "rsq")
 #' @export
-rank_results <- function(x, rank_metric = NULL, select_best = FALSE) {
+rank_results <- function(x, rank_metric = NULL, select_best = FALSE, eval_time = NULL) {
   check_wf_set(x)
   check_string(rank_metric, allow_null = TRUE)
   check_bool(select_best)
+  result_1 <- extract_workflow_set_result(x, id = x$wflow_id[[1]])
+  met_set <- tune::.get_tune_metrics(result_1)
+  if (!is.null(rank_metric)) {
+    tune::check_metric_in_tune_results(tibble::as_tibble(met_set), rank_metric)
+  }
+  tune::check_eval_time_arg(eval_time, met_set)
 
   metric_info <- pick_metric(x, rank_metric)
   metric <- metric_info$metric
@@ -37,7 +43,8 @@ rank_results <- function(x, rank_metric = NULL, select_best = FALSE) {
   wflow_info <- dplyr::bind_cols(purrr::map_dfr(x$info, I), dplyr::select(x, wflow_id))
 
   results <- collect_metrics(x) %>%
-    dplyr::select(wflow_id, .config, .metric, mean, std_err, n) %>%
+    dplyr::select(wflow_id, .config, .metric, mean, std_err, n,
+                  dplyr::any_of(".eval_time")) %>%
     dplyr::full_join(wflow_info, by = "wflow_id") %>%
     dplyr::select(-comment, -workflow)
 

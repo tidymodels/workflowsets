@@ -11,6 +11,7 @@ tune::fit_best
 #' with [workflow_map()]. Note that the workflow set must have been fitted with
 #' the [control option][option_add] `save_workflow = TRUE`.
 #' @param metric A character string giving the metric to rank results by.
+#' @inheritParams tune::fit_best.tune_results
 #' @param ... Additional options to pass to
 #' [tune::fit_best][tune::fit_best.tune_results].
 #'
@@ -71,18 +72,36 @@ tune::fit_best
 #' fit_best(chi_features_res_new, metric = "rmse")
 #' @name fit_best.workflow_set
 #' @export
-fit_best.workflow_set <- function(x, metric = NULL,  ...) {
+fit_best.workflow_set <- function(x, metric = NULL, eval_time = NULL, ...) {
    check_string(metric, allow_null = TRUE)
+   result_1 <- extract_workflow_set_result(x, id = x$wflow_id[[1]])
+   met_set <- tune::.get_tune_metrics(result_1)
+   if (!is.null(metric)) {
+      tune::check_metric_in_tune_results(tibble::as_tibble(met_set), metric)
+   }
+   tune::check_eval_time_arg(eval_time, met_set)
+
    if (is.null(metric)) {
-      result_1 <- extract_workflow_set_result(x, id = x$wflow_id[[1]])
       metric <- .get_tune_metric_names(result_1)[1]
    }
 
-   rankings <- rank_results(x, rank_metric = metric, select_best = TRUE)
+   if (is.null(eval_time) & is_dyn(met_set, metric)) {
+     eval_time <- tune::.get_tune_eval_times(result_1)[1]
+   }
+
+   rankings <- rank_results(x, rank_metric = metric, select_best = TRUE, eval_time = eval_time)
 
    tune_res <- extract_workflow_set_result(x, id = rankings$wflow_id[1])
 
    best_params <- select_best(tune_res, metric = metric)
 
    fit_best(tune_res, metric = metric, parameters = best_params, ...)
+}
+
+# from unexported
+# https://github.com/tidymodels/tune/blob/5b0e10fac559f18c075eb4bd7020e217c6174e66/R/metric-selection.R#L137-L141
+is_dyn <- function(mtr_set, metric) {
+  mtr_info <- tibble::as_tibble(mtr_set)
+  mtr_cls <- mtr_info$class[mtr_info$metric == metric]
+  mtr_cls == "dynamic_survival_metric"
 }

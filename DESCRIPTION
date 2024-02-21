@@ -54,6 +54,8 @@ Suggests:
     testthat (>= 3.0.0),
     tidyclust,
     yardstick (>= 1.3.0)
+Remotes:
+    tidymodels/tune
 VignetteBuilder: 
     knitr
 Config/Needs/website: 

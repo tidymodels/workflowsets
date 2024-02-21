@@ -4,7 +4,7 @@
 \alias{fit_best.workflow_set}
 \title{Fit a model to the numerically optimal configuration}
 \usage{
-\method{fit_best}{workflow_set}(x, metric = NULL, ...)
+\method{fit_best}{workflow_set}(x, metric = NULL, eval_time = NULL, ...)
 }
 \arguments{
 \item{x}{A \code{\link[=workflow_set]{workflow_set}} object that has been evaluated

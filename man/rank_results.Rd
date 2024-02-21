@@ -4,7 +4,7 @@
 \alias{rank_results}
 \title{Rank the results by a metric}
 \usage{
-rank_results(x, rank_metric = NULL, select_best = FALSE)
+rank_results(x, rank_metric = NULL, select_best = FALSE, eval_time = NULL)
 }
 \arguments{
 \item{x}{A \code{\link[=workflow_set]{workflow_set}} object that has been evaluated
