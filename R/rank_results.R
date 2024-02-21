@@ -6,6 +6,7 @@
 #' @param rank_metric A character string for a metric.
 #' @param select_best A logical giving whether the results should only contain
 #' the numerically best submodel per workflow.
+#' @inheritParams tune::fit_best.tune_results
 #' @details
 #' If some models have the exact same performance,
 #' `rank(value, ties.method = "random")` is used (with a reproducible seed) so

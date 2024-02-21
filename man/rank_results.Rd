@@ -14,6 +14,11 @@ with \code{\link[=workflow_map]{workflow_map()}}.}
 
 \item{select_best}{A logical giving whether the results should only contain
 the numerically best submodel per workflow.}
+
+\item{eval_time}{A single numeric time point where dynamic event time
+metrics should be chosen (e.g., the time-dependent ROC curve, etc). The
+values should be consistent with the values used to create \code{x}. The \code{NULL}
+default will automatically use the first evaluation time used by \code{x}.}
 }
 \value{
 A tibble with columns: \code{wflow_id}, \code{.config}, \code{.metric}, \code{mean},

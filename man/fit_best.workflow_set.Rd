@@ -13,6 +13,11 @@ the \link[=option_add]{control option} \code{save_workflow = TRUE}.}
 
 \item{metric}{A character string giving the metric to rank results by.}
 
+\item{eval_time}{A single numeric time point where dynamic event time
+metrics should be chosen (e.g., the time-dependent ROC curve, etc). The
+values should be consistent with the values used to create \code{x}. The \code{NULL}
+default will automatically use the first evaluation time used by \code{x}.}
+
 \item{...}{Additional options to pass to
 \link[tune:fit_best]{tune::fit_best}.}
 }
