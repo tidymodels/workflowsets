@@ -76,24 +76,28 @@ fit_best.workflow_set <- function(x, metric = NULL, eval_time = NULL, ...) {
    check_string(metric, allow_null = TRUE)
    result_1 <- extract_workflow_set_result(x, id = x$wflow_id[[1]])
    met_set <- tune::.get_tune_metrics(result_1)
-   if (!is.null(metric)) {
-      tune::check_metric_in_tune_results(tibble::as_tibble(met_set), metric)
-   }
-   tune::check_eval_time_arg(eval_time, met_set)
 
    if (is.null(metric)) {
-      metric <- .get_tune_metric_names(result_1)[1]
+     metric <- .get_tune_metric_names(result_1)[1]
+   } else {
+     tune::check_metric_in_tune_results(tibble::as_tibble(met_set), metric)
    }
 
    if (is.null(eval_time) & is_dyn(met_set, metric)) {
      eval_time <- tune::.get_tune_eval_times(result_1)[1]
    }
 
-   rankings <- rank_results(x, rank_metric = metric, select_best = TRUE, eval_time = eval_time)
+   rankings <-
+      rank_results(
+        x,
+        rank_metric = metric,
+        select_best = TRUE,
+        eval_time = eval_time
+      )
 
    tune_res <- extract_workflow_set_result(x, id = rankings$wflow_id[1])
 
-   best_params <- select_best(tune_res, metric = metric)
+   best_params <- select_best(tune_res, metric = metric, eval_time = eval_time)
 
    fit_best(tune_res, metric = metric, parameters = best_params, ...)
 }

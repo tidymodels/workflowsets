@@ -36,7 +36,8 @@ rank_results <- function(x, rank_metric = NULL, select_best = FALSE, eval_time =
   if (!is.null(rank_metric)) {
     tune::check_metric_in_tune_results(tibble::as_tibble(met_set), rank_metric)
   }
-  tune::check_eval_time_arg(eval_time, met_set)
+
+  eval_time <- tune::choose_eval_time(result_1, rank_metric, eval_time)
 
   metric_info <- pick_metric(x, rank_metric)
   metric <- metric_info$metric
@@ -48,6 +49,10 @@ rank_results <- function(x, rank_metric = NULL, select_best = FALSE, eval_time =
                   dplyr::any_of(".eval_time")) %>%
     dplyr::full_join(wflow_info, by = "wflow_id") %>%
     dplyr::select(-comment, -workflow)
+
+  if (".eval_time" %in% names(results)) {
+    results <- results[results$.eval_time == eval_time, ]
+  }
 
   types <- x %>%
     dplyr::full_join(wflow_info, by = "wflow_id") %>%
