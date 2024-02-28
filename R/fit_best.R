@@ -99,7 +99,7 @@ fit_best.workflow_set <- function(x, metric = NULL, eval_time = NULL, ...) {
 
    best_params <- select_best(tune_res, metric = metric, eval_time = eval_time)
 
-   fit_best(tune_res, metric = metric, parameters = best_params, ...)
+   fit_best(tune_res, parameters = best_params, ...)
 }
 
 # from unexported
