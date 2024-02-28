@@ -4,9 +4,9 @@
 #'
 #' @inheritParams collect_metrics.workflow_set
 #' @param rank_metric A character string for a metric.
+#' @inheritParams tune::fit_best.tune_results
 #' @param select_best A logical giving whether the results should only contain
 #' the numerically best submodel per workflow.
-#' @inheritParams tune::fit_best.tune_results
 #' @details
 #' If some models have the exact same performance,
 #' `rank(value, ties.method = "random")` is used (with a reproducible seed) so
@@ -27,7 +27,7 @@
 #' rank_results(chi_features_res, select_best = TRUE)
 #' rank_results(chi_features_res, rank_metric = "rsq")
 #' @export
-rank_results <- function(x, rank_metric = NULL, select_best = FALSE, eval_time = NULL) {
+rank_results <- function(x, rank_metric = NULL, eval_time = NULL, select_best = FALSE) {
   check_wf_set(x)
   check_string(rank_metric, allow_null = TRUE)
   check_bool(select_best)
