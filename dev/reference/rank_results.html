@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">workflowsets</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.1.9001</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.1.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rank_results</span><span class="op">(</span><span class="va">x</span>, rank_metric <span class="op">=</span> <span class="cn">NULL</span>, select_best <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rank_results</span><span class="op">(</span><span class="va">x</span>, rank_metric <span class="op">=</span> <span class="cn">NULL</span>, eval_time <span class="op">=</span> <span class="cn">NULL</span>, select_best <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -70,6 +70,13 @@ with <code><a href="workflow_map.html">workflow_map()</a></code>.</p></dd>
 
 <dt>rank_metric</dt>
 <dd><p>A character string for a metric.</p></dd>
+
+
+<dt>eval_time</dt>
+<dd><p>A single numeric time point where dynamic event time
+metrics should be chosen (e.g., the time-dependent ROC curve, etc). The
+values should be consistent with the values used to create <code>x</code>. The <code>NULL</code>
+default will automatically use the first evaluation time used by <code>x</code>.</p></dd>
 
 
 <dt>select_best</dt>
