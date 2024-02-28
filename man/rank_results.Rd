@@ -4,13 +4,18 @@
 \alias{rank_results}
 \title{Rank the results by a metric}
 \usage{
-rank_results(x, rank_metric = NULL, select_best = FALSE)
+rank_results(x, rank_metric = NULL, eval_time = NULL, select_best = FALSE)
 }
 \arguments{
 \item{x}{A \code{\link[=workflow_set]{workflow_set}} object that has been evaluated
 with \code{\link[=workflow_map]{workflow_map()}}.}
 
 \item{rank_metric}{A character string for a metric.}
+
+\item{eval_time}{A single numeric time point where dynamic event time
+metrics should be chosen (e.g., the time-dependent ROC curve, etc). The
+values should be consistent with the values used to create \code{x}. The \code{NULL}
+default will automatically use the first evaluation time used by \code{x}.}
 
 \item{select_best}{A logical giving whether the results should only contain
 the numerically best submodel per workflow.}

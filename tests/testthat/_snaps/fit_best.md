@@ -11,8 +11,8 @@
     Code
       fit_best(chi_features_map, metric = "boop")
     Condition
-      Error in `halt()`:
-      ! Metric 'boop' was not in the results.
+      Error in `fit_best()`:
+      ! "boop" was not in the metric set. Please choose from: "rmse" and "rsq".
 
 ---
 
