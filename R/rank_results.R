@@ -37,12 +37,12 @@ rank_results <- function(x, rank_metric = NULL, eval_time = NULL, select_best = 
     tune::check_metric_in_tune_results(tibble::as_tibble(met_set), rank_metric)
   }
 
-  eval_time <- tune::choose_eval_time(result_1, rank_metric, eval_time)
-
   metric_info <- pick_metric(x, rank_metric)
   metric <- metric_info$metric
   direction <- metric_info$direction
   wflow_info <- dplyr::bind_cols(purrr::map_dfr(x$info, I), dplyr::select(x, wflow_id))
+
+  eval_time <- tune::choose_eval_time(result_1, metric, eval_time)
 
   results <- collect_metrics(x) %>%
     dplyr::select(wflow_id, .config, .metric, mean, std_err, n,
