@@ -42,7 +42,7 @@ rank_results <- function(x, rank_metric = NULL, eval_time = NULL, select_best = 
   direction <- metric_info$direction
   wflow_info <- dplyr::bind_cols(purrr::map_dfr(x$info, I), dplyr::select(x, wflow_id))
 
-  eval_time <- tune::choose_eval_time(result_1, metric, eval_time)
+  eval_time <- tune::choose_eval_time(result_1, metric, eval_time = eval_time)
 
   results <- collect_metrics(x) %>%
     dplyr::select(wflow_id, .config, .metric, mean, std_err, n,
