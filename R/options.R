@@ -11,7 +11,7 @@
 #'
 #' @export
 #' @inheritParams comment_add
-#' @param ... A list of named options to pass to the `tune_*()` functions (e.g.
+#' @param ... Arguments to pass to the `tune_*()` functions (e.g.
 #' [tune::tune_grid()]) or [tune::fit_resamples()]. For `option_remove()` this
 #' can be a series of unquoted option names.
 #' @param id A character string of one or more values from the `wflow_id`
