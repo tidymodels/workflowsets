@@ -15,7 +15,7 @@ option_add_parameters(x, id = NULL, strict = FALSE)
 \arguments{
 \item{x}{A workflow set outputted by \code{\link[=workflow_set]{workflow_set()}} or \code{\link[=workflow_map]{workflow_map()}}.}
 
-\item{...}{A list of named options to pass to the \verb{tune_*()} functions (e.g.
+\item{...}{Arguments to pass to the \verb{tune_*()} functions (e.g.
 \code{\link[tune:tune_grid]{tune::tune_grid()}}) or \code{\link[tune:fit_resamples]{tune::fit_resamples()}}. For \code{option_remove()} this
 can be a series of unquoted option names.}
 
