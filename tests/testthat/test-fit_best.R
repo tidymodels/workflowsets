@@ -36,7 +36,7 @@ test_that("fit_best fits with correct hyperparameters", {
    rankings <- rank_results(chi_features_map, "rmse")
    tune_res <- extract_workflow_set_result(chi_features_map, rankings$wflow_id[1])
    tune_params <- select_best(tune_res, metric = "rmse")
-   manual_wf <- fit_best(tune_res, "rmse", parameters = tune_params)
+   manual_wf <- fit_best(tune_res, parameters = tune_params)
 
    expect_equal(manual_wf, fit_best_wf)
 
@@ -47,7 +47,7 @@ test_that("fit_best fits with correct hyperparameters", {
    rankings_2 <- rank_results(chi_features_map, "iic")
    tune_res_2 <- extract_workflow_set_result(chi_features_map, rankings_2$wflow_id[1])
    tune_params_2 <- select_best(tune_res_2, metric = "iic")
-   manual_wf_2 <- fit_best(tune_res_2, "iic", parameters = tune_params_2)
+   manual_wf_2 <- fit_best(tune_res_2, parameters = tune_params_2)
 
    expect_equal(manual_wf_2, fit_best_wf_2)
 })
