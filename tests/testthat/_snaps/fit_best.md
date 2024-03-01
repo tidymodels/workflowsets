@@ -20,5 +20,7 @@
       fit_best(chi_features_map, boop = "bop")
     Condition
       Error in `fit_best()`:
-      x The `...` are not used by this function.
+      ! `...` must be empty.
+      x Problematic argument:
+      * boop = "bop"
 
