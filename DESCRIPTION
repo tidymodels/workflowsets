@@ -55,7 +55,7 @@ Suggests:
     tidyclust,
     yardstick (>= 1.3.0)
 Remotes:
-    tidymodels/tune#863
+    tidymodels/tune
 VignetteBuilder: 
     knitr
 Config/Needs/website: 
