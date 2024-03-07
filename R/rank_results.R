@@ -50,7 +50,7 @@ rank_results <- function(x, rank_metric = NULL, eval_time = NULL, select_best = 
     dplyr::full_join(wflow_info, by = "wflow_id") %>%
     dplyr::select(-comment, -workflow)
 
-  if (".eval_time" %in% names(results)) {
+  if (!is.null(eval_time) && ".eval_time" %in% names(results)) {
     results <- results[results$.eval_time == eval_time, ]
   }
 
