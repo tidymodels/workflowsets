@@ -6,15 +6,15 @@
 \alias{collect_notes.workflow_set}
 \title{Obtain and format results produced by tuning functions for workflow sets}
 \usage{
-\method{collect_metrics}{workflow_set}(x, summarize = TRUE, ...)
+\method{collect_metrics}{workflow_set}(x, ..., summarize = TRUE)
 
 \method{collect_predictions}{workflow_set}(
   x,
+  ...,
   summarize = TRUE,
   parameters = NULL,
   select_best = FALSE,
-  metric = NULL,
-  ...
+  metric = NULL
 )
 
 \method{collect_notes}{workflow_set}(x, ...)
@@ -23,13 +23,13 @@
 \item{x}{A \code{\link[=workflow_set]{workflow_set}} object that has been evaluated
 with \code{\link[=workflow_map]{workflow_map()}}.}
 
+\item{...}{Not currently used.}
+
 \item{summarize}{A logical for whether the performance estimates should be
 summarized via the mean (over resamples) or the raw performance values (per
 resample) should be returned along with the resampling identifiers. When
 collecting predictions, these are averaged if multiple assessment sets
 contain the same row.}
-
-\item{...}{Not currently used.}
 
 \item{parameters}{An optional tibble of tuning parameter values that can be
 used to filter the predicted values before processing. This tibble should
