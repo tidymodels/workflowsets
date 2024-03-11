@@ -4,6 +4,7 @@
 #'
 #' @param x A [`workflow_set`][workflow_set()] object that has been evaluated
 #' with [workflow_map()].
+#' @param ... Not currently used.
 #' @param summarize A logical for whether the performance estimates should be
 #'  summarized via the mean (over resamples) or the raw performance values (per
 #'  resample) should be returned along with the resampling identifiers. When
@@ -17,7 +18,6 @@
 #' are retained. If `TRUE`, the `parameters` argument is ignored.
 #' @param metric A character string for the metric that is used for
 #' `select_best`.
-#' @param ... Not currently used.
 #' @return A tibble.
 #' @details
 #'
@@ -57,7 +57,8 @@
 #'
 #' collect_metrics(two_class_res, summarize = FALSE)
 #' @export
-collect_metrics.workflow_set <- function(x, summarize = TRUE, ...) {
+collect_metrics.workflow_set <- function(x, ..., summarize = TRUE) {
+  rlang::check_dots_empty()
   check_incompete(x, fail = TRUE)
   check_bool(summarize)
   x <-
@@ -98,8 +99,9 @@ reorder_cols <- function(x) {
 #' @export
 #' @rdname collect_metrics.workflow_set
 collect_predictions.workflow_set <-
-  function(x, summarize = TRUE, parameters = NULL, select_best = FALSE,
-           metric = NULL, ...) {
+  function(x, ..., summarize = TRUE, parameters = NULL, select_best = FALSE,
+           metric = NULL) {
+    rlang::check_dots_empty()
     check_incompete(x, fail = TRUE)
     check_bool(summarize)
     check_bool(select_best)

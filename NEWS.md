@@ -1,5 +1,6 @@
 # workflowsets (development version)
 
+* Ellipses (...) are now used consistently in the package to require optional arguments to be named; `collect_metrics()` and `collect_predictions()` are the only functions that received changes (#151, tidymodels/tune#863).
 * Enabled evaluating censored regression models (#139, #144). The placement of 
   the new `eval_time` argument to `rank_results()` breaks passing-by-position 
   for the `select_best` argument.
