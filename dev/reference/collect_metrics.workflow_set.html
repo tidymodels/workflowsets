@@ -59,16 +59,16 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for workflow_set</span></span>
-<span><span class="fu"><a href="https://tune.tidymodels.org/reference/collect_predictions.html" class="external-link">collect_metrics</a></span><span class="op">(</span><span class="va">x</span>, summarize <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://tune.tidymodels.org/reference/collect_predictions.html" class="external-link">collect_metrics</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, summarize <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for workflow_set</span></span>
 <span><span class="fu"><a href="https://tune.tidymodels.org/reference/collect_predictions.html" class="external-link">collect_predictions</a></span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
+<span>  <span class="va">...</span>,</span>
 <span>  summarize <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  parameters <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  select_best <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  metric <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  <span class="va">...</span></span>
+<span>  metric <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for workflow_set</span></span>
@@ -82,16 +82,16 @@
 with <code><a href="workflow_map.html">workflow_map()</a></code>.</p></dd>
 
 
+<dt>...</dt>
+<dd><p>Not currently used.</p></dd>
+
+
 <dt>summarize</dt>
 <dd><p>A logical for whether the performance estimates should be
 summarized via the mean (over resamples) or the raw performance values (per
 resample) should be returned along with the resampling identifiers. When
 collecting predictions, these are averaged if multiple assessment sets
 contain the same row.</p></dd>
-
-
-<dt>...</dt>
-<dd><p>Not currently used.</p></dd>
 
 
 <dt>parameters</dt>
