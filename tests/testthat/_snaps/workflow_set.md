@@ -59,23 +59,23 @@
     Message
       x Fold1: preprocessor 1/1:
         Error in `fit()`:
-        ! Can't subset columns that don't exist.
+        ! Can't select columns that don't exist.
         x Column `boop` doesn't exist.
       x Fold2: preprocessor 1/1:
         Error in `fit()`:
-        ! Can't subset columns that don't exist.
+        ! Can't select columns that don't exist.
         x Column `boop` doesn't exist.
       x Fold3: preprocessor 1/1:
         Error in `fit()`:
-        ! Can't subset columns that don't exist.
+        ! Can't select columns that don't exist.
         x Column `boop` doesn't exist.
       x Fold4: preprocessor 1/1:
         Error in `fit()`:
-        ! Can't subset columns that don't exist.
+        ! Can't select columns that don't exist.
         x Column `boop` doesn't exist.
       x Fold5: preprocessor 1/1:
         Error in `fit()`:
-        ! Can't subset columns that don't exist.
+        ! Can't select columns that don't exist.
         x Column `boop` doesn't exist.
     Condition
       Warning:
@@ -83,23 +83,23 @@
     Message
       x Fold1: preprocessor 1/1:
         Error in `fit()`:
-        ! Can't subset columns that don't exist.
+        ! Can't select columns that don't exist.
         x Column `boop` doesn't exist.
       x Fold2: preprocessor 1/1:
         Error in `fit()`:
-        ! Can't subset columns that don't exist.
+        ! Can't select columns that don't exist.
         x Column `boop` doesn't exist.
       x Fold3: preprocessor 1/1:
         Error in `fit()`:
-        ! Can't subset columns that don't exist.
+        ! Can't select columns that don't exist.
         x Column `boop` doesn't exist.
       x Fold4: preprocessor 1/1:
         Error in `fit()`:
-        ! Can't subset columns that don't exist.
+        ! Can't select columns that don't exist.
         x Column `boop` doesn't exist.
       x Fold5: preprocessor 1/1:
         Error in `fit()`:
-        ! Can't subset columns that don't exist.
+        ! Can't select columns that don't exist.
         x Column `boop` doesn't exist.
     Condition
       Warning:
@@ -110,7 +110,7 @@
     Code
       class_note$note[1]
     Output
-      [1] "Error in `fit()`:\n! Can't subset columns that don't exist.\nx Column `boop` doesn't exist."
+      [1] "Error in `fit()`:\n! Can't select columns that don't exist.\nx Column `boop` doesn't exist."
 
 # pillar formatting
 
