@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">workflowsets</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.0.1.9002</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">1.1.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +53,9 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="workflowsets-development-version">workflowsets (development version)<a class="anchor" aria-label="anchor" href="#workflowsets-development-version"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.1.0" id="workflowsets-110">workflowsets 1.1.0<a class="anchor" aria-label="anchor" href="#workflowsets-110"></a></h2>
 <ul><li>Ellipses (…) are now used consistently in the package to require optional arguments to be named; <code><a href="https://tune.tidymodels.org/reference/collect_predictions.html" class="external-link">collect_metrics()</a></code> and <code><a href="https://tune.tidymodels.org/reference/collect_predictions.html" class="external-link">collect_predictions()</a></code> are the only functions that received changes (<a href="https://github.com/tidymodels/workflowsets/issues/151" class="external-link">#151</a>, tidymodels/tune#863).</li>
 <li>Enabled evaluating censored regression models (<a href="https://github.com/tidymodels/workflowsets/issues/139" class="external-link">#139</a>, <a href="https://github.com/tidymodels/workflowsets/issues/144" class="external-link">#144</a>). The placement of the new <code>eval_time</code> argument to <code><a href="../reference/rank_results.html">rank_results()</a></code> breaks passing-by-position for the <code>select_best</code> argument.</li>
 <li>Added a <code><a href="https://tune.tidymodels.org/reference/collect_predictions.html" class="external-link">collect_notes()</a></code> method for workflow sets (<a href="https://github.com/tidymodels/workflowsets/issues/135" class="external-link">#135</a>).</li>
