@@ -1,3 +1,5 @@
+# workflowsets (development version)
+
 # workflowsets 1.1.0
 
 * Ellipses (...) are now used consistently in the package to require optional arguments to be named; `collect_metrics()` and `collect_predictions()` are the only functions that received changes (#151, tidymodels/tune#863).
