@@ -1,90 +1,32 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/CODE_OF_CONDUCT.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/CONTRIBUTING.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/LICENSE-text.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/articles/evaluating-different-predictor-sets.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/articles/tuning-and-comparing-models.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/index.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/reference/as_workflow_set.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/reference/autoplot.workflow_set.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/reference/chi_features_set.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/reference/collect_metrics.workflow_set.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/reference/comment_add.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/reference/extract_workflow_set_result.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/reference/fit_best.workflow_set.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/reference/leave_var_out_formulas.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/reference/option_add.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/reference/option_list.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/reference/pull_workflow_set_result.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/reference/rank_results.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/reference/reexports.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/reference/two_class_set.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/reference/update_workflow_model.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/reference/workflow_map.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/reference/workflow_set.html</loc>
-  </url>
-  <url>
-    <loc>https://workflowsets.tidymodels.org/dev/reference/workflowsets-package.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://workflowsets.tidymodels.org/dev/CODE_OF_CONDUCT.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/CONTRIBUTING.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/LICENSE-text.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/LICENSE.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/articles/evaluating-different-predictor-sets.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/articles/index.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/articles/tuning-and-comparing-models.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/authors.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/index.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/news/index.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/reference/as_workflow_set.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/reference/autoplot.workflow_set.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/reference/chi_features_set.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/reference/collect_metrics.workflow_set.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/reference/comment_add.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/reference/extract_workflow_set_result.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/reference/fit_best.workflow_set.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/reference/index.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/reference/leave_var_out_formulas.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/reference/option_add.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/reference/option_list.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/reference/pull_workflow_set_result.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/reference/rank_results.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/reference/reexports.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/reference/two_class_set.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/reference/update_workflow_model.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/reference/workflow_map.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/reference/workflow_set.html</loc></url>
+<url><loc>https://workflowsets.tidymodels.org/dev/reference/workflowsets-package.html</loc></url>
 </urlset>
+
