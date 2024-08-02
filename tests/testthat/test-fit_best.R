@@ -38,6 +38,8 @@ test_that("fit_best fits with correct hyperparameters", {
    tune_params <- select_best(tune_res, metric = "rmse")
    manual_wf <- fit_best(tune_res, parameters = tune_params)
 
+   manual_wf$pre$mold$blueprint$recipe$fit_times <-
+      fit_best_wf$pre$mold$blueprint$recipe$fit_times
    expect_equal(manual_wf, fit_best_wf)
 
    # metric: iic
@@ -49,6 +51,8 @@ test_that("fit_best fits with correct hyperparameters", {
    tune_params_2 <- select_best(tune_res_2, metric = "iic")
    manual_wf_2 <- fit_best(tune_res_2, parameters = tune_params_2)
 
+   manual_wf_2$pre$mold$blueprint$recipe$fit_times <-
+      fit_best_wf_2$pre$mold$blueprint$recipe$fit_times
    expect_equal(manual_wf_2, fit_best_wf_2)
 })
 
