@@ -37,6 +37,10 @@ tune::collect_predictions
 #' @export
 tune::collect_notes
 
+#' @importFrom tune collect_extracts
+#' @export
+tune::collect_extracts
+
 #' @importFrom dplyr %>%
 #' @export
 dplyr::`%>%`

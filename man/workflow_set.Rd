@@ -8,7 +8,7 @@ workflow_set(preproc, models, cross = TRUE, case_weights = NULL)
 }
 \arguments{
 \item{preproc}{A list (preferably named) with preprocessing objects:
-formulas, recipes, or \code{\link[workflows:add_variables]{workflows::workflow_variables()}}.}
+formulas, recipes, or \code{\link[workflows:workflow_variables]{workflows::workflow_variables()}}.}
 
 \item{models}{A list (preferably named) of \code{parsnip} model specifications.}
 
@@ -53,7 +53,7 @@ more of:
 \itemize{
 \item A traditional R formula.
 \item A recipe definition (un-prepared) via \code{\link[recipes:recipe]{recipes::recipe()}}.
-\item A selectors object created by \code{\link[workflows:add_variables]{workflows::workflow_variables()}}.
+\item A selectors object created by \code{\link[workflows:workflow_variables]{workflows::workflow_variables()}}.
 }
 
 Since \code{preproc} is a named list column, any combination of these can be
