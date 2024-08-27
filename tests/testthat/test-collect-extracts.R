@@ -43,5 +43,8 @@ test_that("collect_extracts fails gracefully without .extracts column", {
       resamples = folds
     )
 
-  expect_snapshot_error(collect_extracts(wflow_set_trained))
+  expect_snapshot(
+    error = TRUE,
+    collect_extracts(wflow_set_trained)
+  )
 })
