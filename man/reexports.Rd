@@ -6,6 +6,7 @@
 \alias{collect_metrics}
 \alias{collect_predictions}
 \alias{collect_notes}
+\alias{collect_extracts}
 \alias{\%>\%}
 \alias{autoplot}
 \alias{extract_spec_parsnip}
@@ -25,12 +26,12 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{dplyr}{\code{\link[dplyr:reexports]{\%>\%}}}
+  \item{dplyr}{\code{\link[dplyr]{\%>\%}}}
 
   \item{ggplot2}{\code{\link[ggplot2]{autoplot}}}
 
-  \item{hardhat}{\code{\link[hardhat:hardhat-extract]{extract_fit_engine}}, \code{\link[hardhat:hardhat-extract]{extract_fit_parsnip}}, \code{\link[hardhat:hardhat-extract]{extract_mold}}, \code{\link[hardhat:hardhat-extract]{extract_parameter_dials}}, \code{\link[hardhat:hardhat-extract]{extract_parameter_set_dials}}, \code{\link[hardhat:hardhat-extract]{extract_preprocessor}}, \code{\link[hardhat:hardhat-extract]{extract_recipe}}, \code{\link[hardhat:hardhat-extract]{extract_spec_parsnip}}, \code{\link[hardhat:hardhat-extract]{extract_workflow}}}
+  \item{hardhat}{\code{\link[hardhat]{extract_fit_engine}}, \code{\link[hardhat]{extract_fit_parsnip}}, \code{\link[hardhat]{extract_mold}}, \code{\link[hardhat]{extract_parameter_dials}}, \code{\link[hardhat]{extract_parameter_set_dials}}, \code{\link[hardhat]{extract_preprocessor}}, \code{\link[hardhat]{extract_recipe}}, \code{\link[hardhat]{extract_spec_parsnip}}, \code{\link[hardhat]{extract_workflow}}}
 
-  \item{tune}{\code{\link[tune:collect_predictions]{collect_metrics}}, \code{\link[tune:collect_predictions]{collect_notes}}, \code{\link[tune]{collect_predictions}}, \code{\link[tune]{fit_best}}}
+  \item{tune}{\code{\link[tune]{collect_extracts}}, \code{\link[tune]{collect_metrics}}, \code{\link[tune]{collect_notes}}, \code{\link[tune]{collect_predictions}}, \code{\link[tune]{fit_best}}}
 }}
 

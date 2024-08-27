@@ -4,6 +4,7 @@
 \alias{collect_metrics.workflow_set}
 \alias{collect_predictions.workflow_set}
 \alias{collect_notes.workflow_set}
+\alias{collect_extracts.workflow_set}
 \title{Obtain and format results produced by tuning functions for workflow sets}
 \usage{
 \method{collect_metrics}{workflow_set}(x, ..., summarize = TRUE)
@@ -18,6 +19,8 @@
 )
 
 \method{collect_notes}{workflow_set}(x, ...)
+
+\method{collect_extracts}{workflow_set}(x, ...)
 }
 \arguments{
 \item{x}{A \code{\link[=workflow_set]{workflow_set}} object that has been evaluated
@@ -101,5 +104,5 @@ two_class_res \%>\%
 collect_metrics(two_class_res, summarize = FALSE)
 }
 \seealso{
-\code{\link[tune:collect_predictions]{tune::collect_metrics()}}, \code{\link[=rank_results]{rank_results()}}
+\code{\link[tune:collect_metrics]{tune::collect_metrics()}}, \code{\link[=rank_results]{rank_results()}}
 }

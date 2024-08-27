@@ -166,3 +166,18 @@ collect_notes.workflow_set <- function(x, ...) {
 
   res
 }
+
+#' 
+#' @export
+#' @rdname collect_metrics.workflow_set
+collect_extracts.workflow_set <- function(x, ...) {
+  check_incompete(x)
+
+  res <- dplyr::rowwise(x)
+  res <- dplyr::mutate(res, extracts = list(collect_extracts(result)))
+  res <- dplyr::ungroup(res)
+  res <- dplyr::select(res, wflow_id, extracts)
+  res <- tidyr::unnest(res, cols = extracts)
+
+  res
+}

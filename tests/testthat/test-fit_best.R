@@ -40,6 +40,8 @@ test_that("fit_best fits with correct hyperparameters", {
 
    manual_wf$pre$mold$blueprint$recipe$fit_times <-
       fit_best_wf$pre$mold$blueprint$recipe$fit_times
+   manual_wf$fit$fit$elapsed$elapsed <-
+      fit_best_wf$fit$fit$elapsed$elapsed
    expect_equal(manual_wf, fit_best_wf)
 
    # metric: iic
@@ -53,6 +55,8 @@ test_that("fit_best fits with correct hyperparameters", {
 
    manual_wf_2$pre$mold$blueprint$recipe$fit_times <-
       fit_best_wf_2$pre$mold$blueprint$recipe$fit_times
+   manual_wf_2$fit$fit$elapsed$elapsed <-
+      fit_best_wf_2$fit$fit$elapsed$elapsed
    expect_equal(manual_wf_2, fit_best_wf_2)
 })
 
