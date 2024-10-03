@@ -83,8 +83,8 @@ check_tune_args <- function(x) {
   bad_args <- setdiff(x, arg_names)
   if (length(bad_args) > 0) {
     cli::cli_abort(
-       "The options {.arg {bad_args}} cannot be used as arguments for
-      {.fn fit_resamples} or the {.fn tune_*} functions."
+      "The option{?s} {.arg {bad_args}} cannot be used as {?an argument/arguments}
+      for {.fn fit_resamples} or the {.fn tune_*} functions."
     )
   }
   invisible(NULL)
