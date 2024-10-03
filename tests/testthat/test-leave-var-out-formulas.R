@@ -17,13 +17,13 @@ num_terms <- function(f) {
 # ------------------------------------------------------------------------------
 
 test_that("LOO var formulas", {
-  expect_error(
-    leave_var_out_formulas(y ~ 1, data = form_data),
-    "There should be at least 2 predictors in the formula"
+  expect_snapshot(
+    error = TRUE,
+    leave_var_out_formulas(y ~ 1, data = form_data)
   )
-  expect_error(
-    leave_var_out_formulas(y ~ a, data = form_data),
-    "There should be at least 2 predictors in the formula"
+  expect_snapshot(
+    error = TRUE,
+    leave_var_out_formulas(y ~ a, data = form_data)
   )
 
   f_1 <- leave_var_out_formulas(y ~ ., data = form_data)

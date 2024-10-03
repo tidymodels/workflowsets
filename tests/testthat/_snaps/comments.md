@@ -1,3 +1,75 @@
+# test comments
+
+    Code
+      two_class_set %>% comment_add("toe", "foot")
+    Condition
+      Error in `comment_add()`:
+      ! The 'id' value is not in wflow_id.
+
+---
+
+    Code
+      two_class_set %>% comment_add(letters, "foot")
+    Condition
+      Error in `comment_add()`:
+      ! `id` must be a single string, not a character vector.
+
+---
+
+    Code
+      two_class_set %>% comment_add(1:2, "foot")
+    Condition
+      Error in `comment_add()`:
+      ! `id` must be a single string, not an integer vector.
+
+---
+
+    Code
+      two_class_set %>% comment_add("none_cart", 1:2)
+    Condition
+      Error in `comment_add()`:
+      ! The comments should be character strings.
+
+---
+
+    Code
+      comments_1 %>% comment_add("none_cart", "Stuff.", append = FALSE)
+    Condition
+      Error in `comment_add()`:
+      ! There is already a comment for this id and `append = FALSE`.
+
+---
+
+    Code
+      comment_get(comments_1, id = letters)
+    Condition
+      Error in `comment_get()`:
+      ! 'id' should be a single character value.
+
+---
+
+    Code
+      comment_get(comments_1, id = letters[1])
+    Condition
+      Error in `comment_get()`:
+      ! The 'id' value is not in wflow_id.
+
+---
+
+    Code
+      comments_1 %>% comment_reset(letters)
+    Condition
+      Error in `comment_reset()`:
+      ! 'id' should be a single character value.
+
+---
+
+    Code
+      comments_1 %>% comment_reset("none_carts")
+    Condition
+      Error in `comment_reset()`:
+      ! The 'id' value is not in wflow_id.
+
 # print comments
 
     Code

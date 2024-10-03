@@ -79,33 +79,28 @@ check_prediction_results <- function(ind, x, summarize = FALSE, ...) {
 # ------------------------------------------------------------------------------
 
 test_that("collect predictions", {
-  expect_error(
-    res_car_set_1 <- collect_predictions(car_set_1),
-    regexp = NA
+  expect_no_error(
+    res_car_set_1 <- collect_predictions(car_set_1)
   )
   expect_true(nrow(mtcars) * nrow(car_set_1) == nrow(res_car_set_1))
 
-  expect_error(
-    res_car_set_2 <- collect_predictions(car_set_2),
-    regexp = NA
+  expect_no_error(
+    res_car_set_2 <- collect_predictions(car_set_2)
   )
   expect_true(nrow(mtcars) * nrow(car_set_2) == nrow(res_car_set_2))
 
-  expect_error(
-    res_car_set_2_reps <- collect_predictions(car_set_2, summarize = FALSE),
-    regexp = NA
+  expect_no_error(
+    res_car_set_2_reps <- collect_predictions(car_set_2, summarize = FALSE)
   )
   expect_true(nrow(mtcars) * nrow(car_set_2) * 2 == nrow(res_car_set_2_reps))
 
-  expect_error(
-    res_car_set_3 <- collect_predictions(car_set_3),
-    regexp = NA
+  expect_no_error(
+    res_car_set_3 <- collect_predictions(car_set_3)
   )
   expect_true(nrow(mtcars) * nrow(car_set_2) * 5 == nrow(res_car_set_3))
 
-  expect_error(
-    res_car_set_3_reps <- collect_predictions(car_set_3, summarize = FALSE),
-    regexp = NA
+  expect_no_error(
+    res_car_set_3_reps <- collect_predictions(car_set_3, summarize = FALSE)
   )
   expect_true(nrow(mtcars) * nrow(car_set_2) * 5 * 2 == nrow(res_car_set_3_reps))
 
@@ -151,17 +146,15 @@ test_that("dropping tuning parameter columns", {
     ignore.order = TRUE
   )
 
-  expect_error(
-    best_iter <- collect_predictions(car_set_3, select_best = TRUE, metric = "rmse"),
-    regexp = NA
+  expect_no_error(
+    best_iter <- collect_predictions(car_set_3, select_best = TRUE, metric = "rmse")
   )
   expect_true(
     nrow(dplyr::distinct(best_iter[, c(".config", "wflow_id")])) == 2
   )
-  expect_error(
+  expect_no_error(
     no_param <-
-      workflowsets:::select_bare_predictions(car_set_3$result[[1]], metric = "rmse", TRUE),
-    regex = NA
+      workflowsets:::select_bare_predictions(car_set_3$result[[1]], metric = "rmse", TRUE)
   )
   expect_named(
     no_param,
