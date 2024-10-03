@@ -41,19 +41,19 @@ comment_add <- function(x, id, ..., append = TRUE, collapse = "\n") {
   } else {
     is_chr <- purrr::map_lgl(dots, is.character)
     if (any(!is_chr)) {
-      rlang::abort("The comments should be character strings.")
+      cli::cli_abort("The comments should be character strings.")
     }
   }
 
   check_string(id)
   has_id <- id == x$wflow_id
   if (!any(has_id)) {
-    rlang::abort("The 'id' value is not in wflow_id.")
+    cli::cli_abort("The {.arg id} value is not in {.arg wflow_id}.")
   }
   id_index <- which(has_id)
   current_val <- x$info[[id_index]]$comment
   if (!is.na(current_val) && !append) {
-    rlang::abort("There is already a comment for this id and `append = FALSE`.")
+    cli::cli_abort("There is already a comment for this id and {.code append = FALSE}.")
   }
   new_value <- c(x$info[[id_index]]$comment, unlist(dots))
   new_value <- new_value[!is.na(new_value) & nchar(new_value) > 0]
@@ -67,11 +67,11 @@ comment_add <- function(x, id, ..., append = TRUE, collapse = "\n") {
 comment_get <- function(x, id) {
   check_wf_set(x)
   if (length(id) > 1) {
-    rlang::abort("'id' should be a single character value.")
+    cli::cli_abort("{.arg id} should be a single character value.")
   }
   has_id <- id == x$wflow_id
   if (!any(has_id)) {
-    rlang::abort("The 'id' value is not in wflow_id.")
+    cli::cli_abort("The {.arg id} value is not in {.arg wflow_id}.")
   }
   id_index <- which(has_id)
   x$info[[id_index]]$comment
@@ -83,11 +83,11 @@ comment_get <- function(x, id) {
 comment_reset <- function(x, id) {
   check_wf_set(x)
   if (length(id) > 1) {
-    rlang::abort("'id' should be a single character value.")
+    cli::cli_abort("{.arg id} should be a single character value.")
   }
   has_id <- id == x$wflow_id
   if (!any(has_id)) {
-    rlang::abort("The 'id' value is not in wflow_id.")
+    cli::cli_abort("The {.arg id} value is not in {.arg wflow_id}.")
   }
   id_index <- which(has_id)
   x$info[[id_index]]$comment <- character(1)

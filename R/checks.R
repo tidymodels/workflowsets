@@ -19,15 +19,11 @@ check_consistent_metrics <- function(x, fail = TRUE) {
 
   if (any(metric_info > 0)) {
     incp_metrics <- names(metric_info)[metric_info > 0]
-    msg <- paste(
-      "Some metrics were not used in all workflows:",
-      paste(incp_metrics, collapse = ", ")
-    )
 
     if (fail) {
-      rlang::abort(paste0(msg))
+      cli::cli_abort("The metrics {incp_metrics} were not used in all workflows.")
     } else {
-      rlang::warn(msg)
+      cli::cli_warn("The metrics {incp_metrics} were not used in all workflows.")
     }
   }
   invisible(NULL)
@@ -39,11 +35,10 @@ check_incompete <- function(x, fail = TRUE) {
 
   n_empty <- sum(empty_res | failed_res)
   if (n_empty > 0) {
-    msg <- paste("There were", n_empty, "workflows that had no results.")
     if (fail) {
-      rlang::abort(paste0(msg))
+      cli::cli_abort("There {?was/were} {n_empty} workflow{?s} that had no results.")
     } else {
-      rlang::warn(msg)
+      cli::cli_warn("There {?was/were} {n_empty} workflow{?s} that had no results.")
     }
   }
   invisible(NULL)
@@ -73,10 +68,10 @@ check_options <- function(model, id, global, action = "fail") {
     msg <- "There are existing options that are being modified\n"
     msg <- paste0(msg, paste0("\t", id[flag], ": ", res[flag], collapse = "\n"))
     if (action == "fail") {
-      rlang::abort(paste0(msg))
+      cli::cli_abort(msg)
     }
     if (action == "warn") {
-      rlang::warn(msg)
+      cli::cli_warn(msg)
     }
   }
   invisible(NULL)
@@ -87,10 +82,10 @@ check_tune_args <- function(x) {
                  "iter", "objective", "initial", "eval_time")
   bad_args <- setdiff(x, arg_names)
   if (length(bad_args) > 0) {
-     msg <- paste0("'", bad_args, "'")
-     msg <- paste("The following options cannot be used as arguments for",
-                  "`fit_resamples()` or the `tune_*()` functions:", msg)
-     rlang::abort(paste0(msg))
+    cli::cli_abort(
+       "The options {.arg {bad_args}} cannot be used as arguments for
+      {.fn fit_resamples} or the {.fn tune_*} functions."
+    )
   }
   invisible(NULL)
 }
@@ -127,17 +122,15 @@ check_names <- function(x) {
   nms <- names(x)
   if (any(nms == "")) {
     bad <- which(nms == "")
-    msg <- "Objects in these positions are not named:"
-    msg <- paste(msg, paste0(bad, collapse = ", "))
-    rlang::abort(paste0(msg))
+    cli::cli_abort("Objects in the positions {bad} are not named.")
   } else if (all(is.null(nms))) {
-    rlang::abort(paste0("The values must be named."))
+    cli::cli_abort("The values must be named.")
   }
   xtab <- table(nms)
   if (any(xtab > 1)) {
-    msg <- "The workflow names should be unique:"
-    msg <- paste(msg, paste0("'", names(xtab)[xtab > 1], "'", collapse = ", "))
-    rlang::abort(paste0(msg))
+    cli::cli_abort(
+       "The workflow names should be unique: {.val {names(xtab)[xtab > 1]}}."
+    )
   }
   invisible(NULL)
 }
@@ -146,10 +139,12 @@ check_for_workflow <- function(x) {
   no_wflow <- purrr::map_lgl(x, ~ !inherits(.x, "workflow"))
   if (any(no_wflow)) {
     bad <- names(no_wflow)[no_wflow]
-    msg <- "Some objects do not have workflows:"
-    msg <- paste(msg, paste0("'", bad, "'", collapse = ", "))
-    msg <- paste0(msg, ". Use the control option `save_workflow` and re-run.")
-    rlang::abort(paste0(msg))
+    cli::cli_abort(
+       c(
+          "The objects {.val {bad}} do not have workflows.",
+          "i" = "Use the control option {.code save_workflow} and re-run."
+       )
+    )
   }
   invisible(NULL)
 }

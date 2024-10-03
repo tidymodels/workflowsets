@@ -129,11 +129,11 @@ workflow_set <- function(preproc, models, cross = TRUE, case_weights = NULL) {
   check_bool(cross)
 
   if (length(preproc) != length(models) &
-    (length(preproc) != 1 & length(models) != 1 &
-      !cross)
+     (length(preproc) != 1 & length(models) != 1 & !cross)
   ) {
-    rlang::abort(
-      "The lengths of 'preproc' and 'models' are different and `cross = FALSE`."
+    cli::cli_abort(
+      "The lengths of {.arg preproc} and {.arg models} are different
+       and {.code cross = FALSE}."
     )
   }
 
@@ -323,57 +323,57 @@ tbl_sum.workflow_set <- function(x) {
 
 new_workflow_set <- function(x) {
   if (!has_required_container_type(x)) {
-    rlang::abort(paste0("`x` must be a list."))
+    cli::cli_abort("{.arg x} must be a list.")
   }
   if (!has_required_container_columns(x)) {
     columns <- required_container_columns()
-    rlang::abort(paste0(
-      "The object should have columns: ",
-      paste0("'", columns, "'", collapse = ", "),
-      "."
-    ))
+    cli::cli_abort(
+      "The object should have columns {.field {columns}}."
+    )
   }
 
   if (!has_valid_column_info_structure(x)) {
-    rlang::abort(paste0("The 'info' column should be a list."))
+    cli::cli_abort("The {.field info} column should be a list.")
   }
   if (!has_valid_column_info_inner_types(x)) {
-    rlang::abort(paste0("All elements of 'info' must be tibbles."))
+    cli::cli_abort("All elements of {.field info} must be tibbles.")
   }
   if (!has_valid_column_info_inner_names(x)) {
     columns <- required_info_inner_names()
-    rlang::abort(paste0(
-      "The 'info' columns should have columns: ",
-      paste0("'", columns, "'", collapse = ", "),
-      "."
-    ))
+    cli::cli_abort(
+      "Elements in the {.field info} column should have columns {.field {columns}}."
+    )
   }
 
   if (!has_valid_column_result_structure(x)) {
-    rlang::abort(paste0("The 'result' column should be a list."))
+    cli::cli_abort("The {.field result} column should be a list.")
   }
   if (!has_valid_column_result_inner_types(x)) {
-    rlang::abort(paste0("Some elements of 'result' do not have class `tune_results`."))
+    cli::cli_abort(
+      "Some elements of {.field result} do not have class {.cls tune_results}."
+    )
   }
   if (!has_valid_column_result_fingerprints(x)) {
-    rlang::abort(paste0(
-      "Different resamples were used in the workflow 'result's. ",
-      "All elements of 'result' must use the same resamples."
+    cli::cli_abort(c(
+      "Different resamples were used in the workflow {.field result}s.",
+      "i" = "All elements of {.field result} must use the same resamples."
     ))
   }
 
   if (!has_valid_column_option_structure(x)) {
-    rlang::abort(paste0("The 'option' column should be a list."))
+    cli::cli_abort("The {.field option} column should be a list.")
   }
   if (!has_valid_column_option_inner_types(x)) {
-    rlang::abort(paste0("All elements of 'option' should have class 'workflow_set_options'."))
+    cli::cli_abort("All elements of {.arg option} should have class {.cls workflow_set_options}.")
   }
 
   if (!has_valid_column_wflow_id_structure(x)) {
-    rlang::abort(paste0("The 'wflow_id' column should be character."))
+    cli::cli_abort("The {.field wflow_id} column should be character.")
   }
   if (!has_valid_column_wflow_id_strings(x)) {
-    rlang::abort(paste0("The 'wflow_id' column should contain unique, non-missing character strings."))
+    cli::cli_abort(
+       "The {.field wflow_id} column should contain unique, non-missing character strings."
+      )
   }
 
   new_workflow_set0(x)

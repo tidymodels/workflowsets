@@ -191,7 +191,7 @@ option_list <- function(...) new_workflow_set_options(...)
 new_workflow_set_options <- function(...) {
   res <- rlang::list2(...)
   if (any(names(res) == "")) {
-    rlang::abort("All options should be named.")
+    cli::cli_abort("All options should be named.")
   }
   structure(res, class = c("workflow_set_options", "list"))
 }
