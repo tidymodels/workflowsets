@@ -36,39 +36,41 @@ test_that("test comments", {
     two_class_set %>% comment_add("none_cart"),
     two_class_set
   )
-  expect_error(
-    two_class_set %>% comment_add("toe", "foot"),
-    "The 'id' value is not in wflow_id."
+  expect_snapshot(
+     error = TRUE,
+     two_class_set %>% comment_add("toe", "foot")
   )
-  expect_error(
-    two_class_set %>% comment_add(letters, "foot")
+  expect_snapshot(
+     error = TRUE,
+     two_class_set %>% comment_add(letters, "foot")
   )
-  expect_error(
-    two_class_set %>% comment_add(1:2, "foot")
+  expect_snapshot(
+     error = TRUE,
+     two_class_set %>% comment_add(1:2, "foot")
   )
-  expect_error(
-    two_class_set %>% comment_add("none_cart", 1:2),
-    "The comments should be character strings."
+  expect_snapshot(
+     error = TRUE,
+     two_class_set %>% comment_add("none_cart", 1:2)
   )
-  expect_error(
-    comments_1 %>% comment_add("none_cart", "Stuff.", append = FALSE),
-    "There is already a comment for this id and"
+  expect_snapshot(
+     error = TRUE,
+     comments_1 %>% comment_add("none_cart", "Stuff.", append = FALSE)
   )
-  expect_error(
-    comment_get(comments_1, id = letters),
-    "should be a single character value"
+  expect_snapshot(
+     error = TRUE,
+     comment_get(comments_1, id = letters)
   )
-  expect_error(
-    comment_get(comments_1, id = letters[1]),
-    "value is not in wflow_id"
+  expect_snapshot(
+     error = TRUE,
+     comment_get(comments_1, id = letters[1])
   )
-  expect_error(
-    comments_1 %>% comment_reset(letters),
-    "should be a single character value"
+  expect_snapshot(
+     error = TRUE,
+     comments_1 %>% comment_reset(letters)
   )
-  expect_error(
-    comments_1 %>% comment_reset("none_carts"),
-    "value is not in wflow_id"
+  expect_snapshot(
+     error = TRUE,
+     comments_1 %>% comment_reset("none_carts")
   )
 })
 

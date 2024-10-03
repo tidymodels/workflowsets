@@ -109,8 +109,8 @@ test_that("automatic selection of rank metric", {
     workflowsets:::pick_metric(two_class_res, "roc_auc"),
     list(metric = "roc_auc", direction = "maximize")
   )
-  expect_error(
-    workflowsets:::pick_metric(two_class_res, "roc_auc", "accuracy"),
-    "was not in the results"
+  expect_snapshot(
+    error = TRUE,
+    workflowsets:::pick_metric(two_class_res, "roc_auc", "accuracy")
   )
 })

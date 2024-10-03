@@ -27,24 +27,18 @@ car_set_1 <-
 # ------------------------------------------------------------------------------
 
 test_that("basic mapping", {
-  expect_error(
-    {
-      res_1 <-
-        car_set_1 %>%
-        workflow_map(resamples = folds, seed = 2, grid = 2)
-    },
-    regexp = NA
-  )
+  expect_no_error({
+    res_1 <-
+       car_set_1 %>%
+       workflow_map(resamples = folds, seed = 2, grid = 2)
+  })
 
   # check reproducibility
-  expect_error(
-    {
-      res_2 <-
+   expect_no_error({
+     res_2 <-
         car_set_1 %>%
         workflow_map(resamples = folds, seed = 2, grid = 2)
-    },
-    regexp = NA
-  )
+   })
   expect_equal(collect_metrics(res_1), collect_metrics(res_2))
 
   # ---------------------------------------------------------------------------
@@ -72,18 +66,15 @@ test_that("basic mapping", {
 test_that("map logging", {
   # since the logging prints execution times, we capture output then make a
   # snapshot without those lines
-  expect_error(
-    {
-      logging_res <-
-        capture.output(
-          res <-
-            car_set_1 %>%
-            workflow_map(resamples = folds, seed = 2, verbose = TRUE),
-          type = "message"
-        )
-    },
-    regex = NA
-  )
+  expect_no_error({
+    logging_res <-
+      capture.output(
+        res <-
+          car_set_1 %>%
+          workflow_map(resamples = folds, seed = 2, verbose = TRUE),
+        type = "message"
+      )
+  })
   logging_res <- logging_res[!grepl("s\\)$", logging_res)]
   expect_snapshot(
     cat(logging_res, sep = "\n")
@@ -100,14 +91,13 @@ test_that("missing packages", {
       list(glmn = glmn_spec)
     )
 
-  expect_message(
+  expect_snapshot(
     {
       res <-
         car_set_2 %>%
         workflow_map(resamples = folds, seed = 2, verbose = FALSE)
     },
-    regex = "glmnet"
-  )
+  transform = function(lines) {gsub("\\([0-9]+ms\\)", "(ms)", lines)})
   expect_true(inherits(res, "workflow_set"))
   expect_equal(res$result[[1]], list())
 })
@@ -122,27 +112,21 @@ test_that("failers", {
       list(knn = knn_spec, lm = lr_spec)
     )
 
-  expect_error(
-    {
-      res_quiet <-
-        car_set_3 %>%
-        workflow_map(resamples = folds, seed = 2, verbose = FALSE, grid = "a")
-    },
-    regex = NA
-  )
+  expect_no_error({
+    res_quiet <-
+       car_set_3 %>%
+       workflow_map(resamples = folds, seed = 2, verbose = FALSE, grid = "a")
+  })
   expect_true(inherits(res_quiet, "workflow_set"))
   expect_true(inherits(res_quiet$result[[1]], "try-error"))
 
-  expect_message(
-    expect_error(
-      {
-        res_loud <-
-          car_set_3 %>%
-          workflow_map(resamples = folds, seed = 2, verbose = TRUE, grid = "a")
-      },
-      regex = NA
-    ),
-    regex = "should be a positive integer or a data frame"
+  expect_snapshot(
+   {
+    res_loud <-
+      car_set_3 %>%
+      workflow_map(resamples = folds, seed = 2, verbose = TRUE, grid = "a")
+   },
+   transform = function(lines) {gsub("\\([0-9]+ms\\)", "(ms)", lines)}
   )
   expect_true(inherits(res_loud, "workflow_set"))
   expect_true(inherits(res_loud$result[[1]], "try-error"))

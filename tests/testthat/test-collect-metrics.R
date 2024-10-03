@@ -45,9 +45,9 @@ test_that("ranking models", {
       yj_trans_cart = 10, yj_trans_glm = 1, yj_trans_mars = 2
     )
 
-  expect_error(ranking_1 <- rank_results(two_class_res), regexp = NA)
+  expect_no_error(ranking_1 <- rank_results(two_class_res))
   expect_equal(nrow(ranking_1), sum(param_lines * 2))
 
-  expect_error(ranking_2 <- rank_results(two_class_res, select_best = TRUE), regexp = NA)
+  expect_no_error(ranking_2 <- rank_results(two_class_res, select_best = TRUE))
   expect_equal(nrow(ranking_2), nrow(two_class_res) * 2)
 })

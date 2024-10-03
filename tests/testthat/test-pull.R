@@ -17,35 +17,18 @@ car_set_1 <-
 # ------------------------------------------------------------------------------
 
 test_that("pulling objects", {
-  expect_warning(
-    expect_equal(
-      car_set_1 %>% pull_workflow("reg_lm"),
-      car_set_1$info[[1]]$workflow[[1]]
-    ),
-    "deprecated"
-  )
+  expect_snapshot(res <- car_set_1 %>% pull_workflow("reg_lm"))
+  expect_equal(res, car_set_1$info[[1]]$workflow[[1]])
 
-  expect_warning(
-    expect_equal(
-      car_set_1 %>% pull_workflow_set_result("reg_lm"),
-      car_set_1$result[[1]]
-    ),
-    "deprecated"
-  )
+  expect_snapshot(res <- car_set_1 %>% pull_workflow_set_result("reg_lm"))
+  expect_equal(res, car_set_1$result[[1]])
 
-  expect_warning(
-    expect_error(
-      car_set_1 %>% pull_workflow_set_result("Gideon Nav"),
-      "No workflow ID found"
-    ),
-    "deprecated"
+  expect_snapshot(
+    error = TRUE,
+    car_set_1 %>% pull_workflow_set_result("Gideon Nav")
   )
-
-  expect_warning(
-    expect_error(
-      car_set_1 %>% pull_workflow("Coronabeth Tridentarius"),
-      "No workflow ID found"
-    ),
-    "deprecated"
+  expect_snapshot(
+    error = TRUE,
+    car_set_1 %>% pull_workflow("Coronabeth Tridentarius")
   )
 })

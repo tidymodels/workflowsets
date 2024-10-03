@@ -23,10 +23,22 @@ car_set_1 <-
 
 test_that("extracts", {
   # workflows specific errors, so we don't capture their messages
-  expect_error(extract_fit_engine(car_set_1, id = "reg_lm"))
-  expect_error(extract_fit_parsnip(car_set_1, id = "reg_lm"))
-  expect_error(extract_mold(car_set_1, id = "reg_lm"))
-  expect_error(extract_recipe(car_set_1, id = "reg_lm"))
+  expect_snapshot(
+    error = TRUE,
+    extract_fit_engine(car_set_1, id = "reg_lm")
+  )
+  expect_snapshot(
+    error = TRUE,
+    extract_fit_parsnip(car_set_1, id = "reg_lm")
+  )
+  expect_snapshot(
+    error = TRUE,
+    extract_mold(car_set_1, id = "reg_lm")
+  )
+  expect_snapshot(
+    error = TRUE,
+    extract_recipe(car_set_1, id = "reg_lm")
+  )
 
   expect_s3_class(
     extract_preprocessor(car_set_1, id = "reg_lm"),
@@ -149,8 +161,9 @@ test_that("extract single parameter from workflow set with untunable workflow", 
       list(lm = lm_model, bst = bst_model)
    )
 
-   expect_error(
-      hardhat::extract_parameter_dials(wf_set, id = "reg_lm", parameter = "non there")
+   expect_snapshot(
+     error = TRUE,
+     hardhat::extract_parameter_dials(wf_set, id = "reg_lm", parameter = "non there")
    )
 })
 
