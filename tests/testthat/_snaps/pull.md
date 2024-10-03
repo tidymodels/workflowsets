@@ -24,8 +24,8 @@
       Warning:
       `pull_workflow_set_result()` was deprecated in workflowsets 0.1.0.
       i Please use `extract_workflow_set_result()` instead.
-      Error in `halt()`:
-      ! No workflow ID found for 'Gideon Nav'
+      Error in `pull_workflow_set_result()`:
+      ! No workflow ID found for "Gideon Nav".
 
 ---
 
@@ -35,6 +35,6 @@
       Warning:
       `pull_workflow()` was deprecated in workflowsets 0.1.0.
       i Please use `extract_workflow()` instead.
-      Error in `halt()`:
-      ! No workflow ID found for 'Coronabeth Tridentarius'
+      Error in `pull_workflow()`:
+      ! No workflow ID found for "Coronabeth Tridentarius".
 

@@ -4,7 +4,7 @@
       two_class_set %>% comment_add("toe", "foot")
     Condition
       Error in `comment_add()`:
-      ! The 'id' value is not in wflow_id.
+      ! The `id` value is not in `wflow_id`.
 
 ---
 
@@ -44,7 +44,7 @@
       comment_get(comments_1, id = letters)
     Condition
       Error in `comment_get()`:
-      ! 'id' should be a single character value.
+      ! `id` should be a single character value.
 
 ---
 
@@ -52,7 +52,7 @@
       comment_get(comments_1, id = letters[1])
     Condition
       Error in `comment_get()`:
-      ! The 'id' value is not in wflow_id.
+      ! The `id` value is not in `wflow_id`.
 
 ---
 
@@ -60,7 +60,7 @@
       comments_1 %>% comment_reset(letters)
     Condition
       Error in `comment_reset()`:
-      ! 'id' should be a single character value.
+      ! `id` should be a single character value.
 
 ---
 
@@ -68,7 +68,7 @@
       comments_1 %>% comment_reset("none_carts")
     Condition
       Error in `comment_reset()`:
-      ! The 'id' value is not in wflow_id.
+      ! The `id` value is not in `wflow_id`.
 
 # print comments
 
