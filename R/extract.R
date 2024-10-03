@@ -94,7 +94,7 @@ extract_spec_parsnip.workflow_set <- function(x, id, ...) {
 extract_recipe.workflow_set <- function(x, id, ..., estimated = TRUE) {
   check_empty_dots(...)
   if (!rlang::is_bool(estimated)) {
-    rlang::abort("`estimated` must be a single `TRUE` or `FALSE`.")
+    cli::cli_abort("{.arg estimated} must be a single {.code TRUE} or {.code FALSE}.")
   }
   y <- filter_id(x, id)
   extract_recipe(y$info[[1]]$workflow[[1]], estimated = estimated)
@@ -102,10 +102,10 @@ extract_recipe.workflow_set <- function(x, id, ..., estimated = TRUE) {
 check_empty_dots <- function(...) {
   opts <- list(...)
   if (any(names(opts) == "estimated")) {
-    rlang::abort("'estimated' should be a named argument.")
+    cli::cli_abort("{.arg estimated} should be a named argument.")
   }
   if (length(opts) > 0) {
-    rlang::abort("'...' are not used in this function.")
+     cli::cli_abort("{.arg ...} are not used in this function.")
   }
   invisible(NULL)
 }
@@ -166,7 +166,7 @@ filter_id <- function(x, id) {
   check_string(id)
   out <- dplyr::filter(x, wflow_id == id)
   if (nrow(out) != 1L) {
-    halt("`id` must correspond to a single row in `x`.")
+    cli::cli_abort("{.arg id} must correspond to a single row in {.arg x}.")
   }
   out
 }

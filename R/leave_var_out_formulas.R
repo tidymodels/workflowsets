@@ -40,7 +40,7 @@ leave_var_out_formulas <- function(formula, data, full_model = TRUE, ...) {
   trms <- attr(model.frame(formula, data, ...), "terms")
   x_vars <- attr(trms, "term.labels")
   if (length(x_vars) < 2) {
-    rlang::abort("There should be at least 2 predictors in the formula.")
+    cli::cli_abort("There should be at least 2 predictors in the formula.")
   }
   y_vars <- as.character(formula[[2]])
 

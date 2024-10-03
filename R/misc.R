@@ -11,16 +11,12 @@ make_workflow <- function(x, y) {
   } else if (inherits(x, "workflow_variables")) {
     w <- workflows::add_variables(w, variables = x)
   } else {
-    halt(
-      "The preprocessor must be an object with one of the ",
-      "following classes: ", paste0("'", exp_classes, "'", collapse = ", ")
+    cli::cli_abort(
+      "The preprocessor must be an object with one of the
+       following classes: {.or {.cls {exp_classes}}}."
     )
   }
   w
-}
-
-halt <- function(...) {
-  rlang::abort(paste0(...))
 }
 
 # ------------------------------------------------------------------------------
@@ -75,7 +71,7 @@ pick_metric <- function(x, rank_metric, select_metrics = NULL) {
     direction <- metrics$direction[1]
   } else {
     if (!any(metrics$metric == rank_metric)) {
-      halt("Metric '", rank_metric, "' was not in the results.")
+      cli::cli_abort("Metric {.val {rank_metric}} was not in the results.")
     }
     direction <- metrics$direction[metrics$metric == rank_metric]
   }

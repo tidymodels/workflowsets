@@ -130,63 +130,64 @@
         wt + disp), list(lm = lr_spec, knn = knn_spec), cross = FALSE))
     Condition
       Error in `workflow_set()`:
-      ! The lengths of 'preproc' and 'models' are different and `cross = FALSE`.
+      ! The lengths of `preproc` and `models` are different and `cross = FALSE`.
 
 # checking resamples
 
     Code
       as_workflow_set(wt = f_1, disp = f_2)
     Condition
-      Error in `halt()`:
-      ! Different resamples were used in the workflow 'result's. All elements of 'result' must use the same resamples.
+      Error in `new_workflow_set()`:
+      ! Different resamples were used in the workflow results.
+      i All elements of result must use the same resamples.
 
 # constructor
 
     Code
       new_workflow_set(car_set_1 %>% dplyr::select(-info))
     Condition
-      Error in `halt()`:
-      ! The object should have columns: 'wflow_id', 'info', 'option', 'result'.
+      Error in `new_workflow_set()`:
+      ! The object should have columns wflow_id, info, option, and result.
 
 ---
 
     Code
       new_workflow_set(car_set_1 %>% dplyr::mutate(info = "a"))
     Condition
-      Error in `halt()`:
-      ! The 'info' column should be a list.
+      Error in `new_workflow_set()`:
+      ! The info column should be a list.
 
 ---
 
     Code
       new_workflow_set(car_set_1 %>% dplyr::mutate(result = "a"))
     Condition
-      Error in `halt()`:
-      ! The 'result' column should be a list.
+      Error in `new_workflow_set()`:
+      ! The result column should be a list.
 
 ---
 
     Code
       new_workflow_set(car_set_1 %>% dplyr::mutate(option = "a"))
     Condition
-      Error in `halt()`:
-      ! The 'option' column should be a list.
+      Error in `new_workflow_set()`:
+      ! The option column should be a list.
 
 ---
 
     Code
       new_workflow_set(car_set_1 %>% dplyr::mutate(wflow_id = 1))
     Condition
-      Error in `halt()`:
-      ! The 'wflow_id' column should be character.
+      Error in `new_workflow_set()`:
+      ! The wflow_id column should be character.
 
 ---
 
     Code
       new_workflow_set(car_set_1 %>% dplyr::mutate(wflow_id = "a"))
     Condition
-      Error in `halt()`:
-      ! The 'wflow_id' column should contain unique, non-missing character strings.
+      Error in `new_workflow_set()`:
+      ! The wflow_id column should contain unique, non-missing character strings.
 
 # pillar formatting
 
