@@ -104,5 +104,5 @@ two_class_res \%>\%
 collect_metrics(two_class_res, summarize = FALSE)
 }
 \seealso{
-\code{\link[tune:collect_metrics]{tune::collect_metrics()}}, \code{\link[=rank_results]{rank_results()}}
+\code{\link[tune:collect_predictions]{tune::collect_metrics()}}, \code{\link[=rank_results]{rank_results()}}
 }
