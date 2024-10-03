@@ -154,7 +154,7 @@ test_that("dropping tuning parameter columns", {
   )
   expect_no_error(
     no_param <-
-      workflowsets:::select_bare_predictions(car_set_3$result[[1]], metric = "rmse", TRUE)
+      select_bare_predictions(car_set_3$result[[1]], metric = "rmse", TRUE)
   )
   expect_named(
     no_param,

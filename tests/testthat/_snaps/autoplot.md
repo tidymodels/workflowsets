@@ -9,7 +9,7 @@
 # automatic selection of rank metric
 
     Code
-      workflowsets:::pick_metric(two_class_res, "roc_auc", "accuracy")
+      pick_metric(two_class_res, "roc_auc", "accuracy")
     Condition
       Error in `halt()`:
       ! Metric 'roc_auc' was not in the results.

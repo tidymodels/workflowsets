@@ -143,7 +143,7 @@
 # constructor
 
     Code
-      workflowsets:::new_workflow_set(car_set_1 %>% dplyr::select(-info))
+      new_workflow_set(car_set_1 %>% dplyr::select(-info))
     Condition
       Error in `halt()`:
       ! The object should have columns: 'wflow_id', 'info', 'option', 'result'.
@@ -151,7 +151,7 @@
 ---
 
     Code
-      workflowsets:::new_workflow_set(car_set_1 %>% dplyr::mutate(info = "a"))
+      new_workflow_set(car_set_1 %>% dplyr::mutate(info = "a"))
     Condition
       Error in `halt()`:
       ! The 'info' column should be a list.
@@ -159,7 +159,7 @@
 ---
 
     Code
-      workflowsets:::new_workflow_set(car_set_1 %>% dplyr::mutate(result = "a"))
+      new_workflow_set(car_set_1 %>% dplyr::mutate(result = "a"))
     Condition
       Error in `halt()`:
       ! The 'result' column should be a list.
@@ -167,7 +167,7 @@
 ---
 
     Code
-      workflowsets:::new_workflow_set(car_set_1 %>% dplyr::mutate(option = "a"))
+      new_workflow_set(car_set_1 %>% dplyr::mutate(option = "a"))
     Condition
       Error in `halt()`:
       ! The 'option' column should be a list.
@@ -175,7 +175,7 @@
 ---
 
     Code
-      workflowsets:::new_workflow_set(car_set_1 %>% dplyr::mutate(wflow_id = 1))
+      new_workflow_set(car_set_1 %>% dplyr::mutate(wflow_id = 1))
     Condition
       Error in `halt()`:
       ! The 'wflow_id' column should be character.
@@ -183,7 +183,7 @@
 ---
 
     Code
-      workflowsets:::new_workflow_set(car_set_1 %>% dplyr::mutate(wflow_id = "a"))
+      new_workflow_set(car_set_1 %>% dplyr::mutate(wflow_id = "a"))
     Condition
       Error in `halt()`:
       ! The 'wflow_id' column should contain unique, non-missing character strings.

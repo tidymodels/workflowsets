@@ -254,7 +254,7 @@ test_that("correct object type and resamples", {
   )
   res_1$result[[1]] <- lm(pp[[1]], data = mtcars)
   expect_identical(
-    workflowsets:::has_valid_column_result_inner_types(res_1),
+    has_valid_column_result_inner_types(res_1),
     FALSE
   )
 
@@ -263,11 +263,11 @@ test_that("correct object type and resamples", {
     purrr::map(res_2$wflow_id, ~ extract_workflow(res_2, id = .x)) %>%
     purrr::map(~ tune::fit_resamples(.x, resamples = bootstraps(mtcars, 3)))
   expect_identical(
-    workflowsets:::has_valid_column_result_inner_types(res_2),
+    has_valid_column_result_inner_types(res_2),
     TRUE
   )
   expect_identical(
-    workflowsets:::has_valid_column_result_fingerprints(res_2),
+    has_valid_column_result_fingerprints(res_2),
     FALSE
   )
 })
@@ -366,28 +366,28 @@ test_that("constructor", {
 
   expect_snapshot(
     error = TRUE,
-    workflowsets:::new_workflow_set(car_set_1 %>% dplyr::select(-info))
+    new_workflow_set(car_set_1 %>% dplyr::select(-info))
   )
 
   expect_snapshot(
     error = TRUE,
-    workflowsets:::new_workflow_set(car_set_1 %>% dplyr::mutate(info = "a"))
+    new_workflow_set(car_set_1 %>% dplyr::mutate(info = "a"))
   )
   expect_snapshot(
     error = TRUE,
-    workflowsets:::new_workflow_set(car_set_1 %>% dplyr::mutate(result = "a"))
+    new_workflow_set(car_set_1 %>% dplyr::mutate(result = "a"))
   )
   expect_snapshot(
     error = TRUE,
-    workflowsets:::new_workflow_set(car_set_1 %>% dplyr::mutate(option = "a"))
+    new_workflow_set(car_set_1 %>% dplyr::mutate(option = "a"))
   )
   expect_snapshot(
     error = TRUE,
-    workflowsets:::new_workflow_set(car_set_1 %>% dplyr::mutate(wflow_id = 1))
+    new_workflow_set(car_set_1 %>% dplyr::mutate(wflow_id = 1))
   )
   expect_snapshot(
     error = TRUE,
-    workflowsets:::new_workflow_set(car_set_1 %>% dplyr::mutate(wflow_id = "a"))
+    new_workflow_set(car_set_1 %>% dplyr::mutate(wflow_id = "a"))
   )
 })
 
