@@ -34,6 +34,18 @@
       i	No tuning parameters. `fit_resamples()` will be attempted
       i 3 of 3 resampling: nonlin_lm
 
+# failers
+
+    Code
+      res_loud <- car_set_3 %>% workflow_map(resamples = folds, seed = 2, verbose = TRUE,
+        grid = "a")
+    Message
+      i 1 of 2 tuning:     reg_knn
+      x 1 of 2 tuning:     reg_knn failed with: Error in check_grid(grid = grid, workflow = workflow, pset = pset) :   `grid` should be a positive integer or a data frame.
+      i	No tuning parameters. `fit_resamples()` will be attempted
+      i 2 of 2 resampling: reg_lm
+      v 2 of 2 resampling: reg_lm (ms)
+
 # fail informatively on mismatched spec/tuning function
 
     Code
