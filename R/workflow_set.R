@@ -323,57 +323,57 @@ tbl_sum.workflow_set <- function(x) {
 
 new_workflow_set <- function(x) {
   if (!has_required_container_type(x)) {
-    halt("`x` must be a list.")
+    rlang::abort(paste0("`x` must be a list."))
   }
   if (!has_required_container_columns(x)) {
     columns <- required_container_columns()
-    halt(
+    rlang::abort(paste0(
       "The object should have columns: ",
       paste0("'", columns, "'", collapse = ", "),
       "."
-    )
+    ))
   }
 
   if (!has_valid_column_info_structure(x)) {
-    halt("The 'info' column should be a list.")
+    rlang::abort(paste0("The 'info' column should be a list."))
   }
   if (!has_valid_column_info_inner_types(x)) {
-    halt("All elements of 'info' must be tibbles.")
+    rlang::abort(paste0("All elements of 'info' must be tibbles."))
   }
   if (!has_valid_column_info_inner_names(x)) {
     columns <- required_info_inner_names()
-    halt(
+    rlang::abort(paste0(
       "The 'info' columns should have columns: ",
       paste0("'", columns, "'", collapse = ", "),
       "."
-    )
+    ))
   }
 
   if (!has_valid_column_result_structure(x)) {
-    halt("The 'result' column should be a list.")
+    rlang::abort(paste0("The 'result' column should be a list."))
   }
   if (!has_valid_column_result_inner_types(x)) {
-    halt("Some elements of 'result' do not have class `tune_results`.")
+    rlang::abort(paste0("Some elements of 'result' do not have class `tune_results`."))
   }
   if (!has_valid_column_result_fingerprints(x)) {
-    halt(
+    rlang::abort(paste0(
       "Different resamples were used in the workflow 'result's. ",
       "All elements of 'result' must use the same resamples."
-    )
+    ))
   }
 
   if (!has_valid_column_option_structure(x)) {
-    halt("The 'option' column should be a list.")
+    rlang::abort(paste0("The 'option' column should be a list."))
   }
   if (!has_valid_column_option_inner_types(x)) {
-    halt("All elements of 'option' should have class 'workflow_set_options'.")
+    rlang::abort(paste0("All elements of 'option' should have class 'workflow_set_options'."))
   }
 
   if (!has_valid_column_wflow_id_structure(x)) {
-    halt("The 'wflow_id' column should be character.")
+    rlang::abort(paste0("The 'wflow_id' column should be character."))
   }
   if (!has_valid_column_wflow_id_strings(x)) {
-    halt("The 'wflow_id' column should contain unique, non-missing character strings.")
+    rlang::abort(paste0("The 'wflow_id' column should contain unique, non-missing character strings."))
   }
 
   new_workflow_set0(x)

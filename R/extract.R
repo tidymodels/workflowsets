@@ -166,7 +166,7 @@ filter_id <- function(x, id) {
   check_string(id)
   out <- dplyr::filter(x, wflow_id == id)
   if (nrow(out) != 1L) {
-    halt("`id` must correspond to a single row in `x`.")
+    rlang::abort(paste0("`id` must correspond to a single row in `x`."))
   }
   out
 }

@@ -25,7 +25,7 @@ check_consistent_metrics <- function(x, fail = TRUE) {
     )
 
     if (fail) {
-      halt(msg)
+      rlang::abort(paste0(msg))
     } else {
       rlang::warn(msg)
     }
@@ -41,7 +41,7 @@ check_incompete <- function(x, fail = TRUE) {
   if (n_empty > 0) {
     msg <- paste("There were", n_empty, "workflows that had no results.")
     if (fail) {
-      halt(msg)
+      rlang::abort(paste0(msg))
     } else {
       rlang::warn(msg)
     }
@@ -73,7 +73,7 @@ check_options <- function(model, id, global, action = "fail") {
     msg <- "There are existing options that are being modified\n"
     msg <- paste0(msg, paste0("\t", id[flag], ": ", res[flag], collapse = "\n"))
     if (action == "fail") {
-      halt(msg)
+      rlang::abort(paste0(msg))
     }
     if (action == "warn") {
       rlang::warn(msg)
@@ -90,7 +90,7 @@ check_tune_args <- function(x) {
      msg <- paste0("'", bad_args, "'")
      msg <- paste("The following options cannot be used as arguments for",
                   "`fit_resamples()` or the `tune_*()` functions:", msg)
-     halt(msg)
+     rlang::abort(paste0(msg))
   }
   invisible(NULL)
 }
@@ -129,15 +129,15 @@ check_names <- function(x) {
     bad <- which(nms == "")
     msg <- "Objects in these positions are not named:"
     msg <- paste(msg, paste0(bad, collapse = ", "))
-    halt(msg)
+    rlang::abort(paste0(msg))
   } else if (all(is.null(nms))) {
-    halt("The values must be named.")
+    rlang::abort(paste0("The values must be named."))
   }
   xtab <- table(nms)
   if (any(xtab > 1)) {
     msg <- "The workflow names should be unique:"
     msg <- paste(msg, paste0("'", names(xtab)[xtab > 1], "'", collapse = ", "))
-    halt(msg)
+    rlang::abort(paste0(msg))
   }
   invisible(NULL)
 }
@@ -149,7 +149,7 @@ check_for_workflow <- function(x) {
     msg <- "Some objects do not have workflows:"
     msg <- paste(msg, paste0("'", bad, "'", collapse = ", "))
     msg <- paste0(msg, ". Use the control option `save_workflow` and re-run.")
-    halt(msg)
+    rlang::abort(paste0(msg))
   }
   invisible(NULL)
 }

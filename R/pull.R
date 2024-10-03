@@ -35,7 +35,7 @@ pull_workflow_set_result <- function(x, id) {
   }
   y <- x %>% dplyr::filter(wflow_id == id[1])
   if (nrow(y) != 1) {
-    halt("No workflow ID found for '", id[1], "'")
+    rlang::abort(paste0("No workflow ID found for '", id[1], "'"))
   }
   y$result[[1]]
 }
@@ -49,7 +49,7 @@ pull_workflow <- function(x, id) {
   }
   y <- x %>% dplyr::filter(wflow_id == id[1])
   if (nrow(y) != 1) {
-    halt("No workflow ID found for '", id[1], "'")
+    rlang::abort(paste0("No workflow ID found for '", id[1], "'"))
   }
   y$info[[1]]$workflow[[1]]
 }
