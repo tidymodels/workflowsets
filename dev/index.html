@@ -91,54 +91,58 @@
 <span><span class="co"># Use a small sample to keep file sizes down:</span></span>
 <span><span class="va">Chicago</span> <span class="op">&lt;-</span> <span class="va">Chicago</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">slice</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">365</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">base_recipe</span> <span class="op">&lt;-</span> </span>
-<span>   <span class="fu">recipe</span><span class="op">(</span><span class="va">ridership</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">Chicago</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>   <span class="co"># create date features</span></span>
-<span>   <span class="fu">step_date</span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>   <span class="fu">step_holiday</span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>   <span class="co"># remove date from the list of predictors</span></span>
-<span>   <span class="fu">update_role</span><span class="op">(</span><span class="va">date</span>, new_role <span class="op">=</span> <span class="st">"id"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>   <span class="co"># create dummy variables from factor columns</span></span>
-<span>   <span class="fu">step_dummy</span><span class="op">(</span><span class="fu">all_nominal</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>   <span class="co"># remove any columns with a single unique value</span></span>
-<span>   <span class="fu">step_zv</span><span class="op">(</span><span class="fu">all_predictors</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>   <span class="fu">step_normalize</span><span class="op">(</span><span class="fu">all_predictors</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">base_recipe</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">recipe</span><span class="op">(</span><span class="va">ridership</span> <span class="op">~</span> <span class="va">.</span>, data <span class="op">=</span> <span class="va">Chicago</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="co"># create date features</span></span>
+<span>  <span class="fu">step_date</span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">step_holiday</span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="co"># remove date from the list of predictors</span></span>
+<span>  <span class="fu">update_role</span><span class="op">(</span><span class="va">date</span>, new_role <span class="op">=</span> <span class="st">"id"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="co"># create dummy variables from factor columns</span></span>
+<span>  <span class="fu">step_dummy</span><span class="op">(</span><span class="fu">all_nominal</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="co"># remove any columns with a single unique value</span></span>
+<span>  <span class="fu">step_zv</span><span class="op">(</span><span class="fu">all_predictors</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">step_normalize</span><span class="op">(</span><span class="fu">all_predictors</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>To enact a correlation filter, an additional step is used:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">filter_rec</span> <span class="op">&lt;-</span> </span>
-<span>   <span class="va">base_recipe</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>   <span class="fu">step_corr</span><span class="op">(</span><span class="fu">all_of</span><span class="op">(</span><span class="va">stations</span><span class="op">)</span>, threshold <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">filter_rec</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">base_recipe</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">step_corr</span><span class="op">(</span><span class="fu">all_of</span><span class="op">(</span><span class="va">stations</span><span class="op">)</span>, threshold <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Similarly, for PCA:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">pca_rec</span> <span class="op">&lt;-</span> </span>
-<span>   <span class="va">base_recipe</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>   <span class="fu">step_pca</span><span class="op">(</span><span class="fu">all_of</span><span class="op">(</span><span class="va">stations</span><span class="op">)</span>, num_comp <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>   <span class="fu">step_normalize</span><span class="op">(</span><span class="fu">all_predictors</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">pca_rec</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">base_recipe</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">step_pca</span><span class="op">(</span><span class="fu">all_of</span><span class="op">(</span><span class="va">stations</span><span class="op">)</span>, num_comp <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">step_normalize</span><span class="op">(</span><span class="fu">all_predictors</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We might want to assess a few different models, including a regularized method (<code>glmnet</code>):</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">regularized_spec</span> <span class="op">&lt;-</span> </span>
-<span>   <span class="fu">linear_reg</span><span class="op">(</span>penalty <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>, mixture <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>   <span class="fu">set_engine</span><span class="op">(</span><span class="st">"glmnet"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">regularized_spec</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">linear_reg</span><span class="op">(</span>penalty <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>, mixture <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">set_engine</span><span class="op">(</span><span class="st">"glmnet"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">cart_spec</span> <span class="op">&lt;-</span> </span>
-<span>   <span class="fu">decision_tree</span><span class="op">(</span>cost_complexity <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>, min_n <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>   <span class="fu">set_engine</span><span class="op">(</span><span class="st">"rpart"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>   <span class="fu">set_mode</span><span class="op">(</span><span class="st">"regression"</span><span class="op">)</span></span>
+<span><span class="va">cart_spec</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">decision_tree</span><span class="op">(</span>cost_complexity <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>, min_n <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">set_engine</span><span class="op">(</span><span class="st">"rpart"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">set_mode</span><span class="op">(</span><span class="st">"regression"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">knn_spec</span> <span class="op">&lt;-</span> </span>
-<span>   <span class="fu">nearest_neighbor</span><span class="op">(</span>neighbors <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>, weight_func <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>   <span class="fu">set_engine</span><span class="op">(</span><span class="st">"kknn"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>   <span class="fu">set_mode</span><span class="op">(</span><span class="st">"regression"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">knn_spec</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">nearest_neighbor</span><span class="op">(</span>neighbors <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span>, weight_func <span class="op">=</span> <span class="fu">tune</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">set_engine</span><span class="op">(</span><span class="st">"kknn"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">set_mode</span><span class="op">(</span><span class="st">"regression"</span><span class="op">)</span></span></code></pre></div>
 <p>Rather than creating all 9 combinations of these preprocessors and models, we can create a <em>workflow set</em>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">chi_models</span> <span class="op">&lt;-</span> </span>
-<span>   <span class="fu"><a href="reference/workflow_set.html">workflow_set</a></span><span class="op">(</span></span>
-<span>      preproc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>simple <span class="op">=</span> <span class="va">base_recipe</span>, filter <span class="op">=</span> <span class="va">filter_rec</span>, </span>
-<span>                     pca <span class="op">=</span> <span class="va">pca_rec</span><span class="op">)</span>,</span>
-<span>      models <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>glmnet <span class="op">=</span> <span class="va">regularized_spec</span>, cart <span class="op">=</span> <span class="va">cart_spec</span>, </span>
-<span>                    knn <span class="op">=</span> <span class="va">knn_spec</span><span class="op">)</span>,</span>
-<span>      cross <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span>   <span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">chi_models</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="reference/workflow_set.html">workflow_set</a></span><span class="op">(</span></span>
+<span>    preproc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      simple <span class="op">=</span> <span class="va">base_recipe</span>, filter <span class="op">=</span> <span class="va">filter_rec</span>,</span>
+<span>      pca <span class="op">=</span> <span class="va">pca_rec</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    models <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      glmnet <span class="op">=</span> <span class="va">regularized_spec</span>, cart <span class="op">=</span> <span class="va">cart_spec</span>,</span>
+<span>      knn <span class="op">=</span> <span class="va">knn_spec</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    cross <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="va">chi_models</span></span>
 <span><span class="co">#&gt; # A workflow set/tibble: 9 × 4</span></span>
 <span><span class="co">#&gt;   wflow_id      info             option    result    </span></span>
@@ -154,21 +158,22 @@
 <span><span class="co">#&gt; 9 pca_knn       &lt;tibble [1 × 4]&gt; &lt;opts[0]&gt; &lt;list [0]&gt;</span></span></code></pre></div>
 <p>It doesn’t make sense to use PCA or a filter with a <code>glmnet</code> model. We can remove these easily:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">chi_models</span> <span class="op">&lt;-</span> </span>
-<span>   <span class="va">chi_models</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>   <span class="fu">anti_join</span><span class="op">(</span><span class="fu">tibble</span><span class="op">(</span>wflow_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pca_glmnet"</span>, <span class="st">"filter_glmnet"</span><span class="op">)</span><span class="op">)</span>, </span>
-<span>             by <span class="op">=</span> <span class="st">"wflow_id"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">chi_models</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">chi_models</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">anti_join</span><span class="op">(</span><span class="fu">tibble</span><span class="op">(</span>wflow_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pca_glmnet"</span>, <span class="st">"filter_glmnet"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    by <span class="op">=</span> <span class="st">"wflow_id"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p>These models all have tuning parameters. To resolve these, we’ll need a resampling set. In this case, a time-series resampling method is used:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">splits</span> <span class="op">&lt;-</span> </span>
-<span>   <span class="fu">sliding_period</span><span class="op">(</span></span>
-<span>      <span class="va">Chicago</span>,</span>
-<span>      <span class="va">date</span>,</span>
-<span>      <span class="st">"day"</span>,</span>
-<span>      lookback <span class="op">=</span> <span class="fl">300</span>,   <span class="co"># Each resample has 300 days for modeling</span></span>
-<span>      assess_stop <span class="op">=</span> <span class="fl">7</span>,  <span class="co"># One week for performance assessment</span></span>
-<span>      step <span class="op">=</span> <span class="fl">7</span>          <span class="co"># Ensure non-overlapping weeks for assessment</span></span>
-<span>   <span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">splits</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">sliding_period</span><span class="op">(</span></span>
+<span>    <span class="va">Chicago</span>,</span>
+<span>    <span class="va">date</span>,</span>
+<span>    <span class="st">"day"</span>,</span>
+<span>    lookback <span class="op">=</span> <span class="fl">300</span>, <span class="co"># Each resample has 300 days for modeling</span></span>
+<span>    assess_stop <span class="op">=</span> <span class="fl">7</span>, <span class="co"># One week for performance assessment</span></span>
+<span>    step <span class="op">=</span> <span class="fl">7</span> <span class="co"># Ensure non-overlapping weeks for assessment</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="va">splits</span></span>
 <span><span class="co">#&gt; # Sliding period resampling </span></span>
 <span><span class="co">#&gt; # A tibble: 9 × 2</span></span>
@@ -186,26 +191,28 @@
 <p>We’ll use simple grid search for these models by running <code><a href="reference/workflow_map.html">workflow_map()</a></code>. This will execute a resampling or tuning function over the workflows in the <code>workflow</code> column:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
-<span><span class="va">chi_models</span> <span class="op">&lt;-</span> </span>
-<span>   <span class="va">chi_models</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>   <span class="co"># The first argument is a function name from the {{tune}} package</span></span>
-<span>   <span class="co"># such as `tune_grid()`, `fit_resamples()`, etc.</span></span>
-<span>   <span class="fu"><a href="reference/workflow_map.html">workflow_map</a></span><span class="op">(</span><span class="st">"tune_grid"</span>, resamples <span class="op">=</span> <span class="va">splits</span>, grid <span class="op">=</span> <span class="fl">10</span>, </span>
-<span>                metrics <span class="op">=</span> <span class="fu">metric_set</span><span class="op">(</span><span class="va">mae</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">chi_models</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">chi_models</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="co"># The first argument is a function name from the {{tune}} package</span></span>
+<span>  <span class="co"># such as `tune_grid()`, `fit_resamples()`, etc.</span></span>
+<span>  <span class="fu"><a href="reference/workflow_map.html">workflow_map</a></span><span class="op">(</span><span class="st">"tune_grid"</span>,</span>
+<span>    resamples <span class="op">=</span> <span class="va">splits</span>, grid <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>    metrics <span class="op">=</span> <span class="fu">metric_set</span><span class="op">(</span><span class="va">mae</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="co">#&gt; i 1 of 7 tuning:     simple_glmnet</span></span>
-<span><span class="co">#&gt; ✓ 1 of 7 tuning:     simple_glmnet (15.2s)</span></span>
+<span><span class="co">#&gt; ✔ 1 of 7 tuning:     simple_glmnet (3s)</span></span>
 <span><span class="co">#&gt; i 2 of 7 tuning:     simple_cart</span></span>
-<span><span class="co">#&gt; ✓ 2 of 7 tuning:     simple_cart (16.8s)</span></span>
+<span><span class="co">#&gt; ✔ 2 of 7 tuning:     simple_cart (4.1s)</span></span>
 <span><span class="co">#&gt; i 3 of 7 tuning:     simple_knn</span></span>
-<span><span class="co">#&gt; ✓ 3 of 7 tuning:     simple_knn (16.1s)</span></span>
+<span><span class="co">#&gt; ✔ 3 of 7 tuning:     simple_knn (3.7s)</span></span>
 <span><span class="co">#&gt; i 4 of 7 tuning:     filter_cart</span></span>
-<span><span class="co">#&gt; ✓ 4 of 7 tuning:     filter_cart (32.5s)</span></span>
+<span><span class="co">#&gt; ✔ 4 of 7 tuning:     filter_cart (8.4s)</span></span>
 <span><span class="co">#&gt; i 5 of 7 tuning:     filter_knn</span></span>
-<span><span class="co">#&gt; ✓ 5 of 7 tuning:     filter_knn (32.3s)</span></span>
+<span><span class="co">#&gt; ✔ 5 of 7 tuning:     filter_knn (7.8s)</span></span>
 <span><span class="co">#&gt; i 6 of 7 tuning:     pca_cart</span></span>
-<span><span class="co">#&gt; ✓ 6 of 7 tuning:     pca_cart (21.7s)</span></span>
+<span><span class="co">#&gt; ✔ 6 of 7 tuning:     pca_cart (5.5s)</span></span>
 <span><span class="co">#&gt; i 7 of 7 tuning:     pca_knn</span></span>
-<span><span class="co">#&gt; ✓ 7 of 7 tuning:     pca_knn (21.9s)</span></span>
+<span><span class="co">#&gt; ✔ 7 of 7 tuning:     pca_knn (5.4s)</span></span>
 <span><span class="va">chi_models</span></span>
 <span><span class="co">#&gt; # A workflow set/tibble: 7 × 4</span></span>
 <span><span class="co">#&gt;   wflow_id      info             option    result   </span></span>
@@ -228,18 +235,18 @@
 <p><img src="reference/figures/README-plot-best-1.svg" width="100%"></p>
 <p>We can determine how well each combination did by looking at the best results per workflow:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/rank_results.html">rank_results</a></span><span class="op">(</span><span class="va">chi_models</span>, rank_metric <span class="op">=</span> <span class="st">"mae"</span>, select_best <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>   <span class="fu">select</span><span class="op">(</span><span class="va">rank</span>, <span class="va">mean</span>, <span class="va">model</span>, <span class="va">wflow_id</span>, <span class="va">.config</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/rank_results.html">rank_results</a></span><span class="op">(</span><span class="va">chi_models</span>, rank_metric <span class="op">=</span> <span class="st">"mae"</span>, select_best <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">rank</span>, <span class="va">mean</span>, <span class="va">model</span>, <span class="va">wflow_id</span>, <span class="va">.config</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 7 × 5</span></span>
 <span><span class="co">#&gt;    rank  mean model            wflow_id      .config              </span></span>
 <span><span class="co">#&gt;   &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;         &lt;chr&gt;                </span></span>
-<span><span class="co">#&gt; 1     1  1.85 linear_reg       simple_glmnet Preprocessor1_Model07</span></span>
-<span><span class="co">#&gt; 2     2  2.18 decision_tree    simple_cart   Preprocessor1_Model09</span></span>
-<span><span class="co">#&gt; 3     3  2.95 decision_tree    filter_cart   Preprocessor07_Model1</span></span>
-<span><span class="co">#&gt; 4     4  3.00 decision_tree    pca_cart      Preprocessor3_Model2 </span></span>
-<span><span class="co">#&gt; 5     5  3.34 nearest_neighbor simple_knn    Preprocessor1_Model05</span></span>
-<span><span class="co">#&gt; 6     6  3.50 nearest_neighbor filter_knn    Preprocessor07_Model1</span></span>
-<span><span class="co">#&gt; 7     7  3.81 nearest_neighbor pca_knn       Preprocessor4_Model1</span></span></code></pre></div>
+<span><span class="co">#&gt; 1     1  1.83 linear_reg       simple_glmnet Preprocessor1_Model10</span></span>
+<span><span class="co">#&gt; 2     2  2.23 decision_tree    simple_cart   Preprocessor1_Model06</span></span>
+<span><span class="co">#&gt; 3     3  2.63 decision_tree    filter_cart   Preprocessor06_Model1</span></span>
+<span><span class="co">#&gt; 4     4  2.97 decision_tree    pca_cart      Preprocessor4_Model2 </span></span>
+<span><span class="co">#&gt; 5     5  3.37 nearest_neighbor simple_knn    Preprocessor1_Model07</span></span>
+<span><span class="co">#&gt; 6     6  3.47 nearest_neighbor filter_knn    Preprocessor06_Model1</span></span>
+<span><span class="co">#&gt; 7     7  3.89 nearest_neighbor pca_knn       Preprocessor4_Model2</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>

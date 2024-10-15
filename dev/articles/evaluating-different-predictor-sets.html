@@ -125,11 +125,11 @@ predictors are associated with the best area under the ROC curve.</p>
 <span><span class="co">#&gt; &lt;environment: base&gt;</span></span></code></pre></div>
 <p>We create our workflow set:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">churn_workflows</span> <span class="op">&lt;-</span> </span>
-<span>   <span class="fu"><a href="../reference/workflow_set.html">workflow_set</a></span><span class="op">(</span></span>
-<span>      preproc <span class="op">=</span> <span class="va">formulas</span>, </span>
-<span>      models <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>logistic <span class="op">=</span> <span class="va">lr_model</span><span class="op">)</span></span>
-<span>   <span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">churn_workflows</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/workflow_set.html">workflow_set</a></span><span class="op">(</span></span>
+<span>    preproc <span class="op">=</span> <span class="va">formulas</span>,</span>
+<span>    models <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>logistic <span class="op">=</span> <span class="va">lr_model</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="va">churn_workflows</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A workflow set/tibble: 20 × 4</span></span></span>
 <span><span class="co">#&gt;    wflow_id                               info     option    result    </span></span>
@@ -159,9 +159,9 @@ tune for these models. Instead of <code><a href="https://tune.tidymodels.org/ref
 <code><a href="https://tune.tidymodels.org/reference/fit_resamples.html" class="external-link">tune::fit_resamples()</a></code> instead by giving that function name
 as the first argument:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">churn_workflows</span> <span class="op">&lt;-</span> </span>
-<span>   <span class="va">churn_workflows</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>   <span class="fu"><a href="../reference/workflow_map.html">workflow_map</a></span><span class="op">(</span><span class="st">"fit_resamples"</span>, resamples <span class="op">=</span> <span class="va">folds</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">churn_workflows</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">churn_workflows</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/workflow_map.html">workflow_map</a></span><span class="op">(</span><span class="st">"fit_resamples"</span>, resamples <span class="op">=</span> <span class="va">folds</span><span class="op">)</span></span>
 <span><span class="va">churn_workflows</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A workflow set/tibble: 20 × 4</span></span></span>
 <span><span class="co">#&gt;    wflow_id                               info     option    result   </span></span>
@@ -191,37 +191,37 @@ the area under the ROC curve for each predictor from the same metric
 from the full model. We’ll match first by resampling ID, the compute the
 mean difference.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">roc_values</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">churn_workflows</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://tune.tidymodels.org/reference/collect_predictions.html" class="external-link">collect_metrics</a></span><span class="op">(</span>summarize <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.metric</span> <span class="op">==</span> <span class="st">"roc_auc"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<code class="sourceCode R"><span><span class="va">roc_values</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">churn_workflows</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://tune.tidymodels.org/reference/collect_predictions.html" class="external-link">collect_metrics</a></span><span class="op">(</span>summarize <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.metric</span> <span class="op">==</span> <span class="st">"roc_auc"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>wflow_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"_logistic"</span>, <span class="st">""</span>, <span class="va">wflow_id</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">full_model</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">roc_values</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">wflow_id</span> <span class="op">==</span> <span class="st">"everything"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">full_model</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">roc_values</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">wflow_id</span> <span class="op">==</span> <span class="st">"everything"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span>full_model <span class="op">=</span> <span class="va">.estimate</span>, <span class="va">id</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">differences</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">roc_values</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">wflow_id</span> <span class="op">!=</span> <span class="st">"everything"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">full_join</a></span><span class="op">(</span><span class="va">full_model</span>, by <span class="op">=</span> <span class="st">"id"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">differences</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">roc_values</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">wflow_id</span> <span class="op">!=</span> <span class="st">"everything"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">full_join</a></span><span class="op">(</span><span class="va">full_model</span>, by <span class="op">=</span> <span class="st">"id"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>performance_drop <span class="op">=</span> <span class="va">full_model</span> <span class="op">-</span> <span class="va">.estimate</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">summary_stats</span> <span class="op">&lt;-</span> </span>
-<span>  <span class="va">differences</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">wflow_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span><span class="va">summary_stats</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">differences</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">wflow_id</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>
-<span>    std_err <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">performance_drop</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">performance_drop</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    std_err <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html" class="external-link">sd</a></span><span class="op">(</span><span class="va">performance_drop</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">performance_drop</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    performance_drop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">performance_drop</span><span class="op">)</span>,</span>
 <span>    lower <span class="op">=</span> <span class="va">performance_drop</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">qnorm</a></span><span class="op">(</span><span class="fl">0.975</span><span class="op">)</span> <span class="op">*</span> <span class="va">std_err</span>,</span>
 <span>    upper <span class="op">=</span> <span class="va">performance_drop</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">qnorm</a></span><span class="op">(</span><span class="fl">0.975</span><span class="op">)</span> <span class="op">*</span> <span class="va">std_err</span>,</span>
 <span>    .groups <span class="op">=</span> <span class="st">"drop"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    wflow_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">wflow_id</span><span class="op">)</span>,</span>
 <span>    wflow_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html" class="external-link">reorder</a></span><span class="op">(</span><span class="va">wflow_id</span>, <span class="va">performance_drop</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">summary_stats</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">lower</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 5</span></span></span>
@@ -233,8 +233,8 @@ mean difference.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> number_vmail_messages         0.000<span style="text-decoration: underline;">336</span>          0.001<span style="text-decoration: underline;">77</span> 0.001<span style="text-decoration: underline;">11</span>  0.002<span style="text-decoration: underline;">43</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> voice_mail_plan               0.000<span style="text-decoration: underline;">613</span>          0.003<span style="text-decoration: underline;">79</span> 0.002<span style="text-decoration: underline;">58</span>  0.004<span style="text-decoration: underline;">99</span></span></span>
 <span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">summary_stats</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">performance_drop</span>, y <span class="op">=</span> <span class="va">wflow_id</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">summary_stats</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">performance_drop</span>, y <span class="op">=</span> <span class="va">wflow_id</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="va">lower</span>, xmax <span class="op">=</span> <span class="va">upper</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">.25</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">""</span><span class="op">)</span></span></code></pre></div>
 <p><img src="evaluating-different-predictor-sets_files/figure-html/churn-metrics-1.png" width="576"></p>

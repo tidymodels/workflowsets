@@ -115,16 +115,16 @@ sequence of models built in Section 1.3 of Kuhn and Johnson (2019). See
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rsample.tidymodels.org" class="external-link">rsample</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Chicago</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">Chicago</span> <span class="op">&lt;-</span> <span class="va">Chicago</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">1195</span>,<span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">Chicago</span> <span class="op">&lt;-</span> <span class="va">Chicago</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">1195</span>, <span class="op">]</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">time_val_split</span> <span class="op">&lt;-</span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="https://rsample.tidymodels.org/reference/slide-resampling.html" class="external-link">sliding_period</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>      <span class="va">Chicago</span>,</span></span>
-<span class="r-in"><span>      <span class="va">date</span>,</span></span>
-<span class="r-in"><span>      <span class="st">"month"</span>,</span></span>
-<span class="r-in"><span>      lookback <span class="op">=</span> <span class="fl">38</span>,</span></span>
-<span class="r-in"><span>      assess_stop <span class="op">=</span> <span class="fl">1</span></span></span>
-<span class="r-in"><span>   <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rsample.tidymodels.org/reference/slide-resampling.html" class="external-link">sliding_period</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="va">Chicago</span>,</span></span>
+<span class="r-in"><span>    <span class="va">date</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"month"</span>,</span></span>
+<span class="r-in"><span>    lookback <span class="op">=</span> <span class="fl">38</span>,</span></span>
+<span class="r-in"><span>    assess_stop <span class="op">=</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">chi_features_set</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A workflow set/tibble: 3 × 4</span></span>
@@ -135,25 +135,28 @@ sequence of models built in Section 1.3 of Kuhn and Johnson (2019). See
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> plus_pca_lm      <span style="color: #949494;">&lt;tibble [1 × 4]&gt;</span> <span style="color: #949494;">&lt;opts[0]&gt;</span> <span style="color: #949494;">&lt;list [0]&gt;</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">chi_features_res_new</span> <span class="op">&lt;-</span></span></span>
-<span class="r-in"><span>   <span class="va">chi_features_set</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>   <span class="co"># note: must set `save_workflow = TRUE` to use `fit_best()`</span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="option_add.html">option_add</a></span><span class="op">(</span>control <span class="op">=</span> <span class="fu"><a href="https://tune.tidymodels.org/reference/control_grid.html" class="external-link">control_grid</a></span><span class="op">(</span>save_workflow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span>   <span class="co"># evaluate with resamples</span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="workflow_map.html">workflow_map</a></span><span class="op">(</span>resamples <span class="op">=</span> <span class="va">time_val_split</span>, grid <span class="op">=</span> <span class="fl">21</span>, seed <span class="op">=</span> <span class="fl">1</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">chi_features_set</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="co"># note: must set `save_workflow = TRUE` to use `fit_best()`</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="option_add.html">option_add</a></span><span class="op">(</span>control <span class="op">=</span> <span class="fu"><a href="https://tune.tidymodels.org/reference/control_grid.html" class="external-link">control_grid</a></span><span class="op">(</span>save_workflow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="co"># evaluate with resamples</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="workflow_map.html">workflow_map</a></span><span class="op">(</span>resamples <span class="op">=</span> <span class="va">time_val_split</span>, grid <span class="op">=</span> <span class="fl">21</span>, seed <span class="op">=</span> <span class="fl">1</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">i</span>	<span style="color: #000000;">No tuning parameters. `fit_resamples()` will be attempted</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">i</span> <span style="color: #000000;">1 of 3 resampling: date_lm</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → <span style="color: #BBBB00; font-weight: bold;">A</span> | <span style="color: #BBBB00;">warning</span>: prediction from rank-deficient fit; consider predict(., rankdeficient="NA")</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> There were issues with some computations   <span style="color: #BBBB00; font-weight: bold;">A</span>: x1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> There were issues with some computations   <span style="color: #BBBB00; font-weight: bold;">A</span>: x1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #000000;">1 of 3 resampling: date_lm (215ms)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #000000;">1 of 3 resampling: date_lm (219ms)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">i</span>	<span style="color: #000000;">No tuning parameters. `fit_resamples()` will be attempted</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">i</span> <span style="color: #000000;">2 of 3 resampling: plus_holidays_lm</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → <span style="color: #BBBB00; font-weight: bold;">A</span> | <span style="color: #BBBB00;">warning</span>: prediction from rank-deficient fit; consider predict(., rankdeficient="NA")</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #000000;">2 of 3 resampling: plus_holidays_lm (219ms)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #000000;">2 of 3 resampling: plus_holidays_lm (212ms)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #0000BB;">i</span> <span style="color: #000000;">3 of 3 tuning:     plus_pca_lm</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> → <span style="color: #BBBB00; font-weight: bold;">A</span> | <span style="color: #BBBB00;">warning</span>: prediction from rank-deficient fit; consider predict(., rankdeficient="NA")</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #000000;">3 of 3 tuning:     plus_pca_lm (885ms)</span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> There were issues with some computations   <span style="color: #BBBB00; font-weight: bold;">A</span>: x3</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> There were issues with some computations   <span style="color: #BBBB00; font-weight: bold;">A</span>: x4</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="color: #000000;">3 of 3 tuning:     plus_pca_lm (917ms)</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">chi_features_res_new</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A workflow set/tibble: 3 × 4</span></span>
