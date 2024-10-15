@@ -1,8 +1,8 @@
 # check for bad options
 
-    The following options cannot be used as arguments for `fit_resamples()` or the `tune_*()` functions: 'grid2'
+    The option `grid2` cannot be used as an argument for `fit_resamples()` or the `tune_*()` functions.
 
 ---
 
-    The following options cannot be used as arguments for `fit_resamples()` or the `tune_*()` functions: 'blueprint'
+    The option `blueprint` cannot be used as an argument for `fit_resamples()` or the `tune_*()` functions.
 

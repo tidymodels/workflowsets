@@ -31,11 +31,11 @@ pull_workflow_set_result <- function(x, id) {
     "extract_workflow_set_result()"
   )
   if (length(id) != 1) {
-    rlang::abort("'id' should have a single value.")
+    cli::cli_abort("{.arg id} should have a single value.")
   }
   y <- x %>% dplyr::filter(wflow_id == id[1])
   if (nrow(y) != 1) {
-    halt("No workflow ID found for '", id[1], "'")
+    cli::cli_abort("No workflow ID found for {.val {id[1]}}.")
   }
   y$result[[1]]
 }
@@ -45,11 +45,11 @@ pull_workflow_set_result <- function(x, id) {
 pull_workflow <- function(x, id) {
   lifecycle::deprecate_warn("0.1.0", "pull_workflow()", "extract_workflow()")
   if (length(id) != 1) {
-    rlang::abort("'id' should have a single value.")
+    cli::cli_abort("{.arg id} should have a single value.")
   }
   y <- x %>% dplyr::filter(wflow_id == id[1])
   if (nrow(y) != 1) {
-    halt("No workflow ID found for '", id[1], "'")
+    cli::cli_abort("No workflow ID found for {.val {id[1]}}.")
   }
   y$info[[1]]$workflow[[1]]
 }
