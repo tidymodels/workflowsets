@@ -9,7 +9,7 @@ check_wf_set <- function(x, arg = caller_arg(x), call = caller_env()) {
   invisible(TRUE)
 }
 
-check_consistent_metrics <- function(x, fail = TRUE) {
+check_consistent_metrics <- function(x, fail = TRUE, call = caller_env()) {
   metric_info <-
     dplyr::distinct(x, .metric, wflow_id) %>%
     dplyr::mutate(has = TRUE) %>%
@@ -21,24 +21,36 @@ check_consistent_metrics <- function(x, fail = TRUE) {
     incp_metrics <- names(metric_info)[metric_info > 0]
 
     if (fail) {
-      cli::cli_abort("The metrics {incp_metrics} were not used in all workflows.")
+      cli::cli_abort(
+        "The metrics {incp_metrics} were not used in all workflows.",
+        call = call
+      )
     } else {
-      cli::cli_warn("The metrics {incp_metrics} were not used in all workflows.")
+      cli::cli_warn(
+        "The metrics {incp_metrics} were not used in all workflows.",
+        call = call
+      )
     }
   }
   invisible(NULL)
 }
 
-check_incompete <- function(x, fail = TRUE) {
+check_incompete <- function(x, fail = TRUE, call = caller_env()) {
   empty_res <- purrr::map_lgl(x$result, ~ identical(.x, list()))
   failed_res <- purrr::map_lgl(x$result, ~ inherits(.x, "try-error"))
 
   n_empty <- sum(empty_res | failed_res)
   if (n_empty > 0) {
     if (fail) {
-      cli::cli_abort("There {?was/were} {n_empty} workflow{?s} that had no results.")
+      cli::cli_abort(
+        "There {?was/were} {n_empty} workflow{?s} that had no results.",
+        call = call
+      )
     } else {
-      cli::cli_warn("There {?was/were} {n_empty} workflow{?s} that had no results.")
+      cli::cli_warn(
+        "There {?was/were} {n_empty} workflow{?s} that had no results.",
+        call = call
+      )
     }
   }
   invisible(NULL)
@@ -61,23 +73,23 @@ common_options <- function(model, global) {
   res
 }
 
-check_options <- function(model, id, global, action = "fail") {
+check_options <- function(model, id, global, action = "fail", call = caller_env()) {
   res <- purrr::map_chr(model, common_options, global)
   flag <- nchar(res) > 0
   if (any(flag)) {
     msg <- "There are existing options that are being modified\n"
     msg <- paste0(msg, paste0("\t", id[flag], ": ", res[flag], collapse = "\n"))
     if (action == "fail") {
-      cli::cli_abort(msg)
+      cli::cli_abort(msg, call = call)
     }
     if (action == "warn") {
-      cli::cli_warn(msg)
+      cli::cli_warn(msg, call = call)
     }
   }
   invisible(NULL)
 }
 
-check_tune_args <- function(x) {
+check_tune_args <- function(x, call = caller_env()) {
   arg_names <- c(
     "resamples", "param_info", "grid", "metrics", "control",
     "iter", "objective", "initial", "eval_time"
@@ -86,7 +98,8 @@ check_tune_args <- function(x) {
   if (length(bad_args) > 0) {
     cli::cli_abort(
       "The option{?s} {.arg {bad_args}} cannot be used as {?an argument/arguments}
-      for {.fn fit_resamples} or the {.fn tune_*} functions."
+      for {.fn fit_resamples} or the {.fn tune_*} functions.",
+      call = call
     )
   }
   invisible(NULL)
@@ -120,24 +133,25 @@ check_fn <- function(fn, x, verbose) {
   fn
 }
 
-check_names <- function(x) {
+check_names <- function(x, call = caller_env()) {
   nms <- names(x)
   if (any(nms == "")) {
     bad <- which(nms == "")
-    cli::cli_abort("Objects in the positions {bad} are not named.")
+    cli::cli_abort("Objects in the positions {bad} are not named.", call = call)
   } else if (all(is.null(nms))) {
-    cli::cli_abort("The values must be named.")
+    cli::cli_abort("The values must be named.", call = call)
   }
   xtab <- table(nms)
   if (any(xtab > 1)) {
     cli::cli_abort(
-      "The workflow names should be unique: {.val {names(xtab)[xtab > 1]}}."
+      "The workflow names should be unique: {.val {names(xtab)[xtab > 1]}}.",
+      call = call
     )
   }
   invisible(NULL)
 }
 
-check_for_workflow <- function(x) {
+check_for_workflow <- function(x, call = caller_env()) {
   no_wflow <- purrr::map_lgl(x, ~ !inherits(.x, "workflow"))
   if (any(no_wflow)) {
     bad <- names(no_wflow)[no_wflow]
@@ -145,7 +159,8 @@ check_for_workflow <- function(x) {
       c(
         "The objects {.val {bad}} do not have workflows.",
         "i" = "Use the control option {.code save_workflow} and re-run."
-      )
+      ),
+      call = call
     )
   }
   invisible(NULL)

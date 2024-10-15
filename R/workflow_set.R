@@ -321,58 +321,71 @@ tbl_sum.workflow_set <- function(x) {
 
 # ------------------------------------------------------------------------------
 
-new_workflow_set <- function(x) {
+new_workflow_set <- function(x, call = caller_env()) {
   if (!has_required_container_type(x)) {
-    cli::cli_abort("{.arg x} must be a list.")
+    cli::cli_abort("{.arg x} must be a list.", call = call)
   }
   if (!has_required_container_columns(x)) {
     columns <- required_container_columns()
     cli::cli_abort(
-      "The object should have columns {.field {columns}}."
+      "The object should have columns {.field {columns}}.",
+      call = call
     )
   }
 
   if (!has_valid_column_info_structure(x)) {
-    cli::cli_abort("The {.field info} column should be a list.")
+    cli::cli_abort("The {.field info} column should be a list.", call = call)
   }
   if (!has_valid_column_info_inner_types(x)) {
-    cli::cli_abort("All elements of {.field info} must be tibbles.")
+    cli::cli_abort("All elements of {.field info} must be tibbles.", call = call)
   }
   if (!has_valid_column_info_inner_names(x)) {
     columns <- required_info_inner_names()
     cli::cli_abort(
-      "Elements in the {.field info} column should have columns {.field {columns}}."
+      "Elements in the {.field info} column should have columns {.field {columns}}.",
+      call = call
     )
   }
 
   if (!has_valid_column_result_structure(x)) {
-    cli::cli_abort("The {.field result} column should be a list.")
+    cli::cli_abort("The {.field result} column should be a list.", call = call)
   }
   if (!has_valid_column_result_inner_types(x)) {
     cli::cli_abort(
-      "Some elements of {.field result} do not have class {.cls tune_results}."
+      "Some elements of {.field result} do not have class {.cls tune_results}.",
+      call = call
     )
   }
   if (!has_valid_column_result_fingerprints(x)) {
-    cli::cli_abort(c(
-      "Different resamples were used in the workflow {.field result}s.",
-      "i" = "All elements of {.field result} must use the same resamples."
-    ))
+    cli::cli_abort(
+      c(
+        "Different resamples were used in the workflow {.field result}s.",
+        "i" = "All elements of {.field result} must use the same resamples."
+      ),
+      call = call
+    )
   }
 
   if (!has_valid_column_option_structure(x)) {
-    cli::cli_abort("The {.field option} column should be a list.")
+    cli::cli_abort("The {.field option} column should be a list.", call = call)
   }
   if (!has_valid_column_option_inner_types(x)) {
-    cli::cli_abort("All elements of {.arg option} should have class {.cls workflow_set_options}.")
+    cli::cli_abort(
+      "All elements of {.arg option} should have class {.cls workflow_set_options}.",
+      call = call
+    )
   }
 
   if (!has_valid_column_wflow_id_structure(x)) {
-    cli::cli_abort("The {.field wflow_id} column should be character.")
+    cli::cli_abort(
+      "The {.field wflow_id} column should be character.",
+      call = call
+    )
   }
   if (!has_valid_column_wflow_id_strings(x)) {
     cli::cli_abort(
-      "The {.field wflow_id} column should contain unique, non-missing character strings."
+      "The {.field wflow_id} column should contain unique, non-missing character strings.",
+      call = call
     )
   }
 

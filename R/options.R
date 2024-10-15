@@ -188,10 +188,10 @@ print.workflow_set_options <- function(x, ...) {
 #' @export
 option_list <- function(...) new_workflow_set_options(...)
 
-new_workflow_set_options <- function(...) {
+new_workflow_set_options <- function(..., call = caller_env()) {
   res <- rlang::list2(...)
   if (any(names(res) == "")) {
-    cli::cli_abort("All options should be named.")
+    cli::cli_abort("All options should be named.", call = call)
   }
   structure(res, class = c("workflow_set_options", "list"))
 }

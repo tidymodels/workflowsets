@@ -1,4 +1,4 @@
-make_workflow <- function(x, y) {
+make_workflow <- function(x, y, call = caller_env()) {
   exp_classes <- c("formula", "recipe", "workflow_variables")
   w <-
     workflows::workflow() %>%
@@ -12,7 +12,8 @@ make_workflow <- function(x, y) {
   } else {
     cli::cli_abort(
       "The preprocessor must be an object with one of the
-       following classes: {.or {.cls {exp_classes}}}."
+       following classes: {.or {.cls {exp_classes}}}.",
+      call = call
     )
   }
   w
@@ -55,7 +56,7 @@ collate_metrics <- function(x) {
     dplyr::arrange(order)
 }
 
-pick_metric <- function(x, rank_metric, select_metrics = NULL) {
+pick_metric <- function(x, rank_metric, select_metrics = NULL, call = caller_env()) {
   # mostly to check for completeness and consistency:
   tmp <- collect_metrics(x)
   metrics <- collate_metrics(x)
@@ -70,7 +71,10 @@ pick_metric <- function(x, rank_metric, select_metrics = NULL) {
     direction <- metrics$direction[1]
   } else {
     if (!any(metrics$metric == rank_metric)) {
-      cli::cli_abort("Metric {.val {rank_metric}} was not in the results.")
+      cli::cli_abort(
+        "Metric {.val {rank_metric}} was not in the results.",
+        call = call
+      )
     }
     direction <- metrics$direction[metrics$metric == rank_metric]
   }

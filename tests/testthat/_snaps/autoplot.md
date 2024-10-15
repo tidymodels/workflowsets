@@ -11,6 +11,6 @@
     Code
       pick_metric(two_class_res, "roc_auc", "accuracy")
     Condition
-      Error in `pick_metric()`:
+      Error:
       ! Metric "roc_auc" was not in the results.
 

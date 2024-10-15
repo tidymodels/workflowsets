@@ -99,13 +99,13 @@ extract_recipe.workflow_set <- function(x, id, ..., estimated = TRUE) {
   y <- filter_id(x, id)
   extract_recipe(y$info[[1]]$workflow[[1]], estimated = estimated)
 }
-check_empty_dots <- function(...) {
+check_empty_dots <- function(..., call = caller_env()) {
   opts <- list(...)
   if (any(names(opts) == "estimated")) {
-    cli::cli_abort("{.arg estimated} should be a named argument.")
+    cli::cli_abort("{.arg estimated} should be a named argument.", call = call)
   }
   if (length(opts) > 0) {
-    cli::cli_abort("{.arg ...} are not used in this function.")
+    cli::cli_abort("{.arg ...} are not used in this function.", call = call)
   }
   invisible(NULL)
 }
@@ -162,11 +162,14 @@ extract_parameter_dials.workflow_set <- function(x, id, parameter, ...) {
 
 # ------------------------------------------------------------------------------
 
-filter_id <- function(x, id) {
+filter_id <- function(x, id, call = caller_env()) {
   check_string(id)
   out <- dplyr::filter(x, wflow_id == id)
   if (nrow(out) != 1L) {
-    cli::cli_abort("{.arg id} must correspond to a single row in {.arg x}.")
+    cli::cli_abort(
+      "{.arg id} must correspond to a single row in {.arg x}.",
+      call = call
+    )
   }
   out
 }

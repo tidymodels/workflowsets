@@ -136,7 +136,7 @@
     Code
       as_workflow_set(wt = f_1, disp = f_2)
     Condition
-      Error in `new_workflow_set()`:
+      Error:
       ! Different resamples were used in the workflow results.
       i All elements of result must use the same resamples.
 
@@ -145,7 +145,7 @@
     Code
       new_workflow_set(car_set_1 %>% dplyr::select(-info))
     Condition
-      Error in `new_workflow_set()`:
+      Error:
       ! The object should have columns wflow_id, info, option, and result.
 
 ---
@@ -153,7 +153,7 @@
     Code
       new_workflow_set(car_set_1 %>% dplyr::mutate(info = "a"))
     Condition
-      Error in `new_workflow_set()`:
+      Error:
       ! The info column should be a list.
 
 ---
@@ -161,7 +161,7 @@
     Code
       new_workflow_set(car_set_1 %>% dplyr::mutate(result = "a"))
     Condition
-      Error in `new_workflow_set()`:
+      Error:
       ! The result column should be a list.
 
 ---
@@ -169,7 +169,7 @@
     Code
       new_workflow_set(car_set_1 %>% dplyr::mutate(option = "a"))
     Condition
-      Error in `new_workflow_set()`:
+      Error:
       ! The option column should be a list.
 
 ---
@@ -177,7 +177,7 @@
     Code
       new_workflow_set(car_set_1 %>% dplyr::mutate(wflow_id = 1))
     Condition
-      Error in `new_workflow_set()`:
+      Error:
       ! The wflow_id column should be character.
 
 ---
@@ -185,7 +185,7 @@
     Code
       new_workflow_set(car_set_1 %>% dplyr::mutate(wflow_id = "a"))
     Condition
-      Error in `new_workflow_set()`:
+      Error:
       ! The wflow_id column should contain unique, non-missing character strings.
 
 # pillar formatting

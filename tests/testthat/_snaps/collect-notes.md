@@ -3,6 +3,6 @@
     Code
       collect_notes(wflow_set)
     Condition
-      Error in `check_incompete()`:
+      Error in `collect_notes()`:
       ! There were 2 workflows that had no results.
 
