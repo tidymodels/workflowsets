@@ -48,9 +48,9 @@ test_set <- testing(split)
 Visually, we can see that the predictors are mildly correlated and some type of nonlinear class boundary is probably needed. 
 
 ```{r 2d-plot, fig.width=5, fig.height=5.1}
-ggplot(train_set, aes(x = X1, y = X2, col = class)) + 
-  geom_point(alpha = 0.5) + 
-  coord_fixed(ratio = 1) + 
+ggplot(train_set, aes(x = X1, y = X2, col = class)) +
+  geom_point(alpha = 0.5) +
+  coord_fixed(ratio = 1) +
   scale_color_brewer(palette = "Dark2")
 ```
 
@@ -61,17 +61,17 @@ We'll fit two types of discriminant analysis (DA) models (regularized DA and fle
 ```{r models}
 library(discrim)
 
-mars_disc_spec <- 
-  discrim_flexible(prod_degree = tune()) %>% 
+mars_disc_spec <-
+  discrim_flexible(prod_degree = tune()) %>%
   set_engine("earth")
 
-reg_disc_sepc <- 
-  discrim_regularized(frac_common_cov = tune(), frac_identity = tune()) %>% 
+reg_disc_sepc <-
+  discrim_regularized(frac_common_cov = tune(), frac_identity = tune()) %>%
   set_engine("klaR")
 
-cart_spec <- 
-  decision_tree(cost_complexity = tune(), min_n = tune()) %>% 
-  set_engine("rpart") %>% 
+cart_spec <-
+  decision_tree(cost_complexity = tune(), min_n = tune()) %>%
+  set_engine("rpart") %>%
   set_mode("classification")
 ```
 
@@ -87,7 +87,7 @@ We have a simple data set so a basic formula will suffice for our preprocessing.
 The workflow set takes a named list of preprocessors and a named list of parsnip model specifications, and can cross them to find all combinations. For our case, it will just make a set of workflows for our models: 
 
 ```{r wflow-set}
-all_workflows <- 
+all_workflows <-
   workflow_set(
     preproc = list("formula" = class ~ .),
     models = list(regularized = reg_disc_sepc, mars = mars_disc_spec, cart = cart_spec)
@@ -102,10 +102,12 @@ We can add any specific options that we think are important for tuning or resamp
 For illustration, let's use the `extract` argument of the [control function](https://tune.tidymodels.org/reference/control_grid.html) to save the fitted workflow. We can then pick which workflow should use this option with the `id` argument:
 
 ```{r option}
-all_workflows <- 
-   all_workflows %>% 
-   option_add(id = "formula_cart", 
-              control = control_grid(extract = function(x) x))
+all_workflows <-
+  all_workflows %>%
+  option_add(
+    id = "formula_cart",
+    control = control_grid(extract = function(x) x)
+  )
 all_workflows
 ```
 
@@ -120,8 +122,8 @@ Let's use the same grid size for each model. For the MARS model, there are only 
 The `verbose` option provides a concise listing for which workflow is being processed:
 
 ```{r tuning}
-all_workflows <- 
-  all_workflows %>% 
+all_workflows <-
+  all_workflows %>%
   # Specifying arguments here adds to any previously set with `option_add()`:
   workflow_map(resamples = train_resamples, grid = 20, verbose = TRUE)
 all_workflows
@@ -134,7 +136,7 @@ From these results, we can get quick assessments of how well these models classi
 ```{r rank_res, fig.width=8, fig.height=5.5, out.width="100%"}
 rank_results(all_workflows, rank_metric = "roc_auc")
 
-# or a handy plot: 
+# or a handy plot:
 autoplot(all_workflows, metric = "roc_auc")
 ```
 
@@ -151,8 +153,8 @@ Not much of a difference in performance; it may be prudent to use the additive m
 We can also pull out the results of `tune_grid()` for this model: 
 
 ```{r mars-results-print}
-mars_results <- 
-  all_workflows %>% 
+mars_results <-
+  all_workflows %>%
   extract_workflow_set_result("formula_mars")
 mars_results
 ```
@@ -160,14 +162,14 @@ mars_results
 Let's get that workflow object and finalize the model: 
 
 ```{r final-mars}
-mars_workflow <- 
-  all_workflows %>% 
+mars_workflow <-
+  all_workflows %>%
   extract_workflow("formula_mars")
 mars_workflow
 
-mars_workflow_fit <- 
-  mars_workflow %>% 
-  finalize_workflow(tibble(prod_degree = 1)) %>% 
+mars_workflow_fit <-
+  mars_workflow %>%
+  finalize_workflow(tibble(prod_degree = 1)) %>%
   fit(data = train_set)
 mars_workflow_fit
 ```
@@ -177,21 +179,23 @@ Let's see how well these data work on the test set:
 ```{r grid-pred}
 # Make a grid to predict the whole space:
 grid <-
-  crossing(X1 = seq(min(train_set$X1), max(train_set$X1), length.out = 250),
-           X2 = seq(min(train_set$X1), max(train_set$X2), length.out = 250))
+  crossing(
+    X1 = seq(min(train_set$X1), max(train_set$X1), length.out = 250),
+    X2 = seq(min(train_set$X1), max(train_set$X2), length.out = 250)
+  )
 
-grid <- 
-  grid %>% 
+grid <-
+  grid %>%
   bind_cols(predict(mars_workflow_fit, grid, type = "prob"))
 ```
 
 We can produce a contour plot for the class boundary, then overlay the data: 
 
 ```{r 2d-boundary, fig.width=5, fig.height=5.1, warning=FALSE}
-ggplot(grid, aes(x = X1, y = X2)) + 
-  geom_contour(aes(z = .pred_Class2), breaks = 0.5, col = "black") + 
-  geom_point(data = test_set, aes(col = class), alpha = 0.5) + 
-  coord_fixed(ratio = 1)+ 
+ggplot(grid, aes(x = X1, y = X2)) +
+  geom_contour(aes(z = .pred_Class2), breaks = 0.5, col = "black") +
+  geom_point(data = test_set, aes(col = class), alpha = 0.5) +
+  coord_fixed(ratio = 1) +
   scale_color_brewer(palette = "Dark2")
 ```
 
@@ -202,9 +206,9 @@ The workflow set allows us to screen many models to find one that does very well
 Recall that we added an option to the CART model to extract the model results. Let's pull out the CART tuning results and see what we have:
 
 ```{r extraction-res}
-cart_res <- 
-   all_workflows %>% 
-   extract_workflow_set_result("formula_cart")
+cart_res <-
+  all_workflows %>%
+  extract_workflow_set_result("formula_cart")
 cart_res
 ```
 
@@ -216,11 +220,11 @@ Let's slim that down by keeping the ones that correspond to the best tuning para
 # Get the best results
 best_cart <- select_best(cart_res, metric = "roc_auc")
 
-cart_wflows <- 
-   cart_res %>% 
-   select(id, .extracts) %>% 
-   unnest(cols = .extracts) %>% 
-   inner_join(best_cart)
+cart_wflows <-
+  cart_res %>%
+  select(id, .extracts) %>%
+  unnest(cols = .extracts) %>%
+  inner_join(best_cart)
 
 cart_wflows
 ```
@@ -229,19 +233,19 @@ What can we do with these? Let's write a function to return the number of termin
 
 ```{r cart-nodes}
 num_nodes <- function(wflow) {
-   var_imps <- 
-      wflow %>% 
-      # Pull out the rpart model
-      extract_fit_engine() %>% 
-      # The 'frame' element is a matrix with a column that
-      # indicates which leaves are terminal
-      pluck("frame") %>% 
-      # Convert to a data frame
-      as_tibble() %>% 
-      # Save only the rows that are terminal nodes
-      filter(var == "<leaf>") %>% 
-      # Count them
-      nrow() 
+  var_imps <-
+    wflow %>%
+    # Pull out the rpart model
+    extract_fit_engine() %>%
+    # The 'frame' element is a matrix with a column that
+    # indicates which leaves are terminal
+    pluck("frame") %>%
+    # Convert to a data frame
+    as_tibble() %>%
+    # Save only the rows that are terminal nodes
+    filter(var == "<leaf>") %>%
+    # Count them
+    nrow()
 }
 
 cart_wflows$.extracts[[1]] %>% num_nodes()
@@ -250,9 +254,9 @@ cart_wflows$.extracts[[1]] %>% num_nodes()
 Now let's create a column with the results for each resample:
 
 ```{r num-nodes-counts}
-cart_wflows <- 
-   cart_wflows %>% 
-   mutate(num_nodes = map_int(.extracts, num_nodes))
+cart_wflows <-
+  cart_wflows %>%
+  mutate(num_nodes = map_int(.extracts, num_nodes))
 cart_wflows
 ```
 

@@ -1,4 +1,3 @@
-
 # ------------------------------------------------------------------------------
 
 test_that("test comments", {
@@ -37,40 +36,40 @@ test_that("test comments", {
     two_class_set
   )
   expect_snapshot(
-     error = TRUE,
-     two_class_set %>% comment_add("toe", "foot")
+    error = TRUE,
+    two_class_set %>% comment_add("toe", "foot")
   )
   expect_snapshot(
-     error = TRUE,
-     two_class_set %>% comment_add(letters, "foot")
+    error = TRUE,
+    two_class_set %>% comment_add(letters, "foot")
   )
   expect_snapshot(
-     error = TRUE,
-     two_class_set %>% comment_add(1:2, "foot")
+    error = TRUE,
+    two_class_set %>% comment_add(1:2, "foot")
   )
   expect_snapshot(
-     error = TRUE,
-     two_class_set %>% comment_add("none_cart", 1:2)
+    error = TRUE,
+    two_class_set %>% comment_add("none_cart", 1:2)
   )
   expect_snapshot(
-     error = TRUE,
-     comments_1 %>% comment_add("none_cart", "Stuff.", append = FALSE)
+    error = TRUE,
+    comments_1 %>% comment_add("none_cart", "Stuff.", append = FALSE)
   )
   expect_snapshot(
-     error = TRUE,
-     comment_get(comments_1, id = letters)
+    error = TRUE,
+    comment_get(comments_1, id = letters)
   )
   expect_snapshot(
-     error = TRUE,
-     comment_get(comments_1, id = letters[1])
+    error = TRUE,
+    comment_get(comments_1, id = letters[1])
   )
   expect_snapshot(
-     error = TRUE,
-     comments_1 %>% comment_reset(letters)
+    error = TRUE,
+    comments_1 %>% comment_reset(letters)
   )
   expect_snapshot(
-     error = TRUE,
-     comments_1 %>% comment_reset("none_carts")
+    error = TRUE,
+    comments_1 %>% comment_reset("none_carts")
   )
 })
 

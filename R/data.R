@@ -29,4 +29,3 @@ NULL
 #'
 #' chi_features_set
 NULL
-

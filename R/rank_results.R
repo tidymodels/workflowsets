@@ -45,8 +45,10 @@ rank_results <- function(x, rank_metric = NULL, eval_time = NULL, select_best = 
   eval_time <- tune::choose_eval_time(result_1, metric, eval_time = eval_time)
 
   results <- collect_metrics(x) %>%
-    dplyr::select(wflow_id, .config, .metric, mean, std_err, n,
-                  dplyr::any_of(".eval_time")) %>%
+    dplyr::select(
+      wflow_id, .config, .metric, mean, std_err, n,
+      dplyr::any_of(".eval_time")
+    ) %>%
     dplyr::full_join(wflow_info, by = "wflow_id") %>%
     dplyr::select(-comment, -workflow)
 

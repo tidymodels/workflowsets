@@ -1,4 +1,3 @@
-
 check_metric_results <- function(ind, x, ...) {
   id_val <- x$wflow_id[ind]
 

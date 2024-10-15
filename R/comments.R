@@ -97,8 +97,8 @@ comment_reset <- function(x, id) {
 #' @export
 #' @rdname comment_add
 comment_print <- function(x, id = NULL, ...) {
-   check_wf_set(x)
-   if (is.null(id)) {
+  check_wf_set(x)
+  if (is.null(id)) {
     id <- x$wflow_id
   }
 
