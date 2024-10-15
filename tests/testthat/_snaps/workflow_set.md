@@ -57,9 +57,8 @@
       list(lm = lr_spec, knn = knn_spec), case_weights = wts)
     Condition
       Warning:
-      Case weights are not enabled by the underlying model implementation for the following engine(s): kknn.
-      
-      The `case_weights` argument will be ignored for specifications using that engine.
+      Case weights are not enabled by the underlying model implementation for the engine "kknn".
+      i The `case_weights` argument will be ignored for specifications using that engine.
 
 # specifying a case weight column that isn't in the resamples
 

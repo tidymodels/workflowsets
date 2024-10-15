@@ -238,13 +238,13 @@ set_weights <- function(workflows, case_weights) {
       unlist() %>%
       unique()
 
-    rlang::warn(
-      glue::glue(
-        "Case weights are not enabled by the underlying model implementation ",
-        "for the following engine(s): ",
-        "{glue::glue_collapse(disallowed, sep = ', ')}.\n\n",
-        "The `case_weights` argument will be ignored for specifications ",
-        "using that engine."
+    cli::cli_warn(
+      c(
+        "Case weights are not enabled by the underlying model implementation
+         for the engine{?s} {.or {.val {disallowed}}}.",
+        "i" = "The {.arg case_weights} argument will be ignored for
+               specifications using {cli::qty(disallowed)}
+               {?that engine/those engines}."
       )
     )
   }
