@@ -129,7 +129,7 @@ workflow_set <- function(preproc, models, cross = TRUE, case_weights = NULL) {
   check_bool(cross)
 
   if (length(preproc) != length(models) &
-     (length(preproc) != 1 & length(models) != 1 & !cross)
+    (length(preproc) != 1 & length(models) != 1 & !cross)
   ) {
     cli::cli_abort(
       "The lengths of {.arg preproc} and {.arg models} are different
@@ -150,13 +150,13 @@ workflow_set <- function(preproc, models, cross = TRUE, case_weights = NULL) {
   # call set_weights outside of mutate call so that dplyr
   # doesn't prepend possible warnings with "Problem while computing..."
   wfs <-
-     purrr::map2(res$preproc, res$model, make_workflow) %>%
-     set_weights(case_weights) %>%
-     unname()
+    purrr::map2(res$preproc, res$model, make_workflow) %>%
+    set_weights(case_weights) %>%
+    unname()
 
   res <-
-     res %>%
-     dplyr::mutate(
+    res %>%
+    dplyr::mutate(
       workflow = wfs,
       info = purrr::map(workflow, get_info),
       option = purrr::map(1:nrow(res), ~ new_workflow_set_options()),
@@ -221,74 +221,74 @@ fuse_objects <- function(preproc, models) {
 # takes in a _list_ of workflows so that we can check whether case weights
 # are allowed in batch and only prompt once if so.
 set_weights <- function(workflows, case_weights) {
-   if (rlang::quo_is_null(case_weights)) {
-      return(workflows)
-   }
+  if (rlang::quo_is_null(case_weights)) {
+    return(workflows)
+  }
 
-   allowed <-
-      workflows %>%
+  allowed <-
+    workflows %>%
+    purrr::map(extract_spec_parsnip) %>%
+    purrr::map_lgl(case_weights_allowed)
+
+  if (any(!allowed)) {
+    disallowed <-
+      workflows[!allowed] %>%
       purrr::map(extract_spec_parsnip) %>%
-      purrr::map_lgl(case_weights_allowed)
+      purrr::map(purrr::pluck, "engine") %>%
+      unlist() %>%
+      unique()
 
-   if (any(!allowed)) {
-      disallowed <-
-         workflows[!allowed] %>%
-         purrr::map(extract_spec_parsnip) %>%
-         purrr::map(purrr::pluck, "engine") %>%
-         unlist() %>%
-         unique()
-
-      rlang::warn(
-         glue::glue(
-            "Case weights are not enabled by the underlying model implementation ",
-            "for the following engine(s): ",
-            "{glue::glue_collapse(disallowed, sep = ', ')}.\n\n",
-            "The `case_weights` argument will be ignored for specifications ",
-            "using that engine."
-         )
+    rlang::warn(
+      glue::glue(
+        "Case weights are not enabled by the underlying model implementation ",
+        "for the following engine(s): ",
+        "{glue::glue_collapse(disallowed, sep = ', ')}.\n\n",
+        "The `case_weights` argument will be ignored for specifications ",
+        "using that engine."
       )
-   }
+    )
+  }
 
-   workflows <-
-      purrr::map2(
-         workflows,
-         allowed,
-         add_case_weights_conditionally,
-         case_weights
-      )
+  workflows <-
+    purrr::map2(
+      workflows,
+      allowed,
+      add_case_weights_conditionally,
+      case_weights
+    )
 
-   workflows
+  workflows
 }
 
 # copied from parsnip
 case_weights_allowed <- function(spec) {
-   mod_type <- class(spec)[1]
-   mod_eng <- spec$engine
-   mod_mode <- spec$mode
+  mod_type <- class(spec)[1]
+  mod_eng <- spec$engine
+  mod_mode <- spec$mode
 
-   model_info <-
-      parsnip::get_from_env(paste0(mod_type, "_fit")) %>%
-      dplyr::filter(engine == mod_eng & mode == mod_mode)
+  model_info <-
+    parsnip::get_from_env(paste0(mod_type, "_fit")) %>%
+    dplyr::filter(engine == mod_eng & mode == mod_mode)
 
-   # If weights are used, they are protected data arguments with the canonical
-   # name 'weights' (although this may not be the model function's argument name).
-   data_args <- model_info$value[[1]]$protect
-   any(data_args == "weights")
+  # If weights are used, they are protected data arguments with the canonical
+  # name 'weights' (although this may not be the model function's argument name).
+  data_args <- model_info$value[[1]]$protect
+  any(data_args == "weights")
 }
 
 add_case_weights_conditionally <- function(workflow, allowed, case_weights) {
-   if (allowed) {
-      res <- workflows::add_case_weights(workflow, !!case_weights)
-   } else{
-      res <- workflow
-   }
+  if (allowed) {
+    res <- workflows::add_case_weights(workflow, !!case_weights)
+  } else {
+    res <- workflow
+  }
 
-   res
+  res
 }
 
 # adapted from workflows
 has_case_weights <- function(x) {
-   "case_weights" %in% names(x$pre$actions)
+  "case_weights" %in% names(x$pre$actions)
 }
 
 
@@ -372,8 +372,8 @@ new_workflow_set <- function(x) {
   }
   if (!has_valid_column_wflow_id_strings(x)) {
     cli::cli_abort(
-       "The {.field wflow_id} column should contain unique, non-missing character strings."
-      )
+      "The {.field wflow_id} column should contain unique, non-missing character strings."
+    )
   }
 
   new_workflow_set0(x)
@@ -388,5 +388,3 @@ new_tibble0 <- function(x, ..., class = NULL) {
   x <- vctrs::new_data_frame(x)
   tibble::new_tibble(x, nrow = nrow(x), class = class)
 }
-
-

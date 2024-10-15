@@ -32,35 +32,35 @@
 #' extract_workflow(new_set, id = "none_cart")
 #' @export
 update_workflow_model <- function(x, id, spec, formula = NULL) {
-   check_wf_set(x)
-   check_string(id)
-   check_formula(formula, allow_null = TRUE)
+  check_wf_set(x)
+  check_string(id)
+  check_formula(formula, allow_null = TRUE)
 
-   wflow <- extract_workflow(x, id = id)
-   wflow <- workflows::update_model(wflow, spec = spec, formula = formula)
-   id_ind <- which(x$wflow_id == id)
-   x$info[[id_ind]]$workflow[[1]] <- wflow
-   # Remove any existing results since they are now inconsistent
-   if (!identical(x$result[[id_ind]], list())) {
-      x$result[[id_ind]] <- list()
-   }
-   x
+  wflow <- extract_workflow(x, id = id)
+  wflow <- workflows::update_model(wflow, spec = spec, formula = formula)
+  id_ind <- which(x$wflow_id == id)
+  x$info[[id_ind]]$workflow[[1]] <- wflow
+  # Remove any existing results since they are now inconsistent
+  if (!identical(x$result[[id_ind]], list())) {
+    x$result[[id_ind]] <- list()
+  }
+  x
 }
 
 
 #' @rdname update_workflow_model
 #' @export
 update_workflow_recipe <- function(x, id, recipe, blueprint = NULL) {
-   check_wf_set(x)
-   check_string(id)
+  check_wf_set(x)
+  check_string(id)
 
-   wflow <- extract_workflow(x, id = id)
-   wflow <- workflows::update_recipe(wflow, recipe = recipe, blueprint = blueprint)
-   id_ind <- which(x$wflow_id == id)
-   x$info[[id_ind]]$workflow[[1]] <- wflow
-   # Remove any existing results since they are now inconsistent
-   if (!identical(x$result[[id_ind]], list())) {
-      x$result[[id_ind]] <- list()
-   }
-   x
+  wflow <- extract_workflow(x, id = id)
+  wflow <- workflows::update_recipe(wflow, recipe = recipe, blueprint = blueprint)
+  id_ind <- which(x$wflow_id == id)
+  x$info[[id_ind]]$workflow[[1]] <- wflow
+  # Remove any existing results since they are now inconsistent
+  if (!identical(x$result[[id_ind]], list())) {
+    x$result[[id_ind]] <- list()
+  }
+  x
 }

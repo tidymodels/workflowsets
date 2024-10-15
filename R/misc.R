@@ -1,4 +1,3 @@
-
 make_workflow <- function(x, y) {
   exp_classes <- c("formula", "recipe", "workflow_variables")
   w <-

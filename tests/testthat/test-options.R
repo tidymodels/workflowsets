@@ -1,4 +1,3 @@
-
 # ------------------------------------------------------------------------------
 
 test_that("option management", {
@@ -56,11 +55,10 @@ test_that("option printing", {
 
 
 test_that("check for bad options", {
-   expect_snapshot_error(
-      two_class_set %>% option_add(grid2 = 1)
-   )
-   expect_snapshot_error(
-      two_class_set %>% option_add(grid = 1, blueprint = 2)
-   )
+  expect_snapshot_error(
+    two_class_set %>% option_add(grid2 = 1)
+  )
+  expect_snapshot_error(
+    two_class_set %>% option_add(grid = 1, blueprint = 2)
+  )
 })
-

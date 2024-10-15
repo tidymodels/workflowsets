@@ -82,15 +82,14 @@ rank_plot <- function(object, rank_metric = NULL, metric = NULL,
   has_std_error <- !all(is.na(res$std_err))
 
   p <-
-     switch(
-        type,
-        class =
-           ggplot(res, aes(x = rank, y = mean, col = model)) +
-           geom_point(aes(shape = preprocessor)),
-        wflow_id =
-           ggplot(res, aes(x = rank, y = mean, col = wflow_id)) +
-           geom_point()
-      )
+    switch(type,
+      class =
+        ggplot(res, aes(x = rank, y = mean, col = model)) +
+          geom_point(aes(shape = preprocessor)),
+      wflow_id =
+        ggplot(res, aes(x = rank, y = mean, col = wflow_id)) +
+          geom_point()
+    )
 
   if (num_metrics > 1) {
     res$.metric <- factor(as.character(res$.metric), levels = metrics$metric)

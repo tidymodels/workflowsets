@@ -105,7 +105,7 @@ check_empty_dots <- function(...) {
     cli::cli_abort("{.arg estimated} should be a named argument.")
   }
   if (length(opts) > 0) {
-     cli::cli_abort("{.arg ...} are not used in this function.")
+    cli::cli_abort("{.arg ...} are not used in this function.")
   }
   invisible(NULL)
 }
@@ -142,22 +142,22 @@ extract_preprocessor.workflow_set <- function(x, id, ...) {
 #' @export
 #' @rdname extract_workflow_set_result
 extract_parameter_set_dials.workflow_set <- function(x, id, ...) {
-   y <- filter_id(x, id)
+  y <- filter_id(x, id)
 
-   if ("param_info" %in% names(y$option[[1]])) {
-      return(y$option[[1]][["param_info"]])
-   }
+  if ("param_info" %in% names(y$option[[1]])) {
+    return(y$option[[1]][["param_info"]])
+  }
 
-   extract_parameter_set_dials(y$info[[1]]$workflow[[1]])
+  extract_parameter_set_dials(y$info[[1]]$workflow[[1]])
 }
 
 #' @export
 #' @rdname extract_workflow_set_result
 extract_parameter_dials.workflow_set <- function(x, id, parameter, ...) {
-   res <- extract_parameter_set_dials(x, id)
-   res <- extract_parameter_dials(res, parameter)
+  res <- extract_parameter_set_dials(x, id)
+  res <- extract_parameter_dials(res, parameter)
 
-   res
+  res
 }
 
 # ------------------------------------------------------------------------------

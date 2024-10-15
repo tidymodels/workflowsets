@@ -38,25 +38,25 @@ tune::fit_best
 #' library(rsample)
 #'
 #' data(Chicago)
-#' Chicago <- Chicago[1:1195,]
+#' Chicago <- Chicago[1:1195, ]
 #'
 #' time_val_split <-
-#'    sliding_period(
-#'       Chicago,
-#'       date,
-#'       "month",
-#'       lookback = 38,
-#'       assess_stop = 1
-#'    )
+#'   sliding_period(
+#'     Chicago,
+#'     date,
+#'     "month",
+#'     lookback = 38,
+#'     assess_stop = 1
+#'   )
 #'
 #' chi_features_set
 #'
 #' chi_features_res_new <-
-#'    chi_features_set %>%
-#'    # note: must set `save_workflow = TRUE` to use `fit_best()`
-#'    option_add(control = control_grid(save_workflow = TRUE)) %>%
-#'    # evaluate with resamples
-#'    workflow_map(resamples = time_val_split, grid = 21, seed = 1, verbose = TRUE)
+#'   chi_features_set %>%
+#'   # note: must set `save_workflow = TRUE` to use `fit_best()`
+#'   option_add(control = control_grid(save_workflow = TRUE)) %>%
+#'   # evaluate with resamples
+#'   workflow_map(resamples = time_val_split, grid = 21, seed = 1, verbose = TRUE)
 #'
 #' chi_features_res_new
 #'
@@ -73,33 +73,33 @@ tune::fit_best
 #' @name fit_best.workflow_set
 #' @export
 fit_best.workflow_set <- function(x, metric = NULL, eval_time = NULL, ...) {
-   check_string(metric, allow_null = TRUE)
-   result_1 <- extract_workflow_set_result(x, id = x$wflow_id[[1]])
-   met_set <- tune::.get_tune_metrics(result_1)
+  check_string(metric, allow_null = TRUE)
+  result_1 <- extract_workflow_set_result(x, id = x$wflow_id[[1]])
+  met_set <- tune::.get_tune_metrics(result_1)
 
-   if (is.null(metric)) {
-     metric <- .get_tune_metric_names(result_1)[1]
-   } else {
-     tune::check_metric_in_tune_results(tibble::as_tibble(met_set), metric)
-   }
+  if (is.null(metric)) {
+    metric <- .get_tune_metric_names(result_1)[1]
+  } else {
+    tune::check_metric_in_tune_results(tibble::as_tibble(met_set), metric)
+  }
 
-   if (is.null(eval_time) & is_dyn(met_set, metric)) {
-     eval_time <- tune::.get_tune_eval_times(result_1)[1]
-   }
+  if (is.null(eval_time) & is_dyn(met_set, metric)) {
+    eval_time <- tune::.get_tune_eval_times(result_1)[1]
+  }
 
-   rankings <-
-      rank_results(
-        x,
-        rank_metric = metric,
-        select_best = TRUE,
-        eval_time = eval_time
-      )
+  rankings <-
+    rank_results(
+      x,
+      rank_metric = metric,
+      select_best = TRUE,
+      eval_time = eval_time
+    )
 
-   tune_res <- extract_workflow_set_result(x, id = rankings$wflow_id[1])
+  tune_res <- extract_workflow_set_result(x, id = rankings$wflow_id[1])
 
-   best_params <- select_best(tune_res, metric = metric, eval_time = eval_time)
+  best_params <- select_best(tune_res, metric = metric, eval_time = eval_time)
 
-   fit_best(tune_res, parameters = best_params, ...)
+  fit_best(tune_res, parameters = best_params, ...)
 }
 
 # from unexported

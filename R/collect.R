@@ -167,7 +167,7 @@ collect_notes.workflow_set <- function(x, ...) {
   res
 }
 
-#' 
+#'
 #' @export
 #' @rdname collect_metrics.workflow_set
 collect_extracts.workflow_set <- function(x, ...) {

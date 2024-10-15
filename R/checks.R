@@ -1,8 +1,8 @@
 check_wf_set <- function(x, arg = caller_arg(x), call = caller_env()) {
   if (!inherits(x, "workflow_set")) {
     cli::cli_abort(
-       "{arg} must be a workflow set, not {obj_type_friendly(x)}.",
-       call = call
+      "{arg} must be a workflow set, not {obj_type_friendly(x)}.",
+      call = call
     )
   }
 
@@ -78,8 +78,10 @@ check_options <- function(model, id, global, action = "fail") {
 }
 
 check_tune_args <- function(x) {
-  arg_names <- c("resamples", "param_info", "grid", "metrics", "control",
-                 "iter", "objective", "initial", "eval_time")
+  arg_names <- c(
+    "resamples", "param_info", "grid", "metrics", "control",
+    "iter", "objective", "initial", "eval_time"
+  )
   bad_args <- setdiff(x, arg_names)
   if (length(bad_args) > 0) {
     cli::cli_abort(
@@ -129,7 +131,7 @@ check_names <- function(x) {
   xtab <- table(nms)
   if (any(xtab > 1)) {
     cli::cli_abort(
-       "The workflow names should be unique: {.val {names(xtab)[xtab > 1]}}."
+      "The workflow names should be unique: {.val {names(xtab)[xtab > 1]}}."
     )
   }
   invisible(NULL)
@@ -140,10 +142,10 @@ check_for_workflow <- function(x) {
   if (any(no_wflow)) {
     bad <- names(no_wflow)[no_wflow]
     cli::cli_abort(
-       c(
-          "The objects {.val {bad}} do not have workflows.",
-          "i" = "Use the control option {.code save_workflow} and re-run."
-       )
+      c(
+        "The objects {.val {bad}} do not have workflows.",
+        "i" = "Use the control option {.code save_workflow} and re-run."
+      )
     )
   }
   invisible(NULL)

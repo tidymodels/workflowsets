@@ -129,18 +129,18 @@ test_that("dropping tuning parameter columns", {
     c("wflow_id", ".config", "preproc", "model", ".row", "mpg", ".pred"),
     ignore.order = TRUE
   )
-   expect_named(
+  expect_named(
     collect_predictions(car_set_2),
     c("wflow_id", ".config", "preproc", "model", ".row", "mpg", ".pred"),
     ignore.order = TRUE
   )
 
-   expect_named(
+  expect_named(
     collect_predictions(car_set_1, summarize = FALSE),
     c("wflow_id", ".config", "preproc", "model", "id", ".pred", ".row", "mpg"),
     ignore.order = TRUE
   )
-   expect_named(
+  expect_named(
     collect_predictions(car_set_2, summarize = FALSE),
     c("wflow_id", ".config", "preproc", "model", "id", "id2", ".pred", ".row", "mpg"),
     ignore.order = TRUE

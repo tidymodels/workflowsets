@@ -65,25 +65,25 @@ library(modeldata)
 library(rsample)
 
 data(Chicago)
-Chicago <- Chicago[1:1195,]
+Chicago <- Chicago[1:1195, ]
 
 time_val_split <-
-   sliding_period(
-      Chicago,
-      date,
-      "month",
-      lookback = 38,
-      assess_stop = 1
-   )
+  sliding_period(
+    Chicago,
+    date,
+    "month",
+    lookback = 38,
+    assess_stop = 1
+  )
 
 chi_features_set
 
 chi_features_res_new <-
-   chi_features_set \%>\%
-   # note: must set `save_workflow = TRUE` to use `fit_best()`
-   option_add(control = control_grid(save_workflow = TRUE)) \%>\%
-   # evaluate with resamples
-   workflow_map(resamples = time_val_split, grid = 21, seed = 1, verbose = TRUE)
+  chi_features_set \%>\%
+  # note: must set `save_workflow = TRUE` to use `fit_best()`
+  option_add(control = control_grid(save_workflow = TRUE)) \%>\%
+  # evaluate with resamples
+  workflow_map(resamples = time_val_split, grid = 21, seed = 1, verbose = TRUE)
 
 chi_features_res_new
 
