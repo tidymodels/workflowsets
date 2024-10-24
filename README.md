@@ -6,6 +6,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/tidymodels/workflowsets/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/tidymodels/workflowsets/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check-no-suggests](https://github.com/tidymodels/workflowsets/actions/workflows/R-CMD-check-no-suggests.yaml/badge.svg)](https://github.com/tidymodels/workflowsets/actions/workflows/R-CMD-check-no-suggests.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/tidymodels/workflowsets/branch/main/graph/badge.svg)](https://app.codecov.io/gh/tidymodels/workflowsets?branch=main)
 [![Lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
