@@ -25,7 +25,6 @@ Imports:
     dplyr (>= 1.0.0),
     generics (>= 0.1.2),
     ggplot2,
-    glue,
     hardhat (>= 1.2.0),
     lifecycle (>= 1.0.0),
     parsnip (>= 1.2.1),
