@@ -14,7 +14,7 @@
 #'
 #' Factor predictors are left as-is (i.e., no indicator variables are created).
 #'
-#' @examples
+#' @examplesIf rlang::is_installed("modeldata")
 #' data(penguins, package = "modeldata")
 #'
 #' leave_var_out_formulas(
