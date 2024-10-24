@@ -1,3 +1,5 @@
+skip_if_not_installed(c("kknn", "modeldata"))
+
 library(parsnip)
 library(rsample)
 library(recipes)
