@@ -1,3 +1,6 @@
+skip_if_not_installed("kknn")
+skip_if_not_installed("modeldata")
+
 library(parsnip)
 suppressPackageStartupMessages(library(rsample))
 suppressPackageStartupMessages(library(tune))
@@ -80,8 +83,6 @@ test_that("map logging", {
     cat(logging_res, sep = "\n")
   )
 })
-
-
 
 test_that("missing packages", {
   skip_if(rlang::is_installed("glmnet"))

@@ -1,3 +1,6 @@
+skip_if_not_installed("kknn")
+skip_if_not_installed("modeldata")
+
 test_that("fit_best fits with correct hyperparameters", {
   skip_on_cran()
 

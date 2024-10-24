@@ -1,3 +1,6 @@
+skip_if_not_installed("kknn")
+skip_if_not_installed("modeldata")
+
 library(parsnip)
 library(recipes)
 library(hardhat)

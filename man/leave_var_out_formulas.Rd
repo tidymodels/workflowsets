@@ -30,6 +30,7 @@ such terms).
 Factor predictors are left as-is (i.e., no indicator variables are created).
 }
 \examples{
+\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 data(penguins, package = "modeldata")
 
 leave_var_out_formulas(
@@ -47,6 +48,7 @@ leave_var_out_formulas(
     I(flipper_length_mm^2),
   data = penguins
 )
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 \code{\link[=workflow_set]{workflow_set()}}
