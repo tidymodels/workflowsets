@@ -73,7 +73,7 @@
 #' # ------------------------------------------------------------------------------
 #'
 #' data(cells)
-#' cells <- cells %>% dplyr::select(-case)
+#' cells <- cells |> dplyr::select(-case)
 #'
 #' set.seed(1)
 #' val_set <- validation_split(cells)
@@ -81,27 +81,27 @@
 #' # ------------------------------------------------------------------------------
 #'
 #' basic_recipe <-
-#'   recipe(class ~ ., data = cells) %>%
-#'   step_YeoJohnson(all_predictors()) %>%
+#'   recipe(class ~ ., data = cells) |>
+#'   step_YeoJohnson(all_predictors()) |>
 #'   step_normalize(all_predictors())
 #'
 #' pca_recipe <-
-#'   basic_recipe %>%
+#'   basic_recipe |>
 #'   step_pca(all_predictors(), num_comp = tune())
 #'
 #' ss_recipe <-
-#'   basic_recipe %>%
+#'   basic_recipe |>
 #'   step_spatialsign(all_predictors())
 #'
 #' # ------------------------------------------------------------------------------
 #'
 #' knn_mod <-
-#'   nearest_neighbor(neighbors = tune(), weight_func = tune()) %>%
-#'   set_engine("kknn") %>%
+#'   nearest_neighbor(neighbors = tune(), weight_func = tune()) |>
+#'   set_engine("kknn") |>
 #'   set_mode("classification")
 #'
 #' lr_mod <-
-#'   logistic_reg() %>%
+#'   logistic_reg() |>
 #'   set_engine("glm")
 #'
 #' # ------------------------------------------------------------------------------
@@ -117,7 +117,7 @@
 #'
 #' # Select predictors by their names
 #' channels <- paste0("ch_", 1:4)
-#' preproc <- purrr::map(channels, ~ workflow_variables(class, c(contains(!!.x))))
+#' preproc <- purrr::map(channels, \(.x) workflow_variables(class, c(contains(!!.x))))
 #' names(preproc) <- channels
 #' preproc$everything <- class ~ .
 #' preproc
@@ -128,8 +128,9 @@
 workflow_set <- function(preproc, models, cross = TRUE, case_weights = NULL) {
   check_bool(cross)
 
-  if (length(preproc) != length(models) &
-    (length(preproc) != 1 & length(models) != 1 & !cross)
+  if (
+    length(preproc) != length(models) &
+      (length(preproc) != 1 & length(models) != 1 & !cross)
   ) {
     cli::cli_abort(
       "The lengths of {.arg preproc} and {.arg models} are different
@@ -150,18 +151,18 @@ workflow_set <- function(preproc, models, cross = TRUE, case_weights = NULL) {
   # call set_weights outside of mutate call so that dplyr
   # doesn't prepend possible warnings with "Problem while computing..."
   wfs <-
-    purrr::map2(res$preproc, res$model, make_workflow) %>%
-    set_weights(case_weights) %>%
+    purrr::map2(res$preproc, res$model, make_workflow) |>
+    set_weights(case_weights) |>
     unname()
 
   res <-
-    res %>%
+    res |>
     dplyr::mutate(
       workflow = wfs,
       info = purrr::map(workflow, get_info),
-      option = purrr::map(1:nrow(res), ~ new_workflow_set_options()),
-      result = purrr::map(1:nrow(res), ~ list())
-    ) %>%
+      option = purrr::map(1:nrow(res), \(i) new_workflow_set_options()),
+      result = purrr::map(1:nrow(res), \(i) list())
+    ) |>
     dplyr::select(wflow_id, info, option, result)
 
   new_workflow_set(res)
@@ -187,7 +188,7 @@ model_type <- function(x) {
 }
 
 fix_list_names <- function(x) {
-  prefix <- purrr::map_chr(x, ~ class(.x)[1])
+  prefix <- purrr::map_chr(x, \(.x) class(.x)[1])
   prefix <- vctrs::vec_as_names(prefix, repair = "unique", quiet = TRUE)
   prefix <- gsub("\\.\\.\\.", "_", prefix)
   nms <- names(x)
@@ -201,9 +202,9 @@ fix_list_names <- function(x) {
 }
 
 cross_objects <- function(preproc, models) {
-  tidyr::crossing(preproc, models) %>%
-    dplyr::mutate(pp_nm = names(preproc), mod_nm = names(models)) %>%
-    dplyr::mutate(wflow_id = paste(pp_nm, mod_nm, sep = "_")) %>%
+  tidyr::crossing(preproc, models) |>
+    dplyr::mutate(pp_nm = names(preproc), mod_nm = names(models)) |>
+    dplyr::mutate(wflow_id = paste(pp_nm, mod_nm, sep = "_")) |>
     dplyr::select(wflow_id, preproc, model = models)
 }
 
@@ -214,7 +215,7 @@ fuse_objects <- function(preproc, models) {
   nms <-
     tibble::tibble(wflow_id = paste(names(preproc), names(models), sep = "_"))
 
-  tibble::tibble(preproc = preproc, model = models) %>%
+  tibble::tibble(preproc = preproc, model = models) |>
     dplyr::bind_cols(nms)
 }
 
@@ -226,16 +227,16 @@ set_weights <- function(workflows, case_weights) {
   }
 
   allowed <-
-    workflows %>%
-    purrr::map(extract_spec_parsnip) %>%
+    workflows |>
+    purrr::map(extract_spec_parsnip) |>
     purrr::map_lgl(case_weights_allowed)
 
   if (any(!allowed)) {
     disallowed <-
-      workflows[!allowed] %>%
-      purrr::map(extract_spec_parsnip) %>%
-      purrr::map(purrr::pluck, "engine") %>%
-      unlist() %>%
+      workflows[!allowed] |>
+      purrr::map(extract_spec_parsnip) |>
+      purrr::map(purrr::pluck, "engine") |>
+      unlist() |>
       unique()
 
     cli::cli_warn(
@@ -267,7 +268,7 @@ case_weights_allowed <- function(spec) {
   mod_mode <- spec$mode
 
   model_info <-
-    parsnip::get_from_env(paste0(mod_type, "_fit")) %>%
+    parsnip::get_from_env(paste0(mod_type, "_fit")) |>
     dplyr::filter(engine == mod_eng & mode == mod_mode)
 
   # If weights are used, they are protected data arguments with the canonical
@@ -337,7 +338,10 @@ new_workflow_set <- function(x, call = caller_env()) {
     cli::cli_abort("The {.field info} column should be a list.", call = call)
   }
   if (!has_valid_column_info_inner_types(x)) {
-    cli::cli_abort("All elements of {.field info} must be tibbles.", call = call)
+    cli::cli_abort(
+      "All elements of {.field info} must be tibbles.",
+      call = call
+    )
   }
   if (!has_valid_column_info_inner_names(x)) {
     columns <- required_info_inner_names()

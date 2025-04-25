@@ -11,11 +11,15 @@ check_wf_set <- function(x, arg = caller_arg(x), call = caller_env()) {
 
 check_consistent_metrics <- function(x, fail = TRUE, call = caller_env()) {
   metric_info <-
-    dplyr::distinct(x, .metric, wflow_id) %>%
-    dplyr::mutate(has = TRUE) %>%
-    tidyr::pivot_wider(names_from = ".metric", values_from = "has", values_fill = FALSE) %>%
-    dplyr::select(-wflow_id) %>%
-    purrr::map_dbl(~ sum(!.x))
+    dplyr::distinct(x, .metric, wflow_id) |>
+    dplyr::mutate(has = TRUE) |>
+    tidyr::pivot_wider(
+      names_from = ".metric",
+      values_from = "has",
+      values_fill = FALSE
+    ) |>
+    dplyr::select(-wflow_id) |>
+    purrr::map_dbl(\(.x) sum(!.x))
 
   if (any(metric_info > 0)) {
     incp_metrics <- names(metric_info)[metric_info > 0]
@@ -36,8 +40,8 @@ check_consistent_metrics <- function(x, fail = TRUE, call = caller_env()) {
 }
 
 check_incompete <- function(x, fail = TRUE, call = caller_env()) {
-  empty_res <- purrr::map_lgl(x$result, ~ identical(.x, list()))
-  failed_res <- purrr::map_lgl(x$result, ~ inherits(.x, "try-error"))
+  empty_res <- purrr::map_lgl(x$result, \(.x) identical(.x, list()))
+  failed_res <- purrr::map_lgl(x$result, \(.x) inherits(.x, "try-error"))
 
   n_empty <- sum(empty_res | failed_res)
   if (n_empty > 0) {
@@ -58,7 +62,6 @@ check_incompete <- function(x, fail = TRUE, call = caller_env()) {
 
 # TODO check for consistent resamples
 
-
 # if global in local, overwrite or fail?
 
 common_options <- function(model, global) {
@@ -73,7 +76,13 @@ common_options <- function(model, global) {
   res
 }
 
-check_options <- function(model, id, global, action = "fail", call = caller_env()) {
+check_options <- function(
+  model,
+  id,
+  global,
+  action = "fail",
+  call = caller_env()
+) {
   res <- purrr::map_chr(model, common_options, global)
   flag <- nchar(res) > 0
   if (any(flag)) {
@@ -91,8 +100,15 @@ check_options <- function(model, id, global, action = "fail", call = caller_env(
 
 check_tune_args <- function(x, call = caller_env()) {
   arg_names <- c(
-    "resamples", "param_info", "grid", "metrics", "control",
-    "iter", "objective", "initial", "eval_time"
+    "resamples",
+    "param_info",
+    "grid",
+    "metrics",
+    "control",
+    "iter",
+    "objective",
+    "initial",
+    "eval_time"
   )
   bad_args <- setdiff(x, arg_names)
   if (length(bad_args) > 0) {
@@ -152,7 +168,7 @@ check_names <- function(x, call = caller_env()) {
 }
 
 check_for_workflow <- function(x, call = caller_env()) {
-  no_wflow <- purrr::map_lgl(x, ~ !inherits(.x, "workflow"))
+  no_wflow <- purrr::map_lgl(x, \(.x) !inherits(.x, "workflow"))
   if (any(no_wflow)) {
     bad <- names(no_wflow)[no_wflow]
     cli::cli_abort(
@@ -261,7 +277,11 @@ has_valid_column_option_structure <- function(x) {
 }
 has_valid_column_option_inner_types <- function(x) {
   option <- x$option
-  valid_options_indicator <- purrr::map_lgl(option, inherits, "workflow_set_options")
+  valid_options_indicator <- purrr::map_lgl(
+    option,
+    inherits,
+    "workflow_set_options"
+  )
   all(valid_options_indicator)
 }
 
@@ -290,7 +310,10 @@ has_valid_column_wflow_id_strings <- function(x) {
 has_all_pkgs <- function(w) {
   pkgs <- generics::required_pkgs(w, infra = FALSE)
   if (length(pkgs) > 0) {
-    is_inst <- purrr::map_lgl(pkgs, ~ rlang::is_true(requireNamespace(.x, quietly = TRUE)))
+    is_inst <- purrr::map_lgl(
+      pkgs,
+      \(.x) rlang::is_true(requireNamespace(.x, quietly = TRUE))
+    )
     if (!all(is_inst)) {
       cols <- tune::get_tune_colors()
       msg <- paste0(
@@ -299,7 +322,8 @@ has_all_pkgs <- function(w) {
         ". Skipping this workflow."
       )
       message(
-        cols$symbol$danger(cli::symbol$cross), " ",
+        cols$symbol$danger(cli::symbol$cross),
+        " ",
         cols$message$warning(msg)
       )
       res <- FALSE

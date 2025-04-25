@@ -1,25 +1,30 @@
 # specifying a column that is not case weights
 
     Code
-      car_set_2 <- workflow_set(list(reg = mpg ~ ., nonlin = mpg ~ wt + 1 / sqrt(disp)),
-      list(lm = lr_spec), case_weights = non_wts) %>% workflow_map("fit_resamples",
-        resamples = vfold_cv(cars, v = 5))
+      car_set_2 <- workflow_map(workflow_set(list(reg = mpg ~ ., nonlin = mpg ~ wt +
+        1 / sqrt(disp)), list(lm = lr_spec), case_weights = non_wts), "fit_resamples",
+      resamples = vfold_cv(cars, v = 5))
     Message
       x Fold1: preprocessor 1/1:
         Error in `fit()`:
         ! `col` must select a classed case weights column, as determined by `h...
+        i For example, it could be a column created by `hardhat::frequency_wei...
       x Fold2: preprocessor 1/1:
         Error in `fit()`:
         ! `col` must select a classed case weights column, as determined by `h...
+        i For example, it could be a column created by `hardhat::frequency_wei...
       x Fold3: preprocessor 1/1:
         Error in `fit()`:
         ! `col` must select a classed case weights column, as determined by `h...
+        i For example, it could be a column created by `hardhat::frequency_wei...
       x Fold4: preprocessor 1/1:
         Error in `fit()`:
         ! `col` must select a classed case weights column, as determined by `h...
+        i For example, it could be a column created by `hardhat::frequency_wei...
       x Fold5: preprocessor 1/1:
         Error in `fit()`:
         ! `col` must select a classed case weights column, as determined by `h...
+        i For example, it could be a column created by `hardhat::frequency_wei...
     Condition
       Warning:
       All models failed. Run `show_notes(.Last.tune.result)` for more information.
@@ -27,18 +32,23 @@
       x Fold1: preprocessor 1/1:
         Error in `fit()`:
         ! `col` must select a classed case weights column, as determined by `h...
+        i For example, it could be a column created by `hardhat::frequency_wei...
       x Fold2: preprocessor 1/1:
         Error in `fit()`:
         ! `col` must select a classed case weights column, as determined by `h...
+        i For example, it could be a column created by `hardhat::frequency_wei...
       x Fold3: preprocessor 1/1:
         Error in `fit()`:
         ! `col` must select a classed case weights column, as determined by `h...
+        i For example, it could be a column created by `hardhat::frequency_wei...
       x Fold4: preprocessor 1/1:
         Error in `fit()`:
         ! `col` must select a classed case weights column, as determined by `h...
+        i For example, it could be a column created by `hardhat::frequency_wei...
       x Fold5: preprocessor 1/1:
         Error in `fit()`:
         ! `col` must select a classed case weights column, as determined by `h...
+        i For example, it could be a column created by `hardhat::frequency_wei...
     Condition
       Warning:
       All models failed. Run `show_notes(.Last.tune.result)` for more information.
@@ -48,7 +58,7 @@
     Code
       class_note$note[1]
     Output
-      [1] "Error in `fit()`:\n! `col` must select a classed case weights column, as determined by `hardhat::is_case_weights()`. For example, it could be a column created by `hardhat::frequency_weights()` or `hardhat::importance_weights()`."
+      [1] "Error in `fit()`:\n! `col` must select a classed case weights column, as determined by `hardhat::is_case_weights()`.\ni For example, it could be a column created by `hardhat::frequency_weights()` or `hardhat::importance_weights()`."
 
 # specifying an engine that does not allow case weights
 
@@ -63,9 +73,9 @@
 # specifying a case weight column that isn't in the resamples
 
     Code
-      car_set_4 <- workflow_set(list(reg = mpg ~ ., nonlin = mpg ~ wt + 1 / sqrt(disp)),
-      list(lm = lr_spec), case_weights = boop) %>% workflow_map("fit_resamples",
-        resamples = vfold_cv(cars, v = 5))
+      car_set_4 <- workflow_map(workflow_set(list(reg = mpg ~ ., nonlin = mpg ~ wt +
+        1 / sqrt(disp)), list(lm = lr_spec), case_weights = boop), "fit_resamples",
+      resamples = vfold_cv(cars, v = 5))
     Message
       x Fold1: preprocessor 1/1:
         Error in `fit()`:
@@ -136,14 +146,14 @@
     Code
       as_workflow_set(wt = f_1, disp = f_2)
     Condition
-      Error:
+      Error in `as_workflow_set()`:
       ! Different resamples were used in the workflow results.
       i All elements of result must use the same resamples.
 
 # constructor
 
     Code
-      new_workflow_set(car_set_1 %>% dplyr::select(-info))
+      new_workflow_set(dplyr::select(car_set_1, -info))
     Condition
       Error:
       ! The object should have columns wflow_id, info, option, and result.
@@ -151,7 +161,7 @@
 ---
 
     Code
-      new_workflow_set(car_set_1 %>% dplyr::mutate(info = "a"))
+      new_workflow_set(dplyr::mutate(car_set_1, info = "a"))
     Condition
       Error:
       ! The info column should be a list.
@@ -159,7 +169,7 @@
 ---
 
     Code
-      new_workflow_set(car_set_1 %>% dplyr::mutate(result = "a"))
+      new_workflow_set(dplyr::mutate(car_set_1, result = "a"))
     Condition
       Error:
       ! The result column should be a list.
@@ -167,7 +177,7 @@
 ---
 
     Code
-      new_workflow_set(car_set_1 %>% dplyr::mutate(option = "a"))
+      new_workflow_set(dplyr::mutate(car_set_1, option = "a"))
     Condition
       Error:
       ! The option column should be a list.
@@ -175,7 +185,7 @@
 ---
 
     Code
-      new_workflow_set(car_set_1 %>% dplyr::mutate(wflow_id = 1))
+      new_workflow_set(dplyr::mutate(car_set_1, wflow_id = 1))
     Condition
       Error:
       ! The wflow_id column should be character.
@@ -183,7 +193,7 @@
 ---
 
     Code
-      new_workflow_set(car_set_1 %>% dplyr::mutate(wflow_id = "a"))
+      new_workflow_set(dplyr::mutate(car_set_1, wflow_id = "a"))
     Condition
       Error:
       ! The wflow_id column should contain unique, non-missing character strings.

@@ -21,8 +21,8 @@
 #' library(parsnip)
 #'
 #' new_mod <-
-#'   decision_tree() %>%
-#'   set_engine("rpart", method = "anova") %>%
+#'   decision_tree() |>
+#'   set_engine("rpart", method = "anova") |>
 #'   set_mode("classification")
 #'
 #' new_set <- update_workflow_model(two_class_res, "none_cart", spec = new_mod)
@@ -55,7 +55,11 @@ update_workflow_recipe <- function(x, id, recipe, blueprint = NULL) {
   check_string(id)
 
   wflow <- extract_workflow(x, id = id)
-  wflow <- workflows::update_recipe(wflow, recipe = recipe, blueprint = blueprint)
+  wflow <- workflows::update_recipe(
+    wflow,
+    recipe = recipe,
+    blueprint = blueprint
+  )
   id_ind <- which(x$wflow_id == id)
   x$info[[id_ind]]$workflow[[1]] <- wflow
   # Remove any existing results since they are now inconsistent

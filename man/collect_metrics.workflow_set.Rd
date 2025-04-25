@@ -94,10 +94,10 @@ two_class_res
 collect_metrics(two_class_res)
 
 # Alternatively, if the tuning parameter values are needed:
-two_class_res \%>\%
-  dplyr::filter(grepl("cart", wflow_id)) \%>\%
-  mutate(metrics = map(result, collect_metrics)) \%>\%
-  dplyr::select(wflow_id, metrics) \%>\%
+two_class_res |>
+  dplyr::filter(grepl("cart", wflow_id)) |>
+  mutate(metrics = map(result, collect_metrics)) |>
+  dplyr::select(wflow_id, metrics) |>
   tidyr::unnest(cols = metrics)
 }
 

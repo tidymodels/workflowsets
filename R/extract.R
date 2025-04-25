@@ -94,7 +94,9 @@ extract_spec_parsnip.workflow_set <- function(x, id, ...) {
 extract_recipe.workflow_set <- function(x, id, ..., estimated = TRUE) {
   check_empty_dots(...)
   if (!rlang::is_bool(estimated)) {
-    cli::cli_abort("{.arg estimated} must be a single {.code TRUE} or {.code FALSE}.")
+    cli::cli_abort(
+      "{.arg estimated} must be a single {.code TRUE} or {.code FALSE}."
+    )
   }
   y <- filter_id(x, id)
   extract_recipe(y$info[[1]]$workflow[[1]], estimated = estimated)

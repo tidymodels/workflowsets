@@ -45,7 +45,10 @@ leave_var_out_formulas <- function(formula, data, full_model = TRUE, ...) {
   y_vars <- as.character(formula[[2]])
 
   form_terms <- purrr::map(x_vars, rm_vars, lst = x_vars)
-  form <- purrr::map_chr(form_terms, ~ paste(y_vars, "~", paste(.x, collapse = " + ")))
+  form <- purrr::map_chr(
+    form_terms,
+    \(.x) paste(y_vars, "~", paste(.x, collapse = " + "))
+  )
   form <- purrr::map(form, as.formula)
   form <- purrr::map(form, rm_formula_env)
   names(form) <- x_vars
@@ -60,7 +63,7 @@ rm_vars <- function(x, lst) {
 }
 
 remaining_terms <- function(x, lst) {
-  has_x <- purrr::map_lgl(lst, ~ x %in% all_terms(.x))
+  has_x <- purrr::map_lgl(lst, \(.x) x %in% all_terms(.x))
   is_x <- lst == x
   lst[!has_x & !is_x]
 }

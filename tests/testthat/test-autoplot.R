@@ -4,8 +4,15 @@ test_that("autoplot with error bars (class)", {
   expect_equal(
     names(p_1$data),
     c(
-      "wflow_id", ".config", ".metric", "mean", "std_err", "n",
-      "preprocessor", "model", "rank"
+      "wflow_id",
+      ".config",
+      ".metric",
+      "mean",
+      "std_err",
+      "n",
+      "preprocessor",
+      "model",
+      "rank"
     )
   )
   expect_equal(rlang::get_expr(p_1$mapping$x), expr(rank))
@@ -30,8 +37,15 @@ test_that("autoplot with error bars (wflow_id)", {
   expect_equal(
     names(p_1$data),
     c(
-      "wflow_id", ".config", ".metric", "mean", "std_err", "n",
-      "preprocessor", "model", "rank"
+      "wflow_id",
+      ".config",
+      ".metric",
+      "mean",
+      "std_err",
+      "n",
+      "preprocessor",
+      "model",
+      "rank"
     )
   )
   expect_equal(rlang::get_expr(p_1$mapping$x), expr(rank))
@@ -63,8 +77,15 @@ test_that("autoplot with without error bars", {
   expect_equal(
     names(p_2$data),
     c(
-      "wflow_id", ".config", ".metric", "mean", "std_err", "n",
-      "preprocessor", "model", "rank"
+      "wflow_id",
+      ".config",
+      ".metric",
+      "mean",
+      "std_err",
+      "n",
+      "preprocessor",
+      "model",
+      "rank"
     )
   )
   expect_equal(rlang::get_expr(p_2$mapping$x), expr(rank))

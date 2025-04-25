@@ -50,11 +50,11 @@ sequence of models built in Section 1.3 of Kuhn and Johnson (2019). See
 # objects to a workflow set
 two_class_res
 
-results <- two_class_res \%>\% purrr::pluck("result")
+results <- two_class_res |> purrr::pluck("result")
 names(results) <- two_class_res$wflow_id
 
 # These are all objects that have been resampled or tuned:
-purrr::map_chr(results, ~ class(.x)[1])
+purrr::map_chr(results, \(x) class(x)[1])
 
 # Use rlang's !!! operator to splice in the elements of the list
 new_set <- as_workflow_set(!!!results)
@@ -68,13 +68,13 @@ library(workflows)
 lr_spec <- logistic_reg()
 
 main_effects <-
-  workflow() \%>\%
-  add_model(lr_spec) \%>\%
+  workflow() |>
+  add_model(lr_spec) |>
   add_formula(Class ~ .)
 
 interactions <-
-  workflow() \%>\%
-  add_model(lr_spec) \%>\%
+  workflow() |>
+  add_model(lr_spec) |>
   add_formula(Class ~ (.)^2)
 
 as_workflow_set(main = main_effects, int = interactions)

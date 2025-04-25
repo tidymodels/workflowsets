@@ -2,7 +2,7 @@
 
 test_that("test comments", {
   comments_1 <-
-    two_class_set %>%
+    two_class_set |>
     comment_add("none_cart", "What does 'cart' stand for\u2753")
 
   expect_equal(
@@ -14,46 +14,46 @@ test_that("test comments", {
     expect_equal(comments_1$info[[i]]$comment, character(1))
   }
   comments_2 <-
-    comments_1 %>%
+    comments_1 |>
     comment_add("none_cart", "Stuff.")
   expect_equal(
-    comment_get(comments_2, id = "none_cart") %>% paste0(collapse = "\n"),
+    comment_get(comments_2, id = "none_cart") |> paste0(collapse = "\n"),
     "What does 'cart' stand for\u2753\nStuff."
   )
   comments_3 <-
-    comments_2 %>%
+    comments_2 |>
     comment_reset("none_cart")
   expect_equal(
     comments_3$info[[1]]$comment,
     character(1)
   )
   expect_equal(
-    two_class_set %>% comment_add(),
+    two_class_set |> comment_add(),
     two_class_set
   )
   expect_equal(
-    two_class_set %>% comment_add("none_cart"),
+    two_class_set |> comment_add("none_cart"),
     two_class_set
   )
   expect_snapshot(
     error = TRUE,
-    two_class_set %>% comment_add("toe", "foot")
+    two_class_set |> comment_add("toe", "foot")
   )
   expect_snapshot(
     error = TRUE,
-    two_class_set %>% comment_add(letters, "foot")
+    two_class_set |> comment_add(letters, "foot")
   )
   expect_snapshot(
     error = TRUE,
-    two_class_set %>% comment_add(1:2, "foot")
+    two_class_set |> comment_add(1:2, "foot")
   )
   expect_snapshot(
     error = TRUE,
-    two_class_set %>% comment_add("none_cart", 1:2)
+    two_class_set |> comment_add("none_cart", 1:2)
   )
   expect_snapshot(
     error = TRUE,
-    comments_1 %>% comment_add("none_cart", "Stuff.", append = FALSE)
+    comments_1 |> comment_add("none_cart", "Stuff.", append = FALSE)
   )
   expect_snapshot(
     error = TRUE,
@@ -65,11 +65,11 @@ test_that("test comments", {
   )
   expect_snapshot(
     error = TRUE,
-    comments_1 %>% comment_reset(letters)
+    comments_1 |> comment_reset(letters)
   )
   expect_snapshot(
     error = TRUE,
-    comments_1 %>% comment_reset("none_carts")
+    comments_1 |> comment_reset("none_carts")
   )
 })
 
@@ -79,9 +79,9 @@ test_that("print comments", {
   gatsby_3 <- "Across the courtesy bay the white palaces of fashionable East Egg glittered along the water, and the history of the summer really begins on the evening I drove over there to have dinner with the Tom Buchanans. Daisy was my second cousin once removed and I'd known Tom in college. And just after the war I spent two days with them in Chicago."
 
   test <-
-    two_class_res %>%
-    comment_add("none_cart", gatsby_1) %>%
-    comment_add("none_cart", gatsby_2) %>%
+    two_class_res |>
+    comment_add("none_cart", gatsby_1) |>
+    comment_add("none_cart", gatsby_2) |>
     comment_add("none_glm", gatsby_3)
 
   expect_snapshot(comment_print(test))

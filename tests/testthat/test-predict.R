@@ -8,10 +8,10 @@ suppressPackageStartupMessages(library(tune))
 
 # ------------------------------------------------------------------------------
 
-lr_spec <- linear_reg() %>% set_engine("lm")
+lr_spec <- linear_reg() |> set_engine("lm")
 knn_spec <-
-  nearest_neighbor(neighbors = tune()) %>%
-  set_engine("kknn") %>%
+  nearest_neighbor(neighbors = tune()) |>
+  set_engine("kknn") |>
   set_mode("regression")
 
 set.seed(1)
@@ -22,8 +22,9 @@ car_set_1 <-
   )
 
 car_set_2 <-
-  car_set_1 %>%
-  workflow_map("fit_resamples",
+  car_set_1 |>
+  workflow_map(
+    "fit_resamples",
     resamples = vfold_cv(mtcars, v = 3),
     control = tune::control_resamples(save_pred = TRUE)
   )

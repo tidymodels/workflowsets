@@ -37,7 +37,7 @@
 ---
 
     Code
-      car_set_1 %>% extract_workflow_set_result("Gideon Nav")
+      extract_workflow_set_result(car_set_1, "Gideon Nav")
     Condition
       Error in `extract_workflow_set_result()`:
       ! `id` must correspond to a single row in `x`.
@@ -45,7 +45,7 @@
 ---
 
     Code
-      car_set_1 %>% extract_workflow("Coronabeth Tridentarius")
+      extract_workflow(car_set_1, "Coronabeth Tridentarius")
     Condition
       Error in `extract_workflow()`:
       ! `id` must correspond to a single row in `x`.

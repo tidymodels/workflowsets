@@ -8,13 +8,13 @@ library(kknn)
 
 # ------------------------------------------------------------------------------
 
-lr_spec <- linear_reg() %>% set_engine("lm")
+lr_spec <- linear_reg() |> set_engine("lm")
 knn_spec <-
-  nearest_neighbor(neighbors = tune()) %>%
-  set_engine("kknn") %>%
+  nearest_neighbor(neighbors = tune()) |>
+  set_engine("kknn") |>
   set_mode("regression")
 glmn_spec <-
-  linear_reg(penalty = tune()) %>%
+  linear_reg(penalty = tune()) |>
   set_engine("glmnet")
 
 set.seed(1)
@@ -24,7 +24,7 @@ car_set_1 <-
   workflow_set(
     list(reg = mpg ~ ., nonlin = mpg ~ wt + 1 / sqrt(disp)),
     list(lm = lr_spec, knn = knn_spec)
-  ) %>%
+  ) |>
   dplyr::slice(-4)
 
 # ------------------------------------------------------------------------------
@@ -32,14 +32,14 @@ car_set_1 <-
 test_that("basic mapping", {
   expect_no_error({
     res_1 <-
-      car_set_1 %>%
+      car_set_1 |>
       workflow_map(resamples = folds, seed = 2, grid = 2)
   })
 
   # check reproducibility
   expect_no_error({
     res_2 <-
-      car_set_1 %>%
+      car_set_1 |>
       workflow_map(resamples = folds, seed = 2, grid = 2)
   })
   expect_equal(collect_metrics(res_1), collect_metrics(res_2))
@@ -48,19 +48,19 @@ test_that("basic mapping", {
 
   expect_snapshot(
     error = TRUE,
-    two_class_set %>%
+    two_class_set |>
       workflow_map("foo", seed = 1, resamples = folds, grid = 2)
   )
 
   expect_snapshot(
     error = TRUE,
-    two_class_set %>%
+    two_class_set |>
       workflow_map(fn = 1L, seed = 1, resamples = folds, grid = 2)
   )
 
   expect_snapshot(
     error = TRUE,
-    two_class_set %>%
+    two_class_set |>
       workflow_map(fn = tune::tune_grid, seed = 1, resamples = folds, grid = 2)
   )
 })
@@ -73,7 +73,7 @@ test_that("map logging", {
     logging_res <-
       capture.output(
         res <-
-          car_set_1 %>%
+          car_set_1 |>
           workflow_map(resamples = folds, seed = 2, verbose = TRUE),
         type = "message"
       )
@@ -95,7 +95,7 @@ test_that("missing packages", {
   expect_snapshot(
     {
       res <-
-        car_set_2 %>%
+        car_set_2 |>
         workflow_map(resamples = folds, seed = 2, verbose = FALSE)
     },
     transform = function(lines) {
@@ -105,7 +105,6 @@ test_that("missing packages", {
   expect_true(inherits(res, "workflow_set"))
   expect_equal(res$result[[1]], list())
 })
-
 
 
 test_that("failers", {
@@ -118,7 +117,7 @@ test_that("failers", {
 
   expect_no_error({
     res_quiet <-
-      car_set_3 %>%
+      car_set_3 |>
       workflow_map(resamples = folds, seed = 2, verbose = FALSE, grid = "a")
   })
   expect_true(inherits(res_quiet, "workflow_set"))
@@ -127,7 +126,7 @@ test_that("failers", {
   expect_snapshot(
     {
       res_loud <-
-        car_set_3 %>%
+        car_set_3 |>
         workflow_map(resamples = folds, seed = 2, verbose = TRUE, grid = "a")
     },
     transform = function(lines) {
@@ -145,7 +144,7 @@ test_that("workflow_map can handle cluster specifications", {
   library(recipes)
 
   set.seed(1)
-  mtcars_tbl <- mtcars %>% dplyr::select(where(is.numeric))
+  mtcars_tbl <- mtcars |> dplyr::select(where(is.numeric))
   folds <- vfold_cv(mtcars_tbl, v = 3)
 
   wf_set_spec <-
@@ -166,7 +165,7 @@ test_that("fail informatively on mismatched spec/tuning function", {
   library(tidyclust)
 
   set.seed(1)
-  mtcars_tbl <- mtcars %>% dplyr::select(where(is.numeric))
+  mtcars_tbl <- mtcars |> dplyr::select(where(is.numeric))
   folds <- vfold_cv(mtcars_tbl, v = 3)
 
   wf_set_1 <-

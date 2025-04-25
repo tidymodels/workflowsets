@@ -11,8 +11,9 @@ test_that("collect_notes works", {
     )
 
   wflow_set_trained <-
-    wflow_set %>%
-    workflow_map("fit_resamples",
+    wflow_set |>
+    workflow_map(
+      "fit_resamples",
       resamples = folds,
       control = tune::control_resamples(extract = function(x) {
         warn("hey!")

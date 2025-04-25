@@ -17,19 +17,19 @@
 #' @examples
 #' two_class_set
 #'
-#' two_class_set %>% comment_get("none_cart")
+#' two_class_set |> comment_get("none_cart")
 #'
 #' new_set <-
-#'   two_class_set %>%
-#'   comment_add("none_cart", "What does 'cart' stand for\u2753") %>%
+#'   two_class_set |>
+#'   comment_add("none_cart", "What does 'cart' stand for\u2753") |>
 #'   comment_add("none_cart", "Classification And Regression Trees.")
 #'
 #' comment_print(new_set)
 #'
-#' new_set %>% comment_get("none_cart")
+#' new_set |> comment_get("none_cart")
 #'
-#' new_set %>%
-#'   comment_reset("none_cart") %>%
+#' new_set |>
+#'   comment_reset("none_cart") |>
 #'   comment_get("none_cart")
 comment_add <- function(x, id, ..., append = TRUE, collapse = "\n") {
   check_wf_set(x)
@@ -53,7 +53,9 @@ comment_add <- function(x, id, ..., append = TRUE, collapse = "\n") {
   id_index <- which(has_id)
   current_val <- x$info[[id_index]]$comment
   if (!is.na(current_val) && !append) {
-    cli::cli_abort("There is already a comment for this id and {.code append = FALSE}.")
+    cli::cli_abort(
+      "There is already a comment for this id and {.code append = FALSE}."
+    )
   }
   new_value <- c(x$info[[id_index]]$comment, unlist(dots))
   new_value <- new_value[!is.na(new_value) & nchar(new_value) > 0]
@@ -103,8 +105,8 @@ comment_print <- function(x, id = NULL, ...) {
   }
 
   x <- dplyr::filter(x, wflow_id %in% id)
-  chr_x <- purrr::map(x$wflow_id, ~ comment_get(x, id = .x))
-  has_comment <- purrr::map_lgl(chr_x, ~ nchar(.x) > 0)
+  chr_x <- purrr::map(x$wflow_id, \(.x) comment_get(x, id = .x))
+  has_comment <- purrr::map_lgl(chr_x, \(.x) nchar(.x) > 0)
   chr_x <- chr_x[which(has_comment)]
   id <- x$wflow_id[which(has_comment)]
 
@@ -122,8 +124,8 @@ comment_print <- function(x, id = NULL, ...) {
 
 comment_format <- function(x, id, ...) {
   x <- strsplit(x, "\n")[[1]]
-  x <- purrr::map(x, ~ strwrap(.x))
-  x <- purrr::map(x, ~ add_returns(.x))
+  x <- purrr::map(x, \(.x) strwrap(.x))
+  x <- purrr::map(x, \(.x) add_returns(.x))
   paste0(x, collapse = "\n\n")
 }
 

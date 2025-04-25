@@ -44,12 +44,16 @@
 #' autoplot(two_class_res, select_best = TRUE)
 #' autoplot(two_class_res, id = "yj_trans_cart", metric = "roc_auc")
 #' @export
-autoplot.workflow_set <- function(object, rank_metric = NULL, metric = NULL,
-                                  id = "workflow_set",
-                                  select_best = FALSE,
-                                  std_errs = qnorm(0.95),
-                                  type = "class",
-                                  ...) {
+autoplot.workflow_set <- function(
+  object,
+  rank_metric = NULL,
+  metric = NULL,
+  id = "workflow_set",
+  select_best = FALSE,
+  std_errs = qnorm(0.95),
+  type = "class",
+  ...
+) {
   rlang::arg_match(type, c("class", "wflow_id"))
   check_string(rank_metric, allow_null = TRUE)
   check_character(metric, allow_null = TRUE)
@@ -57,21 +61,39 @@ autoplot.workflow_set <- function(object, rank_metric = NULL, metric = NULL,
   check_bool(select_best)
 
   if (id == "workflow_set") {
-    p <- rank_plot(object,
-      rank_metric = rank_metric, metric = metric,
-      select_best = select_best, std_errs = std_errs, type = type
+    p <- rank_plot(
+      object,
+      rank_metric = rank_metric,
+      metric = metric,
+      select_best = select_best,
+      std_errs = std_errs,
+      type = type
     )
   } else {
-    p <- autoplot(object$result[[which(object$wflow_id == id)]], metric = metric, ...)
+    p <- autoplot(
+      object$result[[which(object$wflow_id == id)]],
+      metric = metric,
+      ...
+    )
   }
   p
 }
 
-rank_plot <- function(object, rank_metric = NULL, metric = NULL,
-                      select_best = FALSE, std_errs = 1, type = "class") {
+rank_plot <- function(
+  object,
+  rank_metric = NULL,
+  metric = NULL,
+  select_best = FALSE,
+  std_errs = 1,
+  type = "class"
+) {
   metric_info <- pick_metric(object, rank_metric, metric)
   metrics <- collate_metrics(object)
-  res <- rank_results(object, rank_metric = metric_info$metric, select_best = select_best)
+  res <- rank_results(
+    object,
+    rank_metric = metric_info$metric,
+    select_best = select_best
+  )
 
   if (!is.null(metric)) {
     keep_metrics <- unique(c(rank_metric, metric))
@@ -82,13 +104,12 @@ rank_plot <- function(object, rank_metric = NULL, metric = NULL,
   has_std_error <- !all(is.na(res$std_err))
 
   p <-
-    switch(type,
-      class =
-        ggplot(res, aes(x = rank, y = mean, col = model)) +
-          geom_point(aes(shape = preprocessor)),
-      wflow_id =
-        ggplot(res, aes(x = rank, y = mean, col = wflow_id)) +
-          geom_point()
+    switch(
+      type,
+      class = ggplot(res, aes(x = rank, y = mean, col = model)) +
+        geom_point(aes(shape = preprocessor)),
+      wflow_id = ggplot(res, aes(x = rank, y = mean, col = wflow_id)) +
+        geom_point()
     )
 
   if (num_metrics > 1) {

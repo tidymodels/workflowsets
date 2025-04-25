@@ -11,8 +11,9 @@ test_that("collect_extracts works", {
     )
 
   wflow_set_trained <-
-    wflow_set %>%
-    workflow_map("fit_resamples",
+    wflow_set |>
+    workflow_map(
+      "fit_resamples",
       resamples = folds,
       control = tune::control_resamples(extract = function(x) {
         x
@@ -23,7 +24,8 @@ test_that("collect_extracts works", {
 
   expect_equal(nrow(extracts), 6)
   expect_contains(
-    class(extracts$.extracts[[1]]), "workflow"
+    class(extracts$.extracts[[1]]),
+    "workflow"
   )
   expect_named(extracts, c("wflow_id", "id", ".extracts", ".config"))
 })
@@ -40,10 +42,8 @@ test_that("collect_extracts fails gracefully without .extracts column", {
     )
 
   wflow_set_trained <-
-    wflow_set %>%
-    workflow_map("fit_resamples",
-      resamples = folds
-    )
+    wflow_set |>
+    workflow_map("fit_resamples", resamples = folds)
 
   expect_snapshot(
     error = TRUE,

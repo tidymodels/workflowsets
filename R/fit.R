@@ -11,13 +11,15 @@ fit.workflow_set <- function(object, ...) {
   if (!all(purrr::map_lgl(object$result, ~ identical(.x, list())))) {
     # if fitted:
     msg <-
-      c(msg,
+      c(
+        msg,
         "i" = "Please see {.help [{.fun fit_best}](workflowsets::fit_best.workflow_set)}."
       )
   } else {
     # if not fitted:
     msg <-
-      c(msg,
+      c(
+        msg,
         "i" = "Please see {.help [{.fun workflow_map}](workflowsets::workflow_map)}."
       )
   }

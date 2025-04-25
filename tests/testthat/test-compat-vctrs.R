@@ -133,7 +133,13 @@ test_that("vec_cbind() returns a bare tibble", {
     # Unlike vec_c() and vec_rbind(), the prototype of the output comes
     # from doing `x[0]`, which will drop the workflow_set class
     expect_identical(vec_cbind(x), vec_cbind(tbl))
-    expect_identical(vec_cbind(x, x, .name_repair = "minimal"), vec_cbind(tbl, tbl, .name_repair = "minimal"))
-    expect_identical(vec_cbind(x, tbl, .name_repair = "minimal"), vec_cbind(tbl, tbl, .name_repair = "minimal"))
+    expect_identical(
+      vec_cbind(x, x, .name_repair = "minimal"),
+      vec_cbind(tbl, tbl, .name_repair = "minimal")
+    )
+    expect_identical(
+      vec_cbind(x, tbl, .name_repair = "minimal"),
+      vec_cbind(tbl, tbl, .name_repair = "minimal")
+    )
   }
 })
