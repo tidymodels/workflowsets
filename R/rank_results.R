@@ -72,7 +72,7 @@ rank_results <- function(
   types <- x |>
     dplyr::full_join(wflow_info, by = "wflow_id") |>
     dplyr::mutate(
-      is_race = purrr::map_lgl(result, ~ inherits(.x, "tune_race")),
+      is_race = purrr::map_lgl(result, \(.x) inherits(.x, "tune_race")),
       num_rs = purrr::map_int(result, get_num_resamples)
     ) |>
     dplyr::select(wflow_id, is_race, num_rs)
@@ -132,7 +132,7 @@ rank_results <- function(
 }
 
 get_num_resamples <- function(x) {
-  purrr::map_dfr(x$splits, ~ .x$id) |>
+  purrr::map_dfr(x$splits, \(.x) .x$id) |>
     dplyr::distinct() |>
     nrow()
 }

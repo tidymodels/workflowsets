@@ -25,8 +25,8 @@ metric_to_df <- function(x, ...) {
   metrics <- attributes(x)$metrics
   names <- names(metrics)
   metrics <- unname(metrics)
-  classes <- purrr::map_chr(metrics, ~ class(.x)[[1]])
-  directions <- purrr::map_chr(metrics, ~ attr(.x, "direction"))
+  classes <- purrr::map_chr(metrics, \(.x) class(.x)[[1]])
+  directions <- purrr::map_chr(metrics, \(.x) attr(.x, "direction"))
   info <- data.frame(metric = names, class = classes, direction = directions)
   info
 }
@@ -37,7 +37,7 @@ collate_metrics <- function(x) {
     x$result |>
     purrr::map(tune::.get_tune_metrics) |>
     purrr::map(metric_to_df) |>
-    purrr::map_dfr(~ dplyr::mutate(.x, order = 1:nrow(.x)))
+    purrr::map_dfr(\(.x) dplyr::mutate(.x, order = 1:nrow(.x)))
 
   mean_order <-
     metrics |>

@@ -246,7 +246,7 @@ allowed_fn_list <- paste0("'", allowed_fn$func, "'", collapse = ", ")
 check_object_fn <- function(object, fn, call = rlang::caller_env()) {
   wf_specs <- purrr::map(
     object$wflow_id,
-    ~ extract_spec_parsnip(object, id = .x)
+    \(.x) extract_spec_parsnip(object, id = .x)
   )
   is_cluster_spec <- purrr::map_lgl(wf_specs, inherits, "cluster_spec")
 

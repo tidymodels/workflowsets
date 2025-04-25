@@ -19,7 +19,7 @@ check_consistent_metrics <- function(x, fail = TRUE, call = caller_env()) {
       values_fill = FALSE
     ) |>
     dplyr::select(-wflow_id) |>
-    purrr::map_dbl(~ sum(!.x))
+    purrr::map_dbl(\(.x) sum(!.x))
 
   if (any(metric_info > 0)) {
     incp_metrics <- names(metric_info)[metric_info > 0]
@@ -40,8 +40,8 @@ check_consistent_metrics <- function(x, fail = TRUE, call = caller_env()) {
 }
 
 check_incompete <- function(x, fail = TRUE, call = caller_env()) {
-  empty_res <- purrr::map_lgl(x$result, ~ identical(.x, list()))
-  failed_res <- purrr::map_lgl(x$result, ~ inherits(.x, "try-error"))
+  empty_res <- purrr::map_lgl(x$result, \(.x) identical(.x, list()))
+  failed_res <- purrr::map_lgl(x$result, \(.x) inherits(.x, "try-error"))
 
   n_empty <- sum(empty_res | failed_res)
   if (n_empty > 0) {
@@ -168,7 +168,7 @@ check_names <- function(x, call = caller_env()) {
 }
 
 check_for_workflow <- function(x, call = caller_env()) {
-  no_wflow <- purrr::map_lgl(x, ~ !inherits(.x, "workflow"))
+  no_wflow <- purrr::map_lgl(x, \(.x) !inherits(.x, "workflow"))
   if (any(no_wflow)) {
     bad <- names(no_wflow)[no_wflow]
     cli::cli_abort(
@@ -312,7 +312,7 @@ has_all_pkgs <- function(w) {
   if (length(pkgs) > 0) {
     is_inst <- purrr::map_lgl(
       pkgs,
-      ~ rlang::is_true(requireNamespace(.x, quietly = TRUE))
+      \(.x) rlang::is_true(requireNamespace(.x, quietly = TRUE))
     )
     if (!all(is_inst)) {
       cols <- tune::get_tune_colors()

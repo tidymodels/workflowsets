@@ -150,7 +150,7 @@ cell_set
 
 # Select predictors by their names
 channels <- paste0("ch_", 1:4)
-preproc <- purrr::map(channels, ~ workflow_variables(class, c(contains(!!.x))))
+preproc <- purrr::map(channels, \(.x) workflow_variables(class, c(contains(!!.x))))
 names(preproc) <- channels
 preproc$everything <- class ~ .
 preproc

@@ -26,7 +26,7 @@
 #' names(results) <- two_class_res$wflow_id
 #'
 #' # These are all objects that have been resampled or tuned:
-#' purrr::map_chr(results, ~ class(.x)[1])
+#' purrr::map_chr(results, \(x) class(x)[1])
 #'
 #' # Use rlang's !!! operator to splice in the elements of the list
 #' new_set <- as_workflow_set(!!!results)
@@ -55,7 +55,7 @@ as_workflow_set <- function(...) {
   object <- rlang::list2(...)
 
   # These could be workflows or objects of class `tune_result`
-  is_workflow <- purrr::map_lgl(object, ~ inherits(.x, "workflow"))
+  is_workflow <- purrr::map_lgl(object, \(x) inherits(x, "workflow"))
   wflows <- vector("list", length(is_workflow))
   wflows[is_workflow] <- object[is_workflow]
   wflows[!is_workflow] <- purrr::map(
@@ -73,7 +73,7 @@ as_workflow_set <- function(...) {
     dplyr::mutate(
       workflow = unname(wflows),
       info = purrr::map(workflow, get_info),
-      option = purrr::map(1:nrow(res), ~ new_workflow_set_options())
+      option = purrr::map(1:nrow(res), \(i) new_workflow_set_options())
     )
   res$result <- vector(mode = "list", length = nrow(res))
   res$result[!is_workflow] <- object[!is_workflow]

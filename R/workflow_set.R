@@ -117,7 +117,7 @@
 #'
 #' # Select predictors by their names
 #' channels <- paste0("ch_", 1:4)
-#' preproc <- purrr::map(channels, ~ workflow_variables(class, c(contains(!!.x))))
+#' preproc <- purrr::map(channels, \(.x) workflow_variables(class, c(contains(!!.x))))
 #' names(preproc) <- channels
 #' preproc$everything <- class ~ .
 #' preproc
@@ -160,8 +160,8 @@ workflow_set <- function(preproc, models, cross = TRUE, case_weights = NULL) {
     dplyr::mutate(
       workflow = wfs,
       info = purrr::map(workflow, get_info),
-      option = purrr::map(1:nrow(res), ~ new_workflow_set_options()),
-      result = purrr::map(1:nrow(res), ~ list())
+      option = purrr::map(1:nrow(res), \(i) new_workflow_set_options()),
+      result = purrr::map(1:nrow(res), \(i) list())
     ) |>
     dplyr::select(wflow_id, info, option, result)
 
@@ -188,7 +188,7 @@ model_type <- function(x) {
 }
 
 fix_list_names <- function(x) {
-  prefix <- purrr::map_chr(x, ~ class(.x)[1])
+  prefix <- purrr::map_chr(x, \(.x) class(.x)[1])
   prefix <- vctrs::vec_as_names(prefix, repair = "unique", quiet = TRUE)
   prefix <- gsub("\\.\\.\\.", "_", prefix)
   nms <- names(x)

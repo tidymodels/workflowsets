@@ -113,7 +113,7 @@ maybe_param <- function(x) {
 #' @export
 #' @rdname option_add
 option_add_parameters <- function(x, id = NULL, strict = FALSE) {
-  prm <- purrr::map(x$info, ~ maybe_param(.x$workflow[[1]]))
+  prm <- purrr::map(x$info, \(.x) maybe_param(.x$workflow[[1]]))
   num <- purrr::map_int(prm, length)
   if (all(num == 0)) {
     return(x)

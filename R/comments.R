@@ -105,8 +105,8 @@ comment_print <- function(x, id = NULL, ...) {
   }
 
   x <- dplyr::filter(x, wflow_id %in% id)
-  chr_x <- purrr::map(x$wflow_id, ~ comment_get(x, id = .x))
-  has_comment <- purrr::map_lgl(chr_x, ~ nchar(.x) > 0)
+  chr_x <- purrr::map(x$wflow_id, \(.x) comment_get(x, id = .x))
+  has_comment <- purrr::map_lgl(chr_x, \(.x) nchar(.x) > 0)
   chr_x <- chr_x[which(has_comment)]
   id <- x$wflow_id[which(has_comment)]
 
@@ -124,8 +124,8 @@ comment_print <- function(x, id = NULL, ...) {
 
 comment_format <- function(x, id, ...) {
   x <- strsplit(x, "\n")[[1]]
-  x <- purrr::map(x, ~ strwrap(.x))
-  x <- purrr::map(x, ~ add_returns(.x))
+  x <- purrr::map(x, \(.x) strwrap(.x))
+  x <- purrr::map(x, \(.x) add_returns(.x))
   paste0(x, collapse = "\n\n")
 }
 

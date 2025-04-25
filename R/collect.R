@@ -118,11 +118,12 @@ collect_predictions.workflow_set <-
           x,
           predictions = purrr::map(
             result,
-            ~ select_bare_predictions(
-              .x,
-              summarize = summarize,
-              metric = metric
-            )
+            \(.x)
+              select_bare_predictions(
+                .x,
+                summarize = summarize,
+                metric = metric
+              )
           )
         )
     } else {
