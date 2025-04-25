@@ -11,3 +11,5 @@
 ^revdep$
 ^cran-comments\.md$
 ^man-roxygen$
+^[\.]?air\.toml$
+^\.vscode$
