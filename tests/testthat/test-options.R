@@ -41,7 +41,6 @@ test_that("option management", {
 })
 
 
-
 test_that("option printing", {
   expect_output(
     print(two_class_res$option[[1]]),

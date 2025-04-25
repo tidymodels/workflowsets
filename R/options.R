@@ -101,7 +101,6 @@ option_remove <- function(x, ...) {
 }
 
 
-
 maybe_param <- function(x) {
   prm <- hardhat::extract_parameter_set_dials(x)
   if (nrow(prm) == 0) {
@@ -132,7 +131,12 @@ option_add_parameters <- function(x, id = NULL, strict = FALSE) {
       if (length(ind) == 0) {
         cli::cli_warn("Don't have an {.arg id} value {i}")
       } else {
-        check_options(x$option[[ind]], x$wflow_id[[ind]], prm[[ind]], action = act)
+        check_options(
+          x$option[[ind]],
+          x$wflow_id[[ind]],
+          prm[[ind]],
+          action = act
+        )
         x$option[[ind]] <- append_options(x$option[[ind]], prm[[ind]])
       }
     }

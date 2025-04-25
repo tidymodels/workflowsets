@@ -107,7 +107,6 @@ test_that("missing packages", {
 })
 
 
-
 test_that("failers", {
   skip_on_cran()
   car_set_3 <-

@@ -30,7 +30,8 @@ test_that("update model", {
 
   expect_no_error(
     new_new_set <-
-      update_workflow_model(new_set,
+      update_workflow_model(
+        new_set,
         "none_glm",
         spec = xgb,
         formula = Class ~ log(A) + B
@@ -45,10 +46,13 @@ test_that("update model", {
 
 test_that("update recipe", {
   expect_no_error(
-    new_set <- update_workflow_recipe(two_class_res, "yj_trans_cart", recipe = rec)
+    new_set <- update_workflow_recipe(
+      two_class_res,
+      "yj_trans_cart",
+      recipe = rec
+    )
   )
   new_rec <- extract_recipe(new_set, id = "yj_trans_cart", estimated = FALSE)
-
 
   expect_true(all(tidy(new_rec)$type == "normalize"))
   expect_equal(new_set$result[[4]], list())

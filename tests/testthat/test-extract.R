@@ -16,7 +16,8 @@ car_set_1 <-
     ),
     list(lm = lr_spec)
   ) %>%
-  workflow_map("fit_resamples",
+  workflow_map(
+    "fit_resamples",
     resamples = vfold_cv(mtcars, v = 3),
     control = tune::control_resamples(save_pred = TRUE)
   )
@@ -85,7 +86,10 @@ test_that("extract parameter set from workflow set with untunable workflow", {
   lm_model <- parsnip::linear_reg() %>%
     parsnip::set_engine("lm")
   bst_model <-
-    parsnip::boost_tree(mode = "classification", trees = hardhat::tune("funky name \n")) %>%
+    parsnip::boost_tree(
+      mode = "classification",
+      trees = hardhat::tune("funky name \n")
+    ) %>%
     parsnip::set_engine("C5.0", rules = hardhat::tune(), noGlobalPruning = TRUE)
   wf_set <- workflow_set(
     list(reg = rm_rec),
@@ -103,7 +107,10 @@ test_that("extract parameter set from workflow set with tunable workflow", {
   lm_model <- parsnip::linear_reg() %>%
     parsnip::set_engine("lm")
   bst_model <-
-    parsnip::boost_tree(mode = "classification", trees = hardhat::tune("funky name \n")) %>%
+    parsnip::boost_tree(
+      mode = "classification",
+      trees = hardhat::tune("funky name \n")
+    ) %>%
     parsnip::set_engine("C5.0", rules = hardhat::tune(), noGlobalPruning = TRUE)
   wf_set <- workflow_set(
     list(reg = rm_rec),
@@ -131,7 +138,8 @@ test_that("extract parameter set from workflow set with tunable workflow", {
   c5_new_info <-
     c5_info %>%
     update(
-      rules = dials::new_qual_param("logical",
+      rules = dials::new_qual_param(
+        "logical",
         values = c(TRUE, FALSE),
         label = c(rules = "Rules")
       )
@@ -150,14 +158,16 @@ test_that("extract parameter set from workflow set with tunable workflow", {
 })
 
 
-
 test_that("extract single parameter from workflow set with untunable workflow", {
   rm_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) %>%
     recipes::step_rm(date, ends_with("away"))
   lm_model <- parsnip::linear_reg() %>%
     parsnip::set_engine("lm")
   bst_model <-
-    parsnip::boost_tree(mode = "classification", trees = hardhat::tune("funky name \n")) %>%
+    parsnip::boost_tree(
+      mode = "classification",
+      trees = hardhat::tune("funky name \n")
+    ) %>%
     parsnip::set_engine("C5.0", rules = hardhat::tune(), noGlobalPruning = TRUE)
   wf_set <- workflow_set(
     list(reg = rm_rec),
@@ -166,7 +176,11 @@ test_that("extract single parameter from workflow set with untunable workflow", 
 
   expect_snapshot(
     error = TRUE,
-    hardhat::extract_parameter_dials(wf_set, id = "reg_lm", parameter = "non there")
+    hardhat::extract_parameter_dials(
+      wf_set,
+      id = "reg_lm",
+      parameter = "non there"
+    )
   )
 })
 
@@ -176,7 +190,10 @@ test_that("extract single parameter from workflow set with tunable workflow", {
   lm_model <- parsnip::linear_reg() %>%
     parsnip::set_engine("lm")
   bst_model <-
-    parsnip::boost_tree(mode = "classification", trees = hardhat::tune("funky name \n")) %>%
+    parsnip::boost_tree(
+      mode = "classification",
+      trees = hardhat::tune("funky name \n")
+    ) %>%
     parsnip::set_engine("C5.0", rules = hardhat::tune(), noGlobalPruning = TRUE)
   wf_set <- workflow_set(
     list(reg = rm_rec),
@@ -184,7 +201,11 @@ test_that("extract single parameter from workflow set with tunable workflow", {
   )
 
   expect_equal(
-    hardhat::extract_parameter_dials(wf_set, id = "reg_bst", parameter = "funky name \n"),
+    hardhat::extract_parameter_dials(
+      wf_set,
+      id = "reg_bst",
+      parameter = "funky name \n"
+    ),
     dials::trees(c(1, 100))
   )
   expect_equal(

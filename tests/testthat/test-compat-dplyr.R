@@ -100,7 +100,13 @@ test_that("workflow_set subclass is kept if row order is changed", {
 test_that("summarise() always drops the workflow_set class", {
   for (x in workflow_set_objects) {
     expect_s3_class_bare_tibble(summarise(x, y = 1))
-    expect_s3_class_bare_tibble(summarise(x, wflow_id = wflow_id[1], info = info[1], option = option[1], result = result[1]))
+    expect_s3_class_bare_tibble(summarise(
+      x,
+      wflow_id = wflow_id[1],
+      info = info[1],
+      option = option[1],
+      result = result[1]
+    ))
   }
 })
 
@@ -110,7 +116,11 @@ test_that("summarise() always drops the workflow_set class", {
 test_that("group_by() always returns a bare grouped-df or bare tibble", {
   for (x in workflow_set_objects) {
     expect_s3_class_bare_tibble(group_by(x))
-    expect_s3_class(group_by(x, wflow_id), c("grouped_df", "tbl_df", "tbl", "data.frame"), exact = TRUE)
+    expect_s3_class(
+      group_by(x, wflow_id),
+      c("grouped_df", "tbl_df", "tbl", "data.frame"),
+      exact = TRUE
+    )
   }
 })
 

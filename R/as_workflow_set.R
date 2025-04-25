@@ -58,7 +58,10 @@ as_workflow_set <- function(...) {
   is_workflow <- purrr::map_lgl(object, ~ inherits(.x, "workflow"))
   wflows <- vector("list", length(is_workflow))
   wflows[is_workflow] <- object[is_workflow]
-  wflows[!is_workflow] <- purrr::map(object[!is_workflow], tune::.get_tune_workflow)
+  wflows[!is_workflow] <- purrr::map(
+    object[!is_workflow],
+    tune::.get_tune_workflow
+  )
   names(wflows) <- names(object)
 
   check_names(wflows)

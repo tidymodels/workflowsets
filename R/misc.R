@@ -21,7 +21,6 @@ make_workflow <- function(x, y, call = caller_env()) {
 
 # ------------------------------------------------------------------------------
 
-
 metric_to_df <- function(x, ...) {
   metrics <- attributes(x)$metrics
   names <- names(metrics)
@@ -44,7 +43,8 @@ collate_metrics <- function(x) {
     metrics %>%
     dplyr::group_by(metric) %>%
     dplyr::summarize(
-      order = mean(order, na.rm = TRUE), n = dplyr::n(),
+      order = mean(order, na.rm = TRUE),
+      n = dplyr::n(),
       .groups = "drop"
     )
 
@@ -56,7 +56,12 @@ collate_metrics <- function(x) {
     dplyr::arrange(order)
 }
 
-pick_metric <- function(x, rank_metric, select_metrics = NULL, call = caller_env()) {
+pick_metric <- function(
+  x,
+  rank_metric,
+  select_metrics = NULL,
+  call = caller_env()
+) {
   # mostly to check for completeness and consistency:
   tmp <- collect_metrics(x)
   metrics <- collate_metrics(x)

@@ -128,8 +128,9 @@
 workflow_set <- function(preproc, models, cross = TRUE, case_weights = NULL) {
   check_bool(cross)
 
-  if (length(preproc) != length(models) &
-    (length(preproc) != 1 & length(models) != 1 & !cross)
+  if (
+    length(preproc) != length(models) &
+      (length(preproc) != 1 & length(models) != 1 & !cross)
   ) {
     cli::cli_abort(
       "The lengths of {.arg preproc} and {.arg models} are different
@@ -337,7 +338,10 @@ new_workflow_set <- function(x, call = caller_env()) {
     cli::cli_abort("The {.field info} column should be a list.", call = call)
   }
   if (!has_valid_column_info_inner_types(x)) {
-    cli::cli_abort("All elements of {.field info} must be tibbles.", call = call)
+    cli::cli_abort(
+      "All elements of {.field info} must be tibbles.",
+      call = call
+    )
   }
   if (!has_valid_column_info_inner_names(x)) {
     columns <- required_info_inner_names()

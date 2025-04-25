@@ -40,8 +40,12 @@ test_that("ranking models", {
   # expected number of rows per metric per model
   param_lines <-
     c(
-      none_cart = 10, none_glm = 1, none_mars = 2,
-      yj_trans_cart = 10, yj_trans_glm = 1, yj_trans_mars = 2
+      none_cart = 10,
+      none_glm = 1,
+      none_mars = 2,
+      yj_trans_cart = 10,
+      yj_trans_glm = 1,
+      yj_trans_mars = 2
     )
 
   expect_no_error(ranking_1 <- rank_results(two_class_res))

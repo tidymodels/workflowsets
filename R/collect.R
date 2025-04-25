@@ -99,8 +99,14 @@ reorder_cols <- function(x) {
 #' @export
 #' @rdname collect_metrics.workflow_set
 collect_predictions.workflow_set <-
-  function(x, ..., summarize = TRUE, parameters = NULL, select_best = FALSE,
-           metric = NULL) {
+  function(
+    x,
+    ...,
+    summarize = TRUE,
+    parameters = NULL,
+    select_best = FALSE,
+    metric = NULL
+  ) {
     rlang::check_dots_empty()
     check_incompete(x, fail = TRUE)
     check_bool(summarize)
@@ -108,7 +114,8 @@ collect_predictions.workflow_set <-
     check_string(metric, allow_null = TRUE)
     if (select_best) {
       x <-
-        dplyr::mutate(x,
+        dplyr::mutate(
+          x,
           predictions = purrr::map(
             result,
             ~ select_bare_predictions(
@@ -141,7 +148,8 @@ collect_predictions.workflow_set <-
 
 select_bare_predictions <- function(x, metric, summarize) {
   res <-
-    tune::collect_predictions(x,
+    tune::collect_predictions(
+      x,
       summarize = summarize,
       parameters = tune::select_best(x, metric = metric)
     )

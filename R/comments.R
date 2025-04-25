@@ -53,7 +53,9 @@ comment_add <- function(x, id, ..., append = TRUE, collapse = "\n") {
   id_index <- which(has_id)
   current_val <- x$info[[id_index]]$comment
   if (!is.na(current_val) && !append) {
-    cli::cli_abort("There is already a comment for this id and {.code append = FALSE}.")
+    cli::cli_abort(
+      "There is already a comment for this id and {.code append = FALSE}."
+    )
   }
   new_value <- c(x$info[[id_index]]$comment, unlist(dots))
   new_value <- new_value[!is.na(new_value) & nchar(new_value) > 0]

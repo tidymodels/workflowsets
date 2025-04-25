@@ -9,7 +9,8 @@ car_set_1 <-
     list(reg = mpg ~ ., nonlin = mpg ~ wt + 1 / sqrt(disp)),
     list(lm = lr_spec)
   ) %>%
-  workflow_map("fit_resamples",
+  workflow_map(
+    "fit_resamples",
     resamples = vfold_cv(mtcars, v = 3),
     control = tune::control_resamples(save_pred = TRUE)
   )

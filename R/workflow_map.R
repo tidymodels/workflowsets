@@ -152,8 +152,13 @@
 #'
 #' chi_features_res_new
 #' @export
-workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
-                         seed = sample.int(10^4, 1), ...) {
+workflow_map <- function(
+  object,
+  fn = "tune_grid",
+  verbose = FALSE,
+  seed = sample.int(10^4, 1),
+  ...
+) {
   check_wf_set(object)
 
   rlang::arg_match(fn, allowed_fn$func)
@@ -187,8 +192,13 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
     .fn_info <- dplyr::filter(allowed_fn, func == .fn)
 
     log_progress(
-      verbose, object$wflow_id[[iter]], NULL, iter_chr[iter],
-      n, .fn, NULL
+      verbose,
+      object$wflow_id[[iter]],
+      NULL,
+      iter_chr[iter],
+      n,
+      .fn,
+      NULL
     )
 
     if (has_all_pkgs(wflow)) {
@@ -202,8 +212,13 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
       })
       object <- new_workflow_set(object)
       log_progress(
-        verbose, object$wflow_id[[iter]], object$result[[iter]],
-        iter_chr[iter], n, .fn, run_time
+        verbose,
+        object$wflow_id[[iter]],
+        object$result[[iter]],
+        iter_chr[iter],
+        n,
+        .fn,
+        run_time
       )
     }
   }
@@ -214,8 +229,13 @@ workflow_map <- function(object, fn = "tune_grid", verbose = FALSE,
 allowed_fn <-
   tibble::tibble(
     func = c(
-      "tune_grid", "tune_bayes", "fit_resamples", "tune_race_anova",
-      "tune_race_win_loss", "tune_sim_anneal", "tune_cluster"
+      "tune_grid",
+      "tune_bayes",
+      "fit_resamples",
+      "tune_race_anova",
+      "tune_race_win_loss",
+      "tune_sim_anneal",
+      "tune_cluster"
     ),
     pkg = c(rep("tune", 3), rep("finetune", 3), "tidyclust")
   )
@@ -225,7 +245,8 @@ allowed_fn_list <- paste0("'", allowed_fn$func, "'", collapse = ", ")
 # ---------------------------------------------
 check_object_fn <- function(object, fn, call = rlang::caller_env()) {
   wf_specs <- purrr::map(
-    object$wflow_id, ~ extract_spec_parsnip(object, id = .x)
+    object$wflow_id,
+    ~ extract_spec_parsnip(object, id = .x)
   )
   is_cluster_spec <- purrr::map_lgl(wf_specs, inherits, "cluster_spec")
 
@@ -279,7 +300,8 @@ log_progress <- function(verbose, id, res, iter, n, .fn, elapsed) {
     errors_msg <- gsub("\n", "", as.character(res))
     errors_msg <- gsub("Error : ", "", errors_msg, fixed = TRUE)
     message(
-      cols$symbol$danger(cli::symbol$cross), " ",
+      cols$symbol$danger(cli::symbol$cross),
+      " ",
       cols$message$info(msg),
       cols$message$info(" failed with: "),
       cols$message$danger(errors_msg)
@@ -289,7 +311,8 @@ log_progress <- function(verbose, id, res, iter, n, .fn, elapsed) {
 
   if (is.null(res)) {
     message(
-      cols$symbol$info("i"), " ",
+      cols$symbol$info("i"),
+      " ",
       cols$message$info(msg)
     )
   } else {
@@ -301,7 +324,8 @@ log_progress <- function(verbose, id, res, iter, n, .fn, elapsed) {
       errors_msg <- gsub("\n", "", as.character(res))
       errors_msg <- gsub("Error : ", "", errors_msg, fixed = TRUE)
       message(
-        cols$symbol$danger(cli::symbol$cross), " ",
+        cols$symbol$danger(cli::symbol$cross),
+        " ",
         cols$message$info(msg),
         cols$message$info(" failed with "),
         cols$message$danger(errors_msg)
@@ -309,7 +333,8 @@ log_progress <- function(verbose, id, res, iter, n, .fn, elapsed) {
     } else {
       time_msg <- paste0(" (", prettyunits::pretty_sec(elapsed[3]), ")")
       message(
-        cols$symbol$success(cli::symbol$tick), " ",
+        cols$symbol$success(cli::symbol$tick),
+        " ",
         cols$message$info(msg),
         cols$message$info(time_msg)
       )
