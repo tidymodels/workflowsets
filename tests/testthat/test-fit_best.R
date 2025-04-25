@@ -22,12 +22,12 @@ test_that("fit_best fits with correct hyperparameters", {
     )
 
   chi_features_map <-
-    chi_features_set %>%
+    chi_features_set |>
     option_add(
       control = control_grid(save_workflow = TRUE),
       # choose metrics resulting in different rankings
       metrics = metric_set(rmse, iic)
-    ) %>%
+    ) |>
     workflow_map(resamples = time_val_split, grid = 21, seed = 1)
 
   chi_features_map
@@ -90,11 +90,11 @@ test_that("fit_best errors informatively with bad inputs", {
     )
 
   chi_features_map <-
-    chi_features_set %>%
+    chi_features_set |>
     option_add(
       # set needed `save_workflow` option
       control = control_grid(save_workflow = TRUE)
-    ) %>%
+    ) |>
     workflow_map(resamples = time_val_split, grid = 21, seed = 1)
 
   expect_snapshot(

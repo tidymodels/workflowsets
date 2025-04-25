@@ -2,26 +2,26 @@
 
 test_that("option management", {
   expect_no_error(
-    set_1 <- two_class_set %>% option_add(grid = 1)
+    set_1 <- two_class_set |> option_add(grid = 1)
   )
   for (i in 1:nrow(set_1)) {
     expect_equal(unclass(set_1$option[[i]]), list(grid = 1))
   }
   expect_no_error(
-    set_2 <- two_class_set %>% option_remove(grid)
+    set_2 <- two_class_set |> option_remove(grid)
   )
   for (i in 1:nrow(set_2)) {
     expect_equal(unclass(set_2$option[[i]]), list())
   }
   expect_no_error(
-    set_3 <- two_class_set %>% option_add(grid = 1, id = "none_cart")
+    set_3 <- two_class_set |> option_add(grid = 1, id = "none_cart")
   )
   expect_equal(unclass(set_3$option[[1]]), list(grid = 1))
   for (i in 2:nrow(set_3)) {
     expect_equal(unclass(set_3$option[[i]]), list())
   }
   expect_no_error(
-    set_4 <- two_class_set %>% option_add_parameters()
+    set_4 <- two_class_set |> option_add_parameters()
   )
   for (i in which(!grepl("glm", set_4$wflow_id))) {
     expect_true(all(names(set_4$option[[i]]) == "param_info"))
@@ -31,7 +31,7 @@ test_that("option management", {
     expect_equal(unclass(set_4$option[[i]]), list())
   }
   expect_no_error(
-    set_5 <- two_class_set %>% option_add_parameters(id = "none_cart")
+    set_5 <- two_class_set |> option_add_parameters(id = "none_cart")
   )
   expect_true(all(names(set_5$option[[1]]) == "param_info"))
   expect_true(inherits(set_5$option[[1]]$param_info, "parameters"))
@@ -55,9 +55,9 @@ test_that("option printing", {
 
 test_that("check for bad options", {
   expect_snapshot_error(
-    two_class_set %>% option_add(grid2 = 1)
+    two_class_set |> option_add(grid2 = 1)
   )
   expect_snapshot_error(
-    two_class_set %>% option_add(grid = 1, blueprint = 2)
+    two_class_set |> option_add(grid = 1, blueprint = 2)
   )
 })

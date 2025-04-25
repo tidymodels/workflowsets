@@ -1,7 +1,7 @@
 # test comments
 
     Code
-      two_class_set %>% comment_add("toe", "foot")
+      comment_add(two_class_set, "toe", "foot")
     Condition
       Error in `comment_add()`:
       ! The `id` value is not in `wflow_id`.
@@ -9,7 +9,7 @@
 ---
 
     Code
-      two_class_set %>% comment_add(letters, "foot")
+      comment_add(two_class_set, letters, "foot")
     Condition
       Error in `comment_add()`:
       ! `id` must be a single string, not a character vector.
@@ -17,7 +17,7 @@
 ---
 
     Code
-      two_class_set %>% comment_add(1:2, "foot")
+      comment_add(two_class_set, 1:2, "foot")
     Condition
       Error in `comment_add()`:
       ! `id` must be a single string, not an integer vector.
@@ -25,7 +25,7 @@
 ---
 
     Code
-      two_class_set %>% comment_add("none_cart", 1:2)
+      comment_add(two_class_set, "none_cart", 1:2)
     Condition
       Error in `comment_add()`:
       ! The comments should be character strings.
@@ -33,7 +33,7 @@
 ---
 
     Code
-      comments_1 %>% comment_add("none_cart", "Stuff.", append = FALSE)
+      comment_add(comments_1, "none_cart", "Stuff.", append = FALSE)
     Condition
       Error in `comment_add()`:
       ! There is already a comment for this id and `append = FALSE`.
@@ -57,7 +57,7 @@
 ---
 
     Code
-      comments_1 %>% comment_reset(letters)
+      comment_reset(comments_1, letters)
     Condition
       Error in `comment_reset()`:
       ! `id` should be a single character value.
@@ -65,7 +65,7 @@
 ---
 
     Code
-      comments_1 %>% comment_reset("none_carts")
+      comment_reset(comments_1, "none_carts")
     Condition
       Error in `comment_reset()`:
       ! The `id` value is not in `wflow_id`.

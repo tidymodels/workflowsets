@@ -5,17 +5,17 @@ library(rsample)
 library(recipes)
 data(Chicago, package = "modeldata")
 
-lr_spec <- linear_reg() %>% set_engine("lm")
+lr_spec <- linear_reg() |> set_engine("lm")
 
 set.seed(1)
 car_set_1 <-
   workflow_set(
     list(
-      reg = recipe(mpg ~ ., data = mtcars) %>% step_log(disp),
+      reg = recipe(mpg ~ ., data = mtcars) |> step_log(disp),
       nonlin = mpg ~ wt + 1 / sqrt(disp)
     ),
     list(lm = lr_spec)
-  ) %>%
+  ) |>
   workflow_map(
     "fit_resamples",
     resamples = vfold_cv(mtcars, v = 3),
@@ -61,35 +61,35 @@ test_that("extracts", {
   )
 
   expect_equal(
-    car_set_1 %>% extract_workflow("reg_lm"),
+    car_set_1 |> extract_workflow("reg_lm"),
     car_set_1$info[[1]]$workflow[[1]]
   )
 
   expect_equal(
-    car_set_1 %>% extract_workflow_set_result("reg_lm"),
+    car_set_1 |> extract_workflow_set_result("reg_lm"),
     car_set_1$result[[1]]
   )
 
   expect_snapshot(error = TRUE, {
-    car_set_1 %>% extract_workflow_set_result("Gideon Nav")
+    car_set_1 |> extract_workflow_set_result("Gideon Nav")
   })
 
   expect_snapshot(error = TRUE, {
-    car_set_1 %>% extract_workflow("Coronabeth Tridentarius")
+    car_set_1 |> extract_workflow("Coronabeth Tridentarius")
   })
 })
 
 
 test_that("extract parameter set from workflow set with untunable workflow", {
-  rm_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) %>%
+  rm_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) |>
     recipes::step_rm(date, ends_with("away"))
-  lm_model <- parsnip::linear_reg() %>%
+  lm_model <- parsnip::linear_reg() |>
     parsnip::set_engine("lm")
   bst_model <-
     parsnip::boost_tree(
       mode = "classification",
       trees = hardhat::tune("funky name \n")
-    ) %>%
+    ) |>
     parsnip::set_engine("C5.0", rules = hardhat::tune(), noGlobalPruning = TRUE)
   wf_set <- workflow_set(
     list(reg = rm_rec),
@@ -102,15 +102,15 @@ test_that("extract parameter set from workflow set with untunable workflow", {
 })
 
 test_that("extract parameter set from workflow set with tunable workflow", {
-  rm_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) %>%
+  rm_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) |>
     recipes::step_rm(date, ends_with("away"))
-  lm_model <- parsnip::linear_reg() %>%
+  lm_model <- parsnip::linear_reg() |>
     parsnip::set_engine("lm")
   bst_model <-
     parsnip::boost_tree(
       mode = "classification",
       trees = hardhat::tune("funky name \n")
-    ) %>%
+    ) |>
     parsnip::set_engine("C5.0", rules = hardhat::tune(), noGlobalPruning = TRUE)
   wf_set <- workflow_set(
     list(reg = rm_rec),
@@ -136,7 +136,7 @@ test_that("extract parameter set from workflow set with tunable workflow", {
   expect_equal(c5_info$object[[2]], NA)
 
   c5_new_info <-
-    c5_info %>%
+    c5_info |>
     update(
       rules = dials::new_qual_param(
         "logical",
@@ -146,7 +146,7 @@ test_that("extract parameter set from workflow set with tunable workflow", {
     )
 
   wf_set_2 <-
-    wf_set %>%
+    wf_set |>
     option_add(id = "reg_bst", param_info = c5_new_info)
 
   check_parameter_set_tibble(c5_new_info)
@@ -159,15 +159,15 @@ test_that("extract parameter set from workflow set with tunable workflow", {
 
 
 test_that("extract single parameter from workflow set with untunable workflow", {
-  rm_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) %>%
+  rm_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) |>
     recipes::step_rm(date, ends_with("away"))
-  lm_model <- parsnip::linear_reg() %>%
+  lm_model <- parsnip::linear_reg() |>
     parsnip::set_engine("lm")
   bst_model <-
     parsnip::boost_tree(
       mode = "classification",
       trees = hardhat::tune("funky name \n")
-    ) %>%
+    ) |>
     parsnip::set_engine("C5.0", rules = hardhat::tune(), noGlobalPruning = TRUE)
   wf_set <- workflow_set(
     list(reg = rm_rec),
@@ -185,15 +185,15 @@ test_that("extract single parameter from workflow set with untunable workflow", 
 })
 
 test_that("extract single parameter from workflow set with tunable workflow", {
-  rm_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) %>%
+  rm_rec <- recipes::recipe(ridership ~ ., data = head(Chicago)) |>
     recipes::step_rm(date, ends_with("away"))
-  lm_model <- parsnip::linear_reg() %>%
+  lm_model <- parsnip::linear_reg() |>
     parsnip::set_engine("lm")
   bst_model <-
     parsnip::boost_tree(
       mode = "classification",
       trees = hardhat::tune("funky name \n")
-    ) %>%
+    ) |>
     parsnip::set_engine("C5.0", rules = hardhat::tune(), noGlobalPruning = TRUE)
   wf_set <- workflow_set(
     list(reg = rm_rec),

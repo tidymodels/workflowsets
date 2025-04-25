@@ -41,18 +41,18 @@ its results as you work. Comments can be appended or removed.
 \examples{
 two_class_set
 
-two_class_set \%>\% comment_get("none_cart")
+two_class_set |> comment_get("none_cart")
 
 new_set <-
-  two_class_set \%>\%
-  comment_add("none_cart", "What does 'cart' stand for\u2753") \%>\%
+  two_class_set |>
+  comment_add("none_cart", "What does 'cart' stand for\u2753") |>
   comment_add("none_cart", "Classification And Regression Trees.")
 
 comment_print(new_set)
 
-new_set \%>\% comment_get("none_cart")
+new_set |> comment_get("none_cart")
 
-new_set \%>\%
-  comment_reset("none_cart") \%>\%
+new_set |>
+  comment_reset("none_cart") |>
   comment_get("none_cart")
 }

@@ -1,7 +1,7 @@
 make_workflow <- function(x, y, call = caller_env()) {
   exp_classes <- c("formula", "recipe", "workflow_variables")
   w <-
-    workflows::workflow() %>%
+    workflows::workflow() |>
     workflows::add_model(y)
   if (inherits(x, "formula")) {
     w <- workflows::add_formula(w, x)
@@ -34,14 +34,14 @@ metric_to_df <- function(x, ...) {
 
 collate_metrics <- function(x) {
   metrics <-
-    x$result %>%
-    purrr::map(tune::.get_tune_metrics) %>%
-    purrr::map(metric_to_df) %>%
+    x$result |>
+    purrr::map(tune::.get_tune_metrics) |>
+    purrr::map(metric_to_df) |>
     purrr::map_dfr(~ dplyr::mutate(.x, order = 1:nrow(.x)))
 
   mean_order <-
-    metrics %>%
-    dplyr::group_by(metric) %>%
+    metrics |>
+    dplyr::group_by(metric) |>
     dplyr::summarize(
       order = mean(order, na.rm = TRUE),
       n = dplyr::n(),
@@ -49,10 +49,10 @@ collate_metrics <- function(x) {
     )
 
   dplyr::full_join(
-    dplyr::distinct(metrics) %>% dplyr::select(-order),
+    dplyr::distinct(metrics) |> dplyr::select(-order),
     mean_order,
     by = "metric"
-  ) %>%
+  ) |>
     dplyr::arrange(order)
 }
 

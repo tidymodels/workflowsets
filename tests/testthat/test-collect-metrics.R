@@ -8,12 +8,12 @@ check_metric_results <- function(ind, x, ...) {
   }
 
   orig <-
-    collect_metrics(x$result[[ind]], ...) %>%
+    collect_metrics(x$result[[ind]], ...) |>
     dplyr::select(dplyr::all_of(cols))
 
   everythng <-
-    collect_metrics(x, ...) %>%
-    dplyr::filter(wflow_id == id_val) %>%
+    collect_metrics(x, ...) |>
+    dplyr::filter(wflow_id == id_val) |>
     dplyr::select(dplyr::all_of(cols))
   all.equal(orig, everythng)
 }

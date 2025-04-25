@@ -48,10 +48,10 @@
 #' collect_metrics(two_class_res)
 #'
 #' # Alternatively, if the tuning parameter values are needed:
-#' two_class_res %>%
-#'   dplyr::filter(grepl("cart", wflow_id)) %>%
-#'   mutate(metrics = map(result, collect_metrics)) %>%
-#'   dplyr::select(wflow_id, metrics) %>%
+#' two_class_res |>
+#'   dplyr::filter(grepl("cart", wflow_id)) |>
+#'   mutate(metrics = map(result, collect_metrics)) |>
+#'   dplyr::select(wflow_id, metrics) |>
 #'   tidyr::unnest(cols = metrics)
 #' }
 #'
@@ -71,11 +71,11 @@ collect_metrics.workflow_set <- function(x, ..., summarize = TRUE) {
       ),
       metrics = purrr::map2(metrics, result, remove_parameters)
     )
-  info <- dplyr::bind_rows(x$info) %>% dplyr::select(-workflow, -comment)
+  info <- dplyr::bind_rows(x$info) |> dplyr::select(-workflow, -comment)
   x <-
-    dplyr::select(x, wflow_id, metrics) %>%
-    dplyr::bind_cols(info) %>%
-    tidyr::unnest(cols = c(metrics)) %>%
+    dplyr::select(x, wflow_id, metrics) |>
+    dplyr::bind_cols(info) |>
+    tidyr::unnest(cols = c(metrics)) |>
     reorder_cols()
   check_consistent_metrics(x, fail = FALSE)
   x
@@ -137,11 +137,11 @@ collect_predictions.workflow_set <-
           )
         )
     }
-    info <- dplyr::bind_rows(x$info) %>% dplyr::select(-workflow, -comment)
+    info <- dplyr::bind_rows(x$info) |> dplyr::select(-workflow, -comment)
     x <-
-      dplyr::select(x, wflow_id, predictions) %>%
-      dplyr::bind_cols(info) %>%
-      tidyr::unnest(cols = c(predictions)) %>%
+      dplyr::select(x, wflow_id, predictions) |>
+      dplyr::bind_cols(info) |>
+      tidyr::unnest(cols = c(predictions)) |>
       reorder_cols()
     x
   }

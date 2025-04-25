@@ -56,61 +56,61 @@ time_val_split <-
 # ------------------------------------------------------------------------------
 
 base_recipe <-
-   recipe(ridership ~ ., data = Chicago) \%>\%
+   recipe(ridership ~ ., data = Chicago) |>
    # create date features
-   step_date(date) \%>\%
-   step_holiday(date) \%>\%
+   step_date(date) |>
+   step_holiday(date) |>
    # remove date from the list of predictors
-   update_role(date, new_role = "id") \%>\%
+   update_role(date, new_role = "id") |>
    # create dummy variables from factor columns
-   step_dummy(all_nominal()) \%>\%
+   step_dummy(all_nominal()) |>
    # remove any columns with a single unique value
-   step_zv(all_predictors()) \%>\%
+   step_zv(all_predictors()) |>
    step_normalize(all_predictors())
 
 date_only <-
-   recipe(ridership ~ ., data = Chicago) \%>\%
+   recipe(ridership ~ ., data = Chicago) |>
    # create date features
-   step_date(date) \%>\%
-   update_role(date, new_role = "id") \%>\%
+   step_date(date) |>
+   update_role(date, new_role = "id") |>
    # create dummy variables from factor columns
-   step_dummy(all_nominal()) \%>\%
+   step_dummy(all_nominal()) |>
    # remove any columns with a single unique value
    step_zv(all_predictors())
 
 date_and_holidays <-
-   recipe(ridership ~ ., data = Chicago) \%>\%
+   recipe(ridership ~ ., data = Chicago) |>
    # create date features
-   step_date(date) \%>\%
-   step_holiday(date) \%>\%
+   step_date(date) |>
+   step_holiday(date) |>
    # remove date from the list of predictors
-   update_role(date, new_role = "id") \%>\%
+   update_role(date, new_role = "id") |>
    # create dummy variables from factor columns
-   step_dummy(all_nominal()) \%>\%
+   step_dummy(all_nominal()) |>
    # remove any columns with a single unique value
    step_zv(all_predictors())
 
 date_and_holidays_and_pca <-
-   recipe(ridership ~ ., data = Chicago) \%>\%
+   recipe(ridership ~ ., data = Chicago) |>
    # create date features
-   step_date(date) \%>\%
-   step_holiday(date) \%>\%
+   step_date(date) |>
+   step_holiday(date) |>
    # remove date from the list of predictors
-   update_role(date, new_role = "id") \%>\%
+   update_role(date, new_role = "id") |>
    # create dummy variables from factor columns
-   step_dummy(all_nominal()) \%>\%
+   step_dummy(all_nominal()) |>
    # remove any columns with a single unique value
-   step_zv(all_predictors()) \%>\%
+   step_zv(all_predictors()) |>
    step_pca(!!stations, num_comp = tune())
 
 # ------------------------------------------------------------------------------
 
-lm_spec <- linear_reg() \%>\% set_engine("lm")
+lm_spec <- linear_reg() |> set_engine("lm")
 
 # ------------------------------------------------------------------------------
 
 pca_param <-
-   parameters(num_comp()) \%>\%
+   parameters(num_comp()) |>
    update(num_comp = num_comp(c(0, 20)))
 
 # ------------------------------------------------------------------------------
@@ -127,8 +127,8 @@ chi_features_set <-
 # ------------------------------------------------------------------------------
 
 chi_features_res <-
-   chi_features_set \%>\%
-   option_add(param_info = pca_param, id = "plus_pca_lm") \%>\%
+   chi_features_set |>
+   option_add(param_info = pca_param, id = "plus_pca_lm") |>
    workflow_map(resamples = time_val_split, grid = 21, seed = 1, verbose = TRUE)
 }\if{html}{\out{</div>}}
 }

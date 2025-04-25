@@ -22,7 +22,7 @@
 #' # objects to a workflow set
 #' two_class_res
 #'
-#' results <- two_class_res %>% purrr::pluck("result")
+#' results <- two_class_res |> purrr::pluck("result")
 #' names(results) <- two_class_res$wflow_id
 #'
 #' # These are all objects that have been resampled or tuned:
@@ -40,13 +40,13 @@
 #' lr_spec <- logistic_reg()
 #'
 #' main_effects <-
-#'   workflow() %>%
-#'   add_model(lr_spec) %>%
+#'   workflow() |>
+#'   add_model(lr_spec) |>
 #'   add_formula(Class ~ .)
 #'
 #' interactions <-
-#'   workflow() %>%
-#'   add_model(lr_spec) %>%
+#'   workflow() |>
+#'   add_model(lr_spec) |>
 #'   add_formula(Class ~ (.)^2)
 #'
 #' as_workflow_set(main = main_effects, int = interactions)
@@ -69,7 +69,7 @@ as_workflow_set <- function(...) {
 
   res <- tibble::tibble(wflow_id = names(wflows))
   res <-
-    res %>%
+    res |>
     dplyr::mutate(
       workflow = unname(wflows),
       info = purrr::map(workflow, get_info),
@@ -78,7 +78,7 @@ as_workflow_set <- function(...) {
   res$result <- vector(mode = "list", length = nrow(res))
   res$result[!is_workflow] <- object[!is_workflow]
 
-  res %>%
-    dplyr::select(wflow_id, info, option, result) %>%
+  res |>
+    dplyr::select(wflow_id, info, option, result) |>
     new_workflow_set()
 }

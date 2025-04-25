@@ -11,7 +11,7 @@ test_that("collect_extracts works", {
     )
 
   wflow_set_trained <-
-    wflow_set %>%
+    wflow_set |>
     workflow_map(
       "fit_resamples",
       resamples = folds,
@@ -42,7 +42,7 @@ test_that("collect_extracts fails gracefully without .extracts column", {
     )
 
   wflow_set_trained <-
-    wflow_set %>%
+    wflow_set |>
     workflow_map("fit_resamples", resamples = folds)
 
   expect_snapshot(

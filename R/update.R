@@ -21,8 +21,8 @@
 #' library(parsnip)
 #'
 #' new_mod <-
-#'   decision_tree() %>%
-#'   set_engine("rpart", method = "anova") %>%
+#'   decision_tree() |>
+#'   set_engine("rpart", method = "anova") |>
 #'   set_mode("classification")
 #'
 #' new_set <- update_workflow_model(two_class_res, "none_cart", spec = new_mod)

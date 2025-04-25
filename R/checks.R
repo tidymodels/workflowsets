@@ -11,14 +11,14 @@ check_wf_set <- function(x, arg = caller_arg(x), call = caller_env()) {
 
 check_consistent_metrics <- function(x, fail = TRUE, call = caller_env()) {
   metric_info <-
-    dplyr::distinct(x, .metric, wflow_id) %>%
-    dplyr::mutate(has = TRUE) %>%
+    dplyr::distinct(x, .metric, wflow_id) |>
+    dplyr::mutate(has = TRUE) |>
     tidyr::pivot_wider(
       names_from = ".metric",
       values_from = "has",
       values_fill = FALSE
-    ) %>%
-    dplyr::select(-wflow_id) %>%
+    ) |>
+    dplyr::select(-wflow_id) |>
     purrr::map_dbl(~ sum(!.x))
 
   if (any(metric_info > 0)) {

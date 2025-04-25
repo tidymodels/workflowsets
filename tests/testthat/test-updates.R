@@ -7,10 +7,10 @@ library(hardhat)
 
 data(two_class_dat, package = "modeldata")
 
-xgb <- boost_tree(trees = 3) %>% set_mode("classification")
+xgb <- boost_tree(trees = 3) |> set_mode("classification")
 rec <-
-  recipe(Class ~ A + B, two_class_dat) %>%
-  step_normalize(A) %>%
+  recipe(Class ~ A + B, two_class_dat) |>
+  step_normalize(A) |>
   step_normalize(B)
 
 sparse_bp <- default_recipe_blueprint(composition = "dgCMatrix")

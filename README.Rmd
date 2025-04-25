@@ -69,19 +69,19 @@ theme_set(theme_bw())
 library(tidymodels)
 data(Chicago)
 # Use a small sample to keep file sizes down:
-Chicago <- Chicago %>% slice(1:365)
+Chicago <- Chicago |> slice(1:365)
 
 base_recipe <-
-  recipe(ridership ~ ., data = Chicago) %>%
+  recipe(ridership ~ ., data = Chicago) |>
   # create date features
-  step_date(date) %>%
-  step_holiday(date) %>%
+  step_date(date) |>
+  step_holiday(date) |>
   # remove date from the list of predictors
-  update_role(date, new_role = "id") %>%
+  update_role(date, new_role = "id") |>
   # create dummy variables from factor columns
-  step_dummy(all_nominal()) %>%
+  step_dummy(all_nominal()) |>
   # remove any columns with a single unique value
-  step_zv(all_predictors()) %>%
+  step_zv(all_predictors()) |>
   step_normalize(all_predictors())
 ```
 
@@ -89,7 +89,7 @@ To enact a correlation filter, an additional step is used:
 
 ```{r filter}
 filter_rec <-
-  base_recipe %>%
+  base_recipe |>
   step_corr(all_of(stations), threshold = tune())
 ```
 
@@ -98,8 +98,8 @@ Similarly, for PCA:
 
 ```{r pca}
 pca_rec <-
-  base_recipe %>%
-  step_pca(all_of(stations), num_comp = tune()) %>%
+  base_recipe |>
+  step_pca(all_of(stations), num_comp = tune()) |>
   step_normalize(all_predictors())
 ```
 
@@ -107,17 +107,17 @@ We might want to assess a few different models, including a regularized method (
 
 ```{r models}
 regularized_spec <-
-  linear_reg(penalty = tune(), mixture = tune()) %>%
+  linear_reg(penalty = tune(), mixture = tune()) |>
   set_engine("glmnet")
 
 cart_spec <-
-  decision_tree(cost_complexity = tune(), min_n = tune()) %>%
-  set_engine("rpart") %>%
+  decision_tree(cost_complexity = tune(), min_n = tune()) |>
+  set_engine("rpart") |>
   set_mode("regression")
 
 knn_spec <-
-  nearest_neighbor(neighbors = tune(), weight_func = tune()) %>%
-  set_engine("kknn") %>%
+  nearest_neighbor(neighbors = tune(), weight_func = tune()) |>
+  set_engine("kknn") |>
   set_mode("regression")
 ```
 
@@ -142,7 +142,7 @@ It doesn't make sense to use PCA or a filter with a `glmnet` model. We can remov
 
 ```{r rm}
 chi_models <-
-  chi_models %>%
+  chi_models |>
   anti_join(tibble(wflow_id = c("pca_glmnet", "filter_glmnet")),
     by = "wflow_id"
   )
@@ -169,7 +169,7 @@ We'll use simple grid search for these models by running `workflow_map()`. This 
 ```{r tune}
 set.seed(123)
 chi_models <-
-  chi_models %>%
+  chi_models |>
   # The first argument is a function name from the {{tune}} package
   # such as `tune_grid()`, `fit_resamples()`, etc.
   workflow_map("tune_grid",
@@ -197,7 +197,7 @@ autoplot(chi_models, select_best = TRUE)
 We can determine how well each combination did by looking at the best results per workflow: 
 
 ```{r best}
-rank_results(chi_models, rank_metric = "mae", select_best = TRUE) %>%
+rank_results(chi_models, rank_metric = "mae", select_best = TRUE) |>
   select(rank, mean, model, wflow_id, .config)
 ```
 
@@ -217,4 +217,3 @@ This project is released with a [Contributor Code of Conduct](https://contributo
 - Either way, learn how to create and share a [reprex](https://reprex.tidyverse.org/articles/articles/learn-reprex.html) (a minimal, reproducible example), to clearly communicate about your code.
 
 - Check out further details on [contributing guidelines for tidymodels packages](https://www.tidymodels.org/contribute/) and [how to get help](https://www.tidymodels.org/help/).
-

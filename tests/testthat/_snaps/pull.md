@@ -1,7 +1,7 @@
 # pulling objects
 
     Code
-      res <- car_set_1 %>% pull_workflow("reg_lm")
+      res <- pull_workflow(car_set_1, "reg_lm")
     Condition
       Warning:
       `pull_workflow()` was deprecated in workflowsets 0.1.0.
@@ -10,7 +10,7 @@
 ---
 
     Code
-      res <- car_set_1 %>% pull_workflow_set_result("reg_lm")
+      res <- pull_workflow_set_result(car_set_1, "reg_lm")
     Condition
       Warning:
       `pull_workflow_set_result()` was deprecated in workflowsets 0.1.0.
@@ -19,7 +19,7 @@
 ---
 
     Code
-      car_set_1 %>% pull_workflow_set_result("Gideon Nav")
+      pull_workflow_set_result(car_set_1, "Gideon Nav")
     Condition
       Warning:
       `pull_workflow_set_result()` was deprecated in workflowsets 0.1.0.
@@ -30,7 +30,7 @@
 ---
 
     Code
-      car_set_1 %>% pull_workflow("Coronabeth Tridentarius")
+      pull_workflow(car_set_1, "Coronabeth Tridentarius")
     Condition
       Warning:
       `pull_workflow()` was deprecated in workflowsets 0.1.0.

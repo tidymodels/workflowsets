@@ -11,7 +11,7 @@ test_that("collect_notes works", {
     )
 
   wflow_set_trained <-
-    wflow_set %>%
+    wflow_set |>
     workflow_map(
       "fit_resamples",
       resamples = folds,

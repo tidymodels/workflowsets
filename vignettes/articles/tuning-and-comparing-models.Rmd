@@ -62,16 +62,16 @@ We'll fit two types of discriminant analysis (DA) models (regularized DA and fle
 library(discrim)
 
 mars_disc_spec <-
-  discrim_flexible(prod_degree = tune()) %>%
+  discrim_flexible(prod_degree = tune()) |>
   set_engine("earth")
 
 reg_disc_sepc <-
-  discrim_regularized(frac_common_cov = tune(), frac_identity = tune()) %>%
+  discrim_regularized(frac_common_cov = tune(), frac_identity = tune()) |>
   set_engine("klaR")
 
 cart_spec <-
-  decision_tree(cost_complexity = tune(), min_n = tune()) %>%
-  set_engine("rpart") %>%
+  decision_tree(cost_complexity = tune(), min_n = tune()) |>
+  set_engine("rpart") |>
   set_mode("classification")
 ```
 
@@ -103,7 +103,7 @@ For illustration, let's use the `extract` argument of the [control function](htt
 
 ```{r option}
 all_workflows <-
-  all_workflows %>%
+  all_workflows |>
   option_add(
     id = "formula_cart",
     control = control_grid(extract = function(x) x)
@@ -123,7 +123,7 @@ The `verbose` option provides a concise listing for which workflow is being proc
 
 ```{r tuning}
 all_workflows <-
-  all_workflows %>%
+  all_workflows |>
   # Specifying arguments here adds to any previously set with `option_add()`:
   workflow_map(resamples = train_resamples, grid = 20, verbose = TRUE)
 all_workflows
@@ -154,7 +154,7 @@ We can also pull out the results of `tune_grid()` for this model:
 
 ```{r mars-results-print}
 mars_results <-
-  all_workflows %>%
+  all_workflows |>
   extract_workflow_set_result("formula_mars")
 mars_results
 ```
@@ -163,13 +163,13 @@ Let's get that workflow object and finalize the model:
 
 ```{r final-mars}
 mars_workflow <-
-  all_workflows %>%
+  all_workflows |>
   extract_workflow("formula_mars")
 mars_workflow
 
 mars_workflow_fit <-
-  mars_workflow %>%
-  finalize_workflow(tibble(prod_degree = 1)) %>%
+  mars_workflow |>
+  finalize_workflow(tibble(prod_degree = 1)) |>
   fit(data = train_set)
 mars_workflow_fit
 ```
@@ -185,7 +185,7 @@ grid <-
   )
 
 grid <-
-  grid %>%
+  grid |>
   bind_cols(predict(mars_workflow_fit, grid, type = "prob"))
 ```
 
@@ -207,7 +207,7 @@ Recall that we added an option to the CART model to extract the model results. L
 
 ```{r extraction-res}
 cart_res <-
-  all_workflows %>%
+  all_workflows |>
   extract_workflow_set_result("formula_cart")
 cart_res
 ```
@@ -221,9 +221,9 @@ Let's slim that down by keeping the ones that correspond to the best tuning para
 best_cart <- select_best(cart_res, metric = "roc_auc")
 
 cart_wflows <-
-  cart_res %>%
-  select(id, .extracts) %>%
-  unnest(cols = .extracts) %>%
+  cart_res |>
+  select(id, .extracts) |>
+  unnest(cols = .extracts) |>
   inner_join(best_cart)
 
 cart_wflows
@@ -234,32 +234,30 @@ What can we do with these? Let's write a function to return the number of termin
 ```{r cart-nodes}
 num_nodes <- function(wflow) {
   var_imps <-
-    wflow %>%
+    wflow |>
     # Pull out the rpart model
-    extract_fit_engine() %>%
+    extract_fit_engine() |>
     # The 'frame' element is a matrix with a column that
     # indicates which leaves are terminal
-    pluck("frame") %>%
+    pluck("frame") |>
     # Convert to a data frame
-    as_tibble() %>%
+    as_tibble() |>
     # Save only the rows that are terminal nodes
-    filter(var == "<leaf>") %>%
+    filter(var == "<leaf>") |>
     # Count them
     nrow()
 }
 
-cart_wflows$.extracts[[1]] %>% num_nodes()
+cart_wflows$.extracts[[1]] |> num_nodes()
 ```
 
 Now let's create a column with the results for each resample:
 
 ```{r num-nodes-counts}
 cart_wflows <-
-  cart_wflows %>%
+  cart_wflows |>
   mutate(num_nodes = map_int(.extracts, num_nodes))
 cart_wflows
 ```
 
 The average number of terminal nodes for this model is `r round(mean(cart_wflows$num_nodes), 1)` nodes.
-
-

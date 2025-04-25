@@ -60,13 +60,13 @@ library(tune)
 
 two_class_set
 
-two_class_set \%>\%
+two_class_set |>
   option_add(grid = 10)
 
-two_class_set \%>\%
-  option_add(grid = 10) \%>\%
+two_class_set |>
+  option_add(grid = 10) |>
   option_add(grid = 50, id = "none_cart")
 
-two_class_set \%>\%
+two_class_set |>
   option_add_parameters()
 }

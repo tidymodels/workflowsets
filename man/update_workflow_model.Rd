@@ -68,8 +68,8 @@ sequence of models built in Section 1.3 of Kuhn and Johnson (2019). See
 library(parsnip)
 
 new_mod <-
-  decision_tree() \%>\%
-  set_engine("rpart", method = "anova") \%>\%
+  decision_tree() |>
+  set_engine("rpart", method = "anova") |>
   set_mode("classification")
 
 new_set <- update_workflow_model(two_class_res, "none_cart", spec = new_mod)

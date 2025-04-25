@@ -10,10 +10,10 @@ suppressPackageStartupMessages(library(tune))
 
 # ------------------------------------------------------------------------------
 
-lr_spec <- linear_reg() %>% set_engine("lm")
+lr_spec <- linear_reg() |> set_engine("lm")
 knn_spec <-
-  nearest_neighbor(neighbors = tune()) %>%
-  set_engine("kknn") %>%
+  nearest_neighbor(neighbors = tune()) |>
+  set_engine("kknn") |>
   set_mode("regression")
 
 set.seed(1)
@@ -21,7 +21,7 @@ car_set_1 <-
   workflow_set(
     list(reg = mpg ~ ., nonlin = mpg ~ wt + 1 / sqrt(disp)),
     list(lm = lr_spec)
-  ) %>%
+  ) |>
   workflow_map(
     "fit_resamples",
     resamples = vfold_cv(mtcars, v = 3),
@@ -36,7 +36,7 @@ car_set_2 <-
   workflow_set(
     list(reg = mpg ~ ., nonlin = mpg ~ wt + 1 / sqrt(disp)),
     list(lm = lr_spec)
-  ) %>%
+  ) |>
   workflow_map(
     "fit_resamples",
     resamples = resamples,
@@ -48,7 +48,7 @@ car_set_3 <-
   workflow_set(
     list(reg = mpg ~ ., nonlin = mpg ~ wt + 1 / sqrt(disp)),
     list(knn = knn_spec)
-  ) %>%
+  ) |>
   workflow_map(
     "tune_bayes",
     resamples = resamples,
@@ -68,7 +68,7 @@ check_prediction_results <- function(ind, x, summarize = FALSE, ...) {
   cols <- c(".row", "mpg", ".config", ".pred")
 
   orig <-
-    collect_predictions(x$result[[ind]], summarize = summarize, ...) %>%
+    collect_predictions(x$result[[ind]], summarize = summarize, ...) |>
     dplyr::select(dplyr::all_of(cols))
 
   if (any(names(list(...)) == "summarize")) {
@@ -76,8 +76,8 @@ check_prediction_results <- function(ind, x, summarize = FALSE, ...) {
   }
 
   everythng <-
-    collect_predictions(x, summarize = summarize, ...) %>%
-    dplyr::filter(wflow_id == id_val) %>%
+    collect_predictions(x, summarize = summarize, ...) |>
+    dplyr::filter(wflow_id == id_val) |>
     dplyr::select(dplyr::all_of(cols))
   all.equal(orig, everythng)
 }
