@@ -7,7 +7,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r}
+#| include: false
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -28,7 +29,8 @@ For some problems, users might want to try different combinations of preprocessi
 
 In this example we'll use a small, two-dimensional data set for illustrating classification models. The data are in the [modeldata](https://modeldata.tidymodels.org/) package: 
 
-```{r parabolic}
+```{r}
+#| label: parabolic
 library(tidymodels)
 
 data(parabolic)
@@ -37,7 +39,8 @@ str(parabolic)
 
 Let's hold back 25% of the data for a test set: 
 
-```{r 2d-splits}
+```{r}
+#| label: 2d-splits
 set.seed(1)
 split <- initial_split(parabolic)
 
@@ -47,7 +50,10 @@ test_set <- testing(split)
 
 Visually, we can see that the predictors are mildly correlated and some type of nonlinear class boundary is probably needed. 
 
-```{r 2d-plot, fig.width=5, fig.height=5.1}
+```{r}
+#| label: 2d-plot
+#| fig-width: 5
+#| fig-height: 5.1
 ggplot(train_set, aes(x = X1, y = X2, col = class)) +
   geom_point(alpha = 0.5) +
   coord_fixed(ratio = 1) +
@@ -58,7 +64,8 @@ ggplot(train_set, aes(x = X1, y = X2, col = class)) +
 
 We'll fit two types of discriminant analysis (DA) models (regularized DA and flexible DA using MARS, multivariate adaptive regression splines) as well as a simple classification tree. Let's create those parsnip model objects: 
 
-```{r models}
+```{r}
+#| label: models
 library(discrim)
 
 mars_disc_spec <-
@@ -77,7 +84,8 @@ cart_spec <-
 
 Next, we'll need a resampling method. Let's use the bootstrap:
 
-```{r resamples}
+```{r}
+#| label: resamples
 set.seed(2)
 train_resamples <- bootstraps(train_set)
 ```
@@ -86,7 +94,8 @@ We have a simple data set so a basic formula will suffice for our preprocessing.
 
 The workflow set takes a named list of preprocessors and a named list of parsnip model specifications, and can cross them to find all combinations. For our case, it will just make a set of workflows for our models: 
 
-```{r wflow-set}
+```{r}
+#| label: wflow-set
 all_workflows <-
   workflow_set(
     preproc = list("formula" = class ~ .),
@@ -101,7 +110,8 @@ We can add any specific options that we think are important for tuning or resamp
 
 For illustration, let's use the `extract` argument of the [control function](https://tune.tidymodels.org/reference/control_grid.html) to save the fitted workflow. We can then pick which workflow should use this option with the `id` argument:
 
-```{r option}
+```{r}
+#| label: option
 all_workflows <-
   all_workflows |>
   option_add(
@@ -121,7 +131,8 @@ Let's use the same grid size for each model. For the MARS model, there are only 
 
 The `verbose` option provides a concise listing for which workflow is being processed:
 
-```{r tuning}
+```{r}
+#| label: tuning
 all_workflows <-
   all_workflows |>
   # Specifying arguments here adds to any previously set with `option_add()`:
@@ -133,7 +144,11 @@ The `result` column now has the results of each `tune_grid()` call.
 
 From these results, we can get quick assessments of how well these models classified the data: 
 
-```{r rank_res, fig.width=8, fig.height=5.5, out.width="100%"}
+```{r}
+#| label: rank_res
+#| fig-width: 8
+#| fig-height: 5.5
+#| out-width: 100%
 rank_results(all_workflows, rank_metric = "roc_auc")
 
 # or a handy plot:
@@ -144,7 +159,10 @@ autoplot(all_workflows, metric = "roc_auc")
 
 It looks like the MARS model did well. We can plot its results and also pull out the tuning object too: 
 
-```{r mars, fig.width=6, fig.height=4.25}
+```{r}
+#| label: mars
+#| fig-width: 6
+#| fig-height: 4.25
 autoplot(all_workflows, metric = "roc_auc", id = "formula_mars")
 ```
 
@@ -152,7 +170,8 @@ Not much of a difference in performance; it may be prudent to use the additive m
 
 We can also pull out the results of `tune_grid()` for this model: 
 
-```{r mars-results-print}
+```{r}
+#| label: mars-results-print
 mars_results <-
   all_workflows |>
   extract_workflow_set_result("formula_mars")
@@ -161,7 +180,8 @@ mars_results
 
 Let's get that workflow object and finalize the model: 
 
-```{r final-mars}
+```{r}
+#| label: final-mars
 mars_workflow <-
   all_workflows |>
   extract_workflow("formula_mars")
@@ -176,7 +196,8 @@ mars_workflow_fit
 
 Let's see how well these data work on the test set:
 
-```{r grid-pred}
+```{r}
+#| label: grid-pred
 # Make a grid to predict the whole space:
 grid <-
   crossing(
@@ -191,7 +212,11 @@ grid <-
 
 We can produce a contour plot for the class boundary, then overlay the data: 
 
-```{r 2d-boundary, fig.width=5, fig.height=5.1, warning=FALSE}
+```{r}
+#| label: 2d-boundary
+#| warning: false
+#| fig-width: 5
+#| fig-height: 5.1
 ggplot(grid, aes(x = X1, y = X2)) +
   geom_contour(aes(z = .pred_Class2), breaks = 0.5, col = "black") +
   geom_point(data = test_set, aes(col = class), alpha = 0.5) +
@@ -205,7 +230,8 @@ The workflow set allows us to screen many models to find one that does very well
 
 Recall that we added an option to the CART model to extract the model results. Let's pull out the CART tuning results and see what we have:
 
-```{r extraction-res}
+```{r}
+#| label: extraction-res
 cart_res <-
   all_workflows |>
   extract_workflow_set_result("formula_cart")
@@ -216,7 +242,8 @@ The `.extracts` has 20 rows for each resample (since there were 20 tuning parame
 
 Let's slim that down by keeping the ones that correspond to the best tuning parameters: 
 
-```{r extract-subset}
+```{r}
+#| label: extract-subset
 # Get the best results
 best_cart <- select_best(cart_res, metric = "roc_auc")
 
@@ -231,7 +258,8 @@ cart_wflows
 
 What can we do with these? Let's write a function to return the number of terminal nodes in the tree. 
 
-```{r cart-nodes}
+```{r}
+#| label: cart-nodes
 num_nodes <- function(wflow) {
   var_imps <-
     wflow |>
@@ -253,7 +281,8 @@ cart_wflows$.extracts[[1]] |> num_nodes()
 
 Now let's create a column with the results for each resample:
 
-```{r num-nodes-counts}
+```{r}
+#| label: num-nodes-counts
 cart_wflows <-
   cart_wflows |>
   mutate(num_nodes = map_int(.extracts, num_nodes))
