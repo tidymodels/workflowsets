@@ -20,7 +20,7 @@ pull_workflow(x, id)
 object.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#soft-deprecated}{\figure{lifecycle-soft-deprecated.svg}{options: alt='[Soft-deprecated]'}}}{\strong{[Soft-deprecated]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
 \details{
 \code{pull_workflow_set_result()} retrieves the results of \code{\link[=workflow_map]{workflow_map()}} for a
@@ -29,13 +29,4 @@ from the \code{info} column.
 
 The \code{\link[=extract_workflow_set_result]{extract_workflow_set_result()}} and \code{\link[=extract_workflow]{extract_workflow()}} functions should
 be used instead of these functions.
-}
-\examples{
-library(tune)
-
-two_class_res
-
-pull_workflow_set_result(two_class_res, "none_cart")
-
-pull_workflow(two_class_res, "none_cart")
 }

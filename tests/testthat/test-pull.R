@@ -17,19 +17,13 @@ car_set_1 <-
 
 # ------------------------------------------------------------------------------
 
-test_that("pulling objects", {
-  expect_snapshot(res <- car_set_1 |> pull_workflow("reg_lm"))
-  expect_equal(res, car_set_1$info[[1]]$workflow[[1]])
-
-  expect_snapshot(res <- car_set_1 |> pull_workflow_set_result("reg_lm"))
-  expect_equal(res, car_set_1$result[[1]])
-
+test_that("pulling objects is deprecated", {
   expect_snapshot(
     error = TRUE,
-    car_set_1 |> pull_workflow_set_result("Gideon Nav")
+    car_set_1 |> pull_workflow_set_result("reg_lm")
   )
   expect_snapshot(
     error = TRUE,
-    car_set_1 |> pull_workflow("Coronabeth Tridentarius")
+    car_set_1 |> pull_workflow("reg_lm")
   )
 })
