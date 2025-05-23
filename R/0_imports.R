@@ -44,7 +44,8 @@ utils::globalVariables(
     "get_from_env",
     ".get_tune_metric_names",
     "select_best",
-    "notes"
+    "notes",
+    "extracts"
   )
 )
 
