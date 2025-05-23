@@ -2,6 +2,8 @@
 
 * Added a `collect_extracts()` method for workflow sets (#156).
 
+* The deprecation of the `pull_*()` functions has been moved forward. These functions now error. Please use the `extract_*()` functions instead (#178).
+
 * Increased the minimum required R version to R 4.1.
 
 # workflowsets 1.1.0
