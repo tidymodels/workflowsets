@@ -183,14 +183,14 @@ The `results` column contains the results of each call to `tune_grid()` for the 
 
 The `autoplot()` method shows the rankings of the workflows: 
 
-```{r plot, fig.height = 4, dev = "svg"}
+```{r plot, fig.height = 4}
 autoplot(chi_models)
 ```
 
 or the best from each workflow: 
 
 
-```{r plot-best, fig.height = 4, dev = "svg"}
+```{r plot-best, fig.height = 4}
 autoplot(chi_models, select_best = TRUE)
 ```
 
