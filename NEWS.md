@@ -1,6 +1,6 @@
-# workflowsets (development version)
+# workflowsets 1.1.1
 
-* Added a `collect_extracts()` method for workflow sets (#156).
+* Added a `collect_extracts()` method for workflow sets (@jrosell, #156).
 
 * The deprecation of the `pull_*()` functions has been moved forward. These functions now error. Please use the `extract_*()` functions instead (#178).
 

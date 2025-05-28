@@ -202,19 +202,26 @@ chi_models <-
     metrics = metric_set(mae), verbose = TRUE
   )
 #> i 1 of 7 tuning:     simple_glmnet
-#> ✔ 1 of 7 tuning:     simple_glmnet (3s)
+#> ✔ 1 of 7 tuning:     simple_glmnet (2s)
 #> i 2 of 7 tuning:     simple_cart
-#> ✔ 2 of 7 tuning:     simple_cart (4.1s)
+#> ✔ 2 of 7 tuning:     simple_cart (2.8s)
 #> i 3 of 7 tuning:     simple_knn
-#> ✔ 3 of 7 tuning:     simple_knn (3.7s)
+#> ✔ 3 of 7 tuning:     simple_knn (2.3s)
+#> Warning: Using `all_of()` outside of a selecting function was deprecated in tidyselect
+#> 1.2.0.
+#> ℹ See details at
+#>   <https://tidyselect.r-lib.org/reference/faq-selection-context.html>
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
 #> i 4 of 7 tuning:     filter_cart
-#> ✔ 4 of 7 tuning:     filter_cart (8.4s)
+#> ✔ 4 of 7 tuning:     filter_cart (5.4s)
 #> i 5 of 7 tuning:     filter_knn
-#> ✔ 5 of 7 tuning:     filter_knn (7.8s)
+#> ✔ 5 of 7 tuning:     filter_knn (5.3s)
 #> i 6 of 7 tuning:     pca_cart
-#> ✔ 6 of 7 tuning:     pca_cart (5.5s)
+#> ✔ 6 of 7 tuning:     pca_cart (4s)
 #> i 7 of 7 tuning:     pca_knn
-#> ✔ 7 of 7 tuning:     pca_knn (5.4s)
+#> ✔ 7 of 7 tuning:     pca_knn (3.6s)
 chi_models
 #> # A workflow set/tibble: 7 × 4
 #>   wflow_id      info             option    result   
@@ -237,7 +244,7 @@ The `autoplot()` method shows the rankings of the workflows:
 autoplot(chi_models)
 ```
 
-<img src="man/figures/README-plot-1.svg" width="100%" />
+<img src="man/figures/README-plot-1.png" width="100%" />
 
 or the best from each workflow:
 
@@ -245,7 +252,7 @@ or the best from each workflow:
 autoplot(chi_models, select_best = TRUE)
 ```
 
-<img src="man/figures/README-plot-best-1.svg" width="100%" />
+<img src="man/figures/README-plot-best-1.png" width="100%" />
 
 We can determine how well each combination did by looking at the best
 results per workflow:
@@ -260,9 +267,9 @@ rank_results(chi_models, rank_metric = "mae", select_best = TRUE) |>
 #> 2     2  2.23 decision_tree    simple_cart   Preprocessor1_Model06
 #> 3     3  2.63 decision_tree    filter_cart   Preprocessor06_Model1
 #> 4     4  2.97 decision_tree    pca_cart      Preprocessor4_Model2 
-#> 5     5  3.37 nearest_neighbor simple_knn    Preprocessor1_Model07
+#> 5     5  3.24 nearest_neighbor simple_knn    Preprocessor1_Model02
 #> 6     6  3.47 nearest_neighbor filter_knn    Preprocessor06_Model1
-#> 7     7  3.89 nearest_neighbor pca_knn       Preprocessor4_Model2
+#> 7     7  3.90 nearest_neighbor pca_knn       Preprocessor2_Model2
 ```
 
 ## Contributing
