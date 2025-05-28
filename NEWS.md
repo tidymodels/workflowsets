@@ -1,3 +1,5 @@
+# workflowsets (development version)
+
 # workflowsets 1.1.1
 
 * Added a `collect_extracts()` method for workflow sets (@jrosell, #156).
