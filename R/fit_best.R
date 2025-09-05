@@ -36,6 +36,7 @@ tune::fit_best
 #' library(tune)
 #' library(modeldata)
 #' library(rsample)
+#' library(recipes)
 #'
 #' data(Chicago)
 #' Chicago <- Chicago[1:1195, ]

@@ -63,6 +63,7 @@ sequence of models built in Section 1.3 of Kuhn and Johnson (2019). See
 library(tune)
 library(modeldata)
 library(rsample)
+library(recipes)
 
 data(Chicago)
 Chicago <- Chicago[1:1195, ]
