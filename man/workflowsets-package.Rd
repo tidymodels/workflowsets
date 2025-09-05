@@ -18,11 +18,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Simon Couch \email{simon.couch@posit.co} (\href{https://orcid.org/0000-0001-5676-5107}{ORCID})
+\strong{Maintainer}: Hannah Frick \email{hannah@posit.co} (\href{https://orcid.org/0000-0002-6049-5258}{ORCID})
 
 Authors:
 \itemize{
   \item Max Kuhn \email{max@posit.co} (\href{https://orcid.org/0000-0003-2402-136X}{ORCID})
+  \item Simon Couch \email{simon.couch@posit.co} (\href{https://orcid.org/0000-0001-5676-5107}{ORCID})
 }
 
 Other contributors:
