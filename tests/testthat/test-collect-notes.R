@@ -25,5 +25,5 @@ test_that("collect_notes works", {
 
   expect_equal(nrow(notes), 6)
   expect_contains(notes$note, "hey!")
-  expect_named(notes, c("wflow_id", "id", "location", "type", "note"))
+  expect_named(notes, c("wflow_id", "id", "location", "type", "note", "trace"))
 })

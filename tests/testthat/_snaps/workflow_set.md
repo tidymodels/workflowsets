@@ -5,50 +5,14 @@
         1 / sqrt(disp)), list(lm = lr_spec), case_weights = non_wts), "fit_resamples",
       resamples = vfold_cv(cars, v = 5))
     Message
-      x Fold1: preprocessor 1/1:
-        Error in `fit()`:
-        ! `col` must select a classed case weights column, as determined by `h...
-        i For example, it could be a column created by `hardhat::frequency_wei...
-      x Fold2: preprocessor 1/1:
-        Error in `fit()`:
-        ! `col` must select a classed case weights column, as determined by `h...
-        i For example, it could be a column created by `hardhat::frequency_wei...
-      x Fold3: preprocessor 1/1:
-        Error in `fit()`:
-        ! `col` must select a classed case weights column, as determined by `h...
-        i For example, it could be a column created by `hardhat::frequency_wei...
-      x Fold4: preprocessor 1/1:
-        Error in `fit()`:
-        ! `col` must select a classed case weights column, as determined by `h...
-        i For example, it could be a column created by `hardhat::frequency_wei...
-      x Fold5: preprocessor 1/1:
-        Error in `fit()`:
-        ! `col` must select a classed case weights column, as determined by `h...
-        i For example, it could be a column created by `hardhat::frequency_wei...
+      > A | error:   `col` must select a classed case weights column, as determined by `hardhat::is_case_weights()`.
+                     i For example, it could be a column created by `hardhat::frequency_weights()` or `hardhat::importance_weights()`.
     Condition
       Warning:
       All models failed. Run `show_notes(.Last.tune.result)` for more information.
     Message
-      x Fold1: preprocessor 1/1:
-        Error in `fit()`:
-        ! `col` must select a classed case weights column, as determined by `h...
-        i For example, it could be a column created by `hardhat::frequency_wei...
-      x Fold2: preprocessor 1/1:
-        Error in `fit()`:
-        ! `col` must select a classed case weights column, as determined by `h...
-        i For example, it could be a column created by `hardhat::frequency_wei...
-      x Fold3: preprocessor 1/1:
-        Error in `fit()`:
-        ! `col` must select a classed case weights column, as determined by `h...
-        i For example, it could be a column created by `hardhat::frequency_wei...
-      x Fold4: preprocessor 1/1:
-        Error in `fit()`:
-        ! `col` must select a classed case weights column, as determined by `h...
-        i For example, it could be a column created by `hardhat::frequency_wei...
-      x Fold5: preprocessor 1/1:
-        Error in `fit()`:
-        ! `col` must select a classed case weights column, as determined by `h...
-        i For example, it could be a column created by `hardhat::frequency_wei...
+      > A | error:   `col` must select a classed case weights column, as determined by `hardhat::is_case_weights()`.
+                     i For example, it could be a column created by `hardhat::frequency_weights()` or `hardhat::importance_weights()`.
     Condition
       Warning:
       All models failed. Run `show_notes(.Last.tune.result)` for more information.
@@ -58,7 +22,7 @@
     Code
       class_note$note[1]
     Output
-      [1] "Error in `fit()`:\n! `col` must select a classed case weights column, as determined by `hardhat::is_case_weights()`.\ni For example, it could be a column created by `hardhat::frequency_weights()` or `hardhat::importance_weights()`."
+      [1] "`col` must select a classed case weights column, as determined by `hardhat::is_case_weights()`.\ni For example, it could be a column created by `hardhat::frequency_weights()` or `hardhat::importance_weights()`."
 
 # specifying an engine that does not allow case weights
 
@@ -77,50 +41,14 @@
         1 / sqrt(disp)), list(lm = lr_spec), case_weights = boop), "fit_resamples",
       resamples = vfold_cv(cars, v = 5))
     Message
-      x Fold1: preprocessor 1/1:
-        Error in `fit()`:
-        ! Can't select columns that don't exist.
-        x Column `boop` doesn't exist.
-      x Fold2: preprocessor 1/1:
-        Error in `fit()`:
-        ! Can't select columns that don't exist.
-        x Column `boop` doesn't exist.
-      x Fold3: preprocessor 1/1:
-        Error in `fit()`:
-        ! Can't select columns that don't exist.
-        x Column `boop` doesn't exist.
-      x Fold4: preprocessor 1/1:
-        Error in `fit()`:
-        ! Can't select columns that don't exist.
-        x Column `boop` doesn't exist.
-      x Fold5: preprocessor 1/1:
-        Error in `fit()`:
-        ! Can't select columns that don't exist.
-        x Column `boop` doesn't exist.
+      > A | error:   Can't select columns that don't exist.
+                     x Column `boop` doesn't exist.
     Condition
       Warning:
       All models failed. Run `show_notes(.Last.tune.result)` for more information.
     Message
-      x Fold1: preprocessor 1/1:
-        Error in `fit()`:
-        ! Can't select columns that don't exist.
-        x Column `boop` doesn't exist.
-      x Fold2: preprocessor 1/1:
-        Error in `fit()`:
-        ! Can't select columns that don't exist.
-        x Column `boop` doesn't exist.
-      x Fold3: preprocessor 1/1:
-        Error in `fit()`:
-        ! Can't select columns that don't exist.
-        x Column `boop` doesn't exist.
-      x Fold4: preprocessor 1/1:
-        Error in `fit()`:
-        ! Can't select columns that don't exist.
-        x Column `boop` doesn't exist.
-      x Fold5: preprocessor 1/1:
-        Error in `fit()`:
-        ! Can't select columns that don't exist.
-        x Column `boop` doesn't exist.
+      > A | error:   Can't select columns that don't exist.
+                     x Column `boop` doesn't exist.
     Condition
       Warning:
       All models failed. Run `show_notes(.Last.tune.result)` for more information.
@@ -130,7 +58,7 @@
     Code
       class_note$note[1]
     Output
-      [1] "Error in `fit()`:\n! Can't select columns that don't exist.\nx Column `boop` doesn't exist."
+      [1] "Can't select columns that don't exist.\nx Column `boop` doesn't exist."
 
 # crossing
 
