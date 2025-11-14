@@ -14,7 +14,7 @@
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Tuning and comparing models">
 <meta name="robots" content="noindex">
-<script defer data-domain="workflowsets.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/posit-dev/supported-by-posit/js/badge.min.js" data-max-height="43" data-light-bg="#666f76" data-light-fg="#f9f9f9"></script><script defer data-domain="workflowsets.tidymodels.org,all.tidymodels.org" src="https://plausible.io/js/plausible.js"></script>
 </head>
 <body>
     <a href="#container" class="visually-hidden-focusable">Skip to content</a>
@@ -103,7 +103,7 @@ some type of nonlinear class boundary is probably needed.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span>ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Dark2"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="tuning-and-comparing-models_files/figure-html/2d-plot-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="tuning-and-comparing-models_files/figure-html/2d-plot-1.png" class="r-plt" width="480" style="display: block; margin: auto;"></p>
 <div class="section level2">
 <h2 id="defining-the-models">Defining the models<a class="anchor" aria-label="anchor" href="#defining-the-models"></a>
 </h2>
@@ -198,11 +198,11 @@ workflow is being processed:</p>
 <span>  <span class="co"># Specifying arguments here adds to any previously set with `option_add()`:</span></span>
 <span>  <span class="fu"><a href="../reference/workflow_map.html">workflow_map</a></span><span class="op">(</span>resamples <span class="op">=</span> <span class="va">train_resamples</span>, grid <span class="op">=</span> <span class="fl">20</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">i</span> <span style="color: #000000;">1 of 3 tuning:     formula_regularized</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #000000;">1 of 3 tuning:     formula_regularized (43.7s)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #000000;">1 of 3 tuning:     formula_regularized (43.1s)</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">i</span> <span style="color: #000000;">2 of 3 tuning:     formula_mars</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #000000;">2 of 3 tuning:     formula_mars (4.3s)</span></span></span>
 <span><span class="co">#&gt; <span style="color: #0000BB;">i</span> <span style="color: #000000;">3 of 3 tuning:     formula_cart</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #000000;">3 of 3 tuning:     formula_cart (34.2s)</span></span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="color: #000000;">3 of 3 tuning:     formula_cart (33.1s)</span></span></span>
 <span><span class="va">all_workflows</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A workflow set/tibble: 3 × 4</span></span></span>
 <span><span class="co">#&gt;   wflow_id            info             option    result   </span></span>
@@ -234,7 +234,7 @@ models classified the data:</p>
 <span></span>
 <span><span class="co"># or a handy plot:</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">all_workflows</span>, metric <span class="op">=</span> <span class="st">"roc_auc"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="tuning-and-comparing-models_files/figure-html/rank_res-1.png" width="100%" style="display: block; margin: auto;"></p>
+<p><img src="tuning-and-comparing-models_files/figure-html/rank_res-1.png" class="r-plt" width="100%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="examining-specific-model-results">Examining specific model results<a class="anchor" aria-label="anchor" href="#examining-specific-model-results"></a>
@@ -243,7 +243,7 @@ models classified the data:</p>
 also pull out the tuning object too:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">all_workflows</span>, metric <span class="op">=</span> <span class="st">"roc_auc"</span>, id <span class="op">=</span> <span class="st">"formula_mars"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="tuning-and-comparing-models_files/figure-html/mars-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="tuning-and-comparing-models_files/figure-html/mars-1.png" class="r-plt" width="576" style="display: block; margin: auto;"></p>
 <p>Not much of a difference in performance; it may be prudent to use the
 additive model (via <code>prod_degree = 1</code>).</p>
 <p>We can also pull out the results of <code><a href="https://tune.tidymodels.org/reference/tune_grid.html" class="external-link">tune_grid()</a></code> for this
@@ -334,7 +334,7 @@ the data:</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">test_set</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>col <span class="op">=</span> <span class="va">class</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span>ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Dark2"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="tuning-and-comparing-models_files/figure-html/2d-boundary-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="tuning-and-comparing-models_files/figure-html/2d-boundary-1.png" class="r-plt" width="480" style="display: block; margin: auto;"></p>
 <p>The workflow set allows us to screen many models to find one that
 does very well. This can be combined with parallel processing and,
 especially, racing methods from the <a href="https://finetune.tidymodels.org/reference/tune_race_anova.html" class="external-link">finetune</a>
@@ -455,7 +455,7 @@ number of terminal nodes in the tree.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
   </div></footer>
