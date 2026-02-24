@@ -34,6 +34,13 @@
       i	No tuning parameters. `fit_resamples()` will be attempted
       i 3 of 3 resampling: nonlin_lm
 
+# missing packages
+
+    Code
+      res <- workflow_map(car_set_2, resamples = folds, seed = 2, verbose = FALSE)
+    Message
+      x The workflow requires packages that are not installed: 'glmnet'. Skipping this workflow.
+
 # failers
 
     Code

@@ -30,7 +30,7 @@ such terms).
 Factor predictors are left as-is (i.e., no indicator variables are created).
 }
 \examples{
-\dontshow{if (rlang::is_installed("modeldata")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed("modeldata")) withAutoprint(\{ # examplesIf}
 data(penguins, package = "modeldata")
 
 leave_var_out_formulas(

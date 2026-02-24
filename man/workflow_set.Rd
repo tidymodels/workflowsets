@@ -92,7 +92,7 @@ Read more about case weights in the tidymodels at \code{?parsnip::case_weights}.
 }
 
 \examples{
-\dontshow{if (rlang::is_installed(c("kknn", "modeldata", "recipes", "yardstick"))) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_installed(c("kknn", "modeldata", "recipes", "yardstick"))) withAutoprint(\{ # examplesIf}
 library(workflowsets)
 library(workflows)
 library(modeldata)
