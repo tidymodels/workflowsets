@@ -158,11 +158,11 @@ all_workflows <-
   # Specifying arguments here adds to any previously set with `option_add()`:
   workflow_map(resamples = train_resamples, grid = 20, verbose = TRUE)
 #> i 1 of 3 tuning:     formula_regularized
-#> ✔ 1 of 3 tuning:     formula_regularized (43.1s)
+#> ✔ 1 of 3 tuning:     formula_regularized (40.9s)
 #> i 2 of 3 tuning:     formula_mars
-#> ✔ 2 of 3 tuning:     formula_mars (4.3s)
+#> ✔ 2 of 3 tuning:     formula_mars (4.2s)
 #> i 3 of 3 tuning:     formula_cart
-#> ✔ 3 of 3 tuning:     formula_cart (33.1s)
+#> ✔ 3 of 3 tuning:     formula_cart (32.9s)
 all_workflows
 #> # A workflow set/tibble: 3 × 4
 #>   wflow_id            info             option    result   

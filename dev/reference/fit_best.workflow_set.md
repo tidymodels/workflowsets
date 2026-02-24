@@ -127,11 +127,11 @@ chi_features_res_new <-
 #> There were issues with some computations   A: x1
 #> There were issues with some computations   A: x1
 #> 
-#> ✔ 1 of 3 resampling: date_lm (279ms)
+#> ✔ 1 of 3 resampling: date_lm (270ms)
 #> i   No tuning parameters. `fit_resamples()` will be attempted
 #> i 2 of 3 resampling: plus_holidays_lm
 #> → A | warning: prediction from rank-deficient fit; consider predict(., rankdeficient="NA")
-#> ✔ 2 of 3 resampling: plus_holidays_lm (285ms)
+#> ✔ 2 of 3 resampling: plus_holidays_lm (272ms)
 #> i 3 of 3 tuning:     plus_pca_lm
 #> → A | warning: prediction from rank-deficient fit; consider predict(., rankdeficient="NA")
 #> ✔ 3 of 3 tuning:     plus_pca_lm (1.3s)

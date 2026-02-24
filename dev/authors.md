@@ -19,14 +19,14 @@
 Source:
 [`DESCRIPTION`](https://github.com/tidymodels/workflowsets/blob/main/DESCRIPTION)
 
-Frick H, Kuhn M, Couch S (2025). *workflowsets: Create a Collection of
+Frick H, Kuhn M, Couch S (2026). *workflowsets: Create a Collection of
 'tidymodels' Workflows*. R package version 1.1.1.9000,
 <https://github.com/tidymodels/workflowsets>.
 
     @Manual{,
       title = {workflowsets: Create a Collection of 'tidymodels' Workflows},
       author = {Hannah Frick and Max Kuhn and Simon Couch},
-      year = {2025},
+      year = {2026},
       note = {R package version 1.1.1.9000},
       url = {https://github.com/tidymodels/workflowsets},
     }

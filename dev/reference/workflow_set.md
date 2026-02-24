@@ -203,12 +203,12 @@ preproc
 #> $outcomes
 #> <quosure>
 #> expr: ^class
-#> env:  0x564b25c6b460
+#> env:  0x55a3147150c8
 #> 
 #> $predictors
 #> <quosure>
 #> expr: ^c(contains("ch_1"))
-#> env:  0x564b25c6b460
+#> env:  0x55a3147150c8
 #> 
 #> attr(,"class")
 #> [1] "workflow_variables"
@@ -217,12 +217,12 @@ preproc
 #> $outcomes
 #> <quosure>
 #> expr: ^class
-#> env:  0x564b25c64a88
+#> env:  0x55a314712360
 #> 
 #> $predictors
 #> <quosure>
 #> expr: ^c(contains("ch_2"))
-#> env:  0x564b25c64a88
+#> env:  0x55a314712360
 #> 
 #> attr(,"class")
 #> [1] "workflow_variables"
@@ -231,12 +231,12 @@ preproc
 #> $outcomes
 #> <quosure>
 #> expr: ^class
-#> env:  0x564b25c63af0
+#> env:  0x55a31470d4f0
 #> 
 #> $predictors
 #> <quosure>
 #> expr: ^c(contains("ch_3"))
-#> env:  0x564b25c63af0
+#> env:  0x55a31470d4f0
 #> 
 #> attr(,"class")
 #> [1] "workflow_variables"
@@ -245,19 +245,19 @@ preproc
 #> $outcomes
 #> <quosure>
 #> expr: ^class
-#> env:  0x564b25c5ee40
+#> env:  0x55a3147096c0
 #> 
 #> $predictors
 #> <quosure>
 #> expr: ^c(contains("ch_4"))
-#> env:  0x564b25c5ee40
+#> env:  0x55a3147096c0
 #> 
 #> attr(,"class")
 #> [1] "workflow_variables"
 #> 
 #> $everything
 #> class ~ .
-#> <environment: 0x564b2c0b1310>
+#> <environment: 0x55a319b70e50>
 #> 
 
 cell_set_by_group <- workflow_set(preproc, models["logistic"])
